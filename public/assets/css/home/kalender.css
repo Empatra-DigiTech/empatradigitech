@@ -1,0 +1,28 @@
+.fc-button-group button {
+    font-size: 1.5em;
+    vertical-align: middle;
+    background-color: #495057 !important;
+}
+.fc-today-button{
+    background-color: #495057 !important;
+}
+#calendars{
+  height:auto;
+  width: auto;
+  margin-top: 0%
+}
+
+@media only screen and (min-width: 600px){
+    #calendars{
+    height:500px;
+    width: 600px;
+    }
+    .kalender{
+      display: flex;
+      justify-content: center;
+    }
+    #my_kalender{
+      background-size:cover;
+      background-repeat: no-repeat;
+    }
+}

@@ -1,0 +1,88 @@
+.inov {
+    width: 100%;
+    min-height: 70vh;
+    position: center;
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+}
+
+.inov-bg img{
+    inset: left;
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+}
+
+.container {
+    width: 80%;
+    margin: 0 auto;
+}
+
+header {
+    text-align: center;
+    padding: 20px 0;
+}
+
+header h1 {
+    margin: 0;
+    font-size: 24px;
+}
+
+.gallery {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 20px;
+    padding: 20px 0;
+}
+
+.gallery-item {
+    background: white;
+    border: 1px solid #ffffff;
+    padding: 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+.gallery-item img {
+    max-width: 100%;
+    height: auto;
+    aspect-ratio: 3/2;
+    object-fit: contain;
+}
+
+.gallery-item h5 {
+    font-size: 20px;
+    margin: 10px 0 5px;
+    color: #000000;
+    font-weight: bolder;
+}
+
+.gallery-item p {
+    font-size: 15px;
+    color: #666;
+    text-align: left;
+    position: relative;
+}
+
+.inovasi-structure {
+    text-align: center;
+    margin-top: 30px;
+}
+.inovasi-structure img {
+    max-width: 90%;
+    height: auto;
+    object-fit: contain;
+} 
+
+@media screen and (max-width: 768px) {
+    .tabel-wrapper {
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+    }
+  
+    table {
+      min-width: 600px;
+    }
+  }
+  
