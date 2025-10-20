@@ -1,5 +1,5 @@
 @extends('kir.layouts.master')
-@section("title","Pesan ~ BALAI UJI KIR MALANG KOTA")
+@section("title","Pesan ~ EMPATRA DIGITECH")
 @section("title_breadcumb","Pesan")
 @section('breadcumb')
     Pesan

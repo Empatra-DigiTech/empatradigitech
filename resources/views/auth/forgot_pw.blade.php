@@ -4,7 +4,7 @@
     <head>
         <meta charset="utf-8">
         <meta content="width=device-width, initial-scale=1.0" name="viewport" shrink-to-fit=no">
-        <title>Login | BALAI UJI KIR MALANG KOTA</title>
+        <title>Login | EMPATRA DIGITECH</title>
         <meta content="" name="description">
         <meta content="" name="keywords">
 
@@ -56,7 +56,7 @@
             <div class="row align-items-center justify-content-center">
                 <div class="col-md-7">
                     <h3>LUPA PASSWORD</h3>
-                        <strong>BALAI UJI KIR MALANG KOTA</strong>
+                        <strong>EMPATRA DIGITECH</strong>
                             <form action="{{ route('auth.forgot_pw.index') }}" method="POST" class="user">
                                 @csrf
                                 <div class="form-group first">

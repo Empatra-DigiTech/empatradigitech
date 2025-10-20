@@ -1,5 +1,5 @@
 @extends('home.layouts.master')
-@section("title","Informasi | BALAI UJI KIR MALANG KOTA")
+@section("title","Informasi | EMPATRA DIGITECH")
 @section("css")
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
     <style>

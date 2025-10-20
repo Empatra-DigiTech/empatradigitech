@@ -1,5 +1,5 @@
 @extends('kir.layouts.master')
-@section("title","Banner ~ BALAI UJI KIR MALANG KOTA")
+@section("title","Banner ~ EMPATRA DIGITECH")
 @section("title_breadcumb","Banner")
 @section("breadcumb","Banner")
 @section("breadcumb_child","Show")
@@ -9,8 +9,8 @@
     <div class="col-xl-12">
         <div class="card m-b-30">
             <div class="card-body">
-                 
-                
+
+
                 <div class="row mb-2">
                     <div class="col-md-3">
                         Judul

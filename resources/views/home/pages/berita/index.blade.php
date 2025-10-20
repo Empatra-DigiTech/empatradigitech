@@ -1,5 +1,5 @@
 @extends('home.layouts.master')
-@section("title","Berita | BALAI UJI KIR MALANG KOTA")
+@section("title","Berita | EMPATRA DIGITECH")
 @section('css')
     <!-- <link href="assets/css/berita/style.css" rel="stylesheet"> -->
     <link href="assets/css/berita/card.css" rel="stylesheet">

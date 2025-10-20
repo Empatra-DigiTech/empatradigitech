@@ -1,5 +1,5 @@
 @extends('kir.layouts.master')
-@section("title","Banner ~ BALAI UJI KIR MALANG KOTA")
+@section("title","Banner ~ EMPATRA DIGITECH")
 @section("title_breadcumb","Banner")
 @section('css')
 

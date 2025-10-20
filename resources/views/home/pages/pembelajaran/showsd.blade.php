@@ -1,5 +1,5 @@
 @extends('home.layouts.master')
-@section("title","Pembelajaran SD | BALAI UJI KIR MALANG KOTA")
+@section("title","Pembelajaran SD | EMPATRA DIGITECH")
 @section("css")
         <link  href="{{URL::to('/')}}/assets/css/pembelajaran/stylesd.css" rel="stylesheet">
 

@@ -1,5 +1,5 @@
 @extends('kir.layouts.master')
-@section("title","Kir ~ BALAI UJI KIR MALANG KOTA")
+@section("title","Kir ~ EMPATRA DIGITECH")
 @section("title_breadcumb","Kir")
 @section('css')
     <link rel="stylesheet" href="{{URL::to('/')}}/assets/css/clock.css">
@@ -8,23 +8,23 @@
 @section("content")
 <div class="row m-5">
     <div class="col-12 col-sm-6 col-md-6 col-lg-6">
-        <!--clock-->    
+        <!--clock-->
         <div class="d-flex justify-content-center mb-3">
             @include('kir.components.clock')
-        </div> 
+        </div>
     </div>
     <div class="col-12 col-sm-6 col-md-6 col-lg-6">
         <div class="d-flex justify-content-center small-box bg-success p-3">
             <span class="wellcome mt-3 mb-3">Selamat datang di Kir <b>{{ Auth::user()->name }}</b></span>
-            
+
         </div>
-        <span class="h5" id="date"></span>            
+        <span class="h5" id="date"></span>
         <span class="h5 text-primary" id="clock"></span>
     </div>
 </div>
 
 <div class="row">
-    <div class="col-lg-3 col-6">   
+    <div class="col-lg-3 col-6">
     <!-- small box -->
     @if(Auth::user()->hasRole([
                 \App\Enums\RoleEnum::SuperAdmin,

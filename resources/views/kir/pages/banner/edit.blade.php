@@ -1,5 +1,5 @@
 @extends('kir.layouts.master')
-@section("title","Banner ~ BALAI UJI KIR MALANG KOTA")
+@section("title","Banner ~ EMPATRA DIGITECH")
 @section("title_breadcumb","Banner")
 @section("breadcumb","Banner")
 @section("breadcumb_child","Edit")
@@ -44,10 +44,10 @@
 @endsection
 @section ('script')
 <script>
-    const toolbarOptions = [ 
+    const toolbarOptions = [
     [{ 'font': [] }],
     [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
-    ['bold', 'italic'], 
+    ['bold', 'italic'],
     [{ 'list': 'ordered'}, { 'list': 'bullet' }],
     [{ 'indent': '-1'}, { 'indent': '+1' }],
     ['link', 'image'],

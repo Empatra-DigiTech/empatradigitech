@@ -97,13 +97,13 @@
         <hr>
         <div class="content">
             <p>Yang terhormat, {{ $recipient }}</p>
-            <p>Kami telah menerima permintaan untuk reset password dari akun website BALAI UJI KIR MALANG KOTA. Klik link dibawah untuk melanjutkan proses reset password lama anda: </p>
+            <p>Kami telah menerima permintaan untuk reset password dari akun website EMPATRA DIGITECH. Klik link dibawah untuk melanjutkan proses reset password lama anda: </p>
             <a href="{{ route('auth.reset_pw.index',$token) }}" class="btn">Reset Password</a>
             <p>Jika kamu tidak menerima permintaan reset password, Harap abaikan pesan email ini!.</p>
-            <p>Terima Kasih,<br>BALAI UJI KIR MALANG KOTA</p>
+            <p>Terima Kasih,<br>EMPATRA DIGITECH</p>
         </div>
         <div class="footer">
-            <p>&copy; {{ date('Y') }} BALAI UJI KIR MALANG KOTA. All rights reserved.</p>
+            <p>&copy; {{ date('Y') }} EMPATRA DIGITECH. All rights reserved.</p>
         </div>
     </div>
 </body>

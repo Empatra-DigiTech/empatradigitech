@@ -1,5 +1,5 @@
 @extends('home.layouts.master')
-@section("title","Struktur Organisasi | BALAI UJI KIR MALANG KOTA")
+@section("title","Struktur Organisasi | EMPATRA DIGITECH")
 @section("content")
 <section id="so" class="so section" style="margin-top: 2cm;">
   <div class="so-bg" >

@@ -1,5 +1,5 @@
 @extends('home.layouts.master')
-@section("title","Galeri | BALAI UJI KIR MALANG KOTA")
+@section("title","Galeri | EMPATRA DIGITECH")
 @section('css')
     <link href="{{ URL::to('/') }}/assets/css/galery/style.css" rel="stylesheet">
 @endsection

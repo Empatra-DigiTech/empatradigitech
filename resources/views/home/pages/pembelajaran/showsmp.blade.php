@@ -1,5 +1,5 @@
 @extends('home.layouts.master')
-@section("title","SMP | BALAI UJI KIR MALANG KOTA")
+@section("title","SMP | EMPATRA DIGITECH")
     @section("css")
         <link  href="{{URL::to('/')}}/assets/css/pembelajaran/stylesmp.css" rel="stylesheet">
     @endsection

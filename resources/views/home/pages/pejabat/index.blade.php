@@ -1,5 +1,5 @@
 @extends('home.layouts.master')
-@section("title","Kepala dan Pejabat | BALAI UJI KIR MALANG KOTA")
+@section("title","Kepala dan Pejabat | EMPATRA DIGITECH")
 
 @section("content")
 

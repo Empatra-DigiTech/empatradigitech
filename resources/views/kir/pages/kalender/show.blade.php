@@ -1,5 +1,5 @@
 @extends('kir.layouts.master')
-@section("title","Kalender ~ BALAI UJI KIR MALANG KOTA")
+@section("title","Kalender ~ EMPATRA DIGITECH")
 @section("title_breadcumb","Kalender")
 @section('breadcumb')
 

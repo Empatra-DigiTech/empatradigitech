@@ -1,5 +1,5 @@
 @extends('home.layouts.master')
-@section("title","". $result->title ." | BALAI UJI KIR MALANG KOTA")
+@section("title","". $result->title ." | EMPATRA DIGITECH")
 @section('css')
 
 @endsection

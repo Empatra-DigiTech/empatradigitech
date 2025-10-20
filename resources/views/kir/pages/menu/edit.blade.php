@@ -1,5 +1,5 @@
 @extends('kir.layouts.master')
-@section("title","Menu ~ BALAI UJI KIR MALANG KOTA")
+@section("title","Menu ~ EMPATRA DIGITECH")
 @section("title_breadcumb","Menu")
 @section("breadcumb","Menu")
 @section("breadcumb_child","Edit")
@@ -20,7 +20,7 @@
                                         <input type="text" class="form-control" name="title" placeholder="Judul" value="{{ old('title', $result->title) }}" required>
                                     </div>
                                 </div>
-                                
+
                                 <div class="form-group row">
                                     <label class="col-md-2 col-form-label" for="parent">Parent</label>
                                     <div class="col-md-10">
@@ -32,15 +32,15 @@
                                         </select>
                                     </div>
                                 </div>
-                                
+
                                 <div class="form-group row mb-5" >
                                     <label class="col-md-2 col-form-label" for="description">Deskripsi <span class="text-danger">*</span></label>
-                                    <div class="col-md-10"   >  
+                                    <div class="col-md-10"   >
                                         @trix($result, 'content')
                                         {{-- @trix(\App\Models\menu::class, 'content', ['value' => $result->content])      --}}
                                         {{-- @trix(\App\Models\menu::class, $result->renderTrix("content")) --}}
                                         {{-- <input id="menu-trixFields" type="hidden" name="menu-trixFields" value="{!! $result->renderTrix("content") !!}" > --}}
-                                      
+
                                     </div>
                                 </div>
                             </div>
