@@ -35,7 +35,7 @@
                         <li class="dropdown"><a href="#"><span>{{ $row->title }}</span> <i
                                     class="bi bi-chevron-down toggle-dropdown"></i></a>
                             <ul>
-                                <li><a href="{{ route('home.pejabat.index') }}">Kepala Dinas dan Pejabat</a></li>
+                                <li><a href="{{ route('home.pejabat.index') }}">Team</a></li>
                                 <li><a href="{{ route('home.SO.index') }}">Struktur Organisasi</a></li>
                                 <li><a href="{{ route('home.VM.index') }}">Visi & Misi</a></li>
                             </ul>
