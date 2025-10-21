@@ -16,7 +16,7 @@ class LogoutController extends Controller
 
         if($manager->isImpersonating()){
             Auth::user()->leaveImpersonation();
-            return redirect()->route('kir.kir.index');
+            return redirect()->route('patra.patra.index');
         }
         else{
             if(!Auth::check()){

@@ -20,8 +20,8 @@ Route::fallback(function () {
 });
 
 //MIDDLEWARE
-Route::group(["middleware" => ["kir.access"], "namespace" => "App\Http\Controllers\Kir", "as" => "kir.", "prefix" => "kir"], function () {
-    Route::get("/", "KirController@index")->name('kir.index');
+Route::group(["middleware" => ["patra.access"], "namespace" => "App\Http\Controllers\Patra", "as" => "patra.", "prefix" => "patra"], function () {
+    Route::get("/", "PatraController@index")->name('patra.index');
 
     //PROFILE PAGE
     Route::group(["as" => "profile.", "prefix" => "profile"], function () {
@@ -193,7 +193,7 @@ Route::group(["namespace" => "App\Http\Controllers\Auth", "as" => "auth.", "pref
 Route::group(["namespace" => "App\Http\Controllers\Home", "as" => "home."], function () {
     Route::get("/", "HomeController@index")->name('home.index');
     Route::get("/events", "HomeController@events")->name("events");
-    
+
     Route::get("/{title}/show", "MenuController@show");
 
 

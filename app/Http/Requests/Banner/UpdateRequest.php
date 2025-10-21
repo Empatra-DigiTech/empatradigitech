@@ -13,7 +13,7 @@ class UpdateRequest extends FormRequest
             'title' => [
                 'required',
             ],
-            
+
             'image' => [
                 'image',
                 'max:2048',
@@ -26,7 +26,7 @@ class UpdateRequest extends FormRequest
     {
         return [
             'title.required' => 'Judul harus diisi',
-           
+
             'image.image' => 'Foto harus berupa gambar',
             'image.mimes' => 'Foto harus berupa jpeg, bmp, png, gif, svg , jpg',
             'image.max' => 'Foto tidak boleh lebih dari 2MB',
@@ -43,7 +43,7 @@ class UpdateRequest extends FormRequest
         if (! $this->wantsJson()) {
             $errors = implode('<br>', $validator->errors()->all());
             alert()->html('Gagal',$errors,'error');
-            $this->redirect = route('kir.banner.edit', request()->route()->parameter('id'));
+            $this->redirect = route('patra.banner.edit', request()->route()->parameter('id'));
         }
 
         parent::failedValidation($validator);

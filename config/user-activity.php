@@ -4,7 +4,7 @@ return [
     'activated'        => true, // active/inactive all logging
     'middleware'       => ['web', 'auth'],
     'route_path'       => 'activity',
-    'admin_panel_path' => 'kir/',
+    'admin_panel_path' => 'patra/',
     'delete_limit'     => 7, // default 7 days
 
     'model' => [

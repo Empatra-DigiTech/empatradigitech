@@ -13,7 +13,7 @@ class StoreRequest extends FormRequest
             'title' => [
                 'required',
             ],
-          
+
             'image' => [
                 'required',
                 'image',
@@ -27,7 +27,7 @@ class StoreRequest extends FormRequest
     {
         return [
             'title.required' => 'Judul harus diisi',
-          
+
             'image.required' => 'File harus diisi',
             'image.image' => 'Foto harus berupa gambar',
             'image.mimes' => 'Foto harus berupa jpeg, bmp, png, gif, svg , jpg',
@@ -45,7 +45,7 @@ class StoreRequest extends FormRequest
         if (! $this->wantsJson()) {
             $errors = implode('<br>', $validator->errors()->all());
             alert()->html('Gagal',$errors,'error');
-            $this->redirect = route('kir.banner.create');
+            $this->redirect = route('patra.banner.create');
         }
 
         parent::failedValidation($validator);

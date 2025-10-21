@@ -20,7 +20,7 @@ class LoginController extends Controller
     public function index(){
 
         if(Auth::check()){
-            return redirect()->route('kir.kir.index');
+            return redirect()->route('patra.patra.index');
         }
         return view($this->view."login");
     }
@@ -54,7 +54,7 @@ class LoginController extends Controller
                     RoleEnum::Moderator,
                 ])){
                     alert()->html('Berhasil','Login berhasil','success');
-                    return redirect()->intended(route('kir.kir.index'));
+                    return redirect()->intended(route('patra.patra.index'));
                 }
             }
             else{

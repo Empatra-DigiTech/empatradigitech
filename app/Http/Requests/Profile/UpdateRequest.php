@@ -70,9 +70,9 @@ class UpdateRequest extends FormRequest
         if (! $this->wantsJson()) {
             $errors = implode('<br>', $validator->errors()->all());
             alert()->html('Gagal',$errors,'error');
-            $this->redirect = route('kir.profile.index');
+            $this->redirect = route('patra.profile.index');
         }
-        
+
         parent::failedValidation($validator);
     }
 }
