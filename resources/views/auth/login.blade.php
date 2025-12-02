@@ -49,7 +49,7 @@
 <body>
     @include('sweetalert::alert')
     <div class="d-lg-flex half">
-        <div class="bg order-1 order-md-2" style="background-image: url('{{ asset("assets/img/login/login.jpg") }}');"></div>
+        <div class="bg order-1 order-md-2" style="background-image: url('{{ asset("assets/img/login/login.png") }}');"></div>
         <div class="contents order-2 order-md-1">
 
         <div class="container">
