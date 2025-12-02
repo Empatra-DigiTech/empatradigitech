@@ -11,6 +11,7 @@ use App\Models\Berita;
 use App\Models\Banner;
 use App\Models\Pengaturan;
 use App\Models\Layanan;
+use App\Models\Paket;
 use App\Models\Menu;
 
 class HomeController extends Controller
@@ -33,6 +34,18 @@ class HomeController extends Controller
         $table_menu = Menu::all();
 
 
+        // Tambahkan data paket website dan app
+        $paket_website = Paket::where('tipe', 'website')
+            ->where('is_active', true)
+            ->orderBy('urutan', 'ASC')
+            ->orderBy('created_at', 'ASC')
+            ->get();
+
+        $paket_app = Paket::where('tipe', 'app')
+            ->where('is_active', true)
+            ->orderBy('urutan', 'ASC')
+            ->orderBy('created_at', 'ASC')
+            ->get();
 
         // Fetch the most viewed berita id
         $count_view = DB::table('views')
@@ -51,6 +64,8 @@ class HomeController extends Controller
                 'table_layanan' => $table_layanan,
                 'table_view' => null,
                 'table_menu' => $table_menu,
+                'paket_website' => $paket_website, // Tambahkan ini
+                'paket_app' => $paket_app,
             ];
 
             return view($this->view . "index", $data);
@@ -70,6 +85,8 @@ class HomeController extends Controller
                 'table_view' => $table_view,
                 'count_view' => $count_view,
                 'table_menu' => $table_menu,
+                'paket_website' => $paket_website, // Tambahkan ini
+                'paket_app' => $paket_app,
             ];
             // dd($data);
 
