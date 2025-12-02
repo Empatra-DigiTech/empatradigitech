@@ -27,7 +27,7 @@
                         <li><a href="{{ route('home.home.index') }}">{{ $row->title }}</a></li>
                     @elseif($row->title == 'Berita')
                         <li><a href="{{ route('home.berita.index') }}">{{ $row->title }}</a></li>
-                    @elseif($row->title == 'Cek Data Kendaraan')
+                    @elseif($row->title == 'Inovasi')
                         <li><a href="{{ route('home.inovasi.index') }}">{{ $row->title }}</a></li>
                     @elseif($row->title == 'Galeri')
                         <li><a href="{{ route('home.galeri.index') }}">{{ $row->title }}</a></li>

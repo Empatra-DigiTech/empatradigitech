@@ -215,7 +215,7 @@ Route::group(["namespace" => "App\Http\Controllers\Home", "as" => "home."], func
         Route::get("/{id}", "BeritaController@show")->name("show");
     });
 
-    Route::group(["as" => "inovasi.", "prefix" => "cek"], function () {
+    Route::group(["as" => "inovasi.", "prefix" => "inovasi"], function () {
         Route::get("/", "InovasiController@index")->name("index");
         Route::get("/{id}", "InovasiController@show")->name("show");
     });

@@ -5,10 +5,8 @@ namespace App\Http\Controllers\Home;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Inovasi;
-use App\Models\DBPerhubungan;
 use App\Models\Pengaturan;
 use App\Models\Menu;
-use Carbon\Carbon;
 use Illuminate\Pagination\Paginator;
 
 class InovasiController extends Controller
@@ -21,53 +19,32 @@ class InovasiController extends Controller
         $this->inovasi = new inovasi();
         Paginator::useBootstrap();
     }
-   
+
     public function index(Request $request)
     {
         $table_pengaturan = Pengaturan::first();
         $table_menu = Menu::all();
+
         $search = $request->search;
-        $table = collect();
-        $rfid = collect();
-    
-        if (!empty($search)) {
-            $table = $this->inovasi
-                ->where("title", "like", "%{$search}%")
-                ->orderBy("created_at", "DESC")
-                ->paginate(50)
-                ->withQueryString();
-    
-            $rfid = \App\Models\DBPerhubungan::whereHas('pengujian', function ($query) use ($search) {
-                    $query->where("nouji", "like", "%{$search}%");
-                })
-                ->with('pengujian')
-                ->orderBy('datarfid.tgluji', 'desc')
-                ->paginate(10)
-                ->withQueryString();
-            
-                foreach ($rfid as $row) {
-                    if (!empty($row->tgluji)) {
-                        try {
-                            $row->formatted_tgluji = Carbon::createFromFormat('dmY', $row->tgluji)->format('d-m-Y');
-                        } catch (\Exception $e) {
-                            $row->formatted_tgluji = '-'; // fallback kalau gagal parse
-                        }
-                    } else {
-                        $row->formatted_tgluji = '-';
-                    }
-                }
+
+        $table = $this->inovasi;
+
+        if(!empty($search)){
+            $table = $table->where(function($query2) use($search){
+                $query2->where("title","like","%".$search."%");
+            });
         }
-    
-        return view($this->view . "index", [
+        $table = $table->orderBy("created_at","DESC");
+        $table = $table->paginate(10)->withQueryString();
+
+        $data = [
             'table' => $table,
-            'rfid' => $rfid,
             'table_pengaturan' => $table_pengaturan,
             'table_menu' => $table_menu,
-        ]);
+        ];
+
+        return view($this->view."index",$data);
     }
-    
-         
-    
     public function show($id){
         $table_pengaturan = Pengaturan::first();
         $table_menu = Menu::all();
