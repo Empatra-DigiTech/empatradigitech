@@ -114,6 +114,16 @@ Route::group(["middleware" => ["patra.access"], "namespace" => "App\Http\Control
         Route::delete('/{id}', 'LayananController@destroy')->name("destroy")->middleware('role:' . implode('|', [RoleEnum::SuperAdmin, RoleEnum::Admin]));
     });
 
+    Route::group(["as" => "paket.", "prefix" => "paket"], function () {
+        Route::get('/', 'PaketController@index')->name("index")->middleware('role:' . implode('|', [RoleEnum::SuperAdmin, RoleEnum::Admin]));
+        Route::get('/create', 'PaketController@create')->name("create")->middleware('role:' . implode('|', [RoleEnum::SuperAdmin, RoleEnum::Admin]));
+        Route::post('/', 'PaketController@store')->name("store")->middleware('role:' . implode('|', [RoleEnum::SuperAdmin, RoleEnum::Admin]));
+        Route::get('/{id}', 'PaketController@show')->name("show")->middleware('role:' . implode('|', [RoleEnum::SuperAdmin, RoleEnum::Admin]));
+        Route::get('/{id}/edit', 'PaketController@edit')->name("edit")->middleware('role:' . implode('|', [RoleEnum::SuperAdmin, RoleEnum::Admin]));
+        Route::put('/{id}', 'PaketController@update')->name("update")->middleware('role:' . implode('|', [RoleEnum::SuperAdmin, RoleEnum::Admin]));
+        Route::delete('/{id}', 'PaketController@destroy')->name("destroy")->middleware('role:' . implode('|', [RoleEnum::SuperAdmin, RoleEnum::Admin]));
+    });
+
     Route::group(["as" => "tautan.", "prefix" => "tautan"], function () {
         Route::get("/", "TautanController@index")->name("index")->middleware('role:' . implode('|', [RoleEnum::SuperAdmin, RoleEnum::Admin]));
         Route::get("/create", "TautanController@create")->name("create")->middleware('role:' . implode('|', [RoleEnum::SuperAdmin, RoleEnum::Admin]));

@@ -107,6 +107,17 @@
               </a>
             </li>
 
+            <!-- TAMBAHKAN INI -->
+            <li class="nav-item">
+            <a href="{{route('patra.paket.index')}}" class="nav-link @if(Str::startsWith(request()->route()->getName(), 'patra.paket')) active @endif">
+                <i class="bx bx-package col-3 bx-tada-hover"></i>
+                <p>
+                Paket Digital
+                </p>
+            </a>
+            </li>
+            <!-- END TAMBAHAN -->
+
             <li class="nav-item">
               <a href="{{route('patra.kalender.index')}}" class="nav-link @if(Str::startsWith(request()->route()->getName(), 'patra.kalender')) active @endif">
                 <i class="bx bx-calendar col-3 bx-tada-hover"></i>
