@@ -1,158 +1,304 @@
 <!DOCTYPE html>
-<html lang="en">
-
+<html lang="id">
 <head>
-	<meta charset="utf-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>Error | UPT Pengelolaan Prasarana Perhubungan Kota Malang</title>
-	<link href="https://fonts.googleapis.com/css?family=Montserrat:300,700" rel="stylesheet">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>404 - Halaman Tidak Ditemukan | Empatra Digitech</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
 
-	<style>
-		* {
-			-webkit-box-sizing: border-box;
-					box-sizing: border-box;
-		}
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-		body {
-			padding: 15px;
-			margin: 0;
-		}
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            position: relative;
+        }
 
-		#notfound {
-			position: relative;
-			height: 100vh;
-		}
+        /* Floating particles animation */
+        .particle {
+            position: absolute;
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 50%;
+            animation: float 15s infinite;
+        }
 
-		#notfound .notfound {
-			position: absolute;
-			left: 50%;
-			top: 50%;
-			-webkit-transform: translate(-50%, -50%);
-					-ms-transform: translate(-50%, -50%);
-						transform: translate(-50%, -50%);
-		}
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0) translateX(0) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100vh) translateX(100px) rotate(360deg);
+                opacity: 0;
+            }
+        }
 
-		.notfound {
-			max-width: 520px;
-			width: 100%;
-			text-align: center;
-			line-height: 1.4;
-		}
+        .error-container {
+            text-align: center;
+            color: white;
+            z-index: 10;
+            padding: 20px;
+            max-width: 700px;
+        }
 
-		.notfound .notfound-404 {
-			height: 190px;
-			display: flex;
-			align-items: center;
-			justify-content: center;
-		}
+        .error-code {
+            position: relative;
+            margin-bottom: 30px;
+        }
 
-		.notfound .notfound-404 h1 {
-			font-family: 'Matura MT Script Capitals';
-			font-size: 180px;
-			font-weight: 700;
-			margin: 0px;
-			color: #2a0f60;
-			position: relative;
-			display: flex;
-			align-items: center;
-		}
+        .error-code h1 {
+            font-size: 180px;
+            font-weight: 700;
+            line-height: 1;
+            text-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            animation: glitch 3s infinite;
+            position: relative;
+            display: inline-block;
+        }
 
-		.notfound .notfound-404 h1 > span {
-			display: inline-block;
-			width: 120px;
-			height: 120px;
-			background-image: url('../assets/img/emoji.png');
-			background-size: cover;
-			-webkit-transform: scale(1.4);
-					-ms-transform: scale(1.4);
-						transform: scale(1.4);
-			z-index: -1;
-			position: relative;
-			top: -20px; /* Adjust the initial position */
-		}
+        @keyframes glitch {
+            0%, 100% {
+                transform: translate(0);
+            }
+            20% {
+                transform: translate(-2px, 2px);
+            }
+            40% {
+                transform: translate(-2px, -2px);
+            }
+            60% {
+                transform: translate(2px, 2px);
+            }
+            80% {
+                transform: translate(2px, -2px);
+            }
+        }
 
-		.notfound h2 {
-			font-family: 'Montserrat', sans-serif;
-			font-size: 22px;
-			font-weight: 700;
-			margin: 0;
-			text-transform: uppercase;
-			color: #232323;
-		}
+        /* Animated search icon in the middle zero */
+        .search-icon {
+            position: absolute;
+            width: 80px;
+            height: 80px;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            animation: searchRotate 4s ease-in-out infinite;
+        }
 
-		.notfound p {
-			font-family: 'Montserrat', sans-serif;
-			color: #787878;
-			font-weight: 300;
-		}
+        .search-circle {
+            width: 50px;
+            height: 50px;
+            border: 6px solid white;
+            border-radius: 50%;
+            position: absolute;
+            top: 5px;
+            left: 5px;
+        }
 
-		.notfound a {
-			font-family: 'Montserrat', sans-serif;
-			display: inline-block;
-			padding: 12px 30px;
-			font-weight: 700;
-			background-color: #2a0f60;
-			color: #fff;
-			border-radius: 40px;
-			text-decoration: none;
-			-webkit-transition: 0.2s all;
-			transition: 0.2s all;
-		}
+        .search-handle {
+            width: 6px;
+            height: 30px;
+            background: white;
+            position: absolute;
+            bottom: 0;
+            right: 10px;
+            transform: rotate(45deg);
+            border-radius: 3px;
+        }
 
-		.notfound a:hover {
-			opacity: 0.8;
-		}
+        @keyframes searchRotate {
+            0%, 100% {
+                transform: translate(-50%, -50%) rotate(0deg) scale(1);
+            }
+            50% {
+                transform: translate(-50%, -50%) rotate(360deg) scale(1.2);
+            }
+        }
 
-		@media only screen and (max-width: 767px) {
-			.notfound .notfound-404 {
-				height: 115px;
-			}
-			.notfound .notfound-404 h1 {
-				font-size: 86px;
-			}
-			.notfound .notfound-404 h1 > span {
-				width: 86px;
-				height: 86px;
-			}
-		}
-	</style>
+        .error-title {
+            font-size: 32px;
+            font-weight: 600;
+            margin-bottom: 15px;
+            animation: fadeInUp 0.8s ease-out 0.2s both;
+        }
+
+        .error-message {
+            font-size: 16px;
+            font-weight: 300;
+            margin-bottom: 35px;
+            line-height: 1.6;
+            opacity: 0.95;
+            animation: fadeInUp 0.8s ease-out 0.4s both;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .btn-home {
+            display: inline-block;
+            padding: 15px 40px;
+            background: white;
+            color: #667eea;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+            animation: fadeInUp 0.8s ease-out 0.6s both;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-home:before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(102, 126, 234, 0.1);
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
+
+        .btn-home:hover:before {
+            width: 300px;
+            height: 300px;
+        }
+
+        .btn-home:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+        }
+
+        .btn-home span {
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Responsive design */
+        @media only screen and (max-width: 768px) {
+            .error-code h1 {
+                font-size: 120px;
+            }
+
+            .search-icon {
+                width: 50px;
+                height: 50px;
+            }
+
+            .search-circle {
+                width: 30px;
+                height: 30px;
+                border-width: 4px;
+            }
+
+            .search-handle {
+                width: 4px;
+                height: 20px;
+            }
+
+            .error-title {
+                font-size: 24px;
+            }
+
+            .error-message {
+                font-size: 14px;
+            }
+
+            .btn-home {
+                padding: 12px 30px;
+                font-size: 14px;
+            }
+        }
+
+        @media only screen and (max-width: 480px) {
+            .error-code h1 {
+                font-size: 80px;
+            }
+
+            .search-icon {
+                width: 35px;
+                height: 35px;
+            }
+
+            .search-circle {
+                width: 20px;
+                height: 20px;
+                border-width: 3px;
+            }
+
+            .search-handle {
+                width: 3px;
+                height: 15px;
+            }
+        }
+    </style>
 </head>
-
 <body>
+    <!-- Floating particles -->
+    <script>
+        // Create floating particles
+        for (let i = 0; i < 20; i++) {
+            const particle = document.createElement('div');
+            particle.className = 'particle';
+            particle.style.width = Math.random() * 10 + 5 + 'px';
+            particle.style.height = particle.style.width;
+            particle.style.left = Math.random() * 100 + '%';
+            particle.style.animationDelay = Math.random() * 15 + 's';
+            particle.style.animationDuration = Math.random() * 10 + 10 + 's';
+            document.body.appendChild(particle);
+        }
+    </script>
 
-	<div id="notfound">
-		<div class="notfound">
-			<div class="notfound-404">
-				<h1>4<span id="emoji"></span>4</h1>
-			</div>
-			<br>
-			<br>
-			<h2>Oops! Halaman tidak ditemukan</h2>
-			<p>Maaf, halaman yang Anda cari tidak ada, telah dihapus, diubah namanya, atau untuk sementara tidak tersedia</p>
-			<a href="{{route('home.home.index')}}">Kembali ke beranda</a>
-		</div>
-	</div>
+    <div class="error-container">
+        <div class="error-code">
+            <h1>
+                4
+                <div class="search-icon">
+                    <div class="search-circle"></div>
+                    <div class="search-handle"></div>
+                </div>
+                4
+            </h1>
+        </div>
 
-	<script>
-		document.addEventListener("DOMContentLoaded", function() {
-			var emoji = document.getElementById('emoji');
-			var position = 0;
-			var direction = 1;
-			var speed = 0.5;
+        <h2 class="error-title">Ups! Halaman Tidak Ditemukan</h2>
+        <p class="error-message">
+            Sepertinya halaman yang Anda cari sedang bersembunyi.
+            Mungkin sudah dipindahkan atau tidak pernah ada di sini.
+        </p>
 
-			function animate() {
-				position += direction * speed;
-				if (position > 20 || position < -20) {
-					direction *= -1;
-				}
-				emoji.style.top = position + 'px';
-				requestAnimationFrame(animate);
-			}
-
-			animate();
-		});
-	</script>
-
+        <a href="{{route('home.home.index')}}" class="btn-home">
+            <span>← Kembali ke Beranda</span>
+        </a>
+    </div>
 </body>
 </html>
