@@ -1,12 +1,17 @@
+/* ========================================
+   BANNER SECTION
+   ======================================== */
 .banner {
     position: relative;
     text-align: center;
     color: white;
 }
+
 .banner img {
     width: 100%;
     height: auto;
 }
+
 .container .text {
     position: center;
     top: 50%;
@@ -17,218 +22,428 @@
     font-weight: bold;
 }
 
+/* ========================================
+   SO SECTION - HERO/BANNER
+   ======================================== */
 .so {
     width: 100%;
     min-height: 60vh;
-    position: center;
+    position: relative;
+    display: flex;
     align-items: center;
     overflow: hidden;
+    margin-top: 2cm;
+}
+
+.so .so-bg {
+    position: relative;
+    width: 100%;
+    height: 450px;
+    overflow: hidden;
+    border-radius: 0 0 50px 50px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
 }
 
 .so .so-bg img {
-    position: absolute;
-    inset: 0;
-    display: block;
     width: 100%;
-    height: 70%;
+    height: 100%;
     object-fit: cover;
-    z-index: 1;
+    display: block;
+    transition: transform 0.5s ease;
+}
+
+.so .so-bg:hover img {
+    transform: scale(1.05);
 }
 
 .so .container {
     position: relative;
+    z-index: 2;
 }
 
-/* team */
+/* ========================================
+   SECTION TITLE
+   ======================================== */
+.section-title {
+    text-align: center;
+    padding-bottom: 40px;
+}
+
+.section-title h2 {
+    font-size: 42px;
+    font-weight: 700;
+    color: #2a0f60;
+    position: relative;
+    display: inline-block;
+    padding-bottom: 15px;
+    text-transform: uppercase;
+}
+
+.section-title h2:after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80px;
+    height: 4px;
+    background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+    border-radius: 2px;
+}
+
+/* ========================================
+   TEAM SECTION - OLD STYLE (KEEP FOR COMPATIBILITY)
+   ======================================== */
 .team .member {
-  background-color: var(--surface-color);
-  box-shadow: 0px 2px 25px rgba(0, 0, 0, 0.1);
-  text-align: center;
-  border-radius: 15px;
-  padding: 15px;
-  overflow: hidden;
+    background-color: var(--surface-color);
+    box-shadow: 0px 2px 25px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    border-radius: 15px;
+    padding: 15px;
+    overflow: hidden;
 }
 
 .team .member img {
-  border-radius: 15px;
-  overflow: hidden;
+    border-radius: 15px;
+    overflow: hidden;
 }
 
 .team .member .member-content {
-  padding: 0 20px 30px 20px;
+    padding: 0 20px 30px 20px;
 }
 
 .team .member h4 {
-  font-weight: 700;
-  margin-top: 16px;
-  margin-bottom: 2px;
-  font-size: 20px;
+    font-weight: 700;
+    margin-top: 16px;
+    margin-bottom: 2px;
+    font-size: 20px;
 }
 
 .team .member span {
-  font-style: italic;
-  display: block;
-  font-size: 14px;
-  color: color-mix(in srgb, var(--default-color), transparent 40%);
+    font-style: italic;
+    display: block;
+    font-size: 14px;
+    color: color-mix(in srgb, var(--default-color), transparent 40%);
 }
 
 .team .member .social {
-  margin-top: 15px;
-  margin-bottom: 10px;
-  display: flex;
-  align-items: center;
-  justify-content: space-around;
+    margin-top: 15px;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
 }
 
 .team .member .social a {
-  color: color-mix(in srgb, var(--default-color), transparent 60%);
-  transition: 0.3s;
-  border-radius: 50%;
-  width: 40px;
-  height: 40px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border: 1px solid color-mix(in srgb, var(--default-color), transparent 60%);
+    color: color-mix(in srgb, var(--default-color), transparent 60%);
+    transition: 0.3s;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid color-mix(in srgb, var(--default-color), transparent 60%);
 }
 
 .team .member .social a:hover {
-  color: var(--accent-color);
-  border-color: var(--accent-color);
+    color: var(--accent-color);
+    border-color: var(--accent-color);
 }
 
 .team .member .social i {
-  font-size: 18px;
-  margin: 0 2px;
+    font-size: 18px;
+    margin: 0 2px;
 }
 
-/* struktur pict */
+.team .row {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+}
 
+.team .member {
+    flex: 0 0 auto;
+    margin-right: 15px;
+}
+
+.team img {
+    max-width: 150px;
+    height: auto;
+}
+
+/* ========================================
+   ORGANIZATION STRUCTURE
+   ======================================== */
 .organization-structure {
     text-align: center;
     margin-top: 40px;
 }
+
 .organization-structure img {
     width: 85%;
     height: auto;
 }
-.team .row {
-  flex-wrap: nowrap; /* Memastikan gambar tidak membungkus ke baris baru */
-  overflow-x: auto;  /* Mengaktifkan scroll horizontal jika gambar terlalu banyak */
-}
 
-.team .member {
-  flex: 0 0 auto; /* Memastikan kolom memiliki lebar tetap dan tidak mengisi seluruh baris */
-  margin-right: 15px; /* Menambahkan jarak antar gambar */
-}
-
-.team img {
-  max-width: 150px; /* Ukuran lebar maksimum gambar */
-  height: auto; /* Tinggi otomatis */
-}
-
-/*card template*/
+/* ========================================
+   CARD TEMPLATE - MODERN GRID LAYOUT
+   ======================================== */
 .cards {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 2rem;
-  margin: 4rem 5vw;
-  padding: 0;
-  list-style-type: none;
-  
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 30px;
+    margin: 2rem auto;
+    padding: 20px;
+    list-style-type: none;
+    max-width: 1400px;
 }
 
 .card {
-  position: relative;
-  display: block;
-  height: 100%;  
-  border-radius: calc(var(--curve) * 1px);
-  overflow: hidden;
-  text-decoration: none;
+    position: relative;
+    display: block;
+    height: 350px;
+    border-radius: 20px;
+    overflow: hidden;
+    text-decoration: none;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    cursor: pointer;
 }
 
-.card__image {      
-  width: 100%;
-  height: auto;
+.card:hover {
+    transform: translateY(-10px) scale(1.02);
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
 }
 
+.card__image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+}
+
+.card:hover .card__image {
+    transform: scale(1.15);
+}
+
+/* ========================================
+   CARD OVERLAY - GRADIENT STYLE
+   ======================================== */
 .card__overlay {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  z-index: 1;      
-  border-radius: calc(var(--curve) * 1px);    
-  background-color: var(--surface-color);      
-  transform: translateY(100%);
-  transition: .2s ease-in-out;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 2;
+    border-radius: 0;
+    background: linear-gradient(to top,
+        rgba(0, 0, 0, 0.9) 0%,
+        rgba(0, 0, 0, 0.5) 70%,
+        transparent 100%);
+    padding: 25px;
+    transform: translateY(0);
+    transition: all 0.3s ease;
 }
 
 .card:hover .card__overlay {
-  transform: translateY(0);
+    background: linear-gradient(to top,
+        rgba(102, 126, 234, 0.95) 0%,
+        rgba(118, 75, 162, 0.85) 100%);
 }
 
+/* ========================================
+   CARD HEADER & CONTENT
+   ======================================== */
 .card__header {
-  position: relative;
-  display: flex;
-  align-items: center;
-  gap: 2em;
-  padding: 2em;
-  border-radius: calc(var(--curve) * 1px) 0 0 0;    
-  background-color: var(--surface-color);
-  transform: translateY(-100%);
-  transition: .2s ease-in-out;
+    position: relative;
+    display: flex;
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 0.5em;
+    padding: 0;
+    background-color: transparent;
+    border-radius: 0;
+    transform: translateY(0);
+    transition: transform 0.3s ease;
+}
+
+.card:hover .card__header {
+    transform: translateY(-5px);
+}
+
+.card__header-text {
+    width: 100%;
 }
 
 .card__arc {
-  width: 80px;
-  height: 80px;
-  position: absolute;
-  bottom: 100%;
-  right: 0;      
-  z-index: 1;
-}
-
-.card__arc path {
-  fill: var(--surface-color);
-  d: path("M 40 80 c 22 0 40 -22 40 -40 v 40 Z");
-}       
-
-.card:hover .card__header {
-  transform: translateY(0);
+    display: none;
 }
 
 .card__thumb {
-  flex-shrink: 0;
-  width: 50px;
-  height: 50px;      
-  border-radius: 50%;      
+    display: none;
 }
 
 .card__title {
-  font-size: 1.07em;
-  margin: 0 0 .3em;
-  color: #6A515E;
-}
-
-.card__tagline {
-  display: block;
-  margin: 1em 0;
-  font-family: "MockFlowFont";  
-  font-size: .8em; 
+    font-size: 20px;
+    font-weight: 700;
+    margin: 0 0 8px 0;
+    color: #fff;
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
 }
 
 .card__status {
-  font-size: .9em;
+    font-size: 14px;
+    color: rgba(255, 255, 255, 0.9);
+    font-weight: 400;
+    letter-spacing: 0.5px;
+    display: block;
 }
 
+.card__tagline,
 .card__description {
-  padding: 0 2em 2em;
-  margin: 0;
-  color: #D7BDCA;
-  font-family: "MockFlowFont";   
-  display: -webkit-box;
-  -webkit-box-orient: vertical;
-  -webkit-line-clamp: 3;
-  overflow: hidden;
-}    
+    display: none;
+}
+
+/* ========================================
+   CARD ANIMATION ON LOAD
+   ======================================== */
+.card {
+    opacity: 0;
+    animation: fadeInUp 0.6s ease forwards;
+}
+
+.card:nth-child(1) { animation-delay: 0.1s; }
+.card:nth-child(2) { animation-delay: 0.2s; }
+.card:nth-child(3) { animation-delay: 0.3s; }
+.card:nth-child(4) { animation-delay: 0.4s; }
+.card:nth-child(5) { animation-delay: 0.5s; }
+.card:nth-child(6) { animation-delay: 0.6s; }
+.card:nth-child(n+7) { animation-delay: 0.7s; }
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ========================================
+   EMPTY STATE
+   ======================================== */
+.empty-state {
+    text-align: center;
+    padding: 60px 20px;
+    color: #999;
+    font-size: 18px;
+}
+
+.empty-state svg {
+    margin-bottom: 20px;
+    opacity: 0.5;
+}
+
+.empty-state p {
+    margin: 0;
+    font-weight: 400;
+}
+
+/* ========================================
+   RESPONSIVE DESIGN
+   ======================================== */
+
+/* Tablet */
+@media (max-width: 1200px) {
+    .cards {
+        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+        gap: 25px;
+    }
+
+    .card {
+        height: 320px;
+    }
+}
+
+/* Mobile Large */
+@media (max-width: 768px) {
+    .so {
+        margin-top: 1.5cm;
+    }
+
+    .so .so-bg {
+        height: 350px;
+        border-radius: 0 0 30px 30px;
+    }
+
+    .section-title h2 {
+        font-size: 32px;
+    }
+
+    .section-title h2:after {
+        width: 60px;
+    }
+
+    .cards {
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+        gap: 20px;
+        padding: 15px;
+        margin: 1.5rem auto;
+    }
+
+    .card {
+        height: 280px;
+    }
+
+    .card__title {
+        font-size: 18px;
+    }
+
+    .card__status {
+        font-size: 13px;
+    }
+
+    .card__overlay {
+        padding: 20px;
+    }
+}
+
+/* Mobile Small */
+@media (max-width: 480px) {
+    .so {
+        margin-top: 1cm;
+    }
+
+    .so .so-bg {
+        height: 250px;
+        border-radius: 0 0 20px 20px;
+    }
+
+    .section-title {
+        padding-bottom: 30px;
+    }
+
+    .section-title h2 {
+        font-size: 28px;
+    }
+
+    .section-title h2:after {
+        width: 50px;
+        height: 3px;
+    }
+
+    .cards {
+        grid-template-columns: 1fr;
+        gap: 15px;
+        margin: 1rem auto;
+    }
+
+    .card {
+        height: 300px;
+    }
+
+    .card__overlay {
+        padding: 18px;
+    }
+}
