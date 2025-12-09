@@ -152,7 +152,12 @@
                 </p>
               </a>
             </li>
-
+<li class="nav-item">
+    <a href="{{route('patra.invoice.index')}}" class="nav-link @if(Str::startsWith(request()->route()->getName(), 'patra.invoice')) active @endif">
+        <i class='bx bx-file col-3 bx-tada-hover'></i>
+        <p>Invoice</p>
+    </a>
+</li>
             <li class="nav-item">
               <a href="{{route('patra.so.index')}}" class="nav-link @if(Str::startsWith(request()->route()->getName(), 'patra.so')) active @endif">
                 <i class="bx bxs-vector col-3 bx-tada-hover"></i>

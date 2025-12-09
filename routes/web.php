@@ -162,7 +162,16 @@ Route::group(["middleware" => ["patra.access"], "namespace" => "App\Http\Control
     Route::group(["as" => "log.", "prefix" => "log"], function () {
         Route::get("/", "LogController@index")->name("index")->middleware('role:' . implode('|', [RoleEnum::SuperAdmin]));
     });
-
+Route::group(["as" => "invoice.", "prefix" => "invoice"], function () {
+    Route::get('/', 'InvoiceController@index')->name("index")->middleware('role:' . implode('|', [RoleEnum::SuperAdmin, RoleEnum::Admin]));
+    Route::get('/create', 'InvoiceController@create')->name("create")->middleware('role:' . implode('|', [RoleEnum::SuperAdmin, RoleEnum::Admin]));
+    Route::post('/', 'InvoiceController@store')->name("store")->middleware('role:' . implode('|', [RoleEnum::SuperAdmin, RoleEnum::Admin]));
+    Route::get('/{id}', 'InvoiceController@show')->name("show")->middleware('role:' . implode('|', [RoleEnum::SuperAdmin, RoleEnum::Admin]));
+    Route::get('/{id}/edit', 'InvoiceController@edit')->name("edit")->middleware('role:' . implode('|', [RoleEnum::SuperAdmin, RoleEnum::Admin]));
+    Route::put('/{id}', 'InvoiceController@update')->name("update")->middleware('role:' . implode('|', [RoleEnum::SuperAdmin, RoleEnum::Admin]));
+    Route::delete('/{id}', 'InvoiceController@destroy')->name("destroy")->middleware('role:' . implode('|', [RoleEnum::SuperAdmin, RoleEnum::Admin]));
+    Route::get('/{id}/download', 'InvoiceController@download')->name("download")->middleware('role:' . implode('|', [RoleEnum::SuperAdmin, RoleEnum::Admin]));
+});
     Route::group(["as" => "users.", "prefix" => "users"], function () {
         Route::get("/", "UserController@index")->name("index")->middleware('role:' . implode('|', [RoleEnum::SuperAdmin]));
         Route::get('/create', 'UserController@create')->name("create")->middleware('role:' . implode('|', [RoleEnum::SuperAdmin]));
