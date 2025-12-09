@@ -113,15 +113,15 @@ class InvoiceController extends Controller
 
     public function edit($id)
     {
-        $result = $this->invoice->find($id);
+        $invoice = $this->invoice->find($id); // Ubah dari $result ke $invoice
 
-        if (!$result) {
+        if (!$invoice) {
             alert()->error('Gagal', "Invoice tidak ditemukan");
             return redirect()->route($this->route . "index");
         }
 
         $data = [
-            'result' => $result,
+            'invoice' => $invoice, // Ubah key dari 'result' ke 'invoice'
         ];
 
         return view($this->view . "edit", $data);
@@ -130,9 +130,9 @@ class InvoiceController extends Controller
     public function update(Request $request, $id)
     {
         try {
-            $result = $this->invoice->find($id);
+            $invoice = $this->invoice->find($id); // Ubah dari $result ke $invoice
 
-            if (!$result) {
+            if (!$invoice) {
                 throw new \Exception("Invoice tidak ditemukan");
             }
 
@@ -159,9 +159,9 @@ class InvoiceController extends Controller
                 'theme' => $request->theme ?? 'classic',
             ];
 
-            $result->update($data);
-            $result->calculateTotals();
-            $result->save();
+            $invoice->update($data);
+            $invoice->calculateTotals();
+            $invoice->save();
 
             alert()->html('Berhasil', 'Invoice berhasil diupdate', 'success');
             return redirect()->route($this->route . "index");
