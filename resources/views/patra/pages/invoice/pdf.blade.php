@@ -1,3 +1,7 @@
+@php
+    $company = App\Models\Pengaturan::first();
+@endphp
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -12,20 +16,20 @@
 
         body {
             font-family: 'DejaVu Sans', Arial, sans-serif;
-            font-size: 12px;
+            font-size: 11px;
             color: #333;
-            line-height: 1.5;
+            line-height: 1.4;
         }
 
         .invoice-box {
             max-width: 800px;
-            margin: 20px auto;
-            padding: 30px;
+            margin: 15px auto;
+            padding: 25px;
         }
 
         .invoice-header {
-            margin-bottom: 30px;
-            padding-bottom: 20px;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
             border-bottom: 2px solid #333;
         }
 
@@ -38,13 +42,13 @@
         }
 
         .invoice-title h1 {
-            font-size: 36px;
+            font-size: 32px;
             color: #1a237e;
-            margin-bottom: 10px;
+            margin-bottom: 8px;
         }
 
         .invoice-number {
-            font-size: 16px;
+            font-size: 14px;
             color: #666;
         }
 
@@ -53,18 +57,20 @@
         }
 
         .company-info h2 {
-            font-size: 18px;
-            margin-bottom: 8px;
+            font-size: 16px;
+            margin-bottom: 6px;
             color: #333;
         }
 
         .company-info p {
             color: #666;
-            margin: 3px 0;
+            margin: 2px 0;
+            font-size: 10px;
+            line-height: 1.4;
         }
 
         .invoice-info {
-            margin: 30px 0;
+            margin: 20px 0;
         }
 
         .invoice-info table {
@@ -73,50 +79,54 @@
 
         .invoice-info td {
             vertical-align: top;
-            padding: 10px;
+            padding: 8px;
         }
 
         .info-section h4 {
-            font-size: 11px;
+            font-size: 10px;
             color: #666;
             text-transform: uppercase;
-            margin-bottom: 8px;
+            margin-bottom: 6px;
             letter-spacing: 0.5px;
         }
 
         .info-section p {
-            margin: 4px 0;
+            margin: 3px 0;
             color: #333;
+            font-size: 10px;
+            line-height: 1.4;
         }
 
         .info-section strong {
-            font-size: 14px;
+            font-size: 12px;
             color: #000;
         }
 
         .details-table {
             width: 100%;
-            margin-top: 10px;
+            margin-top: 8px;
         }
 
         .details-table td {
-            padding: 5px 0;
+            padding: 4px 0;
+            font-size: 10px;
         }
 
         .details-table .label {
             color: #666;
-            width: 150px;
+            width: 130px;
         }
 
         .details-table .value {
             text-align: right;
             font-weight: bold;
             color: #333;
+            font-size: 11px;
         }
 
         .items-table {
             width: 100%;
-            margin: 30px 0;
+            margin: 20px 0;
             border-collapse: collapse;
         }
 
@@ -126,16 +136,17 @@
         }
 
         .items-table th {
-            padding: 12px 10px;
+            padding: 10px 8px;
             text-align: left;
-            font-size: 11px;
+            font-size: 10px;
             text-transform: uppercase;
             letter-spacing: 0.5px;
         }
 
         .items-table td {
-            padding: 12px 10px;
+            padding: 8px;
             border-bottom: 1px solid #e0e0e0;
+            font-size: 11px;
         }
 
         .items-table tbody tr:last-child td {
@@ -151,9 +162,9 @@
         }
 
         .totals-section {
-            margin-top: 30px;
+            margin-top: 20px;
             float: right;
-            width: 300px;
+            width: 280px;
         }
 
         .totals-table {
@@ -161,7 +172,8 @@
         }
 
         .totals-table td {
-            padding: 8px 0;
+            padding: 5px 0;
+            font-size: 11px;
         }
 
         .totals-table .label {
@@ -175,63 +187,63 @@
 
         .total-row {
             border-top: 2px solid #333;
-            padding-top: 10px;
+            padding-top: 8px;
         }
 
         .total-row td {
-            padding-top: 15px;
-            font-size: 16px;
+            padding-top: 12px;
+            font-size: 14px;
             font-weight: bold;
             color: #1a237e;
         }
 
         .balance-row {
             background-color: #f5f5f5;
-            padding: 5px 0;
         }
 
         .balance-row td {
-            padding: 10px;
-            font-size: 18px;
+            padding: 8px;
+            font-size: 15px;
             font-weight: bold;
             color: #d32f2f;
         }
 
         .notes-section {
             clear: both;
-            margin-top: 50px;
-            padding-top: 20px;
+            margin-top: 25px;
+            padding-top: 12px;
             border-top: 1px solid #e0e0e0;
         }
 
         .notes-section h4 {
-            font-size: 12px;
+            font-size: 10px;
             color: #666;
             text-transform: uppercase;
-            margin-bottom: 10px;
+            margin-bottom: 6px;
             letter-spacing: 0.5px;
         }
 
         .notes-section p {
             color: #333;
             white-space: pre-line;
-            line-height: 1.6;
+            line-height: 1.5;
+            font-size: 10px;
         }
 
         .footer {
-            margin-top: 50px;
-            padding-top: 20px;
+            margin-top: 25px;
+            padding-top: 12px;
             border-top: 1px solid #e0e0e0;
             text-align: center;
             color: #999;
-            font-size: 10px;
+            font-size: 9px;
         }
 
         .badge {
             display: inline-block;
             padding: 4px 10px;
             border-radius: 3px;
-            font-size: 10px;
+            font-size: 9px;
             font-weight: bold;
             text-transform: uppercase;
         }
@@ -250,6 +262,13 @@
             background-color: #f44336;
             color: white;
         }
+
+        /* Membatasi tinggi notes agar tidak overflow */
+        .notes-compact p {
+            max-height: 60px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
     </style>
 </head>
 <body>
@@ -259,9 +278,21 @@
             <table>
                 <tr>
                     <td class="company-info" style="width: 50%;">
-                        @if($invoice->from_name)
-                            <h2>{{ $invoice->from_name }}</h2>
-                            <p style="white-space: pre-line;">{{ $invoice->from_address }}</p>
+                        @if($company && $company->website_logo)
+                            <img src="{{ public_path('storage/' . $company->website_logo) }}"
+                                 alt="Logo" style="max-width: 130px; max-height: 65px; margin-bottom: 10px;">
+                        @endif
+                        @if($company)
+                            <h2>{{ $company->website_name }}</h2>
+                            @if($company->website_address)
+                                <p style="white-space: pre-line;">{{ $company->website_address }}</p>
+                            @endif
+                            @if($company->website_phone)
+                                <p>{{ $company->website_phone }}</p>
+                            @endif
+                            @if($company->website_email)
+                                <p>{{ $company->website_email }}</p>
+                            @endif
                         @endif
                     </td>
                     <td class="invoice-title" style="width: 50%;">
@@ -297,7 +328,7 @@
                         </div>
 
                         @if($invoice->ship_to_name)
-                        <div class="info-section" style="margin-top: 20px;">
+                        <div class="info-section" style="margin-top: 15px;">
                             <h4>Kirim Ke:</h4>
                             <p><strong>{{ $invoice->ship_to_name }}</strong></p>
                             <p style="white-space: pre-line;">{{ $invoice->ship_to_address }}</p>
@@ -400,26 +431,26 @@
             </table>
         </div>
 
-        <!-- Notes -->
-        @if($invoice->notes)
-        <div class="notes-section">
-            <h4>Catatan:</h4>
-            <p>{{ $invoice->notes }}</p>
-        </div>
-        @endif
+        <!-- Notes & Terms - Hanya tampilkan jika singkat -->
+        <div style="clear: both;">
+            @if($invoice->notes && strlen($invoice->notes) < 250)
+            <div class="notes-section">
+                <h4>Catatan:</h4>
+                <p>{{ $invoice->notes }}</p>
+            </div>
+            @endif
 
-        <!-- Terms -->
-        @if($invoice->terms)
-        <div class="notes-section">
-            <h4>Syarat & Ketentuan:</h4>
-            <p>{{ $invoice->terms }}</p>
+            @if($invoice->terms && strlen($invoice->terms) < 250)
+            <div class="notes-section">
+                <h4>Syarat & Ketentuan:</h4>
+                <p>{{ $invoice->terms }}</p>
+            </div>
+            @endif
         </div>
-        @endif
 
         <!-- Footer -->
         <div class="footer">
-            <p>Invoice ini dibuat secara otomatis oleh sistem</p>
-            <p>Terima kasih atas kepercayaan Anda</p>
+            <p>Invoice ini dibuat secara otomatis oleh sistem - Terima kasih atas kepercayaan Anda</p>
         </div>
     </div>
 </body>

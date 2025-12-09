@@ -4,8 +4,13 @@
 @section('breadcumb', 'Invoice')
 @section('breadcumb_child', 'Detail')
 
+@php
+    $company = App\Models\Pengaturan::first();
+@endphp
+
 @section('css')
 <style>
+    /* Style tetap sama */
     .invoice-box {
         max-width: 900px;
         margin: auto;
@@ -127,14 +132,33 @@
     <div class="invoice-box">
         <div class="invoice-header">
             <div>
-                @if($result->from_name)
-                    <h3>{{ $result->from_name }}</h3>
-                    <p style="white-space: pre-line;">{{ $result->from_address }}</p>
+                @if($company && $company->website_logo)
+                    <img src="{{ asset('storage/' . $company->website_logo) }}"
+                         alt="Logo" style="max-width: 150px; max-height: 80px; margin-bottom: 15px; display: block;">
+                @endif
+                @if($company)
+                    <h3>{{ $company->website_name }}</h3>
+                    @if($company->website_address)
+                        <p style="white-space: pre-line;">{{ $company->website_address }}</p>
+                    @endif
+                    @if($company->website_phone)
+                        <p style="margin: 5px 0;"><i class="fa fa-phone"></i> {{ $company->website_phone }}</p>
+                    @endif
+                    @if($company->website_email)
+                        <p style="margin: 5px 0;"><i class="fa fa-envelope"></i> {{ $company->website_email }}</p>
+                    @endif
                 @endif
             </div>
             <div class="invoice-title">
                 <h1>INVOICE</h1>
                 <p style="font-size: 18px; color: #666;"># {{ $result->invoice_number }}</p>
+                @if($result->balance_due <= 0)
+                    <span class="badge badge-success">LUNAS</span>
+                @elseif($result->due_date && \Carbon\Carbon::parse($result->due_date)->isPast())
+                    <span class="badge badge-danger">JATUH TEMPO</span>
+                @else
+                    <span class="badge badge-warning">BELUM LUNAS</span>
+                @endif
             </div>
         </div>
 

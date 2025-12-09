@@ -11,8 +11,8 @@ return new class extends Migration
         Schema::create('invoices', function (Blueprint $table) {
             $table->id();
             $table->string('invoice_number')->unique();
-            $table->string('from_name')->nullable();
-            $table->string('from_address')->nullable();
+            $table->string('from_name')->nullable()->change();
+            $table->text('from_address')->nullable()->change();
             $table->string('bill_to_name')->nullable();
             $table->string('bill_to_address')->nullable();
             $table->string('ship_to_name')->nullable();
