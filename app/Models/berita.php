@@ -14,7 +14,6 @@ class Berita extends Model implements Viewable
 {
     use HasFactory, HasTrixRichText, TrixRender, Loggable, InteractsWithViews;
     
-    
     protected $fillable = [
         'title',
         'slug',
@@ -22,5 +21,12 @@ class Berita extends Model implements Viewable
         'date',
         'berita-trixFields',
         'creator',
+        'klien',
+        'industry',
+        'layanan',
+        'brand',
+        'tantangan',
+        'solusi',
+        'fitur',
     ];
 }

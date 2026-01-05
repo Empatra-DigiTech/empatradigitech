@@ -15,9 +15,7 @@ class BeritaController extends Controller
 {
     protected $berita;
     protected $route = 'patra.pages.berita.';
-    /**
-     * Display a listing of the resource.
-     */
+    
     public function __construct(){
         $this->route = "patra.berita.";
         $this->view = "patra.pages.berita.";
@@ -28,7 +26,6 @@ class BeritaController extends Controller
     public function index(Request $request)
     {
         $search = $request->search;
-
         $table = $this->berita;
 
         if(!empty($search)){
@@ -46,27 +43,17 @@ class BeritaController extends Controller
         return view($this->view."index",$data);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
         return view($this->view."create");
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(StoreRequest $request)
     {
         try {
             $title = $request->title;
             $image = $request->file("image");
             $date = $request->date;
-
 
             if($image){
                 $upload = UploadHelper::upload_file($image,'images',['jpeg','jpg','png','gif']);
@@ -82,6 +69,13 @@ class BeritaController extends Controller
                     'image' => $image,
                     'date'=> $date,
                     'creator' => Auth::user()->name,
+                    'klien' => $request->klien,
+                    'industry' => $request->industry,
+                    'layanan' => $request->layanan,
+                    'brand' => $request->brand,
+                    'tantangan' => $request->tantangan,
+                    'solusi' => $request->solusi,
+                    'fitur' => $request->fitur,
                 ]);
             }
             alert()->html('Berhasil','Data berhasil ditambahkan','success');
@@ -89,9 +83,7 @@ class BeritaController extends Controller
 
         } catch (\Throwable $e) {
             Log::emergency($e->getMessage());
-
             alert()->error('Gagal',$e->getMessage());
-
             return redirect()->route($this->route."create")->withInput();
         }
     }
@@ -101,7 +93,6 @@ class BeritaController extends Controller
         $result = $this->berita;
         $result = $result->where('id',$id);
         $result = $result->first();
-
 
         if(!$result){
             alert()->error('Gagal',"Data tidak ditemukan");
@@ -114,7 +105,6 @@ class BeritaController extends Controller
 
         return view($this->view."show",$data);
     }
-
 
     public function edit($id)
     {
@@ -166,7 +156,14 @@ class BeritaController extends Controller
                 'title' => $title,
                 'berita-trixFields' => $request->input('berita-trixFields'),
                 'image' => $image,
-                'date'=> $date
+                'date'=> $date,
+                'klien' => $request->klien,
+                'industry' => $request->industry,
+                'layanan' => $request->layanan,
+                'brand' => $request->brand,
+                'tantangan' => $request->tantangan,
+                'solusi' => $request->solusi,
+                'fitur' => $request->fitur,
             ]);
 
             alert()->html('Berhasil','Data berhasil diubah','success');
@@ -174,18 +171,11 @@ class BeritaController extends Controller
 
         } catch (\Throwable $e) {
             Log::emergency($e->getMessage());
-
             alert()->error('Gagal',$e->getMessage());
             return redirect()->route($this->route."edit",$id)->withInput();
         }
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function destroy($id)
     {
         try {
@@ -200,7 +190,6 @@ class BeritaController extends Controller
 
         } catch (\Throwable $e) {
             Log::emergency($e->getMessage());
-
             alert()->error('Gagal',$e->getMessage());
             return redirect()->route($this->route."index");
         }
