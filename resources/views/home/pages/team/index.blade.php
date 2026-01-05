@@ -1,6 +1,10 @@
 @extends('home.layouts.master')
 @section("title","Team | EMPATRA DIGITECH")
 
+@section('css')
+    <link href="assets/css/home/team/team.css" rel="stylesheet">
+@endsection
+
 @section("content")
 
 {{-- Hero Section --}}
