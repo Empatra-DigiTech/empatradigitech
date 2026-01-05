@@ -3,6 +3,7 @@
 
 @section('css')
     <link href="assets/css/home/home.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
 @endsection
 
 @section('content')
@@ -61,7 +62,7 @@
                 </div>
             @endforelse
         </div>
-        
+
         <div class="swiper-pagination"></div>
         <div class="swiper-button-prev"><i class='bx bx-chevron-left'></i></div>
         <div class="swiper-button-next"><i class='bx bx-chevron-right'></i></div>
@@ -626,11 +627,11 @@
             <!-- Contact Form -->
             <div class="col-lg-8">
                 <div class="contact-form-wrapper">
-                    <form action="{{ route('home.kontak.store') }}" method="post" class="contact-form" 
-                          onsubmit="return confirm('Are you sure you want to send this message?')" 
+                    <form action="{{ route('home.kontak.store') }}" method="post" class="contact-form"
+                          onsubmit="return confirm('Are you sure you want to send this message?')"
                           enctype="multipart/form-data">
                         @csrf
-                        
+
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
@@ -672,11 +673,11 @@
 
         <!-- Map -->
         <div class="contact-map">
-            <iframe src="{{ $table_pengaturan->website_map ?? '' }}" 
-                    width="100%" 
-                    height="400" 
-                    style="border:0;" 
-                    allowfullscreen="" 
+            <iframe src="{{ $table_pengaturan->website_map ?? '' }}"
+                    width="100%"
+                    height="400"
+                    style="border:0;"
+                    allowfullscreen=""
                     loading="lazy">
             </iframe>
         </div>
@@ -686,32 +687,93 @@
 @endsection
 
 @section('script')
-<script src="{{ URL::to('/') }}/assets/js/home/swiper/core.min.js"></script>
-
+<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 <script>
 // ========================================
-// Hero Carousel Initialization
+// WAIT FOR DOM TO LOAD
 // ========================================
 document.addEventListener('DOMContentLoaded', function() {
+
+    // ========================================
+    // Hero Carousel Initialization
+    // ========================================
     const heroCarousel = new Swiper('.hero-carousel', {
+        // Core parameters
         loop: true,
-        autoplay: {
-            delay: 5000,
-            disableOnInteraction: false,
-        },
+        speed: 800,
         effect: 'fade',
         fadeEffect: {
             crossFade: true
         },
-        pagination: {
-            el: '.hero-carousel .swiper-pagination',
-            clickable: true,
+
+        // Autoplay
+        autoplay: {
+            delay: 5000,
+            disableOnInteraction: false,
+            pauseOnMouseEnter: true,
         },
+
+        // Navigation arrows
         navigation: {
             nextEl: '.hero-carousel .swiper-button-next',
             prevEl: '.hero-carousel .swiper-button-prev',
         },
+
+        // Pagination bullets
+        pagination: {
+            el: '.hero-carousel .swiper-pagination',
+            clickable: true,
+            dynamicBullets: false,
+        },
+
+        // Keyboard control
+        keyboard: {
+            enabled: true,
+            onlyInViewport: true,
+        },
+
+        // Accessibility
+        a11y: {
+            prevSlideMessage: 'Previous slide',
+            nextSlideMessage: 'Next slide',
+        },
     });
+
+    console.log('Hero Carousel initialized:', heroCarousel);
+
+    // ========================================
+    // Testimonials Slider Initialization
+    // ========================================
+    const testimonialsSlider = new Swiper('.testimonials-slider', {
+        loop: true,
+        speed: 600,
+        spaceBetween: 30,
+        slidesPerView: 1,
+
+        autoplay: {
+            delay: 5000,
+            disableOnInteraction: false,
+        },
+
+        pagination: {
+            el: '.testimonials-slider .swiper-pagination',
+            clickable: true,
+        },
+
+        // Responsive breakpoints
+        breakpoints: {
+            768: {
+                slidesPerView: 2,
+                spaceBetween: 30,
+            },
+            1024: {
+                slidesPerView: 3,
+                spaceBetween: 30,
+            }
+        }
+    });
+
+    console.log('Testimonials Slider initialized:', testimonialsSlider);
 
     // ========================================
     // Package Tabs Functionality
@@ -722,63 +784,40 @@ document.addEventListener('DOMContentLoaded', function() {
     tabButtons.forEach(button => {
         button.addEventListener('click', function() {
             const targetTab = this.getAttribute('data-tab');
-            
-            // Remove active class from all buttons and contents
+
+            // Remove active class
             tabButtons.forEach(btn => btn.classList.remove('active'));
             packageContents.forEach(content => content.classList.remove('active'));
-            
-            // Add active class to clicked button and corresponding content
-            this.classList.add('active');
-            document.getElementById(targetTab).classList.add('active');
-        });
-    });
 
-    // ========================================
-    // Testimonials Slider Initialization
-    // ========================================
-    const testimonialsSlider = new Swiper('.testimonials-slider', {
-        loop: true,
-        autoplay: {
-            delay: 5000,
-        },
-        slidesPerView: 1,
-        spaceBetween: 30,
-        pagination: {
-            el: '.testimonials-slider .swiper-pagination',
-            clickable: true,
-        },
-        breakpoints: {
-            768: {
-                slidesPerView: 2,
-            },
-            1024: {
-                slidesPerView: 3,
+            // Add active class
+            this.classList.add('active');
+            const targetContent = document.getElementById(targetTab);
+            if (targetContent) {
+                targetContent.classList.add('active');
             }
-        }
+        });
     });
 
     // ========================================
     // Smooth Scroll for Anchor Links
     // ========================================
     const anchorLinks = document.querySelectorAll('a[href^="#"]');
-    
+
     anchorLinks.forEach(link => {
         link.addEventListener('click', function(e) {
             const href = this.getAttribute('href');
-            
-            // Skip if it's just '#' or empty
+
             if (href === '#' || href.length <= 1) return;
-            
+
             const targetElement = document.querySelector(href);
-            
+
             if (targetElement) {
                 e.preventDefault();
-                
-                // Get header height for offset
-                const header = document.querySelector('.header');
+
+                const header = document.querySelector('.header, .navbar, header');
                 const headerHeight = header ? header.offsetHeight : 80;
                 const targetPosition = targetElement.offsetTop - headerHeight - 20;
-                
+
                 window.scrollTo({
                     top: targetPosition,
                     behavior: 'smooth'
@@ -788,7 +827,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     // ========================================
-    // Scroll Reveal Animation (Optional)
+    // Scroll Reveal Animation
     // ========================================
     const observerOptions = {
         threshold: 0.1,
@@ -799,15 +838,22 @@ document.addEventListener('DOMContentLoaded', function() {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
                 entry.target.classList.add('animate-in');
+                // Unobserve after animation
                 observer.unobserve(entry.target);
             }
         });
     }, observerOptions);
 
-    // Observe all sections for scroll animations
+    // Observe all sections
     document.querySelectorAll('section').forEach(section => {
         observer.observe(section);
     });
+
+    // ========================================
+    // Debug Info (HAPUS SETELAH TESTING)
+    // ========================================
+    console.log('Total slides in hero:', document.querySelectorAll('.hero-carousel .swiper-slide').length);
+    console.log('Total slides in testimonials:', document.querySelectorAll('.testimonials-slider .swiper-slide').length);
 });
 </script>
 @endsection

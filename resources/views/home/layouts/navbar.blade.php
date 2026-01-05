@@ -21,38 +21,38 @@
 
                     @if ($row->title == 'Layanan')
                         <li><a href="{{ route('home.home.index') }}#layanan">{{ $row->title }}</a></li>
-                    
+
                     @elseif($row->title == 'Kontak')
                         <li><a href="{{ route('home.home.index') }}#kontak">{{ $row->title }}</a></li>
-                    
+
                     @elseif($row->title == 'Informasi Publik')
                         <li><a href="{{ route('home.informasi.index') }}">{{ $row->title }}</a></li>
-                    
+
                     @elseif($row->title == 'Home')
                         <li><a href="{{ route('home.home.index') }}" class="active">{{ $row->title }}</a></li>
-                    
+
                     @elseif($row->title == 'Berita')
                         <li><a href="{{ route('home.berita.index') }}">{{ $row->title }}</a></li>
-                    
+
                     @elseif($row->title == 'Inovasi')
                         <li><a href="{{ route('home.inovasi.index') }}">{{ $row->title }}</a></li>
-                    
+
                     @elseif($row->title == 'Galeri')
                         <li><a href="{{ route('home.galeri.index') }}">{{ $row->title }}</a></li>
-                    
+
                     @elseif($row->title == 'Profil')
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle">
-                                <span>{{ $row->title }}</span> 
+                                <span>{{ $row->title }}</span>
                                 <!-- <i class="bi bi-chevron-down toggle-dropdown"></i> -->
                             </a>
                             <ul class="dropdown-menu">
-                                <li><a href="{{ route('home.pejabat.index') }}">Team</a></li>
-                                <li><a href="{{ route('home.SO.index') }}">Struktur Organisasi</a></li>
+                                <li><a href="{{ route('home.team.index') }}">Team</a></li>
+                                {{-- <li><a href="{{ route('home.SO.index') }}">Struktur Organisasi</a></li> --}}
                                 <li><a href="{{ route('home.VM.index') }}">Visi & Misi</a></li>
                             </ul>
                         </li>
-                    
+
                     @else
                         @if ($row->parent == null)
                             @php
@@ -60,7 +60,7 @@
                                     ->orderBy('created_at')
                                     ->get();
                             @endphp
-                            
+
                             @if ($child->count() == 0)
                                 <li><a href="{{ '/' . strtolower($row->title) . '/show' }}">{{ $row->title }}</a></li>
                             @else
@@ -81,7 +81,7 @@
 
                 @endforeach
             </ul>
-            
+
             <!-- Mobile Navigation Toggle -->
             <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
         </nav>
@@ -95,7 +95,7 @@
         const mobileNavToggle = document.querySelector('.mobile-nav-toggle');
         const navmenu = document.querySelector('.navmenu');
         const dropdowns = document.querySelectorAll('.dropdown');
-        
+
         // ========================================
         // Sticky Header on Scroll
         // ========================================
@@ -106,10 +106,10 @@
                 header.classList.remove('scrolled');
             }
         }
-        
+
         window.addEventListener('scroll', handleScroll);
-        
-        
+
+
         // ========================================
         // Mobile Navigation Toggle
         // ========================================
@@ -120,33 +120,33 @@
                 this.classList.toggle('bi-x');
             });
         }
-        
-        
+
+
         // ========================================
         // Dropdown Menu Functionality
         // ========================================
         dropdowns.forEach(dropdown => {
             const toggle = dropdown.querySelector('.dropdown-toggle');
             const menu = dropdown.querySelector('.dropdown-menu');
-            
+
             if (toggle) {
                 toggle.addEventListener('click', function(e) {
                     e.preventDefault();
-                    
+
                     // Close other dropdowns
                     dropdowns.forEach(otherDropdown => {
                         if (otherDropdown !== dropdown) {
                             otherDropdown.classList.remove('active');
                         }
                     });
-                    
+
                     // Toggle current dropdown
                     dropdown.classList.toggle('active');
                 });
             }
         });
-        
-        
+
+
         // ========================================
         // Close Dropdown on Outside Click
         // ========================================
@@ -157,48 +157,48 @@
                 });
             }
         });
-        
-        
+
+
         // ========================================
         // Active Link Highlighting
         // ========================================
         const currentPath = window.location.pathname;
         const navLinks = document.querySelectorAll('.navmenu a');
-        
+
         navLinks.forEach(link => {
             if (link.getAttribute('href') === currentPath) {
                 link.classList.add('active');
             }
         });
-        
-        
+
+
         // ========================================
         // Smooth Scroll for Anchor Links
         // ========================================
         const anchorLinks = document.querySelectorAll('a[href^="#"]');
-        
+
         anchorLinks.forEach(link => {
             link.addEventListener('click', function(e) {
                 const href = this.getAttribute('href');
-                
+
                 if (href !== '#' && href.includes('#')) {
                     const targetId = href.split('#')[1];
                     const targetElement = document.getElementById(targetId);
-                    
+
                     if (targetElement) {
                         e.preventDefault();
-                        
+
                         // Close mobile menu if open
                         navmenu.classList.remove('active');
                         if (mobileNavToggle) {
                             mobileNavToggle.classList.add('bi-list');
                             mobileNavToggle.classList.remove('bi-x');
                         }
-                        
+
                         // Smooth scroll to target
                         const headerHeight = header.offsetHeight;
                         const targetPosition = targetElement.offsetTop - headerHeight - 20;
-                        
+
                         window.scrollTo({
                             top: targetPosition,
                             behavior: 'smooth'

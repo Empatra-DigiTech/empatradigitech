@@ -7,15 +7,15 @@
     --primary: #B02E36;
     --primary-dark: #8B2329;
     --primary-light: #D63840;
-    
+
     --secondary: #0F3C5D;
     --secondary-dark: #0A2840;
     --secondary-light: #1A5380;
-    
+
     /* Complementary Colors */
     --accent: #E8B923;
     --accent-light: #F5D366;
-    
+
     /* Neutral Colors */
     --white: #FFFFFF;
     --light: #F8F9FA;
@@ -30,17 +30,17 @@
     --gray-900: #212529;
     --dark: #1A1A1A;
     --black: #000000;
-    
+
     /* Status Colors */
     --success: #28A745;
     --warning: #FFC107;
     --danger: #DC3545;
     --info: #17A2B8;
-    
+
     /* Typography */
     --font-heading: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
     --font-body: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-    
+
     /* Font Sizes */
     --font-size-xs: 0.75rem;
     --font-size-sm: 0.875rem;
@@ -51,7 +51,7 @@
     --font-size-3xl: 1.875rem;
     --font-size-4xl: 2.25rem;
     --font-size-5xl: 3rem;
-    
+
     /* Spacing */
     --spacing-xs: 0.25rem;
     --spacing-sm: 0.5rem;
@@ -60,7 +60,7 @@
     --spacing-xl: 2rem;
     --spacing-2xl: 3rem;
     --spacing-3xl: 4rem;
-    
+
     /* Border Radius */
     --radius-sm: 0.25rem;
     --radius-md: 0.375rem;
@@ -68,18 +68,18 @@
     --radius-xl: 0.75rem;
     --radius-2xl: 1rem;
     --radius-full: 9999px;
-    
+
     /* Shadows */
     --shadow-sm: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
     --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
     --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
     --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
-    
+
     /* Transitions */
     --transition-fast: 150ms ease-in-out;
     --transition-base: 250ms ease-in-out;
     --transition-slow: 400ms ease-in-out;
-    
+
     /* Z-index */
     --z-dropdown: 1000;
     --z-sticky: 1020;
@@ -172,9 +172,8 @@ a:active {
 
 section {
     position: relative;
-    opacity: 0;
     transform: translateY(20px);
-    transition: opacity 0.6s var(--transition-base), 
+    transition: opacity 0.6s var(--transition-base),
                 transform 0.6s var(--transition-base);
 }
 
@@ -453,7 +452,7 @@ section.animate-in {
     .mobile-nav-toggle {
         display: block;
     }
-    
+
     .navmenu {
         position: fixed;
         top: 0;
@@ -467,27 +466,27 @@ section.animate-in {
         transition: right var(--transition-slow);
         z-index: var(--z-modal);
     }
-    
+
     .navmenu.active {
         right: 0;
     }
-    
+
     .navmenu ul {
         flex-direction: column;
         align-items: flex-start;
         gap: 0;
     }
-    
+
     .navmenu li {
         width: 100%;
         border-bottom: 1px solid var(--gray-200);
     }
-    
+
     .navmenu a {
         width: 100%;
         padding: 1rem 0;
     }
-    
+
     .dropdown-menu {
         position: static;
         box-shadow: none;
@@ -501,16 +500,16 @@ section.animate-in {
         visibility: visible;
         transform: none;
     }
-    
+
     .dropdown.active .dropdown-menu {
         max-height: 500px;
         padding: 0.5rem 0;
     }
-    
+
     .dropdown-menu a {
         padding-left: 2rem;
     }
-    
+
     .dropdown-menu a:hover {
         padding-left: 2.25rem;
     }

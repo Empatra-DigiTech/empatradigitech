@@ -2,27 +2,27 @@
 
 namespace App\Http\Controllers\Patra;
 use App\Http\Controllers\Controller;
-use App\Models\Pejabat;
+use App\Models\Team;
 
 use Illuminate\Support\Facades\Log;
-use App\Http\Requests\Pejabat\StoreRequest;
-use App\Http\Requests\Pejabat\UpdateRequest;
+use App\Http\Requests\Team\StoreRequest;
+use App\Http\Requests\Team\UpdateRequest;
 use App\Helpers\UploadHelper;
 use Illuminate\Http\Request;
 use Illuminate\Pagination\Paginator;
 
-class PejabatController extends Controller
+class TeamController extends Controller
 {
-    protected $pejabat;
+    protected $team;
 
-    protected $route = 'patra.pages.pejabat.';
+    protected $route = 'patra.pages.team.';
     /**
-     * Display a listing of the repejabaturce.
+     * Display a listing of the reteamurce.
      */
     public function __construct(){
-        $this->route = "patra.pejabat.";
-        $this->view = "patra.pages.pejabat.";
-        $this->pejabat = new Pejabat();
+        $this->route = "patra.team.";
+        $this->view = "patra.pages.team.";
+        $this->team = new Team();
 
         Paginator::useBootstrap();
     }
@@ -31,7 +31,7 @@ class PejabatController extends Controller
     {
         $search = $request->search;
 
-        $table = $this->pejabat;
+        $table = $this->team;
 
 
         if(!empty($search)){
@@ -52,7 +52,7 @@ class PejabatController extends Controller
     }
 
     /**
-     * Show the form for creating a new repejabaturce.
+     * Show the form for creating a new reteamurce.
      */
     public function create()
     {
@@ -60,7 +60,7 @@ class PejabatController extends Controller
     }
 
     /**
-     * Store a newly created repejabaturce in storage.
+     * Store a newly created reteamurce in storage.
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
@@ -81,7 +81,7 @@ class PejabatController extends Controller
                 }
 
                 $image = $upload["Path"];
-                $create = $this->pejabat->create([
+                $create = $this->team->create([
                     'nama' => $nama,
                     'jabatan' => $jabatan,
                     'image' => $image,
@@ -101,7 +101,7 @@ class PejabatController extends Controller
 
     public function show($id)
     {
-        $result = $this->pejabat;
+        $result = $this->team;
         $result = $result->where('id',$id);
         $result = $result->first();
 
@@ -120,7 +120,7 @@ class PejabatController extends Controller
 
     public function edit($id)
     {
-        $result = $this->pejabat;
+        $result = $this->team;
         $result = $result->where('id',$id);
         $result = $result->first();
 
@@ -139,7 +139,7 @@ class PejabatController extends Controller
     public function update(UpdateRequest $request, $id)
     {
         try {
-            $result = $this->pejabat;
+            $result = $this->team;
             $result = $result->where('id',$id);
             $result = $result->first();
 
@@ -153,7 +153,7 @@ class PejabatController extends Controller
             $image = $request->file("image");
 
             if($image){
-                $upload = UploadHelper::upload_file($image,'pejabat',['jpeg','jpg','png','gif']);
+                $upload = UploadHelper::upload_file($image,'team',['jpeg','jpg','png','gif']);
 
                 if($upload["IsError"] == TRUE){
                     throw new Error($upload["Message"]);
@@ -184,7 +184,7 @@ class PejabatController extends Controller
     }
 
     /**
-     * Remove the specified repejabaturce from storage.
+     * Remove the specified reteamurce from storage.
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
@@ -192,7 +192,7 @@ class PejabatController extends Controller
     public function destroy($id)
     {
         try {
-            $result = $this->pejabat;
+            $result = $this->team;
             $result = $result->where('id',$id);
             $result = $result->first();
 

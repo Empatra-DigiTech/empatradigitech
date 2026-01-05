@@ -1,7 +1,7 @@
 @extends('patra.layouts.master')
-@section("title","Pejabat ~ EMPATRA DIGITECH")
-@section("title_breadcumb","Pejabat")
-@section("breadcumb","Pejabat")
+@section("title","Team ~ EMPATRA DIGITECH")
+@section("title_breadcumb","Team")
+@section("breadcumb","Team")
 @section("breadcumb_child","Show")
 @section("content")
 <div class="container">
@@ -70,8 +70,8 @@
                 </div>
 
                 <div class="mt-5">
-                    <a href="{{route('patra.pejabat.index')}}" class="btn btn-warning btn-sm"><i class="fa fa-arrow-left"></i> Kembali</a>
-                    <a href="{{route('patra.pejabat.edit',$result->id)}}" class="btn btn-primary btn-sm"><i class="fa fa-edit"></i> Edit</a>
+                    <a href="{{route('patra.team.index')}}" class="btn btn-warning btn-sm"><i class="fa fa-arrow-left"></i> Kembali</a>
+                    <a href="{{route('patra.team.edit',$result->id)}}" class="btn btn-primary btn-sm"><i class="fa fa-edit"></i> Edit</a>
                     <a href="#" class="btn btn-danger btn-sm btn-delete"><i class="fa fa-trash"></i> Hapus</a>
                 </div>
 
@@ -92,7 +92,7 @@
 
         $(document).on("click",".btn-delete",function(){
             if(confirm("Apakah anda yakin ingin menghapus data ini ?")){
-                $("#frmDelete").attr("action", "{{ route('patra.pejabat.destroy', '_id_') }}".replace("_id_", '{{$result->id}}'));
+                $("#frmDelete").attr("action", "{{ route('patra.team.destroy', '_id_') }}".replace("_id_", '{{$result->id}}'));
                 $("#frmDelete").submit();
             }
         })
