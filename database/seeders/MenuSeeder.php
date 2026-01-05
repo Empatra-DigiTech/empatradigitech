@@ -4,7 +4,7 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
-use App\Models\Menu; 
+use App\Models\Menu;
 
 
 class MenuSeeder extends Seeder
@@ -48,12 +48,6 @@ class MenuSeeder extends Seeder
             'title' => 'Galeri'
             ],[
             'title' => 'Galeri',
-        ]);
-
-        Menu::firstOrCreate([
-            'title' => 'Informasi Publik'
-            ],[
-            'title' => 'Informasi Publik',
         ]);
 
         Menu::firstOrCreate([

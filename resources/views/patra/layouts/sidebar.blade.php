@@ -159,13 +159,15 @@
     </a>
 </li>
             <li class="nav-item">
+
+            {{-- <li class="nav-item">
               <a href="{{route('patra.so.index')}}" class="nav-link @if(Str::startsWith(request()->route()->getName(), 'patra.so')) active @endif">
                 <i class="bx bxs-vector col-3 bx-tada-hover"></i>
                 <p>
                   Struktur Organisasi
                 </p>
               </a>
-            </li>
+            </li> --}}
 
             <li class="nav-item">
               <a href="{{route('patra.vm.index')}}" class="nav-link @if(Str::startsWith(request()->route()->getName(), 'patra.vm')) active @endif">
@@ -177,10 +179,10 @@
             </li>
 
             <li class="nav-item">
-              <a href="{{route('patra.pejabat.index')}}" class="nav-link @if(Str::startsWith(request()->route()->getName(), 'patra.pejabat')) active @endif">
+              <a href="{{route('patra.team.index')}}" class="nav-link @if(Str::startsWith(request()->route()->getName(), 'patra.team')) active @endif">
                 <i class='bx bx-group col-3 bx-tada-hover'></i>
                 <p>
-                  Pejabat
+                  Team
                 </p>
               </a>
             </li>

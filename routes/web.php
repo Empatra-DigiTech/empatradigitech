@@ -144,14 +144,14 @@ Route::group(["middleware" => ["patra.access"], "namespace" => "App\Http\Control
         Route::put('/', 'VMController@update')->name("update")->middleware('role:' . implode('|', [RoleEnum::SuperAdmin, RoleEnum::Admin]));
     });
 
-    Route::group(["as" => "pejabat.", "prefix" => "pejabat"], function () {
-        Route::get('/', 'PejabatController@index')->name("index")->middleware('role:' . implode('|', [RoleEnum::SuperAdmin, RoleEnum::Admin]));
-        Route::get('/create', 'PejabatController@create')->name("create")->middleware('role:' . implode('|', [RoleEnum::SuperAdmin, RoleEnum::Admin]));
-        Route::post('/', 'PejabatController@store')->name("store")->middleware('role:' . implode('|', [RoleEnum::SuperAdmin, RoleEnum::Admin]));
-        Route::get('/{id}', 'PejabatController@show')->name("show")->middleware('role:' . implode('|', [RoleEnum::SuperAdmin, RoleEnum::Admin]));
-        Route::get('/{id}/edit', 'PejabatController@edit')->name("edit")->middleware('role:' . implode('|', [RoleEnum::SuperAdmin, RoleEnum::Admin]));
-        Route::put('/{id}', 'PejabatController@update')->name("update")->middleware('role:' . implode('|', [RoleEnum::SuperAdmin, RoleEnum::Admin]));
-        Route::delete('/{id}', 'PejabatController@destroy')->name("destroy")->middleware('role:' . implode('|', [RoleEnum::SuperAdmin, RoleEnum::Admin]));
+    Route::group(["as" => "team.", "prefix" => "team"], function () {
+        Route::get('/', 'TeamController@index')->name("index")->middleware('role:' . implode('|', [RoleEnum::SuperAdmin, RoleEnum::Admin]));
+        Route::get('/create', 'TeamController@create')->name("create")->middleware('role:' . implode('|', [RoleEnum::SuperAdmin, RoleEnum::Admin]));
+        Route::post('/', 'TeamController@store')->name("store")->middleware('role:' . implode('|', [RoleEnum::SuperAdmin, RoleEnum::Admin]));
+        Route::get('/{id}', 'TeamController@show')->name("show")->middleware('role:' . implode('|', [RoleEnum::SuperAdmin, RoleEnum::Admin]));
+        Route::get('/{id}/edit', 'TeamController@edit')->name("edit")->middleware('role:' . implode('|', [RoleEnum::SuperAdmin, RoleEnum::Admin]));
+        Route::put('/{id}', 'TeamController@update')->name("update")->middleware('role:' . implode('|', [RoleEnum::SuperAdmin, RoleEnum::Admin]));
+        Route::delete('/{id}', 'TeamController@destroy')->name("destroy")->middleware('role:' . implode('|', [RoleEnum::SuperAdmin, RoleEnum::Admin]));
     });
 
     Route::group(["as" => "pengaturan.", "prefix" => "pengaturan"], function () {
@@ -257,9 +257,9 @@ Route::group(["namespace" => "App\Http\Controllers\Home", "as" => "home."], func
         Route::get("/{id}", "SOController@show")->name("show");
     });
 
-    Route::group(["as" => "pejabat.", "prefix" => "pejabat"], function () {
-        Route::get("/", "PejabatController@index")->name("index");
-        Route::get("/{id}", "PejabatController@show")->name("show");
+    Route::group(["as" => "team.", "prefix" => "team"], function () {
+        Route::get("/", "TeamController@index")->name("index");
+        Route::get("/{id}", "TeamController@show")->name("show");
     });
 
     Route::group(["as" => "VM.", "prefix" => "VM"], function () {

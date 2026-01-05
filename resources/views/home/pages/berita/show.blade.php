@@ -1,5 +1,6 @@
 @extends('home.layouts.master')
-@section("title","". $result->title ." | EMPATRA DIGITECH")
+@section("title", $result->title . " | EMPATRA DIGITECH")
+
 @section('css')
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
     <style>
@@ -146,32 +147,113 @@
             @endforelse
         </div>
     </div>
-</div>
+</section>
+
 @endsection
 
 @section('script')
 <script>
-    // Facebook Share
-    document.getElementById('share-facebook').onclick = function() {
-        let url = encodeURIComponent(window.location.href);
-        let facebookShareUrl = `https://www.facebook.com/sharer/sharer.php?u=${url}`;
-        window.open(facebookShareUrl, '_blank');
-    };
-
-    // WhatsApp Share
-    document.getElementById('share-whatsapp').onclick = function() {
-        let text = encodeURIComponent(document.title + " " + window.location.href);
-        let whatsappShareUrl = `https://api.whatsapp.com/send?text=${text}`;
-        window.open(whatsappShareUrl, '_blank');
-    };
-
-    // Twitter Share
-    document.getElementById('share-twitter').onclick = function() {
-        let text = encodeURIComponent(document.title);
-        let url = encodeURIComponent(window.location.href);
-        let twitterShareUrl = `https://twitter.com/intent/tweet?text=${text}&url=${url}`;
-        window.open(twitterShareUrl, '_blank');
-    };
+    document.addEventListener('DOMContentLoaded', function() {
+        
+        // ========================================
+        // Facebook Share
+        // ========================================
+        document.getElementById('share-facebook').addEventListener('click', function() {
+            const url = encodeURIComponent(window.location.href);
+            const facebookShareUrl = `https://www.facebook.com/sharer/sharer.php?u=${url}`;
+            window.open(facebookShareUrl, '_blank', 'width=600,height=400');
+        });
+        
+        
+        // ========================================
+        // WhatsApp Share
+        // ========================================
+        document.getElementById('share-whatsapp').addEventListener('click', function() {
+            const text = encodeURIComponent(document.title + " " + window.location.href);
+            const whatsappShareUrl = `https://api.whatsapp.com/send?text=${text}`;
+            window.open(whatsappShareUrl, '_blank');
+        });
+        
+        
+        // ========================================
+        // Twitter Share
+        // ========================================
+        document.getElementById('share-twitter').addEventListener('click', function() {
+            const text = encodeURIComponent(document.title);
+            const url = encodeURIComponent(window.location.href);
+            const twitterShareUrl = `https://twitter.com/intent/tweet?text=${text}&url=${url}`;
+            window.open(twitterShareUrl, '_blank', 'width=600,height=400');
+        });
+        
+        
+        // ========================================
+        // Copy Link to Clipboard
+        // ========================================
+        document.getElementById('copy-link').addEventListener('click', function() {
+            const currentUrl = window.location.href;
+            const button = this;
+            
+            // Create temporary input element
+            const tempInput = document.createElement('input');
+            tempInput.value = currentUrl;
+            document.body.appendChild(tempInput);
+            tempInput.select();
+            document.execCommand('copy');
+            document.body.removeChild(tempInput);
+            
+            // Change button text temporarily
+            const originalHTML = button.innerHTML;
+            button.innerHTML = '<i class="bx bx-check"></i><span>Link Disalin!</span>';
+            button.style.backgroundColor = '#28a745';
+            
+            setTimeout(function() {
+                button.innerHTML = originalHTML;
+                button.style.backgroundColor = '';
+            }, 2000);
+        });
+        
+        
+        // ========================================
+        // Related News Hover Effect
+        // ========================================
+        const relatedNewsItems = document.querySelectorAll('.related-news-item');
+        
+        relatedNewsItems.forEach(item => {
+            item.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateX(5px)';
+            });
+            
+            item.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateX(0)';
+            });
+        });
+        
+        
+        // ========================================
+        // Smooth Scroll for Anchor Links in Content
+        // ========================================
+        const contentLinks = document.querySelectorAll('.article-content a[href^="#"]');
+        
+        contentLinks.forEach(link => {
+            link.addEventListener('click', function(e) {
+                const href = this.getAttribute('href');
+                const targetElement = document.querySelector(href);
+                
+                if (targetElement) {
+                    e.preventDefault();
+                    const header = document.getElementById('header');
+                    const headerHeight = header ? header.offsetHeight : 0;
+                    const targetPosition = targetElement.offsetTop - headerHeight - 20;
+                    
+                    window.scrollTo({
+                        top: targetPosition,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+        
+    });
 </script>
 <script src="https://unpkg.com/boxicons@2.1.4/dist/boxicons.js"></script>
 @endsection
