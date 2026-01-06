@@ -1,6 +1,10 @@
 @extends('home.layouts.master')
 @section("title","Visi & Misi | EMPATRA DIGITECH")
 
+@section('css')
+    <link href="assets/css/home/vm/vm.css" rel="stylesheet">
+@endsection
+
 @section("content")
 
 {{-- Hero Section --}}
