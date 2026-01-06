@@ -10,13 +10,28 @@ class UpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            // 'title' => [
-            //     'required',
-            // ],
-            // 'description'=> [
-            //     'required',
-            //     ],
+            'nama' => [
+                'required',
+                'string',
+                'max:255',
+            ],
+            'jabatan' => [
+                'required',
+                'string',
+                'max:255',
+            ],
+            'linkedin' => [
+                'nullable',
+                'url',
+                'max:500',
+            ],
+            'instagram' => [
+                'nullable',
+                'url',
+                'max:500',
+            ],
             'image' => [
+                'nullable',
                 'image',
                 'max:2048',
                 'mimes:jpeg,bmp,png,gif,svg,jpg',
@@ -27,10 +42,22 @@ class UpdateRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'title.required' => 'Judul harus diisi',
-            'description.required' => 'Deksripsi harus diisi',
-            'image.image' => 'Foto harus berupa gambar',
-            'image.mimes' => 'Foto harus berupa jpeg, bmp, png, gif, svg , jpg',
+            'nama.required' => 'Nama harus diisi',
+            'nama.string' => 'Nama harus berupa teks',
+            'nama.max' => 'Nama tidak boleh lebih dari 255 karakter',
+
+            'jabatan.required' => 'Jabatan harus diisi',
+            'jabatan.string' => 'Jabatan harus berupa teks',
+            'jabatan.max' => 'Jabatan tidak boleh lebih dari 255 karakter',
+
+            'linkedin.url' => 'LinkedIn harus berupa URL yang valid',
+            'linkedin.max' => 'LinkedIn URL tidak boleh lebih dari 500 karakter',
+
+            'instagram.url' => 'Instagram harus berupa URL yang valid',
+            'instagram.max' => 'Instagram URL tidak boleh lebih dari 500 karakter',
+
+            'image.image' => 'File harus berupa gambar',
+            'image.mimes' => 'Foto harus berupa jpeg, bmp, png, gif, svg, jpg',
             'image.max' => 'Foto tidak boleh lebih dari 2MB',
         ];
     }

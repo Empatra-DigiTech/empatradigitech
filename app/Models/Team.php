@@ -16,6 +16,8 @@ class Team extends Model
         'nama',
         'jabatan',
         'image',
+        'linkedin',
+        'instagram',
         'team-trixFields',
     ];
 }

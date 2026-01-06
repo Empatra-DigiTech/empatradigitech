@@ -17,25 +17,45 @@
                                 <div class="form-group row">
                                     <label class="col-md-2 col-form-label">Nama <span class="text-danger">*</span></label>
                                     <div class="col-md-10">
-                                        <input type="text" class="form-control" name="nama" placeholder="Nama"  value="{{old('nama',$result->nama)}}" required>
+                                        <input type="text" class="form-control" name="nama" placeholder="Nama" value="{{old('nama',$result->nama)}}" required>
                                     </div>
                                 </div>
+
                                 <div class="form-group row">
                                     <label class="col-md-2 col-form-label">Jabatan <span class="text-danger">*</span></label>
                                     <div class="col-md-10">
-                                        <input type="text" class="form-control" name="jabatan" placeholder="Jabatan"  value="{{old('jabatan',$result->jabatan)}}" required>
+                                        <input type="text" class="form-control" name="jabatan" placeholder="Jabatan" value="{{old('jabatan',$result->jabatan)}}" required>
                                     </div>
                                 </div>
-                                <div class="form-group row">
-                                    <label class="col-md-2 col-form-label">Image <span class="text-danger">*</span></label>
 
+                                <div class="form-group row">
+                                    <label class="col-md-2 col-form-label">LinkedIn</label>
+                                    <div class="col-md-10">
+                                        <input type="url" class="form-control" name="linkedin" placeholder="https://linkedin.com/in/username" value="{{old('linkedin',$result->linkedin)}}">
+                                        <small class="form-text text-muted">Contoh: https://linkedin.com/in/john-doe</small>
+                                    </div>
+                                </div>
+
+                                <div class="form-group row">
+                                    <label class="col-md-2 col-form-label">Instagram</label>
+                                    <div class="col-md-10">
+                                        <input type="url" class="form-control" name="instagram" placeholder="https://instagram.com/username" value="{{old('instagram',$result->instagram)}}">
+                                        <small class="form-text text-muted">Contoh: https://instagram.com/johndoe</small>
+                                    </div>
+                                </div>
+
+                                <div class="form-group row mt-3">
+                                    <label class="col-md-2 col-form-label">Image <span class="text-danger">*</span></label>
                                     <div class="col-md-10">
                                         <input class="form-control" type="file" name="image" accept="image/*">
-                                        <p class="text-info" style="margin-top: 0px;margin-bottom: 0px;padding-top: 0px;padding-bottom: 0px;"><small><i>Koteamngkan jika tidak diubah</i></small></p>
+                                        <p class="text-info" style="margin-top: 0px;margin-bottom: 0px;padding-top: 0px;padding-bottom: 0px;">
+                                            <small><i>Kosongkan jika tidak diubah</i></small>
+                                        </p>
                                     </div>
                                 </div>
                             </div>
                         </div>
+
                         <div class="row">
                             <div class="col-lg-12">
                                 <a href="{{route('patra.team.index')}}" class="btn btn-warning"><i class="fa fa-arrow-left"></i> Kembali</a>
