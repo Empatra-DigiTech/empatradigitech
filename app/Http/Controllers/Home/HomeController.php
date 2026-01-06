@@ -27,7 +27,7 @@ class HomeController extends Controller
     public function index(Request $request)
     {
         $table_tautan = Tautan::all();
-        $table_berita = Berita::all();
+        $table_berita = Berita::orderBy('date', 'DESC')->take(6)->get();
         $table_banner = Banner::all();
         $table_layanan = Layanan::all();
         $table_pengaturan = Pengaturan::first();
