@@ -217,22 +217,42 @@
         </div>
 
         <div class="portfolio-grid">
-            <!-- Portfolio items will be added from backend -->
-            @for($i = 1; $i <= 6; $i++)
+            @forelse ($table_berita as $index => $row)
                 <div class="portfolio-item">
                     <div class="portfolio-image">
-                        <img src="https://via.placeholder.com/600x400" alt="Project {{ $i }}">
+                        <img src="{{ asset('storage/' . $row->image) }}" alt="{{ $row->title }}">
                         <div class="portfolio-overlay">
                             <div class="portfolio-info">
-                                <h4 class="portfolio-title">Project Title {{ $i }}</h4>
-                                <p class="portfolio-category">Web Development</p>
-                                <a href="#" class="btn-portfolio">View Details</a>
+                                <h4 class="portfolio-title">{{ $row->title }}</h4>
+                                @if($row->layanan)
+                                    <p class="portfolio-category">{{ $row->layanan }}</p>
+                                @endif
+                                @if($row->brand)
+                                    <p class="portfolio-brand">{{ $row->brand }}</p>
+                                @endif
+                                <a href="{{ route('home.berita.show', $row->id) }}" class="btn-portfolio">View Details</a>
                             </div>
                         </div>
                     </div>
                 </div>
-            @endfor
+            @empty
+                <div class="col-12 text-center">
+                    <div class="empty-portfolio">
+                        <i class='bx bx-folder-open'></i>
+                        <p>No portfolio items available at the moment.</p>
+                    </div>
+                </div>
+            @endforelse
         </div>
+
+        @if($table_berita->count() >= 6)
+            <div class="portfolio-cta">
+                <a href="{{ route('home.berita.index') }}" class="btn-view-all">
+                    View All Projects
+                    <i class='bx bx-right-arrow-alt'></i>
+                </a>
+            </div>
+        @endif
     </div>
 </section>
 
@@ -689,6 +709,72 @@
 @section('script')
 <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 <script>
+
+    // ========================================
+// Portfolio Section Animations
+// ========================================
+
+// Portfolio Items Animation on Scroll
+const portfolioItems = document.querySelectorAll('.portfolio-item');
+
+const portfolioObserverOptions = {
+    threshold: 0.15,
+    rootMargin: '0px 0px -50px 0px'
+};
+
+const portfolioObserver = new IntersectionObserver(function(entries) {
+    entries.forEach((entry, index) => {
+        if (entry.isIntersecting) {
+            setTimeout(() => {
+                entry.target.style.opacity = '1';
+                entry.target.style.transform = 'translateY(0)';
+            }, index * 100); // Stagger animation
+
+            portfolioObserver.unobserve(entry.target);
+        }
+    });
+}, portfolioObserverOptions);
+
+portfolioItems.forEach((item, index) => {
+    item.style.opacity = '0';
+    item.style.transform = 'translateY(30px)';
+    item.style.transition = 'all 0.6s cubic-bezier(0.4, 0, 0.2, 1)';
+    portfolioObserver.observe(item);
+});
+
+// Portfolio Image Loading
+const portfolioImages = document.querySelectorAll('.portfolio-image img');
+
+portfolioImages.forEach(img => {
+    img.addEventListener('load', function() {
+        this.classList.add('loaded');
+        this.style.opacity = '1';
+    });
+
+    // If image already loaded
+    if (img.complete) {
+        img.classList.add('loaded');
+        img.style.opacity = '1';
+    }
+});
+
+// Enhanced Hover Effect
+portfolioItems.forEach(item => {
+    const overlay = item.querySelector('.portfolio-overlay');
+    const info = item.querySelector('.portfolio-info');
+
+    item.addEventListener('mouseenter', function() {
+        overlay.style.opacity = '1';
+        info.style.transform = 'translateY(0)';
+    });
+
+    item.addEventListener('mouseleave', function() {
+        overlay.style.opacity = '0';
+        info.style.transform = 'translateY(20px)';
+    });
+});
+
+console.log('Portfolio animations initialized:', portfolioItems.length, 'items');
 // ========================================
 // WAIT FOR DOM TO LOAD
 // ========================================
