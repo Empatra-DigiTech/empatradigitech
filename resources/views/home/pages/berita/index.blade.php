@@ -2,7 +2,7 @@
 @section("title","Berita | EMPATRA DIGITECH")
 
 @section('css')
-    <link href="assets/css/berita/card.css" rel="stylesheet">
+    <link href="{{ asset('assets/css/berita/card.css') }}" rel="stylesheet">
 @endsection
 
 @section('content')
@@ -27,7 +27,7 @@
         <div class="row news-grid">
             
             @forelse ($table as $index => $row)
-                <div class="col-lg-4 col-md-6 mb-4">
+                <div class="col-lg-4 col-md-6 mb-4" data-aos="fade-up" data-aos-delay="{{ $index * 100 }}">
                     <article class="news-card">
                         <div class="news-card-image">
                             <a href="{{ route('home.berita.show', $row->id) }}">
@@ -46,12 +46,20 @@
                                 </span>
                             </div>
                             
+                            @if($row->layanan)
+                                <h2 class="news-layanan">{{ $row->layanan }}</h2>
+                            @endif
+                            
                             <a href="{{ route('home.berita.show', $row->id) }}" class="news-title-link">
                                 <h3 class="news-title">{{ $row->title }}</h3>
                             </a>
                             
                             <p class="news-excerpt">
-                                {!! Str::limit(strip_tags($row->renderTrix('content')), 120) !!}
+                                @if($row->brand)
+                                    {{ $row->brand }}
+                                @else
+                                    {!! Str::limit(strip_tags($row->renderTrix('content')), 120) !!}
+                                @endif
                             </p>
                             
                             <a href="{{ route('home.berita.show', $row->id) }}" class="btn-read-more">
@@ -109,7 +117,7 @@
         
         
         // ========================================
-        // Smooth Scroll Animation on Load
+        // Scroll Reveal Animation
         // ========================================
         const observerOptions = {
             threshold: 0.1,
@@ -125,10 +133,10 @@
             });
         }, observerOptions);
         
-        newsCards.forEach(card => {
+        newsCards.forEach((card, index) => {
             card.style.opacity = '0';
             card.style.transform = 'translateY(30px)';
-            card.style.transition = 'all 0.6s ease-out';
+            card.style.transition = `all 0.6s ease-out ${index * 0.1}s`;
             observer.observe(card);
         });
         

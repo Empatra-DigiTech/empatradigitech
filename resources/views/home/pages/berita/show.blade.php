@@ -4,150 +4,167 @@
 @section('css')
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
     <style>
-        .info-section {
-            background-color: #f8f9fa;
-            border-left: 4px solid #007bff;
-            padding: 15px;
-            margin-bottom: 20px;
+        /* Include the CSS from berita_show_css artifact here */
+        /* Or create a separate CSS file: public/assets/css/berita/show.css */
+        
+        /* Hide Trix attachment captions */
+        .attachment__caption {
+            display: none !important;
         }
-        .info-section h4 {
-            color: #007bff;
-            margin-bottom: 10px;
-        }
-        .info-item {
-            display: flex;
-            margin-bottom: 8px;
-        }
-        .info-label {
-            font-weight: bold;
-            min-width: 100px;
-            color: #6c757d;
-        }
-        .info-value {
-            flex: 1;
-        }
-        .section-title {
-            border-bottom: 2px solid #007bff;
-            padding-bottom: 10px;
-            margin-top: 30px;
-            margin-bottom: 20px;
+        
+        /* Ensure images are responsive */
+        .article-body img {
+            max-width: 100%;
+            height: auto;
         }
     </style>
 @endsection
+
 @section('content')
-<br>
-<br>
-<div class="container text-justify">
-    <div class="row mx-1">
-        <div class="col-12 col-lg-9">
-            <img src="{{ asset('storage/' . $result->image) }}" class="card-img-top mb-3" alt="">
-            <h1 class=""><b>{{ $result->title }}</b></h1>
-            <div class="text-black-50">
-                <p>{{ Carbon\Carbon::parse($result->date)->translatedFormat('l,d F Y') }} by {{ $result->creator }}</p>
-            </div>
 
-            <!-- Info Section -->
-            @if($result->klien || $result->industry || $result->layanan || $result->brand)
-            <div class="info-section">
-                <h4>Informasi Umum</h4>
-                @if($result->klien)
-                <div class="info-item">
-                    <span class="info-label">Klien:</span>
-                    <span class="info-value">{{ $result->klien }}</span>
-                </div>
-                @endif
-                @if($result->industry)
-                <div class="info-item">
-                    <span class="info-label">Industri:</span>
-                    <span class="info-value">{{ $result->industry }}</span>
-                </div>
-                @endif
-                @if($result->layanan)
-                <div class="info-item">
-                    <span class="info-label">Layanan:</span>
-                    <span class="info-value">{{ $result->layanan }}</span>
-                </div>
-                @endif
-                @if($result->brand)
-                <div class="info-item">
-                    <span class="info-label">Brand:</span>
-                    <span class="info-value">{{ $result->brand }}</span>
-                </div>
-                @endif
-            </div>
-            @endif
+<div class="berita-detail-container">
+    <div class="container">
+        <div class="row">
+            <!-- Main Content -->
+            <div class="col-12 col-lg-9">
+                <article class="article-container">
+                    <!-- Featured Image -->
+                    <img src="{{ asset('storage/' . $result->image) }}" 
+                         class="article-featured-image" 
+                         alt="{{ $result->title }}">
+                    
+                    <!-- Article Content -->
+                    <div class="article-content">
+                        <!-- Article Header -->
+                        <div class="article-header">
+                            <h1 class="article-title">{{ $result->title }}</h1>
+                            <div class="article-meta">
+                                <span class="meta-item">
+                                    <i class="bi bi-calendar-event"></i>
+                                    {{ Carbon\Carbon::parse($result->date)->translatedFormat('l, d F Y') }}
+                                </span>
+                                <span class="meta-item">
+                                    <i class="bi bi-person"></i>
+                                    {{ $result->creator }}
+                                </span>
+                            </div>
+                        </div>
 
-            <!-- Description -->
-            <style>
-                img {
-                    max-width: 100%;
-                    height: auto;
-                }
-                .attachment__caption {
-                    display: none !important;
-                }
-            </style>
-            <div class="section-content">
-                {!! $result->renderTrix("content") !!}
-            </div>
+                        <!-- Info Section -->
+                        @if($result->klien || $result->industry || $result->layanan || $result->brand)
+                        <div class="info-section">
+                            <h4>
+                                <i class="bi bi-info-circle"></i>
+                                Informasi Umum
+                            </h4>
+                            @if($result->klien)
+                            <div class="info-item">
+                                <span class="info-label">Klien:</span>
+                                <span class="info-value">{{ $result->klien }}</span>
+                            </div>
+                            @endif
+                            @if($result->industry)
+                            <div class="info-item">
+                                <span class="info-label">Industri:</span>
+                                <span class="info-value">{{ $result->industry }}</span>
+                            </div>
+                            @endif
+                            @if($result->layanan)
+                            <div class="info-item">
+                                <span class="info-label">Layanan:</span>
+                                <span class="info-value">{{ $result->layanan }}</span>
+                            </div>
+                            @endif
+                            @if($result->brand)
+                            <div class="info-item">
+                                <span class="info-label">Brand:</span>
+                                <span class="info-value">{{ $result->brand }}</span>
+                            </div>
+                            @endif
+                        </div>
+                        @endif
 
-            <!-- Tantangan Section -->
-            @if($result->tantangan)
-            <h3 class="section-title">Tantangan</h3>
-            <p>{!! nl2br(e($result->tantangan)) !!}</p>
-            @endif
+                        <!-- Main Content -->
+                        <div class="article-body">
+                            {!! $result->renderTrix("content") !!}
+                        </div>
 
-            <!-- Solusi Section -->
-            @if($result->solusi)
-            <h3 class="section-title">Solusi</h3>
-            <p>{!! nl2br(e($result->solusi)) !!}</p>
-            @endif
+                        <!-- Tantangan Section -->
+                        @if($result->tantangan)
+                        <div class="section-content">
+                            <h2 class="section-title">Tantangan</h2>
+                            <p>{!! nl2br(e($result->tantangan)) !!}</p>
+                        </div>
+                        @endif
 
-            <!-- Fitur Section -->
-            @if($result->fitur)
-            <h3 class="section-title">Fitur</h3>
-            <p>{!! nl2br(e($result->fitur)) !!}</p>
-            @endif
+                        <!-- Solusi Section -->
+                        @if($result->solusi)
+                        <div class="section-content">
+                            <h2 class="section-title">Solusi</h2>
+                            <p>{!! nl2br(e($result->solusi)) !!}</p>
+                        </div>
+                        @endif
 
-            <!-- Share Buttons -->
-            <p class="demo mt-4">
-                <p>Bagikan Juga</p>
-                <button type="button" class="btn btn-icon btn-round btn-primary" id="share-facebook">
-                    <i class='bx bxl-facebook'></i>
-                </button>
-                <button type="button" class="btn btn-icon btn-round btn-success" id="share-whatsapp">
-                    <i class='bx bxl-whatsapp'></i>
-                </button>
-                <button type="button" class="btn btn-icon btn-round btn-info" id="share-twitter">
-                    <i class='bx bxl-twitter'></i>
-                </button>
-            </p>
-        </div>
+                        <!-- Fitur Section -->
+                        @if($result->fitur)
+                        <div class="section-content">
+                            <h2 class="section-title">Fitur</h2>
+                            <p>{!! nl2br(e($result->fitur)) !!}</p>
+                        </div>
+                        @endif
 
-        <!-- Sidebar -->
-        <div class="col-12 col-lg-3">
-            <h2><b>Berita Lainnya</b></h2>
-            @forelse($except_result as $index => $row)
-            <div class="card-body">
-                <div class="">
-                    <div class="">
-                        <img src="{{ asset('storage/' . $row->image) }}" class="card-img-top" alt="">
+                        <!-- Share Section -->
+                        <div class="share-section">
+                            <p class="share-title">Bagikan Artikel Ini:</p>
+                            <div class="share-buttons">
+                                <button type="button" class="btn-share facebook" id="share-facebook" aria-label="Share on Facebook">
+                                    <i class='bx bxl-facebook'></i>
+                                </button>
+                                <button type="button" class="btn-share whatsapp" id="share-whatsapp" aria-label="Share on WhatsApp">
+                                    <i class='bx bxl-whatsapp'></i>
+                                </button>
+                                <button type="button" class="btn-share twitter" id="share-twitter" aria-label="Share on Twitter">
+                                    <i class='bx bxl-twitter'></i>
+                                </button>
+                            </div>
+                        </div>
                     </div>
-                    <div class="flex-1 ms-3 pt-1">
-                        <a href="{{ route('home.berita.show', $row->id) }}"><h6 class="text-uppercase fw-bold mb-1">{{ $row->title }}</h6></a>
-                    </div>
-                    <div class="float-end pt-1">
-                        <small class="text-muted">{{ Carbon\Carbon::parse($row->date)->diffForHumans(null, true).' yang lalu';}}</small>
-                    </div>
+                </article>
+            </div>
+
+            <!-- Sidebar -->
+            <div class="col-12 col-lg-3">
+                <div class="sidebar-container">
+                    <h2 class="sidebar-title">Berita Lainnya</h2>
+                    
+                    @forelse($except_result as $index => $row)
+                        <article class="related-news-card">
+                            <a href="{{ route('home.berita.show', $row->id) }}" class="related-news-image-wrapper">
+                                <img src="{{ asset('storage/' . $row->image) }}" 
+                                     class="related-news-image" 
+                                     alt="{{ $row->title }}">
+                            </a>
+                            <div class="related-news-body">
+                                <a href="{{ route('home.berita.show', $row->id) }}" class="related-news-title">
+                                    {{ $row->title }}
+                                </a>
+                                <p class="related-news-date">
+                                    <i class="bi bi-clock"></i>
+                                    {{ Carbon\Carbon::parse($row->date)->diffForHumans(null, true) }} lalu
+                                </p>
+                            </div>
+                        </article>
+                    @empty
+                        <div class="empty-sidebar">
+                            <i class="bi bi-inbox"></i>
+                            <p>Belum ada berita lainnya</p>
+                        </div>
+                    @endforelse
                 </div>
             </div>
-            <div class="card-footer m-2">
-            </div>
-            @empty
-            @endforelse
         </div>
     </div>
-</section>
+</div>
 
 @endsection
 
@@ -187,36 +204,9 @@
         
         
         // ========================================
-        // Copy Link to Clipboard
-        // ========================================
-        document.getElementById('copy-link').addEventListener('click', function() {
-            const currentUrl = window.location.href;
-            const button = this;
-            
-            // Create temporary input element
-            const tempInput = document.createElement('input');
-            tempInput.value = currentUrl;
-            document.body.appendChild(tempInput);
-            tempInput.select();
-            document.execCommand('copy');
-            document.body.removeChild(tempInput);
-            
-            // Change button text temporarily
-            const originalHTML = button.innerHTML;
-            button.innerHTML = '<i class="bx bx-check"></i><span>Link Disalin!</span>';
-            button.style.backgroundColor = '#28a745';
-            
-            setTimeout(function() {
-                button.innerHTML = originalHTML;
-                button.style.backgroundColor = '';
-            }, 2000);
-        });
-        
-        
-        // ========================================
         // Related News Hover Effect
         // ========================================
-        const relatedNewsItems = document.querySelectorAll('.related-news-item');
+        const relatedNewsItems = document.querySelectorAll('.related-news-card');
         
         relatedNewsItems.forEach(item => {
             item.addEventListener('mouseenter', function() {
@@ -232,7 +222,7 @@
         // ========================================
         // Smooth Scroll for Anchor Links in Content
         // ========================================
-        const contentLinks = document.querySelectorAll('.article-content a[href^="#"]');
+        const contentLinks = document.querySelectorAll('.article-body a[href^="#"]');
         
         contentLinks.forEach(link => {
             link.addEventListener('click', function(e) {
@@ -252,6 +242,32 @@
                 }
             });
         });
+        
+        
+        // ========================================
+        // Auto-styling for article content
+        // ========================================
+        const articleBody = document.querySelector('.article-body');
+        if (articleBody) {
+            // Add class to all links
+            const links = articleBody.querySelectorAll('a');
+            links.forEach(link => {
+                if (!link.querySelector('img')) { // Skip image links
+                    link.style.color = '#667eea';
+                    link.style.textDecoration = 'underline';
+                }
+            });
+            
+            // Add responsive class to tables
+            const tables = articleBody.querySelectorAll('table');
+            tables.forEach(table => {
+                const wrapper = document.createElement('div');
+                wrapper.style.overflowX = 'auto';
+                wrapper.style.marginBottom = '20px';
+                table.parentNode.insertBefore(wrapper, table);
+                wrapper.appendChild(table);
+            });
+        }
         
     });
 </script>

@@ -1,0 +1,478 @@
+/* ========================================
+   BERITA SHOW - DETAIL PAGE STYLES
+   File: public/assets/css/berita/show.css
+   ======================================== */
+
+/* Main Container */
+.berita-detail-container {
+    padding: 100px 0 60px;
+    background: #f8f9fa;
+}
+
+/* Article Container */
+.article-container {
+    background: white;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.07);
+    margin-bottom: 30px;
+}
+
+/* Featured Image - FIXED: No more stretched images */
+.article-featured-image {
+    width: 100%;
+    height: 400px;
+    object-fit: cover;
+    object-position: center;
+}
+
+/* Article Content */
+.article-content {
+    padding: 40px;
+}
+
+/* Article Header */
+.article-header {
+    margin-bottom: 30px;
+    padding-bottom: 25px;
+    border-bottom: 2px solid #e2e8f0;
+}
+
+.article-title {
+    font-size: 36px;
+    font-weight: 700;
+    color: #2d3748;
+    line-height: 1.3;
+    margin-bottom: 15px;
+}
+
+.article-meta {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    color: #718096;
+    font-size: 14px;
+}
+
+.meta-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.meta-item i {
+    font-size: 16px;
+    color: #667eea;
+}
+
+/* Info Section */
+.info-section {
+    background: linear-gradient(135deg, #f0f4ff 0%, #e9efff 100%);
+    border-left: 4px solid #667eea;
+    border-radius: 8px;
+    padding: 25px;
+    margin-bottom: 30px;
+}
+
+.info-section h4 {
+    color: #667eea;
+    font-size: 18px;
+    font-weight: 700;
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.info-section h4 i {
+    font-size: 20px;
+}
+
+.info-item {
+    display: flex;
+    margin-bottom: 10px;
+    padding: 8px 0;
+}
+
+.info-item:last-child {
+    margin-bottom: 0;
+}
+
+.info-label {
+    font-weight: 600;
+    min-width: 120px;
+    color: #4a5568;
+}
+
+.info-value {
+    flex: 1;
+    color: #2d3748;
+}
+
+/* Article Body */
+.article-body {
+    font-size: 16px;
+    line-height: 1.8;
+    color: #2d3748;
+}
+
+.article-body p {
+    margin-bottom: 20px;
+}
+
+.article-body img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 12px;
+    margin: 25px 0;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.article-body h2,
+.article-body h3,
+.article-body h4 {
+    color: #2d3748;
+    font-weight: 700;
+    margin-top: 35px;
+    margin-bottom: 20px;
+}
+
+.article-body h2 {
+    font-size: 28px;
+    padding-bottom: 12px;
+    border-bottom: 3px solid #667eea;
+}
+
+.article-body h3 {
+    font-size: 24px;
+}
+
+.article-body h4 {
+    font-size: 20px;
+}
+
+.article-body ul,
+.article-body ol {
+    margin-bottom: 20px;
+    padding-left: 30px;
+}
+
+.article-body li {
+    margin-bottom: 10px;
+}
+
+.article-body blockquote {
+    background: #f7fafc;
+    border-left: 4px solid #667eea;
+    padding: 20px 25px;
+    margin: 25px 0;
+    font-style: italic;
+    color: #4a5568;
+}
+
+.article-body code {
+    background: #f7fafc;
+    padding: 3px 8px;
+    border-radius: 4px;
+    font-size: 14px;
+    color: #e83e8c;
+}
+
+.article-body pre {
+    background: #2d3748;
+    color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    overflow-x: auto;
+    margin: 25px 0;
+}
+
+/* Section Title */
+.section-title {
+    font-size: 26px;
+    font-weight: 700;
+    color: #2d3748;
+    margin-top: 40px;
+    margin-bottom: 20px;
+    padding-bottom: 12px;
+    border-bottom: 3px solid #667eea;
+    position: relative;
+}
+
+.section-title::after {
+    content: "";
+    position: absolute;
+    bottom: -3px;
+    left: 0;
+    width: 60px;
+    height: 3px;
+    background: #764ba2;
+}
+
+/* Section Content */
+.section-content {
+    margin-bottom: 30px;
+}
+
+.section-content p {
+    white-space: pre-line;
+    margin-bottom: 15px;
+}
+
+/* Share Section */
+.share-section {
+    margin-top: 40px;
+    padding-top: 30px;
+    border-top: 2px solid #e2e8f0;
+}
+
+.share-title {
+    font-size: 16px;
+    font-weight: 600;
+    color: #2d3748;
+    margin-bottom: 15px;
+}
+
+.share-buttons {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+.btn-share {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    border: none;
+    font-size: 20px;
+    color: white;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.btn-share:hover {
+    transform: translateY(-4px) scale(1.1);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.btn-share.facebook {
+    background: #1877f2;
+}
+
+.btn-share.whatsapp {
+    background: #25d366;
+}
+
+.btn-share.twitter {
+    background: #1da1f2;
+}
+
+/* ========================================
+   SIDEBAR - BERITA LAINNYA
+   ======================================== */
+.sidebar-container {
+    position: sticky;
+    top: 100px;
+}
+
+.sidebar-title {
+    font-size: 22px;
+    font-weight: 700;
+    color: #1a202c;
+    margin-bottom: 24px;
+    padding-bottom: 12px;
+    border-bottom: 3px solid #667eea;
+    position: relative;
+}
+
+.sidebar-title::after {
+    content: "";
+    position: absolute;
+    bottom: -3px;
+    left: 0;
+    width: 50px;
+    height: 3px;
+    background: #764ba2;
+}
+
+/* Related News Card - IMPROVED LAYOUT */
+.related-news-card {
+    background: white;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    margin-bottom: 20px;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    border: 1px solid #e8eef5;
+}
+
+.related-news-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 16px rgba(102, 126, 234, 0.15);
+    border-color: #667eea;
+}
+
+/* Image Wrapper - FIXED: 5:3 Aspect Ratio, No Stretching */
+.related-news-image-wrapper {
+    width: 100%;
+    padding-top: 60%; /* 5:3 Aspect Ratio */
+    position: relative;
+    overflow: hidden;
+    background: #f0f4f8;
+}
+
+.related-news-image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.related-news-card:hover .related-news-image {
+    transform: scale(1.08);
+}
+
+/* Related News Body */
+.related-news-body {
+    padding: 16px;
+}
+
+.related-news-title {
+    font-size: 15px;
+    font-weight: 600;
+    color: #1a202c;
+    line-height: 1.5;
+    margin-bottom: 8px;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-decoration: none;
+    transition: color 0.2s ease;
+    min-height: 45px;
+}
+
+.related-news-title:hover {
+    color: #667eea;
+}
+
+.related-news-date {
+    font-size: 12px;
+    color: #64748b;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-weight: 500;
+}
+
+.related-news-date i {
+    font-size: 14px;
+    color: #667eea;
+}
+
+/* Empty Sidebar */
+.empty-sidebar {
+    text-align: center;
+    padding: 40px 20px;
+    color: #a0aec0;
+}
+
+.empty-sidebar i {
+    font-size: 50px;
+    margin-bottom: 15px;
+}
+
+/* ========================================
+   RESPONSIVE DESIGN
+   ======================================== */
+@media (max-width: 992px) {
+    .article-featured-image {
+        height: 300px;
+    }
+
+    .article-content {
+        padding: 30px;
+    }
+
+    .article-title {
+        font-size: 28px;
+    }
+
+    .sidebar-container {
+        position: static;
+        margin-top: 50px;
+    }
+}
+
+@media (max-width: 768px) {
+    .berita-detail-container {
+        padding: 80px 0 40px;
+    }
+
+    .article-featured-image {
+        height: 250px;
+    }
+
+    .article-content {
+        padding: 25px 20px;
+    }
+
+    .article-title {
+        font-size: 24px;
+    }
+
+    .article-meta {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 8px;
+    }
+
+    .info-item {
+        flex-direction: column;
+        gap: 5px;
+    }
+
+    .info-label {
+        min-width: auto;
+    }
+
+    .section-title {
+        font-size: 22px;
+    }
+
+    .article-body {
+        font-size: 15px;
+    }
+}
+
+@media (max-width: 576px) {
+    .article-title {
+        font-size: 20px;
+    }
+
+    .related-news-title {
+        font-size: 14px;
+        min-height: 42px;
+    }
+}
+
+/* ========================================
+   UTILITY CLASSES
+   ======================================== */
+.attachment__caption {
+    display: none !important;
+}
+
+/* Ensure all images in article are responsive */
+.article-body img {
+    max-width: 100%;
+    height: auto;
+}
