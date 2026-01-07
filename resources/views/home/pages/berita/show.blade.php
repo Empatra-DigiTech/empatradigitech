@@ -3,11 +3,9 @@
 
 @section('css')
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link href="{{ asset('assets/css/berita/show.css') }}" rel="stylesheet">
     <style>
-        /* Include the CSS from berita_show_css artifact here */
-        /* Or create a separate CSS file: public/assets/css/berita/show.css */
         
-        /* Hide Trix attachment captions */
         .attachment__caption {
             display: none !important;
         }
@@ -22,16 +20,20 @@
 
 @section('content')
 
+<!-- Full Width Featured Image Banner -->
+<div class="featured-banner">
+    <img src="{{ asset('storage/' . $result->image) }}" 
+         class="banner-image" 
+         alt="{{ $result->title }}">
+    <div class="banner-overlay"></div>
+</div>
+
 <div class="berita-detail-container">
     <div class="container">
         <div class="row">
             <!-- Main Content -->
             <div class="col-12 col-lg-9">
                 <article class="article-container">
-                    <!-- Featured Image -->
-                    <img src="{{ asset('storage/' . $result->image) }}" 
-                         class="article-featured-image" 
-                         alt="{{ $result->title }}">
                     
                     <!-- Article Content -->
                     <div class="article-content">
@@ -138,21 +140,19 @@
                     <h2 class="sidebar-title">Berita Lainnya</h2>
                     
                     @forelse($except_result as $index => $row)
-                        <article class="related-news-card">
-                            <a href="{{ route('home.berita.show', $row->id) }}" class="related-news-image-wrapper">
-                                <img src="{{ asset('storage/' . $row->image) }}" 
-                                     class="related-news-image" 
-                                     alt="{{ $row->title }}">
+                        <article class="sidebar-news-card">
+                            <a href="{{ route('home.berita.show', $row->id) }}" class="sidebar-news-link">
+                                <div class="sidebar-news-image">
+                                    <img src="{{ asset('storage/' . $row->image) }}" 
+                                         alt="{{ $row->title }}">
+                                </div>
+                                <div class="sidebar-news-content">
+                                    <h3 class="sidebar-news-title">{{ $row->title }}</h3>
+                                    <p class="sidebar-news-date">
+                                        {{ Carbon\Carbon::parse($row->date)->diffForHumans(null, true) }} yang lalu
+                                    </p>
+                                </div>
                             </a>
-                            <div class="related-news-body">
-                                <a href="{{ route('home.berita.show', $row->id) }}" class="related-news-title">
-                                    {{ $row->title }}
-                                </a>
-                                <p class="related-news-date">
-                                    <i class="bi bi-clock"></i>
-                                    {{ Carbon\Carbon::parse($row->date)->diffForHumans(null, true) }} lalu
-                                </p>
-                            </div>
                         </article>
                     @empty
                         <div class="empty-sidebar">
@@ -200,22 +200,6 @@
             const url = encodeURIComponent(window.location.href);
             const twitterShareUrl = `https://twitter.com/intent/tweet?text=${text}&url=${url}`;
             window.open(twitterShareUrl, '_blank', 'width=600,height=400');
-        });
-        
-        
-        // ========================================
-        // Related News Hover Effect
-        // ========================================
-        const relatedNewsItems = document.querySelectorAll('.related-news-card');
-        
-        relatedNewsItems.forEach(item => {
-            item.addEventListener('mouseenter', function() {
-                this.style.transform = 'translateX(5px)';
-            });
-            
-            item.addEventListener('mouseleave', function() {
-                this.style.transform = 'translateX(0)';
-            });
         });
         
         

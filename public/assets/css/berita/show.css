@@ -3,9 +3,35 @@
    File: public/assets/css/berita/show.css
    ======================================== */
 
+/* Featured Banner - Full Width */
+.featured-banner {
+    width: 100%;
+    height: 500px;
+    position: relative;
+    overflow: hidden;
+    margin-top: 70px;
+}
+
+.banner-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    display: block;
+}
+
+.banner-overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 150px;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.6), transparent);
+}
+
 /* Main Container */
 .berita-detail-container {
-    padding: 100px 0 60px;
+    padding: 40px 0 60px;
     background: #f8f9fa;
 }
 
@@ -16,14 +42,6 @@
     overflow: hidden;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.07);
     margin-bottom: 30px;
-}
-
-/* Featured Image - FIXED: No more stretched images */
-.article-featured-image {
-    width: 100%;
-    height: 400px;
-    object-fit: cover;
-    object-position: center;
 }
 
 /* Article Content */
@@ -271,7 +289,7 @@
 }
 
 /* ========================================
-   SIDEBAR - BERITA LAINNYA
+   SIDEBAR - BERITA LAINNYA (LIKE IMAGE)
    ======================================== */
 .sidebar-container {
     position: sticky;
@@ -298,53 +316,53 @@
     background: #764ba2;
 }
 
-/* Related News Card - IMPROVED LAYOUT */
-.related-news-card {
+/* Sidebar News Card - Compact Design Like Image */
+.sidebar-news-card {
     background: white;
-    border-radius: 12px;
+    border-radius: 10px;
     overflow: hidden;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
     margin-bottom: 20px;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    border: 1px solid #e8eef5;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+    transition: all 0.3s ease;
 }
 
-.related-news-card:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 6px 16px rgba(102, 126, 234, 0.15);
-    border-color: #667eea;
+.sidebar-news-card:hover {
+    box-shadow: 0 4px 12px rgba(102, 126, 234, 0.2);
+    transform: translateY(-2px);
 }
 
-/* Image Wrapper - FIXED: 5:3 Aspect Ratio, No Stretching */
-.related-news-image-wrapper {
+.sidebar-news-link {
+    display: block;
+    text-decoration: none;
+    color: inherit;
+}
+
+/* Sidebar News Image */
+.sidebar-news-image {
     width: 100%;
-    padding-top: 60%; /* 5:3 Aspect Ratio */
-    position: relative;
+    height: 180px;
     overflow: hidden;
-    background: #f0f4f8;
+    position: relative;
 }
 
-.related-news-image {
-    position: absolute;
-    top: 0;
-    left: 0;
+.sidebar-news-image img {
     width: 100%;
     height: 100%;
     object-fit: cover;
     object-position: center;
-    transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: transform 0.3s ease;
 }
 
-.related-news-card:hover .related-news-image {
-    transform: scale(1.08);
+.sidebar-news-card:hover .sidebar-news-image img {
+    transform: scale(1.05);
 }
 
-/* Related News Body */
-.related-news-body {
+/* Sidebar News Content */
+.sidebar-news-content {
     padding: 16px;
 }
 
-.related-news-title {
+.sidebar-news-title {
     font-size: 15px;
     font-weight: 600;
     color: #1a202c;
@@ -354,28 +372,17 @@
     -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
     overflow: hidden;
-    text-decoration: none;
-    transition: color 0.2s ease;
-    min-height: 45px;
 }
 
-.related-news-title:hover {
+.sidebar-news-card:hover .sidebar-news-title {
     color: #667eea;
 }
 
-.related-news-date {
-    font-size: 12px;
-    color: #64748b;
+.sidebar-news-date {
+    font-size: 13px;
+    color: #718096;
     margin: 0;
-    display: flex;
-    align-items: center;
-    gap: 5px;
     font-weight: 500;
-}
-
-.related-news-date i {
-    font-size: 14px;
-    color: #667eea;
 }
 
 /* Empty Sidebar */
@@ -383,6 +390,8 @@
     text-align: center;
     padding: 40px 20px;
     color: #a0aec0;
+    background: white;
+    border-radius: 10px;
 }
 
 .empty-sidebar i {
@@ -394,8 +403,8 @@
    RESPONSIVE DESIGN
    ======================================== */
 @media (max-width: 992px) {
-    .article-featured-image {
-        height: 300px;
+    .featured-banner {
+        height: 400px;
     }
 
     .article-content {
@@ -413,12 +422,13 @@
 }
 
 @media (max-width: 768px) {
-    .berita-detail-container {
-        padding: 80px 0 40px;
+    .featured-banner {
+        height: 300px;
+        margin-top: 60px;
     }
 
-    .article-featured-image {
-        height: 250px;
+    .berita-detail-container {
+        padding: 30px 0 40px;
     }
 
     .article-content {
@@ -451,16 +461,27 @@
     .article-body {
         font-size: 15px;
     }
+
+    .sidebar-news-image {
+        height: 160px;
+    }
 }
 
 @media (max-width: 576px) {
+    .featured-banner {
+        height: 250px;
+    }
+
     .article-title {
         font-size: 20px;
     }
 
-    .related-news-title {
+    .sidebar-news-title {
         font-size: 14px;
-        min-height: 42px;
+    }
+
+    .sidebar-news-image {
+        height: 140px;
     }
 }
 
