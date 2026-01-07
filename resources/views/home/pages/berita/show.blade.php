@@ -5,11 +5,11 @@
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
     <link href="{{ asset('assets/css/berita/show.css') }}" rel="stylesheet">
     <style>
-        
+
         .attachment__caption {
             display: none !important;
         }
-        
+
         /* Ensure images are responsive */
         .article-body img {
             max-width: 100%;
@@ -22,8 +22,8 @@
 
 <!-- Full Width Featured Image Banner -->
 <div class="featured-banner">
-    <img src="{{ asset('storage/' . $result->image) }}" 
-         class="banner-image" 
+    <img src="{{ asset('storage/' . $result->image) }}"
+         class="banner-image"
          alt="{{ $result->title }}">
     <div class="banner-overlay"></div>
 </div>
@@ -34,7 +34,7 @@
             <!-- Main Content -->
             <div class="col-12 col-lg-9">
                 <article class="article-container">
-                    
+
                     <!-- Article Content -->
                     <div class="article-content">
                         <!-- Article Header -->
@@ -137,13 +137,13 @@
             <!-- Sidebar -->
             <div class="col-12 col-lg-3">
                 <div class="sidebar-container">
-                    <h2 class="sidebar-title">Berita Lainnya</h2>
-                    
+                    <h2 class="sidebar-title">Portfolio Lainnya</h2>
+
                     @forelse($except_result as $index => $row)
                         <article class="sidebar-news-card">
                             <a href="{{ route('home.berita.show', $row->id) }}" class="sidebar-news-link">
                                 <div class="sidebar-news-image">
-                                    <img src="{{ asset('storage/' . $row->image) }}" 
+                                    <img src="{{ asset('storage/' . $row->image) }}"
                                          alt="{{ $row->title }}">
                                 </div>
                                 <div class="sidebar-news-content">
@@ -157,7 +157,7 @@
                     @empty
                         <div class="empty-sidebar">
                             <i class="bi bi-inbox"></i>
-                            <p>Belum ada berita lainnya</p>
+                            <p>Belum ada portfolio lainnya</p>
                         </div>
                     @endforelse
                 </div>
@@ -171,7 +171,7 @@
 @section('script')
 <script>
     document.addEventListener('DOMContentLoaded', function() {
-        
+
         // ========================================
         // Facebook Share
         // ========================================
@@ -180,8 +180,8 @@
             const facebookShareUrl = `https://www.facebook.com/sharer/sharer.php?u=${url}`;
             window.open(facebookShareUrl, '_blank', 'width=600,height=400');
         });
-        
-        
+
+
         // ========================================
         // WhatsApp Share
         // ========================================
@@ -190,8 +190,8 @@
             const whatsappShareUrl = `https://api.whatsapp.com/send?text=${text}`;
             window.open(whatsappShareUrl, '_blank');
         });
-        
-        
+
+
         // ========================================
         // Twitter Share
         // ========================================
@@ -201,24 +201,24 @@
             const twitterShareUrl = `https://twitter.com/intent/tweet?text=${text}&url=${url}`;
             window.open(twitterShareUrl, '_blank', 'width=600,height=400');
         });
-        
-        
+
+
         // ========================================
         // Smooth Scroll for Anchor Links in Content
         // ========================================
         const contentLinks = document.querySelectorAll('.article-body a[href^="#"]');
-        
+
         contentLinks.forEach(link => {
             link.addEventListener('click', function(e) {
                 const href = this.getAttribute('href');
                 const targetElement = document.querySelector(href);
-                
+
                 if (targetElement) {
                     e.preventDefault();
                     const header = document.getElementById('header');
                     const headerHeight = header ? header.offsetHeight : 0;
                     const targetPosition = targetElement.offsetTop - headerHeight - 20;
-                    
+
                     window.scrollTo({
                         top: targetPosition,
                         behavior: 'smooth'
@@ -226,8 +226,8 @@
                 }
             });
         });
-        
-        
+
+
         // ========================================
         // Auto-styling for article content
         // ========================================
@@ -241,7 +241,7 @@
                     link.style.textDecoration = 'underline';
                 }
             });
-            
+
             // Add responsive class to tables
             const tables = articleBody.querySelectorAll('table');
             tables.forEach(table => {
@@ -252,7 +252,7 @@
                 wrapper.appendChild(table);
             });
         }
-        
+
     });
 </script>
 <script src="https://unpkg.com/boxicons@2.1.4/dist/boxicons.js"></script>

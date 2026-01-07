@@ -229,7 +229,7 @@ Route::group(["namespace" => "App\Http\Controllers\Home", "as" => "home."], func
         Route::get("/", "ProfilController@index")->name("index");
     });
 
-    Route::group(["as" => "berita.", "prefix" => "berita"], function () {
+    Route::group(["as" => "berita.", "prefix" => "portfolio"], function () {
         Route::get("/", "BeritaController@index")->name("index");
         Route::get("/{id}", "BeritaController@show")->name("show");
     });
