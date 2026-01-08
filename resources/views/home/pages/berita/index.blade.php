@@ -2,7 +2,7 @@
 @section("title","Berita | EMPATRA DIGITECH")
 
 @section('css')
-    <link href="{{ asset('assets/css/berita/card.css') }}" rel="stylesheet">
+    <link href="{{ asset('assets/css/portfolio/card.css') }}" rel="stylesheet">
 @endsection
 
 @section('content')

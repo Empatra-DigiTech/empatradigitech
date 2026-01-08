@@ -3,9 +3,8 @@
 
 @section('css')
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
-    <link href="{{ asset('assets/css/berita/show.css') }}" rel="stylesheet">
+    <link href="{{ asset('assets/css/portfolio/show.css') }}" rel="stylesheet">
     <style>
-
         .attachment__caption {
             display: none !important;
         }
@@ -44,10 +43,6 @@
                                 <span class="meta-item">
                                     <i class="bi bi-calendar-event"></i>
                                     {{ Carbon\Carbon::parse($result->date)->translatedFormat('l, d F Y') }}
-                                </span>
-                                <span class="meta-item">
-                                    <i class="bi bi-person"></i>
-                                    {{ $result->creator }}
                                 </span>
                             </div>
                         </div>
@@ -115,21 +110,28 @@
                         </div>
                         @endif
 
-                        <!-- Share Section -->
-                        <div class="share-section">
-                            <p class="share-title">Bagikan Artikel Ini:</p>
-                            <div class="share-buttons">
-                                <button type="button" class="btn-share facebook" id="share-facebook" aria-label="Share on Facebook">
-                                    <i class='bx bxl-facebook'></i>
-                                </button>
-                                <button type="button" class="btn-share whatsapp" id="share-whatsapp" aria-label="Share on WhatsApp">
-                                    <i class='bx bxl-whatsapp'></i>
-                                </button>
-                                <button type="button" class="btn-share twitter" id="share-twitter" aria-label="Share on Twitter">
-                                    <i class='bx bxl-twitter'></i>
-                                </button>
+                        <!-- Gallery Section -->
+                        @if($result->gallery && count($result->gallery) > 0)
+                        <div class="gallery-section">
+                            <h2 class="gallery-title">
+                                <i class="bi bi-images"></i>
+                                Galeri
+                            </h2>
+                            <div class="gallery-grid">
+                                @foreach($result->gallery as $index => $image)
+                                <div class="gallery-item" data-index="{{ $index }}">
+                                    <img src="{{ asset('storage/' . $image) }}" 
+                                         alt="Gallery Image {{ $index + 1 }}">
+                                    <div class="gallery-overlay">
+                                        <div class="gallery-zoom-icon">
+                                            <i class="bi bi-zoom-in"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                                @endforeach
                             </div>
                         </div>
+                        @endif
                     </div>
                 </article>
             </div>
@@ -166,6 +168,23 @@
     </div>
 </div>
 
+<!-- Lightbox Modal -->
+<div class="lightbox-modal" id="lightbox">
+    <div class="lightbox-content">
+        <button class="lightbox-close" id="lightbox-close">
+            <i class="bi bi-x-lg"></i>
+        </button>
+        <button class="lightbox-nav lightbox-prev" id="lightbox-prev">
+            <i class="bi bi-chevron-left"></i>
+        </button>
+        <button class="lightbox-nav lightbox-next" id="lightbox-next">
+            <i class="bi bi-chevron-right"></i>
+        </button>
+        <img src="" alt="Lightbox Image" class="lightbox-image" id="lightbox-image">
+        <div class="lightbox-counter" id="lightbox-counter"></div>
+    </div>
+</div>
+
 @endsection
 
 @section('script')
@@ -173,33 +192,84 @@
     document.addEventListener('DOMContentLoaded', function() {
 
         // ========================================
-        // Facebook Share
+        // Gallery Lightbox Functionality
         // ========================================
-        document.getElementById('share-facebook').addEventListener('click', function() {
-            const url = encodeURIComponent(window.location.href);
-            const facebookShareUrl = `https://www.facebook.com/sharer/sharer.php?u=${url}`;
-            window.open(facebookShareUrl, '_blank', 'width=600,height=400');
+        const galleryItems = document.querySelectorAll('.gallery-item');
+        const lightbox = document.getElementById('lightbox');
+        const lightboxImage = document.getElementById('lightbox-image');
+        const lightboxClose = document.getElementById('lightbox-close');
+        const lightboxPrev = document.getElementById('lightbox-prev');
+        const lightboxNext = document.getElementById('lightbox-next');
+        const lightboxCounter = document.getElementById('lightbox-counter');
+        
+        let currentIndex = 0;
+        let galleryImages = [];
+
+        // Collect all gallery images
+        galleryItems.forEach((item, index) => {
+            const img = item.querySelector('img');
+            galleryImages.push(img.src);
+
+            // Click to open lightbox
+            item.addEventListener('click', function() {
+                currentIndex = index;
+                openLightbox();
+            });
         });
 
+        function openLightbox() {
+            lightbox.classList.add('active');
+            document.body.style.overflow = 'hidden';
+            updateLightboxImage();
+        }
 
-        // ========================================
-        // WhatsApp Share
-        // ========================================
-        document.getElementById('share-whatsapp').addEventListener('click', function() {
-            const text = encodeURIComponent(document.title + " " + window.location.href);
-            const whatsappShareUrl = `https://api.whatsapp.com/send?text=${text}`;
-            window.open(whatsappShareUrl, '_blank');
+        function closeLightbox() {
+            lightbox.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        function updateLightboxImage() {
+            lightboxImage.src = galleryImages[currentIndex];
+            lightboxCounter.textContent = `${currentIndex + 1} / ${galleryImages.length}`;
+
+            // Hide/show navigation buttons
+            lightboxPrev.style.display = currentIndex === 0 ? 'none' : 'flex';
+            lightboxNext.style.display = currentIndex === galleryImages.length - 1 ? 'none' : 'flex';
+        }
+
+        function nextImage() {
+            if (currentIndex < galleryImages.length - 1) {
+                currentIndex++;
+                updateLightboxImage();
+            }
+        }
+
+        function prevImage() {
+            if (currentIndex > 0) {
+                currentIndex--;
+                updateLightboxImage();
+            }
+        }
+
+        // Event listeners
+        lightboxClose.addEventListener('click', closeLightbox);
+        lightboxNext.addEventListener('click', nextImage);
+        lightboxPrev.addEventListener('click', prevImage);
+
+        // Close on background click
+        lightbox.addEventListener('click', function(e) {
+            if (e.target === lightbox) {
+                closeLightbox();
+            }
         });
 
+        // Keyboard navigation
+        document.addEventListener('keydown', function(e) {
+            if (!lightbox.classList.contains('active')) return;
 
-        // ========================================
-        // Twitter Share
-        // ========================================
-        document.getElementById('share-twitter').addEventListener('click', function() {
-            const text = encodeURIComponent(document.title);
-            const url = encodeURIComponent(window.location.href);
-            const twitterShareUrl = `https://twitter.com/intent/tweet?text=${text}&url=${url}`;
-            window.open(twitterShareUrl, '_blank', 'width=600,height=400');
+            if (e.key === 'Escape') closeLightbox();
+            if (e.key === 'ArrowRight') nextImage();
+            if (e.key === 'ArrowLeft') prevImage();
         });
 
 
@@ -237,7 +307,7 @@
             const links = articleBody.querySelectorAll('a');
             links.forEach(link => {
                 if (!link.querySelector('img')) { // Skip image links
-                    link.style.color = '#667eea';
+                    link.style.color = '#B02E36';
                     link.style.textDecoration = 'underline';
                 }
             });
