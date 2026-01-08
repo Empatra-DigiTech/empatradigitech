@@ -26,7 +26,7 @@
                         <li><a href="{{ route('home.home.index') }}#kontak">{{ $row->title }}</a></li>
 
                     @elseif($row->title == 'Informasi Publik')
-                        <li><a href="{{ route('home.informasi.index') }}">{{ $row->title }}</a></li>
+                        <!-- <li><a href="{{ route('home.informasi.index') }}"></a></li> -->
 
                     @elseif($row->title == 'Home')
                         <li><a href="{{ route('home.home.index') }}" class="active">{{ $row->title }}</a></li>
