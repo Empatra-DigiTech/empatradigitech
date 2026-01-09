@@ -2,31 +2,31 @@
 
 namespace App\Http\Controllers\Patra;
 use App\Http\Controllers\Controller;
-use App\Models\Berita;
+use App\Models\Portofolio;
 use Illuminate\Support\Facades\Log;
-use App\Http\Requests\Berita\StoreRequest;
-use App\Http\Requests\Berita\UpdateRequest;
+use App\Http\Requests\Portofolio\StoreRequest;
+use App\Http\Requests\Portofolio\UpdateRequest;
 use App\Helpers\UploadHelper;
 use Illuminate\Http\Request;
 use Illuminate\Pagination\Paginator;
 use Auth;
 
-class BeritaController extends Controller
+class PortofolioController extends Controller
 {
-    protected $berita;
-    protected $route = 'patra.pages.berita.';
-    
+    protected $portofolio;
+    protected $route = 'patra.pages.portofolio.';
+
     public function __construct(){
-        $this->route = "patra.berita.";
-        $this->view = "patra.pages.berita.";
-        $this->berita = new Berita();
+        $this->route = "patra.portofolio.";
+        $this->view = "patra.pages.portofolio.";
+        $this->portofolio = new Portofolio();
         Paginator::useBootstrap();
     }
 
     public function index(Request $request)
     {
         $search = $request->search;
-        $table = $this->berita;
+        $table = $this->portofolio;
 
         if(!empty($search)){
             $table = $table->where(function($query2) use($search){
@@ -63,9 +63,9 @@ class BeritaController extends Controller
                 }
 
                 $image = $upload["Path"];
-                $create = $this->berita->create([
+                $create = $this->portofolio->create([
                     'title' => $title,
-                    'berita-trixFields' => $request->input('berita-trixFields'),
+                    'portofolio-trixFields' => $request->input('portofolio-trixFields'),
                     'image' => $image,
                     'date'=> $date,
                     'creator' => Auth::user()->name,
@@ -90,7 +90,7 @@ class BeritaController extends Controller
 
     public function show($id)
     {
-        $result = $this->berita;
+        $result = $this->portofolio;
         $result = $result->where('id',$id);
         $result = $result->first();
 
@@ -108,7 +108,7 @@ class BeritaController extends Controller
 
     public function edit($id)
     {
-        $result = $this->berita;
+        $result = $this->portofolio;
         $result = $result->where('id',$id);
         $result = $result->first();
 
@@ -127,7 +127,7 @@ class BeritaController extends Controller
     public function update(UpdateRequest $request, $id)
     {
         try {
-            $result = $this->berita;
+            $result = $this->portofolio;
             $result = $result->where('id',$id);
             $result = $result->first();
 
@@ -140,7 +140,7 @@ class BeritaController extends Controller
             $date = $request->date;
 
             if($image){
-                $upload = UploadHelper::upload_file($image,'berita',['jpeg','jpg','png','gif']);
+                $upload = UploadHelper::upload_file($image,'portofolio',['jpeg','jpg','png','gif']);
 
                 if($upload["IsError"] == TRUE){
                     throw new Error($upload["Message"]);
@@ -154,7 +154,7 @@ class BeritaController extends Controller
 
             $result->update([
                 'title' => $title,
-                'berita-trixFields' => $request->input('berita-trixFields'),
+                'portofolio-trixFields' => $request->input('portofolio-trixFields'),
                 'image' => $image,
                 'date'=> $date,
                 'klien' => $request->klien,
@@ -179,7 +179,7 @@ class BeritaController extends Controller
     public function destroy($id)
     {
         try {
-            $result = $this->berita;
+            $result = $this->portofolio;
             $result = $result->where('id',$id);
             $result = $result->first();
 

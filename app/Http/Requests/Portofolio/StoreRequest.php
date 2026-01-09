@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Requests\Berita;
+namespace App\Http\Requests\Portofolio;
 
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
@@ -48,7 +48,7 @@ class StoreRequest extends FormRequest
         if (! $this->wantsJson()) {
             $errors = implode('<br>', $validator->errors()->all());
             alert()->html('Gagal',$errors,'error');
-            $this->redirect = route('patra.berita.create');
+            $this->redirect = route('patra.portofolio.create');
         }
 
         parent::failedValidation($validator);

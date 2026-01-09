@@ -27,7 +27,7 @@
     <div class="banner-overlay"></div>
 </div>
 
-<div class="berita-detail-container">
+<div class="portofolio-detail-container">
     <div class="container">
         <div class="row">
             <!-- Main Content -->
@@ -120,7 +120,7 @@
                             <div class="gallery-grid">
                                 @foreach($result->gallery as $index => $image)
                                 <div class="gallery-item" data-index="{{ $index }}">
-                                    <img src="{{ asset('storage/' . $image) }}" 
+                                    <img src="{{ asset('storage/' . $image) }}"
                                          alt="Gallery Image {{ $index + 1 }}">
                                     <div class="gallery-overlay">
                                         <div class="gallery-zoom-icon">
@@ -143,7 +143,7 @@
 
                     @forelse($except_result as $index => $row)
                         <article class="sidebar-news-card">
-                            <a href="{{ route('home.berita.show', $row->id) }}" class="sidebar-news-link">
+                            <a href="{{ route('home.portofolio.show', $row->id) }}" class="sidebar-news-link">
                                 <div class="sidebar-news-image">
                                     <img src="{{ asset('storage/' . $row->image) }}"
                                          alt="{{ $row->title }}">
@@ -201,7 +201,7 @@
         const lightboxPrev = document.getElementById('lightbox-prev');
         const lightboxNext = document.getElementById('lightbox-next');
         const lightboxCounter = document.getElementById('lightbox-counter');
-        
+
         let currentIndex = 0;
         let galleryImages = [];
 

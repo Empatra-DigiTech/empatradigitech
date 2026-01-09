@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Requests\Berita;
+namespace App\Http\Requests\Portofolio;
 
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
@@ -45,7 +45,7 @@ class UpdateRequest extends FormRequest
         if (! $this->wantsJson()) {
             $errors = implode('<br>', $validator->errors()->all());
             alert()->html('Gagal',$errors,'error');
-            $this->redirect = route('patra.berita.edit', request()->route()->parameter('id'));
+            $this->redirect = route('patra.portofolio.edit', request()->route()->parameter('id'));
         }
 
         parent::failedValidation($validator);

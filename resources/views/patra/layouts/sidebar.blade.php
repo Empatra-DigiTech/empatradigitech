@@ -63,11 +63,11 @@
             @endif
 
             <li class="nav-item">
-              <a href="{{route('patra.berita.index')}}" class="nav-link @if(Str::startsWith(request()->route()->getName(), 'patra.berita')) active @endif">
+              <a href="{{route('patra.portofolio.index')}}" class="nav-link @if(Str::startsWith(request()->route()->getName(), 'patra.portofolio')) active @endif">
                 <col class="row">
                 <i class="bx bx-news col-3 bx-tada-hover"></i>
                 <p>
-                  Berita
+                  Portofolio
                 </p>
                 </col>
               </a>

@@ -217,7 +217,7 @@
         </div>
 
         <div class="portfolio-grid">
-            @forelse ($table_berita as $index => $row)
+            @forelse ($table_portofolio as $index => $row)
                 <div class="portfolio-item">
                     <div class="portfolio-image">
                         <img src="{{ asset('storage/' . $row->image) }}" alt="{{ $row->title }}">
@@ -230,7 +230,7 @@
                                 @if($row->brand)
                                     <p class="portfolio-brand">{{ $row->brand }}</p>
                                 @endif
-                                <a href="{{ route('home.berita.show', $row->id) }}" class="btn-portfolio">View Details</a>
+                                <a href="{{ route('home.portofolio.show', $row->id) }}" class="btn-portfolio">View Details</a>
                             </div>
                         </div>
                     </div>
@@ -245,9 +245,9 @@
             @endforelse
         </div>
 
-        @if($table_berita->count() >= 6)
+        @if($table_portofolio->count() >= 6)
             <div class="portfolio-cta">
-                <a href="{{ route('home.berita.index') }}" class="btn-view-all">
+                <a href="{{ route('home.portofolio.index') }}" class="btn-view-all">
                     View All Projects
                     <i class='bx bx-right-arrow-alt'></i>
                 </a>

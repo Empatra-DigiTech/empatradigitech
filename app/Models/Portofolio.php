@@ -10,16 +10,16 @@ use Haruncpi\LaravelUserActivity\Traits\Loggable;
 use CyrildeWit\EloquentViewable\InteractsWithViews;
 use CyrildeWit\EloquentViewable\Contracts\Viewable;
 
-class Berita extends Model implements Viewable
+class Portofolio extends Model implements Viewable
 {
     use HasFactory, HasTrixRichText, TrixRender, Loggable, InteractsWithViews;
-    
+
     protected $fillable = [
         'title',
         'slug',
         'image',
         'date',
-        'berita-trixFields',
+        'portofolio-trixFields',
         'creator',
         'klien',
         'industry',

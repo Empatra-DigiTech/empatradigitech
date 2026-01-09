@@ -31,8 +31,8 @@
                     @elseif($row->title == 'Home')
                         <li><a href="{{ route('home.home.index') }}" class="active">{{ $row->title }}</a></li>
 
-                    @elseif($row->title == 'Berita')
-                        <li><a href="{{ route('home.berita.index') }}">Portfolio</a></li>
+                    @elseif($row->title == 'Portofolio')
+                        <li><a href="{{ route('home.portofolio.index') }}">{{ $row->title }}</a></li>
 
                     @elseif($row->title == 'Inovasi')
                         <li><a href="{{ route('home.inovasi.index') }}">{{ $row->title }}</a></li>

@@ -48,14 +48,14 @@ Route::group(["middleware" => ["patra.access"], "namespace" => "App\Http\Control
         Route::delete('/{id}', 'InformasiController@destroy')->name("destroy")->middleware('role:' . implode('|', [RoleEnum::SuperAdmin, RoleEnum::Admin]));
     });
 
-    Route::group(["as" => "berita.", "prefix" => "berita"], function () {
-        Route::get('/', 'BeritaController@index')->name("index");
-        Route::get('/create', 'BeritaController@create')->name("create");
-        Route::post('/', 'BeritaController@store')->name("store");
-        Route::get('/{id}', 'BeritaController@show')->name("show");
-        Route::get('/{id}/edit', 'BeritaController@edit')->name("edit");
-        Route::put('/{id}', 'BeritaController@update')->name("update");
-        Route::delete('/{id}', 'BeritaController@destroy')->name("destroy");
+    Route::group(["as" => "portofolio.", "prefix" => "portofolio"], function () {
+        Route::get('/', 'PortofolioController@index')->name("index");
+        Route::get('/create', 'PortofolioController@create')->name("create");
+        Route::post('/', 'PortofolioController@store')->name("store");
+        Route::get('/{id}', 'PortofolioController@show')->name("show");
+        Route::get('/{id}/edit', 'PortofolioController@edit')->name("edit");
+        Route::put('/{id}', 'PortofolioController@update')->name("update");
+        Route::delete('/{id}', 'PortofolioController@destroy')->name("destroy");
     });
 
     Route::group(["as" => "inovasi.", "prefix" => "inovasi"], function () {
@@ -229,9 +229,9 @@ Route::group(["namespace" => "App\Http\Controllers\Home", "as" => "home."], func
         Route::get("/", "ProfilController@index")->name("index");
     });
 
-    Route::group(["as" => "berita.", "prefix" => "portfolio"], function () {
-        Route::get("/", "BeritaController@index")->name("index");
-        Route::get("/{id}", "BeritaController@show")->name("show");
+    Route::group(["as" => "portofolio.", "prefix" => "portfolio"], function () {
+        Route::get("/", "PortofolioController@index")->name("index");
+        Route::get("/{id}", "PortofolioController@show")->name("show");
     });
 
     Route::group(["as" => "inovasi.", "prefix" => "inovasi"], function () {

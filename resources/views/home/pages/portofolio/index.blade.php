@@ -1,5 +1,5 @@
 @extends('home.layouts.master')
-@section("title","Berita | EMPATRA DIGITECH")
+@section("title","Portofolio | EMPATRA DIGITECH")
 
 @section('css')
     <link href="{{ asset('assets/css/portfolio/card.css') }}" rel="stylesheet">
@@ -30,7 +30,7 @@
                 <div class="col-lg-4 col-md-6 mb-4" data-aos="fade-up" data-aos-delay="{{ $index * 100 }}">
                     <article class="news-card">
                         <div class="news-card-image">
-                            <a href="{{ route('home.berita.show', $row->id) }}">
+                            <a href="{{ route('home.portofolio.show', $row->id) }}">
                                 <img src="{{ asset('storage/' . $row->image) }}" alt="{{ $row->title }}" class="img-fluid">
                                 <div class="image-overlay">
                                     <span class="read-more-badge">Baca Selengkapnya</span>
@@ -50,7 +50,7 @@
                                 <h2 class="news-layanan">{{ $row->layanan }}</h2>
                             @endif
 
-                            <a href="{{ route('home.berita.show', $row->id) }}" class="news-title-link">
+                            <a href="{{ route('home.portofolio.show', $row->id) }}" class="news-title-link">
                                 <h3 class="news-title">{{ $row->title }}</h3>
                             </a>
 
@@ -62,7 +62,7 @@
                                 @endif
                             </p>
 
-                            <a href="{{ route('home.berita.show', $row->id) }}" class="btn-read-more">
+                            <a href="{{ route('home.portofolio.show', $row->id) }}" class="btn-read-more">
                                 Selengkapnya
                                 <i class="bi bi-arrow-right"></i>
                             </a>
