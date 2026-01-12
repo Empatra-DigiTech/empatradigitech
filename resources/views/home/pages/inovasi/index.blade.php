@@ -1,7 +1,7 @@
 @extends('home.layouts.master')
-@section("title","Inovasi | DINAS PENDIDIKAN DAN KEBUDAYAAN KOTA MALANG")
-@section("css")
-<link  href="assets/css/inovasi/style.css" rel="stylesheet">
+@section("title","Inovasi | EMPATRA DIGITECH")
+@section('css')
+    <link href="assets/css/home/inovasi/inovasi.css" rel="stylesheet">
 @endsection
 @section("content")
 <div class="inov-bg">

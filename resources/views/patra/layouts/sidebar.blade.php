@@ -118,14 +118,14 @@
             </li>
             <!-- END TAMBAHAN -->
 
-            <li class="nav-item">
+            {{-- <li class="nav-item">
               <a href="{{route('patra.kalender.index')}}" class="nav-link @if(Str::startsWith(request()->route()->getName(), 'patra.kalender')) active @endif">
                 <i class="bx bx-calendar col-3 bx-tada-hover"></i>
                 <p>
                   Kalender
                 </p>
               </a>
-            </li>
+            </li> --}}
 
             <li class="nav-item">
               <a href="{{route('patra.kontak.index')}}" class="nav-link @if(Str::startsWith(request()->route()->getName(), 'patra.kontak')) active @endif">
