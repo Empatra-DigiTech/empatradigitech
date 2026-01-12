@@ -39,13 +39,6 @@
                         </div>
 
                         <div class="news-card-body">
-                            <div class="news-meta">
-                                <span class="news-date">
-                                    <i class="bi bi-calendar-event"></i>
-                                    {{ Carbon\Carbon::parse($row->date)->translatedFormat('d F Y') }}
-                                </span>
-                            </div>
-
                             @if($row->layanan)
                                 <h2 class="news-layanan">{{ $row->layanan }}</h2>
                             @endif

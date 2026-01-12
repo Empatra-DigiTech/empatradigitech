@@ -13,7 +13,7 @@
                 <div class="row mb-3">
                     <div class="col-lg-12">
                         <a href="{{route('patra.portofolio.create')}}" class="btn btn-primary"><i class="fa fa-plus"></i> Tambah</a>
-                        <a href="#" class="btn btn-success btn-filter"><i class="fa fa-filter"></i> Fiter</a>
+                        <a href="#" class="btn btn-success btn-filter"><i class="fa fa-filter"></i> Filter</a>
                         <a href="{{route('patra.portofolio.index')}}" class="btn btn-warning"><i class="fa fa-refresh"></i> Refresh</a>
                     </div>
                 </div>
@@ -24,7 +24,6 @@
                                 <thead>
                                     <th>No</th>
                                     <th>Judul</th>
-                                    <th>Tanggal</th>
                                     <th>Image</th>
                                     <th>Aksi</th>
                                 </thead>
@@ -33,7 +32,6 @@
                                     <tr>
                                         <td>{{$table->firstItem() + $index}}</td>
                                         <td>{{$row->title}}</td>
-                                        <td>{{ Carbon\Carbon::parse($row->date)->translatedFormat('l,d F Y') }}</td>
                                         <td>
                                             <img src="{{ asset('storage/'.$row->image) }}" alt="" style="width: 80px;height:80px;">
                                         </td>
@@ -76,7 +74,6 @@
     $(function(){
         $(document).on("click",".btn-filter",function(e){
             e.preventDefault();
-
             $("#modalFilter").modal("show");
         });
 
@@ -92,4 +89,3 @@
 </script>
 
 @endsection
-

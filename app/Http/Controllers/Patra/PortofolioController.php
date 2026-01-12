@@ -53,13 +53,12 @@ class PortofolioController extends Controller
         try {
             $title = $request->title;
             $image = $request->file("image");
-            $date = $request->date;
 
             if($image){
                 $upload = UploadHelper::upload_file($image,'images',['jpeg','jpg','png','gif']);
 
                 if($upload["IsError"] == TRUE){
-                    throw new Error($upload["Message"]);
+                    throw new \Error($upload["Message"]);
                 }
 
                 $image = $upload["Path"];
@@ -67,7 +66,6 @@ class PortofolioController extends Controller
                     'title' => $title,
                     'portofolio-trixFields' => $request->input('portofolio-trixFields'),
                     'image' => $image,
-                    'date'=> $date,
                     'creator' => Auth::user()->name,
                     'klien' => $request->klien,
                     'industry' => $request->industry,
@@ -132,18 +130,17 @@ class PortofolioController extends Controller
             $result = $result->first();
 
             if(!$result){
-                throw new Error("Data tidak ditemukan");
+                throw new \Error("Data tidak ditemukan");
             }
 
             $title = $request->title;
             $image = $request->file("image");
-            $date = $request->date;
 
             if($image){
                 $upload = UploadHelper::upload_file($image,'portofolio',['jpeg','jpg','png','gif']);
 
                 if($upload["IsError"] == TRUE){
-                    throw new Error($upload["Message"]);
+                    throw new \Error($upload["Message"]);
                 }
 
                 $image = $upload["Path"];
@@ -156,7 +153,6 @@ class PortofolioController extends Controller
                 'title' => $title,
                 'portofolio-trixFields' => $request->input('portofolio-trixFields'),
                 'image' => $image,
-                'date'=> $date,
                 'klien' => $request->klien,
                 'industry' => $request->industry,
                 'layanan' => $request->layanan,

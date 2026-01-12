@@ -39,12 +39,6 @@
                         <!-- Article Header -->
                         <div class="article-header">
                             <h1 class="article-title">{{ $result->title }}</h1>
-                            <div class="article-meta">
-                                <span class="meta-item">
-                                    <i class="bi bi-calendar-event"></i>
-                                    {{ Carbon\Carbon::parse($result->date)->translatedFormat('l, d F Y') }}
-                                </span>
-                            </div>
                         </div>
 
                         <!-- Info Section -->
@@ -150,9 +144,6 @@
                                 </div>
                                 <div class="sidebar-news-content">
                                     <h3 class="sidebar-news-title">{{ $row->title }}</h3>
-                                    <p class="sidebar-news-date">
-                                        {{ Carbon\Carbon::parse($row->date)->diffForHumans(null, true) }} yang lalu
-                                    </p>
                                 </div>
                             </a>
                         </article>

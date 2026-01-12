@@ -13,6 +13,7 @@ class PortofolioController extends Controller
 {
     protected $portofolio;
     protected $route = 'home.pages.portofolio.';
+
     public function __construct(){
         $this->route = "home.portofolio.";
         $this->view = "home.pages.portofolio.";
@@ -33,6 +34,8 @@ class PortofolioController extends Controller
                 $query2->where("title","like","%".$search."%");
             });
         }
+
+        // Changed from orderBy('date') to orderBy('created_at')
         $table = $table->orderBy("created_at","DESC");
         $table = $table->paginate(9)->withQueryString();
 
@@ -44,6 +47,7 @@ class PortofolioController extends Controller
 
         return view($this->view."index",$data);
     }
+
     public function show($id){
         $table_pengaturan = Pengaturan::first();
         $table_menu = Menu::all();
@@ -54,8 +58,9 @@ class PortofolioController extends Controller
 
         $except_result = $this->portofolio;
         $except_result = $except_result->where('id','!=',$id);
-        $except_result = $except_result->orderBy("date","DESC");      //sort descending by time created data
-        $except_result = $except_result->paginate(3);   //limit paginate only 10 data appears per load
+        // Changed from orderBy('date') to orderBy('created_at')
+        $except_result = $except_result->orderBy("created_at","DESC");
+        $except_result = $except_result->paginate(3);
 
         if(!$result){
             alert()->error('Gagal',"Data tidak ditemukan");
@@ -68,6 +73,7 @@ class PortofolioController extends Controller
             'table_pengaturan' => $table_pengaturan,
             'table_menu' => $table_menu,
         ];
+
         //view count in show portofolio
         views($result)->cooldown($minutes = 3)->record();
 

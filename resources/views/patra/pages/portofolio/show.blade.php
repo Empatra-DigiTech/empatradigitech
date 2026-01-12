@@ -112,19 +112,19 @@
 
                         <div class="row mb-2">
                             <div class="col-md-2">
-                                Tanggal
+                                Image
                             </div>
                             <div class="col-md-8">
-                                : {{ Carbon\Carbon::parse($result->date)->translatedFormat('l,d F Y') }}
+                                : <img src="{{ asset('storage/' . $result->image) }}" style="width: 200px;height:200px;">
                             </div>
                         </div>
 
                         <div class="row mb-2">
                             <div class="col-md-2">
-                                Image
+                                Tanggal Dibuat
                             </div>
                             <div class="col-md-8">
-                                : <img src="{{ asset('storage/' . $result->image) }}" style="width: 200px;height:200px;">
+                                : {{ date('d-m-Y H:i:s', strtotime($result->created_at)) }}
                             </div>
                         </div>
 
@@ -138,10 +138,8 @@
                         </div>
 
                         <div class="mt-5">
-                            <a href="{{ route('patra.portofolio.index') }}" class="btn btn-warning btn-sm"><i
-                                    class="fa fa-arrow-left"></i> Kembali</a>
-                            <a href="{{ route('patra.portofolio.edit', $result->id) }}" class="btn btn-primary btn-sm"><i
-                                    class="fa fa-edit"></i> Edit</a>
+                            <a href="{{ route('patra.portofolio.index') }}" class="btn btn-warning btn-sm"><i class="fa fa-arrow-left"></i> Kembali</a>
+                            <a href="{{ route('patra.portofolio.edit', $result->id) }}" class="btn btn-primary btn-sm"><i class="fa fa-edit"></i> Edit</a>
                             <a href="#" class="btn btn-danger btn-sm btn-delete"><i class="fa fa-trash"></i> Hapus</a>
                         </div>
 
@@ -162,8 +160,7 @@
         $(function() {
             $(document).on("click", ".btn-delete", function() {
                 if (confirm("Apakah anda yakin ingin menghapus data ini ?")) {
-                    $("#frmDelete").attr("action", "{{ route('patra.portofolio.destroy', '_id_') }}"
-                        .replace("_id_", '{{ $result->id }}'));
+                    $("#frmDelete").attr("action", "{{ route('patra.portofolio.destroy', '_id_') }}".replace("_id_", '{{ $result->id }}'));
                     $("#frmDelete").submit();
                 }
             })

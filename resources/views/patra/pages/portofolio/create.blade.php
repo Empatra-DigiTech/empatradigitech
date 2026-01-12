@@ -19,8 +19,7 @@
                                 <div class="col-lg-12">
                                     <!-- Judul -->
                                     <div class="form-group row">
-                                        <label class="col-md-2 col-form-label">Judul <span
-                                                class="text-danger">*</span></label>
+                                        <label class="col-md-2 col-form-label">Judul <span class="text-danger">*</span></label>
                                         <div class="col-md-10">
                                             <input type="text" class="form-control" name="title" placeholder="Judul"
                                                 value="{{ old('title') }}" required>
@@ -65,8 +64,7 @@
 
                                     <!-- Deskripsi -->
                                     <div class="form-group row mb-5">
-                                        <label class="col-md-2 col-form-label" for="description">Deskripsi <span
-                                                class="text-danger">*</span></label>
+                                        <label class="col-md-2 col-form-label" for="description">Deskripsi <span class="text-danger">*</span></label>
                                         <div class="col-md-10">
                                             @trix(\App\Models\Portofolio::class, 'content')
                                         </div>
@@ -96,23 +94,11 @@
                                         </div>
                                     </div>
 
-                                    <!-- Tanggal -->
-                                    <div class="form-group row">
-                                        <label class="col-md-2 col-form-label">Tanggal<span
-                                                class="text-danger">*</span></label>
-                                        <div class="col-md-10">
-                                            <input type="date" class="form-control" name="date" placeholder="Tanggal"
-                                                value="{{ old('date', date('Y-m-d')) }}" required>
-                                        </div>
-                                    </div>
-
                                     <!-- Image -->
                                     <div class="form-group row mt-5">
-                                        <label class="col-md-2 col-form-label">Image <span
-                                                class="text-danger">*</span></label>
+                                        <label class="col-md-2 col-form-label">Image <span class="text-danger">*</span></label>
                                         <div class="col-md-10">
-                                            <input class="form-control" type="file" name="image" accept="image/*"
-                                                required>
+                                            <input class="form-control" type="file" name="image" accept="image/*" required>
                                         </div>
                                     </div>
 
@@ -120,10 +106,8 @@
                             </div>
                             <div class="row">
                                 <div class="col-lg-12">
-                                    <a href="{{ route('patra.portofolio.index') }}" class="btn btn-warning"><i
-                                            class="fa fa-arrow-left"></i> Kembali</a>
-                                    <button type="submit" class="btn btn-primary"><i class="fa fa-save"></i>
-                                        Simpan</button>
+                                    <a href="{{ route('patra.portofolio.index') }}" class="btn btn-warning"><i class="fa fa-arrow-left"></i> Kembali</a>
+                                    <button type="submit" class="btn btn-primary"><i class="fa fa-save"></i> Simpan</button>
                                 </div>
                             </div>
                         </form>
