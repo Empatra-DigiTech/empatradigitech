@@ -76,11 +76,12 @@
 <section id="services" class="services-section">
     <div class="container">
         <!-- Section Header -->
-        <div class="section-header">
-            <h2 class="section-title">Our Services</h2>
-            <p class="section-subtitle">Comprehensive digital solutions for your business needs</p>
-        </div>
-
+        <section id="layanan">
+            <div class="section-header">
+                <h2 class="section-title">Our Services</h2>
+                <p class="section-subtitle">Comprehensive digital solutions for your business needs</p>
+            </div>
+        </section>
         <!-- Services Grid -->
         <div class="services-grid">
             @forelse ($table_layanan as $index => $row)
