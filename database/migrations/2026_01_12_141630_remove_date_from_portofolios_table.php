@@ -12,7 +12,9 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('portofolios', function (Blueprint $table) {
-            $table->dropColumn('date');
+            if (Schema::hasColumn('portofolios', 'date')) {
+                $table->dropColumn('date');
+            }
         });
     }
 
@@ -22,7 +24,7 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('portofolios', function (Blueprint $table) {
-            $table->date('date')->nullable();
+            $table->date('date')->nullable()->after('image');
         });
     }
 };

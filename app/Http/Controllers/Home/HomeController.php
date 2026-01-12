@@ -27,7 +27,10 @@ class HomeController extends Controller
     public function index(Request $request)
     {
         $table_tautan = Tautan::all();
-        $table_portofolio = Portofolio::orderBy('date', 'DESC')->take(6)->get();
+
+        // FIXED: Changed from orderBy('date') to orderBy('created_at')
+        $table_portofolio = Portofolio::orderBy('created_at', 'DESC')->take(6)->get();
+
         $table_banner = Banner::all();
         $table_layanan = Layanan::all();
         $table_pengaturan = Pengaturan::first();
@@ -64,7 +67,7 @@ class HomeController extends Controller
                 'table_layanan' => $table_layanan,
                 'table_view' => null,
                 'table_menu' => $table_menu,
-                'paket_website' => $paket_website, // Tambahkan ini
+                'paket_website' => $paket_website,
                 'paket_app' => $paket_app,
             ];
 
@@ -85,15 +88,12 @@ class HomeController extends Controller
                 'table_view' => $table_view,
                 'count_view' => $count_view,
                 'table_menu' => $table_menu,
-                'paket_website' => $paket_website, // Tambahkan ini
+                'paket_website' => $paket_website,
                 'paket_app' => $paket_app,
             ];
-            // dd($data);
 
             return view($this->view . "index", $data);
         }
-        // return dd($data );
-
     }
 
     //function for calendar handler in json
