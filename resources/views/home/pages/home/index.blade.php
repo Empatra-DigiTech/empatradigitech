@@ -149,7 +149,11 @@
                                 </ul>
                             </div>
                             <div class="package-footer">
-                                <a href="{{ route('home.kontak.index') }}?paket=website_{{ $paket->id }}" class="btn-package">
+                                <a href="#kontak"
+                                class="btn-package"
+                                data-package-type="Website Development"
+                                data-package-name="{{ $paket->nama_paket }}"
+                                data-package-price="Rp {{ number_format($paket->harga, 0, ',', '.') }}">
                                     Choose Package
                                 </a>
                             </div>
@@ -190,7 +194,11 @@
                                 </ul>
                             </div>
                             <div class="package-footer">
-                                <a href="{{ route('home.kontak.index') }}?paket=app_{{ $paket->id }}" class="btn-package">
+                                <a href="#kontak"
+                                class="btn-package"
+                                data-package-type="App Development"
+                                data-package-name="{{ $paket->nama_paket }}"
+                                data-package-price="Rp {{ number_format($paket->harga, 0, ',', '.') }}">
                                     Choose Package
                                 </a>
                             </div>
@@ -710,7 +718,155 @@
 @section('script')
 <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 <script>
+// ========================================
+// PACKAGE SELECTION & AUTO-FILL CONTACT FORM
+// ========================================
 
+document.addEventListener('DOMContentLoaded', function() {
+
+    // Get all package selection buttons
+    const packageButtons = document.querySelectorAll('.btn-package');
+
+    packageButtons.forEach(button => {
+        button.addEventListener('click', function(e) {
+            e.preventDefault();
+
+            // Get package information from data attributes
+            const packageType = this.getAttribute('data-package-type');
+            const packageName = this.getAttribute('data-package-name');
+            const packagePrice = this.getAttribute('data-package-price');
+
+            // Create subject text
+            const subjectText = `Inquiry: ${packageType} - ${packageName} (${packagePrice})`;
+
+            // Create message text
+            const messageText = `Hello EMPATRA DIGITECH,
+
+I'm interested in your ${packageType} package: ${packageName} (${packagePrice}).
+
+I would like to know more details about:
+- Project timeline
+- Included features
+- Payment terms
+- Support and maintenance
+
+Please contact me to discuss further.
+
+Thank you!`;
+
+            // Scroll to contact section smoothly
+            const contactSection = document.getElementById('kontak');
+            if (contactSection) {
+                const header = document.querySelector('.header, .navbar, header');
+                const headerHeight = header ? header.offsetHeight : 80;
+                const targetPosition = contactSection.offsetTop - headerHeight - 20;
+
+                window.scrollTo({
+                    top: targetPosition,
+                    behavior: 'smooth'
+                });
+
+                // Wait for scroll to complete, then fill form
+                setTimeout(() => {
+                    // Fill subject field
+                    const subjectField = document.getElementById('subject');
+                    if (subjectField) {
+                        subjectField.value = subjectText;
+                        subjectField.focus();
+
+                        // Add highlight animation
+                        subjectField.style.transition = 'all 0.3s ease';
+                        subjectField.style.backgroundColor = '#fff3cd';
+                        setTimeout(() => {
+                            subjectField.style.backgroundColor = '';
+                        }, 1000);
+                    }
+
+                    // Fill message field
+                    const messageField = document.getElementById('message');
+                    if (messageField) {
+                        messageField.value = messageText;
+
+                        // Add highlight animation
+                        messageField.style.transition = 'all 0.3s ease';
+                        messageField.style.backgroundColor = '#fff3cd';
+                        setTimeout(() => {
+                            messageField.style.backgroundColor = '';
+                        }, 1000);
+                    }
+
+                    // Show success notification
+                    showPackageNotification(packageName);
+
+                }, 800);
+            }
+        });
+    });
+
+    // Function to show notification
+    function showPackageNotification(packageName) {
+        const notification = document.createElement('div');
+        notification.className = 'package-notification';
+        notification.innerHTML = `
+            <div class="notification-content">
+                <i class='bx bx-check-circle'></i>
+                <span>Package "${packageName}" selected! Form pre-filled for you.</span>
+            </div>
+        `;
+
+        notification.style.cssText = `
+            position: fixed;
+            top: 100px;
+            right: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 15px 25px;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            z-index: 10000;
+            animation: slideInRight 0.5s ease;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        `;
+
+        notification.querySelector('.notification-content').style.cssText = `
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        `;
+
+        notification.querySelector('i').style.cssText = `
+            font-size: 24px;
+        `;
+
+        if (!document.getElementById('package-notification-styles')) {
+            const style = document.createElement('style');
+            style.id = 'package-notification-styles';
+            style.textContent = `
+                @keyframes slideInRight {
+                    from { transform: translateX(400px); opacity: 0; }
+                    to { transform: translateX(0); opacity: 1; }
+                }
+                @keyframes slideOutRight {
+                    from { transform: translateX(0); opacity: 1; }
+                    to { transform: translateX(400px); opacity: 0; }
+                }
+            `;
+            document.head.appendChild(style);
+        }
+
+        document.body.appendChild(notification);
+
+        setTimeout(() => {
+            notification.style.animation = 'slideOutRight 0.5s ease';
+            setTimeout(() => notification.remove(), 500);
+        }, 4000);
+    }
+
+    console.log('Package selection initialized:', packageButtons.length, 'buttons');
+});
     // ========================================
 // Portfolio Section Animations
 // ========================================
