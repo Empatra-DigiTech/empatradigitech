@@ -19,14 +19,6 @@
                         </div>
                         <div class="row mb-2">
                             <div class="col-md-2">
-                                Kategori
-                            </div>
-                            <div class="col-md-5">
-                                : {{ $result->kategori }}
-                            </div>
-                        </div>
-                        <div class="row mb-2">
-                            <div class="col-md-2">
                                 Deskripsi
                             </div>
                             <div class="col-md-8">

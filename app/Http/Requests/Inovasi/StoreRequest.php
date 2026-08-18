@@ -13,9 +13,6 @@ class StoreRequest extends FormRequest
             'title' => [
                 'required',
             ],
-            'kategori' => [
-                'required',
-            ],
             // 'description'=> [
             //     'required',
             //     ''
@@ -33,7 +30,6 @@ class StoreRequest extends FormRequest
     {
         return [
             'title.required' => 'Judul harus diisi',
-            'kategori.required' => 'Kategori harus diisi',
             // 'description.required' => 'Deksripsi harus diisi',
             'image.required' => 'File harus diisi',
             'image.image' => 'Foto harus berupa gambar',

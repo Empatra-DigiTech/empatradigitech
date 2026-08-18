@@ -26,7 +26,6 @@ class InovasiController extends Controller
         $table_menu = Menu::all();
 
         $search = $request->search;
-        $kategori = $request->kategori;
 
         $table = $this->inovasi;
 
@@ -35,20 +34,13 @@ class InovasiController extends Controller
                 $query2->where("title","like","%".$search."%");
             });
         }
-        if(!empty($kategori)){
-            $table = $table->where("kategori", $kategori);
-        }
         $table = $table->orderBy("created_at","DESC");
         $table = $table->paginate(10)->withQueryString();
-
-        $kategori_list = $this->inovasi->select('kategori')->distinct()->whereNotNull('kategori')->pluck('kategori');
 
         $data = [
             'table' => $table,
             'table_pengaturan' => $table_pengaturan,
             'table_menu' => $table_menu,
-            'kategori_list' => $kategori_list,
-            'kategori_active' => $kategori,
         ];
 
         return view($this->view."index",$data);
