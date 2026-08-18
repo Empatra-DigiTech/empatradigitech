@@ -14,6 +14,7 @@ class Inovasi extends Model
     
     protected $fillable = [
         'title',
+        'kategori',
         'slug',
         'image',
         'date',

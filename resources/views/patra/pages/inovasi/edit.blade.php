@@ -23,6 +23,18 @@
                                                 value="{{ old('title', $result->title) }}" required>
                                         </div>
                                     </div>
+                                    <div class="form-group row">
+                                        <label class="col-md-2 col-form-label">Kategori <span
+                                                class="text-danger">*</span></label>
+                                        <div class="col-md-10">
+                                            <select class="form-control" name="kategori" required>
+                                                <option value="">-- Pilih Kategori --</option>
+                                                @foreach(['Website','Aplikasi Mobile','Sistem/ERP','AI & Automation','Desain/UI-UX','Lainnya'] as $kategoriOption)
+                                                    <option value="{{ $kategoriOption }}" {{ old('kategori', $result->kategori) == $kategoriOption ? 'selected' : '' }}>{{ $kategoriOption }}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    </div>
                                     <div class="form-group row mb-5">
                                         <label class="col-md-2 col-form-label" for="description">Deskripsi <span
                                                 class="text-danger">*</span></label>

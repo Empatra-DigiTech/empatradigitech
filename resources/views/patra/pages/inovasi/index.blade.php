@@ -24,6 +24,7 @@
                                 <thead>
                                     <th>No</th>
                                     <th>Judul</th>
+                                    <th>Kategori</th>
                                     <th>Deskripsi</th>
                                     <th>Tanggal</th>
                                     <th>Image</th>
@@ -34,6 +35,7 @@
                                     <tr>
                                         <td>{{$table->firstItem() + $index}}</td>
                                         <td>{{$row->title}}</td>
+                                        <td><span class="badge badge-info">{{ $row->kategori }}</span></td>
                                         <td>{{$row->description}}</td>
                                         <td>{{ Carbon\Carbon::parse($row->date)->translatedFormat('l,d F Y') }}</td>
                                         <td>

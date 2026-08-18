@@ -63,6 +63,7 @@ class InovasiController extends Controller
     {
         try {
             $title = $request->title;
+            $kategori = $request->kategori;
             $image = $request->file("image");
             $date = $request->date;
 
@@ -77,6 +78,7 @@ class InovasiController extends Controller
                 $image = $upload["Path"];
                 $create = $this->inovasi->create([
                     'title' => $title,
+                    'kategori' => $kategori,
                     'inovasi-trixFields' => $request->input('inovasi-trixFields'),
                     'image' => $image,
                     'date'=> $date
@@ -144,6 +146,7 @@ class InovasiController extends Controller
             }
 
             $title = $request->title;
+            $kategori = $request->kategori;
             $image = $request->file("image");
             $date = $request->date;
 
@@ -162,6 +165,7 @@ class InovasiController extends Controller
 
             $result->update([
                 'title' => $title,
+                'kategori' => $kategori,
                 'inovasi-trixFields' => $request->input('inovasi-trixFields'),
                 'image' => $image,
                 'date'=> $date
