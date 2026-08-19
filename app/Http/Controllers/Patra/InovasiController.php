@@ -65,6 +65,8 @@ class InovasiController extends Controller
             $title = $request->title;
             $image = $request->file("image");
             $date = $request->date;
+            $kategori = $request->kategori;
+            $harga = $request->harga;
 
 
             if($image){
@@ -79,7 +81,9 @@ class InovasiController extends Controller
                     'title' => $title,
                     'inovasi-trixFields' => $request->input('inovasi-trixFields'),
                     'image' => $image,
-                    'date'=> $date
+                    'date'=> $date,
+                    'kategori' => $kategori,
+                    'harga' => $harga,
                 ]);
             }
             alert()->html('Berhasil','Data berhasil ditambahkan','success');
@@ -146,6 +150,8 @@ class InovasiController extends Controller
             $title = $request->title;
             $image = $request->file("image");
             $date = $request->date;
+            $kategori = $request->kategori;
+            $harga = $request->harga;
 
             if($image){
                 $upload = UploadHelper::upload_file($image,'inovasi',['jpeg','jpg','png','gif']);
@@ -164,7 +170,9 @@ class InovasiController extends Controller
                 'title' => $title,
                 'inovasi-trixFields' => $request->input('inovasi-trixFields'),
                 'image' => $image,
-                'date'=> $date
+                'date'=> $date,
+                'kategori' => $kategori,
+                'harga' => $harga,
             ]);
 
             alert()->html('Berhasil','Data berhasil diubah','success');

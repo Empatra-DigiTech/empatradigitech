@@ -42,6 +42,22 @@
                         </div>
                         <div class="row mb-2">
                             <div class="col-md-2">
+                                Kategori
+                            </div>
+                            <div class="col-md-8">
+                                : {{ $result->kategori ?? '-' }}
+                            </div>
+                        </div>
+                        <div class="row mb-2">
+                            <div class="col-md-2">
+                                Harga
+                            </div>
+                            <div class="col-md-8">
+                                : {{ $result->harga !== null ? 'Rp ' . number_format($result->harga, 0, ',', '.') : '-' }}
+                            </div>
+                        </div>
+                        <div class="row mb-2">
+                            <div class="col-md-2">
                                 Image
                             </div>
                             <div class="col-md-8">

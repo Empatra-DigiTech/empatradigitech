@@ -13,6 +13,11 @@ class StoreRequest extends FormRequest
             'title' => [
                 'required',
             ],
+            'harga' => [
+                'nullable',
+                'numeric',
+                'min:0',
+            ],
             // 'description'=> [
             //     'required',
             //     ''
@@ -30,6 +35,8 @@ class StoreRequest extends FormRequest
     {
         return [
             'title.required' => 'Judul harus diisi',
+            'harga.numeric' => 'Harga harus berupa angka',
+            'harga.min' => 'Harga tidak boleh negatif',
             // 'description.required' => 'Deksripsi harus diisi',
             'image.required' => 'File harus diisi',
             'image.image' => 'Foto harus berupa gambar',

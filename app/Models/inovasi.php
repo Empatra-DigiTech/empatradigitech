@@ -17,6 +17,8 @@ class Inovasi extends Model
         'slug',
         'image',
         'date',
+        'kategori',
+        'harga',
         'inovasi-trixFields',
     ];
 }

@@ -36,6 +36,10 @@
                         {{ Carbon\Carbon::parse($result->date)->translatedFormat('l, d F Y') }}
                     </div>
 
+                    @if($result->harga !== null)
+                        <div class="detail-price">Rp {{ number_format($result->harga, 0, ',', '.') }}</div>
+                    @endif
+
                     <div class="detail-divider"></div>
 
                     <div class="detail-content">

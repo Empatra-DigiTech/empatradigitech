@@ -26,6 +26,8 @@
                                     <th>Judul</th>
                                     <th>Deskripsi</th>
                                     <th>Tanggal</th>
+                                    <th>Kategori</th>
+                                    <th>Harga</th>
                                     <th>Image</th>
                                     <th>Aksi</th>
                                 </thead>
@@ -36,6 +38,8 @@
                                         <td>{{$row->title}}</td>
                                         <td>{{$row->description}}</td>
                                         <td>{{ Carbon\Carbon::parse($row->date)->translatedFormat('l,d F Y') }}</td>
+                                        <td>{{ $row->kategori ?? '-' }}</td>
+                                        <td>{{ $row->harga !== null ? 'Rp ' . number_format($row->harga, 0, ',', '.') : '-' }}</td>
                                         <td>
                                             <img src="{{ asset('storage/'.$row->image) }}" alt="" style="width: 80px;height:80px;">
                                         </td>

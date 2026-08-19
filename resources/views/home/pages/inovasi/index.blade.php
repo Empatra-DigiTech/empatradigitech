@@ -52,6 +52,10 @@
                                 {!! Str::limit(strip_tags($row->renderTrix('content')), 110) !!}
                             </p>
 
+                            @if($row->harga !== null)
+                                <div class="showcase-price">Rp {{ number_format($row->harga, 0, ',', '.') }}</div>
+                            @endif
+
                             <a href="{{ route('home.inovasi.show', $row->id) }}" class="btn-showcase">
                                 Lihat Detail
                                 <i class="bi bi-arrow-right"></i>

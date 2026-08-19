@@ -590,3 +590,18 @@
 .attachment__caption {
     display: none !important;
 }
+
+/* Harga / price display */
+.showcase-price {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--primary);
+    margin-bottom: 10px;
+}
+
+.detail-price {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--primary);
+    margin-top: 8px;
+}
