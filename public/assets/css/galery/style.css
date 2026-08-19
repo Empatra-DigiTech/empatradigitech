@@ -50,12 +50,14 @@ html, body {
     font-size: 2.75rem;
     font-weight: 700;
     margin-bottom: 0.5rem;
+    color: var(--gl-white) !important;
 }
 
 .galeri-page-subtitle {
     font-size: 1.125rem;
     opacity: 0.9;
     margin: 0;
+    color: var(--gl-white) !important;
 }
 
 /* ========================================
@@ -228,16 +230,20 @@ html, body {
     border-radius: var(--gl-radius-lg);
     overflow: hidden;
     box-shadow: var(--gl-shadow-xl);
+    background: var(--gl-white) !important;
+    position: relative;
+    z-index: 1;
+    isolation: isolate;
 }
 
 #galeriShowModal .modal-header {
-    background: linear-gradient(135deg, var(--gl-primary) 0%, var(--gl-secondary) 100%);
+    background: linear-gradient(135deg, var(--gl-primary) 0%, var(--gl-secondary) 100%) !important;
     padding: 1.1rem 1.5rem;
     border: none;
 }
 
 #galeriShowModal .modal-title {
-    color: var(--gl-white);
+    color: var(--gl-white) !important;
     font-weight: 700;
     font-size: 1.1rem;
     margin: 0;
@@ -254,7 +260,11 @@ html, body {
 
 #galeriShowModal .modal-body {
     padding: 1.75rem;
-    background: var(--gl-gray-100);
+    background: var(--gl-gray-100) !important;
+}
+
+#galeriShowModal.modal.show {
+    background: rgba(0, 0, 0, 0.5);
 }
 
 .gallery-modal-layout {
