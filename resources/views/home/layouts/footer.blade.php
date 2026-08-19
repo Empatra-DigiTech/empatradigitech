@@ -4,13 +4,7 @@
 
             <!-- Company Logo & Motto Section -->
             <div class="col-lg-4 col-md-6 footer-about">
-                <a href="{{ route('home.home.index') }}" class="logo d-flex justify-content-center mb-4">
-                    @if($table_pengaturan->website_logo == null)
-                        <img src="{{ URL::to('/') }}/assets/img/favicon.png" alt="Company Logo">
-                    @else
-                        <img src="{{ asset('storage/' . $table_pengaturan->website_logo) }}" alt="Company Logo">
-                    @endif
-                </a>
+                <a href="{{ route('home.home.index') }}" class="logo d-flex justify-content-center mb-4"> @if(optional($table_pengaturan)->website_logo) <img src="{{ asset('storage/' . $table_pengaturan->website_logo) }}" alt="Company Logo"> @else <img src="{{ URL::to('/') }}/assets/img/favicon.png" alt="Company Logo"> @endif </a>
                 <div class="footer-contact">
                     <p class="footer-motto">{{ $table_pengaturan->website_motto }}</p>
                 </div>

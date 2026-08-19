@@ -1,3 +1,4 @@
+```php
 @php
     use App\Models\Menu;
 @endphp
@@ -7,79 +8,100 @@
 
         <!-- Logo Section -->
         <a href="{{ route('home.home.index') }}" class="logo d-flex align-items-center me-auto">
-            @if ($table_pengaturan->website_logo == null)
-                <img src="{{ URL::to('/') }}/assets/img/favicon.png" alt="Company Logo">
-            @else
+
+            @if (optional($table_pengaturan)->website_logo)
                 <img src="{{ asset('storage/' . $table_pengaturan->website_logo) }}" alt="Company Logo">
+            @else
+                <img src="{{ URL::to('/') }}/assets/img/favicon.png" alt="Company Logo">
             @endif
+
         </a>
 
         <!-- Navigation Menu -->
         <nav id="navmenu" class="navmenu">
             <ul>
-                @foreach ($table_menu as $index => $row)
 
-                    @if ($row->title == 'Layanan')
-                        <li><a href="{{ route('home.home.index') }}#layanan">{{ $row->title }}</a></li>
+                @if (!empty($table_menu))
+                    @foreach ($table_menu as $index => $row)
 
-                    @elseif($row->title == 'Kontak')
-                        <li><a href="{{ route('home.home.index') }}#kontak">{{ $row->title }}</a></li>
+                        @if ($row->title == 'Layanan')
+                            <li><a href="{{ route('home.home.index') }}#layanan">{{ $row->title }}</a></li>
 
-                    @elseif($row->title == 'Informasi Publik')
-                        <!-- <li><a href="{{ route('home.informasi.index') }}"></a></li> -->
+                        @elseif($row->title == 'Kontak')
+                            <li><a href="{{ route('home.home.index') }}#kontak">{{ $row->title }}</a></li>
 
-                    @elseif($row->title == 'Home')
-                        <li><a href="{{ route('home.home.index') }}" class="active">{{ $row->title }}</a></li>
+                        @elseif($row->title == 'Informasi Publik')
+                            <!-- kosong sesuai logic lama -->
 
-                    @elseif($row->title == 'Portofolio')
-                        <li><a href="{{ route('home.portofolio.index') }}">{{ $row->title }}</a></li>
+                        @elseif($row->title == 'Home')
+                            <li><a href="{{ route('home.home.index') }}" class="active">{{ $row->title }}</a></li>
 
-                    @elseif($row->title == 'Inovasi')
-                        <li><a href="{{ route('home.inovasi.index') }}">{{ $row->title }}</a></li>
+                        @elseif($row->title == 'Portofolio')
+                            <li><a href="{{ route('home.portofolio.index') }}">{{ $row->title }}</a></li>
 
-                    @elseif($row->title == 'Galeri')
-                        <li><a href="{{ route('home.galeri.index') }}">{{ $row->title }}</a></li>
+                        @elseif($row->title == 'Inovasi')
+                            <li><a href="{{ route('home.inovasi.index') }}">{{ $row->title }}</a></li>
 
-                    @elseif($row->title == 'Profil')
-                        <li class="dropdown">
-                            <a href="#" class="dropdown-toggle">
-                                <span>{{ $row->title }}</span>
-                                <!-- <i class="bi bi-chevron-down toggle-dropdown"></i> -->
-                            </a>
-                            <ul class="dropdown-menu">
-                                <li><a href="{{ route('home.team.index') }}">Team</a></li>
-                                {{-- <li><a href="{{ route('home.SO.index') }}">Struktur Organisasi</a></li> --}}
-                                <li><a href="{{ route('home.VM.index') }}">Visi & Misi</a></li>
-                            </ul>
-                        </li>
+                        @elseif($row->title == 'Galeri')
+                            <li><a href="{{ route('home.galeri.index') }}">{{ $row->title }}</a></li>
 
-                    @else
-                        @if ($row->parent == null)
-                            @php
-                                $child = Menu::where('parent', $row->id)
-                                    ->orderBy('created_at')
-                                    ->get();
-                            @endphp
+                        @elseif($row->title == 'Profil')
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle">
+                                    <span>{{ $row->title }}</span>
+                                </a>
+                                <ul class="dropdown-menu">
+                                    <li><a href="{{ route('home.team.index') }}">Team</a></li>
+                                    <li><a href="{{ route('home.VM.index') }}">Visi & Misi</a></li>
+                                </ul>
+                            </li>
 
-                            @if ($child->count() == 0)
-                                <li><a href="{{ '/' . strtolower($row->title) . '/show' }}">{{ $row->title }}</a></li>
-                            @else
-                                <li class="dropdown">
-                                    <a href="#" class="dropdown-toggle">
-                                        <span>{{ $row->title }}</span>
-                                        <i class="bi bi-chevron-down toggle-dropdown"></i>
-                                    </a>
-                                    <ul class="dropdown-menu">
-                                        @foreach ($child as $ch)
-                                            <li><a href="{{ '/' . strtolower($ch->title) . '/show' }}">{{ $ch->title }}</a></li>
-                                        @endforeach
-                                    </ul>
-                                </li>
+                        @else
+
+                            @if ($row->parent == null)
+
+                                @php
+                                    $child = Menu::where('parent', $row->id)
+                                        ->orderBy('created_at')
+                                        ->get();
+                                @endphp
+
+                                @if ($child && $child->count() == 0)
+
+                                    <li>
+                                        <a href="{{ '/' . strtolower($row->title) . '/show' }}">
+                                            {{ $row->title }}
+                                        </a>
+                                    </li>
+
+                                @else
+
+                                    <li class="dropdown">
+                                        <a href="#" class="dropdown-toggle">
+                                            <span>{{ $row->title }}</span>
+                                            <i class="bi bi-chevron-down toggle-dropdown"></i>
+                                        </a>
+
+                                        <ul class="dropdown-menu">
+                                            @foreach ($child as $ch)
+                                                <li>
+                                                    <a href="{{ '/' . strtolower($ch->title) . '/show' }}">
+                                                        {{ $ch->title }}
+                                                    </a>
+                                                </li>
+                                            @endforeach
+                                        </ul>
+                                    </li>
+
+                                @endif
+
                             @endif
-                        @endif
-                    @endif
 
-                @endforeach
+                        @endif
+
+                    @endforeach
+                @endif
+
             </ul>
 
             <!-- Mobile Navigation Toggle -->
@@ -90,122 +112,103 @@
 </header>
 
 <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        const header = document.getElementById('header');
-        const mobileNavToggle = document.querySelector('.mobile-nav-toggle');
-        const navmenu = document.querySelector('.navmenu');
-        const dropdowns = document.querySelectorAll('.dropdown');
+document.addEventListener('DOMContentLoaded', function() {
 
-        // ========================================
-        // Sticky Header on Scroll
-        // ========================================
-        function handleScroll() {
-            if (window.scrollY > 100) {
-                header.classList.add('scrolled');
-            } else {
-                header.classList.remove('scrolled');
-            }
+    const header = document.getElementById('header');
+    const mobileNavToggle = document.querySelector('.mobile-nav-toggle');
+    const navmenu = document.querySelector('.navmenu');
+    const dropdowns = document.querySelectorAll('.dropdown');
+
+    // Sticky Header
+    function handleScroll() {
+        if (window.scrollY > 100) {
+            header.classList.add('scrolled');
+        } else {
+            header.classList.remove('scrolled');
         }
+    }
 
-        window.addEventListener('scroll', handleScroll);
+    window.addEventListener('scroll', handleScroll);
 
+    // Mobile Toggle
+    if (mobileNavToggle) {
+        mobileNavToggle.addEventListener('click', function() {
+            navmenu.classList.toggle('active');
+            this.classList.toggle('bi-list');
+            this.classList.toggle('bi-x');
+        });
+    }
 
-        // ========================================
-        // Mobile Navigation Toggle
-        // ========================================
-        if (mobileNavToggle) {
-            mobileNavToggle.addEventListener('click', function() {
-                navmenu.classList.toggle('active');
-                this.classList.toggle('bi-list');
-                this.classList.toggle('bi-x');
+    // Dropdown
+    dropdowns.forEach(dropdown => {
+        const toggle = dropdown.querySelector('.dropdown-toggle');
+
+        if (toggle) {
+            toggle.addEventListener('click', function(e) {
+                e.preventDefault();
+
+                dropdowns.forEach(otherDropdown => {
+                    if (otherDropdown !== dropdown) {
+                        otherDropdown.classList.remove('active');
+                    }
+                });
+
+                dropdown.classList.toggle('active');
             });
         }
+    });
 
+    // Close dropdown outside click
+    document.addEventListener('click', function(e) {
+        if (!e.target.closest('.dropdown')) {
+            dropdowns.forEach(dropdown => {
+                dropdown.classList.remove('active');
+            });
+        }
+    });
 
-        // ========================================
-        // Dropdown Menu Functionality
-        // ========================================
-        dropdowns.forEach(dropdown => {
-            const toggle = dropdown.querySelector('.dropdown-toggle');
-            const menu = dropdown.querySelector('.dropdown-menu');
+    // Active link
+    const navLinks = document.querySelectorAll('.navmenu a');
 
-            if (toggle) {
-                toggle.addEventListener('click', function(e) {
+    navLinks.forEach(link => {
+        if (link.href === window.location.href) {
+            link.classList.add('active');
+        }
+    });
+
+    // Smooth Scroll
+    const anchorLinks = document.querySelectorAll('a[href*="#"]');
+
+    anchorLinks.forEach(link => {
+        link.addEventListener('click', function(e) {
+            const href = this.getAttribute('href');
+
+            if (href.includes('#')) {
+                const targetId = href.split('#')[1];
+                const targetElement = document.getElementById(targetId);
+
+                if (targetElement) {
                     e.preventDefault();
 
-                    // Close other dropdowns
-                    dropdowns.forEach(otherDropdown => {
-                        if (otherDropdown !== dropdown) {
-                            otherDropdown.classList.remove('active');
-                        }
-                    });
+                    navmenu.classList.remove('active');
 
-                    // Toggle current dropdown
-                    dropdown.classList.toggle('active');
-                });
-            }
-        });
-
-
-        // ========================================
-        // Close Dropdown on Outside Click
-        // ========================================
-        document.addEventListener('click', function(e) {
-            if (!e.target.closest('.dropdown')) {
-                dropdowns.forEach(dropdown => {
-                    dropdown.classList.remove('active');
-                });
-            }
-        });
-
-
-        // ========================================
-        // Active Link Highlighting
-        // ========================================
-        const currentPath = window.location.pathname;
-        const navLinks = document.querySelectorAll('.navmenu a');
-
-        navLinks.forEach(link => {
-            if (link.getAttribute('href') === currentPath) {
-                link.classList.add('active');
-            }
-        });
-
-
-        // ========================================
-        // Smooth Scroll for Anchor Links
-        // ========================================
-        const anchorLinks = document.querySelectorAll('a[href^="#"]');
-
-        anchorLinks.forEach(link => {
-            link.addEventListener('click', function(e) {
-                const href = this.getAttribute('href');
-
-                if (href !== '#' && href.includes('#')) {
-                    const targetId = href.split('#')[1];
-                    const targetElement = document.getElementById(targetId);
-
-                    if (targetElement) {
-                        e.preventDefault();
-
-                        // Close mobile menu if open
-                        navmenu.classList.remove('active');
-                        if (mobileNavToggle) {
-                            mobileNavToggle.classList.add('bi-list');
-                            mobileNavToggle.classList.remove('bi-x');
-                        }
-
-                        // Smooth scroll to target
-                        const headerHeight = header.offsetHeight;
-                        const targetPosition = targetElement.offsetTop - headerHeight - 20;
-
-                        window.scrollTo({
-                            top: targetPosition,
-                            behavior: 'smooth'
-                        });
+                    if (mobileNavToggle) {
+                        mobileNavToggle.classList.add('bi-list');
+                        mobileNavToggle.classList.remove('bi-x');
                     }
+
+                    const headerHeight = header.offsetHeight;
+                    const targetPosition = targetElement.offsetTop - headerHeight - 20;
+
+                    window.scrollTo({
+                        top: targetPosition,
+                        behavior: 'smooth'
+                    });
                 }
-            });
+            }
         });
     });
+
+});
 </script>
+```
