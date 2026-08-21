@@ -121,7 +121,11 @@ class InvoiceController extends Controller
         }
 
         $data = [
+<<<<<<< Updated upstream
             'invoice' => $invoice, // Ubah key dari 'result' ke 'invoice'
+=======
+             'invoice' => $result,
+>>>>>>> Stashed changes
         ];
 
         return view($this->view . "edit", $data);
