@@ -22,18 +22,26 @@
         border-bottom: 2px solid #e0e0e0;
     }
 
-    .logo-section {
-        cursor: pointer;
-        padding: 40px;
-        border: 2px dashed #ccc;
-        text-align: center;
-        color: #999;
-        border-radius: 4px;
+    .company-info {
+        display: flex;
+        align-items: center;
+        gap: 20px;
+    }
+
+    .logo-container {
+        width: 80px;
+        height: 80px;
+    }
+
+    .logo-container img {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
     }
 
     .invoice-title h1 {
         font-size: 32px;
-        color: #333;
+        color: #1a237e;
         margin-bottom: 10px;
     }
 
@@ -49,6 +57,9 @@
         font-weight: 600;
         color: #333;
         margin-bottom: 8px;
+        font-size: 11px;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
     }
 
     .party-section textarea,
@@ -79,7 +90,7 @@
         font-size: 14px;
     }
 
-    .detail-row input {
+    .detail-row input, .detail-row select {
         border: 1px solid #e0e0e0;
         padding: 8px;
         border-radius: 4px;
@@ -101,7 +112,9 @@
         padding: 12px;
         text-align: left;
         font-weight: 600;
-        font-size: 12px;
+        font-size: 11px;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
     }
 
     .items-table td {
@@ -135,6 +148,7 @@
         margin-top: 8px;
         font-weight: bold;
         font-size: 16px;
+        color: #1a237e;
     }
 
     .total-row input {
@@ -167,6 +181,20 @@
         border-radius: 4px;
         cursor: pointer;
     }
+
+    .notes-section {
+        margin-top: 30px;
+        padding-top: 20px;
+        border-top: 1px solid #e0e0e0;
+    }
+
+    .notes-section h4 {
+        font-size: 12px;
+        color: #666;
+        text-transform: uppercase;
+        margin-bottom: 10px;
+        letter-spacing: 0.5px;
+    }
 </style>
 @endsection
 
@@ -176,17 +204,30 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-body">
-                    {{-- pastikan route dan method update sudah ada --}}
                     <form action="{{ route('patra.invoice.update', $invoice->id) }}" method="POST" id="invoiceForm">
                         @csrf
                         @method('PUT')
 
                         <div class="invoice-preview">
                             <div class="invoice-header">
+                                <div class="company-info">
+                                    <div class="logo-container">
+                                        <img src="{{ asset('images/logo.png') }}" alt="Logo">
+                                    </div>
+                                    <div>
+                                        <input type="text" name="from_name" class="form-control mb-2"
+                                               placeholder="Nama Perusahaan" required
+                                               value="{{ old('from_name', $invoice->from_name) }}"
+                                               style="font-size: 18px; font-weight: bold; border: 1px solid #ddd;">
+                                        <textarea name="from_address" class="form-control" rows="3"
+                                                  placeholder="Alamat Lengkap&#10;Kota, Provinsi&#10;Telepon"
+                                                  style="font-size: 12px;">{{ old('from_address', $invoice->from_address) }}</textarea>
+                                    </div>
+                                </div>
                                 <div class="invoice-title">
                                     <h1>INVOICE</h1>
                                     <div style="display: flex; align-items: center; gap: 10px;">
-                                        <span style="color: #666;">#</span>
+                                        <span style="color: #666; font-size: 16px;">#</span>
                                         <input type="text" name="invoice_number" class="form-control"
                                                value="{{ old('invoice_number', $invoice->invoice_number) }}" required
                                                style="width: 200px; border: 1px solid #ddd;">
@@ -195,84 +236,72 @@
                             </div>
 
                             <div class="invoice-parties">
-                                <div class="party-section">
-                                    <label>Dari (Your Company)</label>
-                                    <input type="text" name="from_name" class="form-control mb-2"
-                                           placeholder="Nama Perusahaan" required
-                                           value="{{ old('from_name', $invoice->from_name) }}">
-                                    <textarea name="from_address" class="form-control" rows="3"
-                                              placeholder="Alamat Lengkap&#10;Kota, Provinsi&#10;Telepon">{{ old('from_address', $invoice->from_address) }}</textarea>
-                                </div>
                                 <div>
                                     <div class="party-section mb-3">
-                                        <label>Tagih Ke (Bill To)</label>
+                                        <label>Tagih Ke:</label>
                                         <input type="text" name="bill_to_name" class="form-control mb-2"
                                                placeholder="Nama Klien" required
                                                value="{{ old('bill_to_name', $invoice->bill_to_name) }}">
-                                        <textarea name="bill_to_address" class="form-control" rows="2"
+                                        <textarea name="bill_to_address" class="form-control" rows="3"
                                                   placeholder="Alamat Klien">{{ old('bill_to_address', $invoice->bill_to_address) }}</textarea>
                                     </div>
+
+                                    @if($invoice->ship_to_name || old('ship_to_name'))
                                     <div class="party-section">
-                                        <label>Kirim Ke (Ship To) - Opsional</label>
+                                        <label>Kirim Ke:</label>
                                         <input type="text" name="ship_to_name" class="form-control mb-2"
                                                placeholder="Nama Penerima"
                                                value="{{ old('ship_to_name', $invoice->ship_to_name) }}">
-                                        <textarea name="ship_to_address" class="form-control" rows="2"
+                                        <textarea name="ship_to_address" class="form-control" rows="3"
                                                   placeholder="Alamat Pengiriman">{{ old('ship_to_address', $invoice->ship_to_address) }}</textarea>
                                     </div>
+                                    @endif
                                 </div>
-                            </div>
 
-                            <div class="invoice-details">
                                 <div>
-                                    <div class="detail-row">
-                                        <label>Tanggal Invoice</label>
-                                        <input type="date" name="invoice_date" class="form-control"
-                                               value="{{ old('invoice_date', optional($invoice->invoice_date)->format('Y-m-d')) }}" required>
-                                    </div>
-                                    <div class="detail-row">
-                                        <label>Syarat Pembayaran</label>
-                                        <input type="text" name="payment_terms" class="form-control"
-                                               placeholder="Net 30"
-                                               value="{{ old('payment_terms', $invoice->payment_terms) }}">
-                                    </div>
+                                    <table style="width: 100%; font-size: 14px;">
+                                        <tr>
+                                            <td style="padding: 8px 0; color: #666;">Tanggal Invoice:</td>
+                                            <td style="text-align: right; padding: 8px 0;">
+                                                <input type="date" name="invoice_date" class="form-control"
+                                                       value="{{ old('invoice_date', optional($invoice->invoice_date)->format('Y-m-d')) }}" required>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td style="padding: 8px 0; color: #666;">Syarat Pembayaran:</td>
+                                            <td style="text-align: right; padding: 8px 0;">
+                                                <input type="text" name="payment_terms" class="form-control"
+                                                       placeholder="Net 30"
+                                                       value="{{ old('payment_terms', $invoice->payment_terms) }}">
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td style="padding: 8px 0; color: #666;">Jatuh Tempo:</td>
+                                            <td style="text-align: right; padding: 8px 0;">
+                                                <input type="date" name="due_date" class="form-control"
+                                                       value="{{ old('due_date', optional($invoice->due_date)->format('Y-m-d')) }}">
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td style="padding: 8px 0; color: #666;">No. PO:</td>
+                                            <td style="text-align: right; padding: 8px 0;">
+                                                <input type="text" name="po_number" class="form-control"
+                                                       placeholder="Nomor Purchase Order"
+                                                       value="{{ old('po_number', $invoice->po_number) }}">
+                                            </td>
+                                        </tr>
+                                    </table>
                                 </div>
-                                <div>
-                                    <div class="detail-row">
-                                        <label>Jatuh Tempo</label>
-                                        <input type="date" name="due_date" class="form-control"
-                                               value="{{ old('due_date', optional($invoice->due_date)->format('Y-m-d')) }}">
-                                    </div>
-                                    <div class="detail-row">
-                                        <label>No. PO</label>
-                                        <input type="text" name="po_number" class="form-control"
-                                               placeholder="Nomor Purchase Order"
-                                               value="{{ old('po_number', $invoice->po_number) }}">
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="detail-row mb-3">
-                                <label>Mata Uang</label>
-                                @php
-                                    $selectedCurrency = old('currency', $invoice->currency ?? 'IDR');
-                                @endphp
-                                <select name="currency" id="currency" class="form-control" style="width: 200px;">
-                                    <option value="IDR" {{ $selectedCurrency === 'IDR' ? 'selected' : '' }}>IDR (Rp)</option>
-                                    <option value="USD" {{ $selectedCurrency === 'USD' ? 'selected' : '' }}>USD ($)</option>
-                                    <option value="EUR" {{ $selectedCurrency === 'EUR' ? 'selected' : '' }}>EUR (€)</option>
-                                    <option value="GBP" {{ $selectedCurrency === 'GBP' ? 'selected' : '' }}>GBP (£)</option>
-                                </select>
                             </div>
 
                             <table class="items-table" id="itemsTable">
                                 <thead>
                                     <tr>
-                                        <th style="width: 50%;">Item / Deskripsi</th>
-                                        <th class="text-center" style="width: 10%;">Jumlah</th>
-                                        <th class="text-right" style="width: 15%;">Harga</th>
-                                        <th class="text-right" style="width: 15%;">Total</th>
-                                        <th style="width: 10%;"></th>
+                                        <th style="width: 50%;">DESKRIPSI</th>
+                                        <th class="text-center" style="width: 15%;">JUMLAH</th>
+                                        <th class="text-right" style="width: 15%;">HARGA</th>
+                                        <th class="text-right" style="width: 15%;">TOTAL</th>
+                                        <th style="width: 5%;"></th>
                                     </tr>
                                 </thead>
                                 <tbody id="itemsBody">
@@ -296,17 +325,13 @@
                                                     <input type="number" class="form-control item-rate text-right"
                                                            value="{{ $item['rate'] ?? 0 }}" min="0" step="0.01" required>
                                                 </td>
-                                                <td class="text-right item-amount">
-                                                    {{-- Akan diupdate oleh JS calculateTotals --}}
-                                                    {{ isset($item['amount']) ? $item['amount'] : 0 }}
-                                                </td>
+                                                <td class="text-right item-amount">Rp 0</td>
                                                 <td class="text-center">
-                                                    <button type="button" class="btn-remove-item" onclick="removeItem(this)">Hapus</button>
+                                                    <button type="button" class="btn-remove-item" onclick="removeItem(this)">×</button>
                                                 </td>
                                             </tr>
                                         @endforeach
                                     @else
-                                        {{-- fallback kalau tidak ada items --}}
                                         <tr class="item-row">
                                             <td>
                                                 <input type="text" class="form-control item-desc"
@@ -322,7 +347,7 @@
                                             </td>
                                             <td class="text-right item-amount">Rp 0</td>
                                             <td class="text-center">
-                                                <button type="button" class="btn-remove-item" onclick="removeItem(this)">Hapus</button>
+                                                <button type="button" class="btn-remove-item" onclick="removeItem(this)">×</button>
                                             </td>
                                         </tr>
                                     @endif
@@ -334,64 +359,72 @@
                             </button>
 
                             <div class="totals-section">
-                                <div class="total-row">
-                                    <span>Subtotal</span>
-                                    <span id="subtotal">
-                                        {{-- akan diisi JS, tapi kasih default --}}
-                                        {{ isset($invoice->subtotal) ? $invoice->formatCurrency($invoice->subtotal) : 'Rp 0' }}
-                                    </span>
-                                </div>
-                                <div class="total-row">
-                                    <span>Pajak (%)</span>
-                                    <input type="number" name="tax_percentage" id="taxPercent"
-                                           value="{{ old('tax_percentage', $invoice->tax_percentage ?? 0) }}"
-                                           step="0.01" min="0" max="100">
-                                </div>
-                                <div class="total-row">
-                                    <span>Diskon</span>
-                                    <input type="number" name="discount_amount" id="discount"
-                                           value="{{ old('discount_amount', $invoice->discount_amount ?? 0) }}"
-                                           step="0.01" min="0">
-                                </div>
-                                <div class="total-row">
-                                    <span>Ongkir</span>
-                                    <input type="number" name="shipping_amount" id="shipping"
-                                           value="{{ old('shipping_amount', $invoice->shipping_amount ?? 0) }}"
-                                           step="0.01" min="0">
-                                </div>
-                                <div class="total-row grand-total">
-                                    <span>Total</span>
-                                    <span id="total">
-                                        {{ isset($invoice->total) ? $invoice->formatCurrency($invoice->total) : 'Rp 0' }}
-                                    </span>
-                                </div>
-                                <div class="total-row">
-                                    <span>Dibayar</span>
-                                    <input type="number" name="amount_paid" id="amountPaid"
-                                           value="{{ old('amount_paid', $invoice->amount_paid ?? 0) }}"
-                                           step="0.01" min="0">
-                                </div>
-                                <div class="total-row grand-total">
-                                    <span>Sisa</span>
-                                    <span id="balanceDue">
-                                        {{ isset($invoice->balance_due) ? $invoice->formatCurrency($invoice->balance_due) : 'Rp 0' }}
-                                    </span>
-                                </div>
+                                <table style="width: 100%;">
+                                    <tr>
+                                        <td class="total-row" style="color: #666;">Subtotal:</td>
+                                        <td class="total-row" style="text-align: right; font-weight: bold;" id="subtotal">Rp 0</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="total-row" style="color: #666;">Pajak (%):</td>
+                                        <td class="total-row" style="text-align: right;">
+                                            <input type="number" name="tax_percentage" id="taxPercent"
+                                                   value="{{ old('tax_percentage', $invoice->tax_percentage ?? 0) }}"
+                                                   step="0.01" min="0" max="100">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="total-row" style="color: #666;">Diskon:</td>
+                                        <td class="total-row" style="text-align: right;">
+                                            <input type="number" name="discount_amount" id="discount"
+                                                   value="{{ old('discount_amount', $invoice->discount_amount ?? 0) }}"
+                                                   step="0.01" min="0">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="total-row" style="color: #666;">Ongkir:</td>
+                                        <td class="total-row" style="text-align: right;">
+                                            <input type="number" name="shipping_amount" id="shipping"
+                                                   value="{{ old('shipping_amount', $invoice->shipping_amount ?? 0) }}"
+                                                   step="0.01" min="0">
+                                        </td>
+                                    </tr>
+                                    <tr class="grand-total">
+                                        <td>TOTAL:</td>
+                                        <td style="text-align: right;" id="total">Rp 0</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="total-row" style="color: #666;">Dibayar:</td>
+                                        <td class="total-row" style="text-align: right;">
+                                            <input type="number" name="amount_paid" id="amountPaid"
+                                                   value="{{ old('amount_paid', $invoice->amount_paid ?? 0) }}"
+                                                   step="0.01" min="0">
+                                        </td>
+                                    </tr>
+                                    <tr class="grand-total" style="background-color: #f5f5f5;">
+                                        <td style="color: #d32f2f;">SISA:</td>
+                                        <td style="text-align: right; color: #d32f2f;" id="balanceDue">Rp 0</td>
+                                    </tr>
+                                </table>
                             </div>
 
-                            <div class="party-section mt-4">
-                                <label>Catatan</label>
+                            @if($invoice->notes || old('notes'))
+                            <div class="notes-section">
+                                <h4>Catatan:</h4>
                                 <textarea name="notes" class="form-control" rows="3"
                                           placeholder="Catatan tambahan jika diperlukan">{{ old('notes', $invoice->notes) }}</textarea>
                             </div>
+                            @endif
 
-                            <div class="party-section mt-3">
-                                <label>Syarat & Ketentuan</label>
+                            @if($invoice->terms || old('terms'))
+                            <div class="notes-section">
+                                <h4>Syarat & Ketentuan:</h4>
                                 <textarea name="terms" class="form-control" rows="3"
                                           placeholder="Syarat pembayaran, denda keterlambatan, dll">{{ old('terms', $invoice->terms) }}</textarea>
                             </div>
+                            @endif
 
                             <input type="hidden" name="items" id="itemsData">
+                            <input type="hidden" name="currency" value="{{ old('currency', $invoice->currency ?? 'IDR') }}">
                             <input type="hidden" name="theme" value="{{ old('theme', $invoice->theme ?? 'classic') }}">
                         </div>
 
@@ -434,7 +467,7 @@
             </td>
             <td class="text-right item-amount">Rp 0</td>
             <td class="text-center">
-                <button type="button" class="btn-remove-item" onclick="removeItem(this)">Hapus</button>
+                <button type="button" class="btn-remove-item" onclick="removeItem(this)">×</button>
             </td>
         `;
 
@@ -456,14 +489,13 @@
 
     function calculateTotals() {
         const rows = document.querySelectorAll('.item-row');
-        const currency = document.getElementById('currency').value;
         let subtotal = 0;
 
         rows.forEach(row => {
             const qty = parseFloat(row.querySelector('.item-qty').value) || 0;
             const rate = parseFloat(row.querySelector('.item-rate').value) || 0;
             const amount = qty * rate;
-            row.querySelector('.item-amount').textContent = formatCurrency(amount, currency);
+            row.querySelector('.item-amount').textContent = formatCurrency(amount);
             subtotal += amount;
         });
 
@@ -476,19 +508,13 @@
         const total = subtotal + taxAmount - discount + shipping;
         const balanceDue = total - amountPaid;
 
-        document.getElementById('subtotal').textContent = formatCurrency(subtotal, currency);
-        document.getElementById('total').textContent = formatCurrency(total, currency);
-        document.getElementById('balanceDue').textContent = formatCurrency(balanceDue, currency);
+        document.getElementById('subtotal').textContent = formatCurrency(subtotal);
+        document.getElementById('total').textContent = formatCurrency(total);
+        document.getElementById('balanceDue').textContent = formatCurrency(balanceDue);
     }
 
-    function formatCurrency(amount, currency) {
-        if (currency === 'IDR') {
-            return 'Rp ' + Math.round(amount).toLocaleString('id-ID');
-        }
-
-        const symbols = { USD: '$', EUR: '€', GBP: '£' };
-        const symbol = symbols[currency] || '$';
-        return symbol + amount.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
+    function formatCurrency(amount) {
+        return 'Rp ' + Math.round(amount).toLocaleString('id-ID');
     }
 
     document.getElementById('invoiceForm').addEventListener('submit', function(e) {
@@ -511,12 +537,10 @@
         });
 
         document.getElementById('itemsData').value = JSON.stringify(items);
-
         this.submit();
     });
 
     // Event listeners
-    document.getElementById('currency').addEventListener('change', calculateTotals);
     document.getElementById('taxPercent').addEventListener('input', calculateTotals);
     document.getElementById('discount').addEventListener('input', calculateTotals);
     document.getElementById('shipping').addEventListener('input', calculateTotals);
@@ -526,7 +550,7 @@
         input.addEventListener('input', calculateTotals);
     });
 
-    // hitung ulang saat halaman pertama kali dibuka
+    // Hitung saat load
     calculateTotals();
 </script>
 @endsection

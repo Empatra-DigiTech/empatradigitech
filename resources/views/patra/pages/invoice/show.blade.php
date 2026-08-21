@@ -9,26 +9,70 @@
     .invoice-box {
         max-width: 900px;
         margin: auto;
-        padding: 30px;
+        padding: 40px;
         background: white;
-        box-shadow: 0 0 10px rgba(0, 0, 0, .15);
+        box-shadow: 0 2px 10px rgba(0, 0, 0, .1);
     }
 
     .invoice-header {
         display: flex;
         justify-content: space-between;
+        align-items: flex-start;
         margin-bottom: 40px;
         padding-bottom: 20px;
-        border-bottom: 2px solid #eee;
+        border-bottom: 2px solid #333;
+    }
+
+    .company-info {
+        display: flex;
+        align-items: flex-start;
+        gap: 15px;
+    }
+
+    .logo-container {
+        width: 80px;
+        height: 80px;
+        flex-shrink: 0;
+    }
+
+    .logo-container img {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+    }
+
+    .company-details h3 {
+        font-size: 18px;
+        font-weight: bold;
+        margin-bottom: 8px;
+        color: #333;
+    }
+
+    .company-details p {
+        margin: 3px 0;
+        color: #666;
+        font-size: 12px;
+        line-height: 1.6;
     }
 
     .invoice-title h1 {
         font-size: 36px;
         margin: 0;
-        color: #333;
+        color: #1a237e;
+        font-weight: bold;
+    }
+
+    .invoice-number {
+        font-size: 16px;
+        color: #666;
+        margin-top: 10px;
     }
 
     .invoice-info {
+        margin: 30px 0;
+    }
+
+    .invoice-parties {
         display: grid;
         grid-template-columns: 1fr 1fr;
         gap: 30px;
@@ -36,13 +80,45 @@
     }
 
     .info-section h4 {
-        font-size: 14px;
+        font-size: 11px;
         color: #666;
+        text-transform: uppercase;
         margin-bottom: 10px;
+        letter-spacing: 0.5px;
+        font-weight: 600;
     }
 
     .info-section p {
-        margin: 5px 0;
+        margin: 4px 0;
+        color: #333;
+        font-size: 14px;
+    }
+
+    .info-section strong {
+        font-weight: bold;
+        color: #000;
+    }
+
+    .details-table {
+        width: 100%;
+    }
+
+    .details-table tr {
+        border-bottom: 1px solid #f0f0f0;
+    }
+
+    .details-table td {
+        padding: 8px 0;
+        font-size: 14px;
+    }
+
+    .details-table .label {
+        color: #666;
+    }
+
+    .details-table .value {
+        text-align: right;
+        font-weight: bold;
         color: #333;
     }
 
@@ -57,37 +133,96 @@
         color: white;
     }
 
-    .invoice-table th,
-    .invoice-table td {
-        padding: 12px;
+    .invoice-table th {
+        padding: 12px 10px;
         text-align: left;
+        font-size: 11px;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        font-weight: 600;
     }
 
-    .invoice-table tbody tr {
-        border-bottom: 1px solid #eee;
+    .invoice-table td {
+        padding: 12px 10px;
+        border-bottom: 1px solid #e0e0e0;
+        font-size: 14px;
+    }
+
+    .invoice-table tbody tr:last-child td {
+        border-bottom: 2px solid #333;
+    }
+
+    .totals-section {
+        margin-left: auto;
+        width: 350px;
+        margin-top: 30px;
     }
 
     .totals-table {
-        margin-left: auto;
-        width: 300px;
-        margin-top: 20px;
+        width: 100%;
     }
 
     .totals-table tr td {
         padding: 8px 0;
+        font-size: 14px;
+    }
+
+    .totals-table tr td:first-child {
+        color: #666;
+    }
+
+    .totals-table tr td:last-child {
+        text-align: right;
+        font-weight: bold;
+        color: #333;
     }
 
     .totals-table tr.total-row td {
         border-top: 2px solid #333;
         padding-top: 15px;
+        font-size: 16px;
         font-weight: bold;
+        color: #1a237e;
+    }
+
+    .totals-table tr.balance-row {
+        background-color: #f5f5f5;
+    }
+
+    .totals-table tr.balance-row td {
+        padding: 10px;
         font-size: 18px;
+        font-weight: bold;
+        color: #d32f2f;
     }
 
     .notes-section {
         margin-top: 40px;
         padding-top: 20px;
-        border-top: 1px solid #eee;
+        border-top: 1px solid #e0e0e0;
+    }
+
+    .notes-section h4 {
+        font-size: 12px;
+        color: #666;
+        text-transform: uppercase;
+        margin-bottom: 10px;
+        letter-spacing: 0.5px;
+    }
+
+    .notes-section p {
+        color: #333;
+        white-space: pre-line;
+        line-height: 1.6;
+        font-size: 14px;
+    }
+
+    .text-right {
+        text-align: right;
+    }
+
+    .text-center {
+        text-align: center;
     }
 
     @media print {
@@ -125,72 +260,85 @@
     </div>
 
     <div class="invoice-box">
+        <!-- Header dengan Logo -->
         <div class="invoice-header">
-            <div>
-                @if($result->from_name)
-                    <h3>{{ $result->from_name }}</h3>
-                    <p style="white-space: pre-line;">{{ $result->from_address }}</p>
-                @endif
+            <div class="company-info">
+                <div class="logo-container">
+                    <img src="{{ asset('images/logo.png') }}" alt="Company Logo">
+                </div>
+                <div class="company-details">
+                    @if($result->from_name)
+                        <h3>{{ $result->from_name }}</h3>
+                        <p style="white-space: pre-line;">{{ $result->from_address }}</p>
+                    @endif
+                </div>
             </div>
             <div class="invoice-title">
                 <h1>INVOICE</h1>
-                <p style="font-size: 18px; color: #666;"># {{ $result->invoice_number }}</p>
-            </div>
-        </div>
-
-        <div class="invoice-info">
-            <div>
-                <div class="info-section mb-3">
-                    <h4>TAGIH KE:</h4>
-                    <p><strong>{{ $result->bill_to_name }}</strong></p>
-                    <p style="white-space: pre-line;">{{ $result->bill_to_address }}</p>
-                </div>
-
-                @if($result->ship_to_name)
-                <div class="info-section">
-                    <h4>KIRIM KE:</h4>
-                    <p><strong>{{ $result->ship_to_name }}</strong></p>
-                    <p style="white-space: pre-line;">{{ $result->ship_to_address }}</p>
-                </div>
+                <p class="invoice-number"># {{ $result->invoice_number }}</p>
+                @if($result->balance_due <= 0)
+                    <span class="badge badge-success mt-2">LUNAS</span>
+                @elseif($result->due_date && \Carbon\Carbon::parse($result->due_date)->isPast())
+                    <span class="badge badge-danger mt-2">JATUH TEMPO</span>
+                @else
+                    <span class="badge badge-warning mt-2">BELUM LUNAS</span>
                 @endif
             </div>
+        </div>
 
-            <div>
-                <table style="width: 100%;">
-                    <tr>
-                        <td style="padding: 8px 0; color: #666;">Tanggal Invoice:</td>
-                        <td style="text-align: right; padding: 8px 0;">
-                            <strong>{{ Carbon\Carbon::parse($result->invoice_date)->format('d/m/Y') }}</strong>
-                        </td>
-                    </tr>
-                    @if($result->payment_terms)
-                    <tr>
-                        <td style="padding: 8px 0; color: #666;">Syarat Pembayaran:</td>
-                        <td style="text-align: right; padding: 8px 0;">
-                            <strong>{{ $result->payment_terms }}</strong>
-                        </td>
-                    </tr>
+        <!-- Invoice Info -->
+        <div class="invoice-info">
+            <div class="invoice-parties">
+                <div>
+                    <div class="info-section mb-3">
+                        <h4>Tagih Ke:</h4>
+                        <p><strong>{{ $result->bill_to_name }}</strong></p>
+                        <p style="white-space: pre-line;">{{ $result->bill_to_address }}</p>
+                    </div>
+
+                    @if($result->ship_to_name)
+                    <div class="info-section">
+                        <h4>Kirim Ke:</h4>
+                        <p><strong>{{ $result->ship_to_name }}</strong></p>
+                        <p style="white-space: pre-line;">{{ $result->ship_to_address }}</p>
+                    </div>
                     @endif
-                    @if($result->due_date)
-                    <tr>
-                        <td style="padding: 8px 0; color: #666;">Jatuh Tempo:</td>
-                        <td style="text-align: right; padding: 8px 0;">
-                            <strong>{{ Carbon\Carbon::parse($result->due_date)->format('d/m/Y') }}</strong>
-                        </td>
-                    </tr>
-                    @endif
-                    @if($result->po_number)
-                    <tr>
-                        <td style="padding: 8px 0; color: #666;">No. PO:</td>
-                        <td style="text-align: right; padding: 8px 0;">
-                            <strong>{{ $result->po_number }}</strong>
-                        </td>
-                    </tr>
-                    @endif
-                </table>
+                </div>
+
+                <div>
+                    <table class="details-table">
+                        <tr>
+                            <td class="label">Tanggal Invoice:</td>
+                            <td class="value">
+                                {{ Carbon\Carbon::parse($result->invoice_date)->format('d/m/Y') }}
+                            </td>
+                        </tr>
+                        @if($result->payment_terms)
+                        <tr>
+                            <td class="label">Syarat Pembayaran:</td>
+                            <td class="value">{{ $result->payment_terms }}</td>
+                        </tr>
+                        @endif
+                        @if($result->due_date)
+                        <tr>
+                            <td class="label">Jatuh Tempo:</td>
+                            <td class="value">
+                                {{ Carbon\Carbon::parse($result->due_date)->format('d/m/Y') }}
+                            </td>
+                        </tr>
+                        @endif
+                        @if($result->po_number)
+                        <tr>
+                            <td class="label">No. PO:</td>
+                            <td class="value">{{ $result->po_number }}</td>
+                        </tr>
+                        @endif
+                    </table>
+                </div>
             </div>
         </div>
 
+        <!-- Items Table -->
         <table class="invoice-table">
             <thead>
                 <tr>
@@ -214,56 +362,61 @@
             </tbody>
         </table>
 
-        <table class="totals-table">
-            <tr>
-                <td>Subtotal:</td>
-                <td style="text-align: right;">{{ $result->formatCurrency($result->subtotal) }}</td>
-            </tr>
-            @if($result->tax_percentage > 0)
-            <tr>
-                <td>Pajak ({{ $result->tax_percentage }}%):</td>
-                <td style="text-align: right;">{{ $result->formatCurrency($result->tax_amount) }}</td>
-            </tr>
-            @endif
-            @if($result->discount_amount > 0)
-            <tr>
-                <td>Diskon:</td>
-                <td style="text-align: right;">- {{ $result->formatCurrency($result->discount_amount) }}</td>
-            </tr>
-            @endif
-            @if($result->shipping_amount > 0)
-            <tr>
-                <td>Ongkir:</td>
-                <td style="text-align: right;">{{ $result->formatCurrency($result->shipping_amount) }}</td>
-            </tr>
-            @endif
-            <tr class="total-row">
-                <td>TOTAL:</td>
-                <td style="text-align: right;">{{ $result->formatCurrency($result->total) }}</td>
-            </tr>
-            @if($result->amount_paid > 0)
-            <tr>
-                <td>Dibayar:</td>
-                <td style="text-align: right;">- {{ $result->formatCurrency($result->amount_paid) }}</td>
-            </tr>
-            <tr class="total-row">
-                <td>SISA:</td>
-                <td style="text-align: right;">{{ $result->formatCurrency($result->balance_due) }}</td>
-            </tr>
-            @endif
-        </table>
+        <!-- Totals -->
+        <div class="totals-section">
+            <table class="totals-table">
+                <tr>
+                    <td>Subtotal:</td>
+                    <td>{{ $result->formatCurrency($result->subtotal) }}</td>
+                </tr>
+                @if($result->tax_percentage > 0)
+                <tr>
+                    <td>Pajak ({{ $result->tax_percentage }}%):</td>
+                    <td>{{ $result->formatCurrency($result->tax_amount) }}</td>
+                </tr>
+                @endif
+                @if($result->discount_amount > 0)
+                <tr>
+                    <td>Diskon:</td>
+                    <td>- {{ $result->formatCurrency($result->discount_amount) }}</td>
+                </tr>
+                @endif
+                @if($result->shipping_amount > 0)
+                <tr>
+                    <td>Ongkir:</td>
+                    <td>{{ $result->formatCurrency($result->shipping_amount) }}</td>
+                </tr>
+                @endif
+                <tr class="total-row">
+                    <td>TOTAL:</td>
+                    <td>{{ $result->formatCurrency($result->total) }}</td>
+                </tr>
+                @if($result->amount_paid > 0)
+                <tr>
+                    <td>Dibayar:</td>
+                    <td>- {{ $result->formatCurrency($result->amount_paid) }}</td>
+                </tr>
+                <tr class="balance-row">
+                    <td>SISA:</td>
+                    <td>{{ $result->formatCurrency($result->balance_due) }}</td>
+                </tr>
+                @endif
+            </table>
+        </div>
 
+        <!-- Notes -->
         @if($result->notes)
         <div class="notes-section">
-            <h4>CATATAN:</h4>
-            <p style="white-space: pre-line;">{{ $result->notes }}</p>
+            <h4>Catatan:</h4>
+            <p>{{ $result->notes }}</p>
         </div>
         @endif
 
+        <!-- Terms -->
         @if($result->terms)
         <div class="notes-section">
-            <h4>SYARAT & KETENTUAN:</h4>
-            <p style="white-space: pre-line;">{{ $result->terms }}</p>
+            <h4>Syarat & Ketentuan:</h4>
+            <p>{{ $result->terms }}</p>
         </div>
         @endif
     </div>

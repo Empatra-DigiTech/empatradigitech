@@ -50,15 +50,29 @@
 
         .company-info {
             text-align: left;
+            display: flex;
+            align-items: flex-start;
         }
 
-        .company-info h2 {
+        .company-logo {
+            width: 80px;
+            height: 80px;
+            margin-right: 15px;
+        }
+
+        .company-logo img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        .company-details h2 {
             font-size: 18px;
             margin-bottom: 8px;
             color: #333;
         }
 
-        .company-info p {
+        .company-details p {
             color: #666;
             margin: 3px 0;
         }
@@ -259,10 +273,17 @@
             <table>
                 <tr>
                     <td class="company-info" style="width: 50%;">
-                        @if($invoice->from_name)
-                            <h2>{{ $invoice->from_name }}</h2>
-                            <p style="white-space: pre-line;">{{ $invoice->from_address }}</p>
-                        @endif
+                        <div style="display: flex; align-items: flex-start;">
+                            <div class="company-logo">
+                                <img src="{{ public_path('images/logo.png') }}" alt="Logo">
+                            </div>
+                            <div class="company-details">
+                                @if($invoice->from_name)
+                                    <h2>{{ $invoice->from_name }}</h2>
+                                    <p style="white-space: pre-line;">{{ $invoice->from_address }}</p>
+                                @endif
+                            </div>
+                        </div>
                     </td>
                     <td class="invoice-title" style="width: 50%;">
                         <h1>INVOICE</h1>
