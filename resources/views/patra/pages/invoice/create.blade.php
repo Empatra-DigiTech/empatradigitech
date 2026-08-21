@@ -4,6 +4,11 @@
 @section('breadcumb', 'Invoice')
 @section('breadcumb_child', 'Create')
 
+@php
+    $company = App\Models\Pengaturan::first();
+@endphp
+
+
 @section('css')
 <style>
     .invoice-preview {
@@ -320,62 +325,89 @@
                                 </div>
                             </div>
 
-                            <!-- Invoice Info -->
-                            <div class="invoice-info">
-                                <div class="invoice-parties">
+                            <!-- Info Perusahaan (Read-only, dari Pengaturan) -->
+                            @if($company)
+                            <div class="alert alert-info mb-4">
+                                <div class="d-flex align-items-start">
+                                    @if($company->website_logo)
+                                        <img src="{{ asset('storage/' . $company->website_logo) }}"
+                                             alt="Logo" style="max-width: 80px; max-height: 50px; margin-right: 15px;">
+                                    @endif
                                     <div>
-                                        <div class="info-section">
-                                            <h4>Tagih Ke:</h4>
-                                            <input type="text" name="bill_to_name" class="form-control"
-                                                   placeholder="Nama Klien" required>
-                                            <textarea name="bill_to_address" class="form-control" rows="3"
-                                                      placeholder="Alamat Klien"></textarea>
-                                        </div>
-
-                                        <div class="info-section mt-3">
-                                            <h4>Kirim Ke: (Opsional)</h4>
-                                            <input type="text" name="ship_to_name" class="form-control"
-                                                   placeholder="Nama Penerima">
-                                            <textarea name="ship_to_address" class="form-control" rows="3"
-                                                      placeholder="Alamat Pengiriman"></textarea>
-                                        </div>
+                                        <strong>{{ $company->website_name }}</strong><br>
+                                        @if($company->website_address)
+                                            <small style="white-space: pre-line;">{{ $company->website_address }}</small><br>
+                                        @endif
+                                        @if($company->website_phone)
+                                            <small><i class="fa fa-phone"></i> {{ $company->website_phone }}</small>
+                                        @endif
+                                        @if($company->website_email)
+                                            <small><i class="fa fa-envelope"></i> {{ $company->website_email }}</small>
+                                        @endif
                                     </div>
+                                </div>
+                                <small class="text-muted d-block mt-2">
+                                    <i class="fa fa-info-circle"></i> Informasi perusahaan diambil dari
+                                    <a href="{{ route('patra.pengaturan.index') }}" target="_blank">Pengaturan</a>
+                                </small>
+                            </div>
+                            @endif
 
-                                    <div>
-                                        <table class="details-table">
-                                            <tr>
-                                                <td class="label">Tanggal Invoice:</td>
-                                                <td class="value">
-                                                    <input type="date" name="invoice_date" class="form-control"
-                                                           value="{{ date('Y-m-d') }}" required>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td class="label">Syarat Pembayaran:</td>
-                                                <td class="value">
-                                                    <input type="text" name="payment_terms" class="form-control"
-                                                           placeholder="Net 30">
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td class="label">Jatuh Tempo:</td>
-                                                <td class="value">
-                                                    <input type="date" name="due_date" class="form-control">
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td class="label">No. PO:</td>
-                                                <td class="value">
-                                                    <input type="text" name="po_number" class="form-control"
-                                                           placeholder="Nomor Purchase Order">
-                                                </td>
-                                            </tr>
-                                        </table>
+                            <div class="invoice-parties">
+                                <div class="party-section">
+                                    <label>Tagih Ke (Bill To)</label>
+                                    <input type="text" name="bill_to_name" class="form-control mb-2"
+                                           placeholder="Nama Klien" required>
+                                    <textarea name="bill_to_address" class="form-control" rows="3"
+                                              placeholder="Alamat Klien"></textarea>
+                                </div>
+
+                                <div class="party-section">
+                                    <label>Kirim Ke (Ship To) - Opsional</label>
+                                    <input type="text" name="ship_to_name" class="form-control mb-2"
+                                           placeholder="Nama Penerima">
+                                    <textarea name="ship_to_address" class="form-control" rows="3"
+                                              placeholder="Alamat Pengiriman"></textarea>
+                                </div>
+                            </div>
+
+                            <!-- Rest of form tetap sama -->
+                            <div class="invoice-details">
+                                <div>
+                                    <div class="detail-row">
+                                        <label>Tanggal Invoice</label>
+                                        <input type="date" name="invoice_date" class="form-control"
+                                               value="{{ date('Y-m-d') }}" required>
+                                    </div>
+                                    <div class="detail-row">
+                                        <label>Syarat Pembayaran</label>
+                                        <input type="text" name="payment_terms" class="form-control"
+                                               placeholder="Net 30">
+                                    </div>
+                                </div>
+                                <div>
+                                    <div class="detail-row">
+                                        <label>Jatuh Tempo</label>
+                                        <input type="date" name="due_date" class="form-control">
+                                    </div>
+                                    <div class="detail-row">
+                                        <label>No. PO</label>
+                                        <input type="text" name="po_number" class="form-control"
+                                               placeholder="Nomor Purchase Order">
                                     </div>
                                 </div>
                             </div>
 
-                            <!-- Items Table -->
+                            <div class="detail-row mb-3">
+                                <label>Mata Uang</label>
+                                <select name="currency" id="currency" class="form-control" style="width: 200px;">
+                                    <option value="IDR" selected>IDR (Rp)</option>
+                                    <option value="USD">USD ($)</option>
+                                    <option value="EUR">EUR (€)</option>
+                                    <option value="GBP">GBP (£)</option>
+                                </select>
+                            </div>
+
                             <table class="items-table" id="itemsTable">
                                 <thead>
                                     <tr>

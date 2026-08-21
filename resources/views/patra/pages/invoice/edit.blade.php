@@ -4,6 +4,10 @@
 @section('breadcumb', 'Invoice')
 @section('breadcumb_child', 'Edit')
 
+@php
+    $company = App\Models\Pengaturan::first();
+@endphp
+
 @section('css')
 <style>
     .invoice-preview {
@@ -235,25 +239,50 @@
                                 </div>
                             </div>
 
-                            <div class="invoice-parties">
-                                <div>
-                                    <div class="party-section mb-3">
-                                        <label>Tagih Ke:</label>
+                            @if($company)
+                                <div class="alert alert-info mb-4">
+                                    <div class="d-flex align-items-start">
+                                        @if($company->website_logo)
+                                            <img src="{{ asset('storage/' . $company->website_logo) }}"
+                                                alt="Logo" style="max-width: 80px; max-height: 50px; margin-right: 15px;">
+                                        @endif
+                                        <div>
+                                            <strong>{{ $company->website_name }}</strong><br>
+                                            @if($company->website_address)
+                                                <small style="white-space: pre-line;">{{ $company->website_address }}</small><br>
+                                            @endif
+                                            @if($company->website_phone)
+                                                <small><i class="fa fa-phone"></i> {{ $company->website_phone }}</small>
+                                            @endif
+                                            @if($company->website_email)
+                                                <small><i class="fa fa-envelope"></i> {{ $company->website_email }}</small>
+                                            @endif
+                                        </div>
+                                    </div>
+                                    <small class="text-muted d-block mt-2">
+                                        <i class="fa fa-info-circle"></i> Informasi perusahaan diambil dari
+                                        <a href="{{ route('patra.pengaturan.index') }}" target="_blank">Pengaturan</a>
+                                    </small>
+                                </div>
+                                @endif
+
+                                <div class="invoice-parties">
+                                    <div class="party-section">
+                                        <label>Tagih Ke (Bill To)</label>
                                         <input type="text" name="bill_to_name" class="form-control mb-2"
-                                               placeholder="Nama Klien" required
-                                               value="{{ old('bill_to_name', $invoice->bill_to_name) }}">
+                                            placeholder="Nama Klien" required
+                                            value="{{ old('bill_to_name', $invoice->bill_to_name) }}">
                                         <textarea name="bill_to_address" class="form-control" rows="3"
-                                                  placeholder="Alamat Klien">{{ old('bill_to_address', $invoice->bill_to_address) }}</textarea>
+                                                placeholder="Alamat Klien">{{ old('bill_to_address', $invoice->bill_to_address) }}</textarea>
                                     </div>
 
-                                    @if($invoice->ship_to_name || old('ship_to_name'))
                                     <div class="party-section">
                                         <label>Kirim Ke:</label>
                                         <input type="text" name="ship_to_name" class="form-control mb-2"
-                                               placeholder="Nama Penerima"
-                                               value="{{ old('ship_to_name', $invoice->ship_to_name) }}">
+                                            placeholder="Nama Penerima"
+                                            value="{{ old('ship_to_name', $invoice->ship_to_name) }}">
                                         <textarea name="ship_to_address" class="form-control" rows="3"
-                                                  placeholder="Alamat Pengiriman">{{ old('ship_to_address', $invoice->ship_to_address) }}</textarea>
+                                                placeholder="Alamat Pengiriman">{{ old('ship_to_address', $invoice->ship_to_address) }}</textarea>
                                     </div>
                                     @endif
                                 </div>

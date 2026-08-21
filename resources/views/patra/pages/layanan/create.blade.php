@@ -1,5 +1,5 @@
 @extends('patra.layouts.master')
-@section("title","Pejabat ~ EMPATRA DIGITECH")
+@section("title","Team ~ EMPATRA DIGITECH")
 @section("title_breadcumb","Layanan")
 @section('css')
 

@@ -4,8 +4,13 @@
 @section('breadcumb', 'Invoice')
 @section('breadcumb_child', 'Detail')
 
+@php
+    $company = App\Models\Pengaturan::first();
+@endphp
+
 @section('css')
 <style>
+    /* Style tetap sama */
     .invoice-box {
         max-width: 900px;
         margin: auto;
@@ -262,26 +267,51 @@
     <div class="invoice-box">
         <!-- Header dengan Logo -->
         <div class="invoice-header">
-            <div class="company-info">
-                <div class="logo-container">
-                    <img src="{{ asset('images/logo.png') }}" alt="Company Logo">
-                </div>
-                <div class="company-details">
-                    @if($result->from_name)
-                        <h3>{{ $result->from_name }}</h3>
-                        <p style="white-space: pre-line;">{{ $result->from_address }}</p>
+            <div>
+                @if($company && $company->website_logo)
+                    <img src="{{ asset('storage/' . $company->website_logo) }}"
+                         alt="Logo" style="max-width: 150px; max-height: 80px; margin-bottom: 15px; display: block;">
+                @endif
+                @if($company)
+                    <h3>{{ $company->website_name }}</h3>
+                    @if($company->website_address)
+                        <p style="white-space: pre-line;">{{ $company->website_address }}</p>
                     @endif
-                </div>
+                    @if($company->website_phone)
+                        <p style="margin: 5px 0;"><i class="fa fa-phone"></i> {{ $company->website_phone }}</p>
+                    @endif
+                    @if($company->website_email)
+                        <p style="margin: 5px 0;"><i class="fa fa-envelope"></i> {{ $company->website_email }}</p>
+                    @endif
+                @endif
             </div>
             <div class="invoice-title">
                 <h1>INVOICE</h1>
-                <p class="invoice-number"># {{ $result->invoice_number }}</p>
+                <p style="font-size: 18px; color: #666;"># {{ $result->invoice_number }}</p>
                 @if($result->balance_due <= 0)
-                    <span class="badge badge-success mt-2">LUNAS</span>
+                    <span class="badge badge-success">LUNAS</span>
                 @elseif($result->due_date && \Carbon\Carbon::parse($result->due_date)->isPast())
-                    <span class="badge badge-danger mt-2">JATUH TEMPO</span>
+                    <span class="badge badge-danger">JATUH TEMPO</span>
                 @else
-                    <span class="badge badge-warning mt-2">BELUM LUNAS</span>
+                    <span class="badge badge-warning">BELUM LUNAS</span>
+                @endif
+            </div>
+        </div>
+
+        <div class="invoice-info">
+            <div>
+                <div class="info-section mb-3">
+                    <h4>TAGIH KE:</h4>
+                    <p><strong>{{ $result->bill_to_name }}</strong></p>
+                    <p style="white-space: pre-line;">{{ $result->bill_to_address }}</p>
+                </div>
+
+                @if($result->ship_to_name)
+                <div class="info-section">
+                    <h4>KIRIM KE:</h4>
+                    <p><strong>{{ $result->ship_to_name }}</strong></p>
+                    <p style="white-space: pre-line;">{{ $result->ship_to_address }}</p>
+                </div>
                 @endif
             </div>
         </div>

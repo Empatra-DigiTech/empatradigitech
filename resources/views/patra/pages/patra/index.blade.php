@@ -47,14 +47,14 @@
     <!-- small box -->
     <div class="small-box bg-success">
         <div class="inner">
-            <h3>{{ $count_berita }}</h3>
+            <h3>{{ $count_portofolio }}</h3>
 
-        <p>Berita</p>
+        <p>Portofolio</p>
         </div>
         <div class="icon">
             <i class='bx bxs-news' ></i>
         </div>
-        <a href="{{ route('patra.berita.index') }}" class="small-box-footer">Detail <i class="fas fa-arrow-circle-right"></i></a>
+        <a href="{{ route('patra.portofolio.index') }}" class="small-box-footer">Detail <i class="fas fa-arrow-circle-right"></i></a>
     </div>
     </div>
     <!-- ./col -->

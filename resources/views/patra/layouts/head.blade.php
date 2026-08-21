@@ -43,5 +43,8 @@
     <link href="https://cdn.jsdelivr.net/npm/quill@2.0.2/dist/quill.snow.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/trix/1.3.1/trix.css">
 
+    <!-- Modern admin override (loaded last so it wins over AdminLTE defaults) -->
+    <link href="{{URL::to('/')}}/assets/css/patra/modern-admin.css" rel="stylesheet" type="text/css">
+
   @yield("css")
 </head>

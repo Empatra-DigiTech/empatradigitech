@@ -63,11 +63,11 @@
             @endif
 
             <li class="nav-item">
-              <a href="{{route('patra.berita.index')}}" class="nav-link @if(Str::startsWith(request()->route()->getName(), 'patra.berita')) active @endif">
+              <a href="{{route('patra.portofolio.index')}}" class="nav-link @if(Str::startsWith(request()->route()->getName(), 'patra.portofolio')) active @endif">
                 <col class="row">
                 <i class="bx bx-news col-3 bx-tada-hover"></i>
                 <p>
-                  Berita
+                  Portofolio
                 </p>
                 </col>
               </a>
@@ -118,14 +118,14 @@
             </li>
             <!-- END TAMBAHAN -->
 
-            <li class="nav-item">
+            {{-- <li class="nav-item">
               <a href="{{route('patra.kalender.index')}}" class="nav-link @if(Str::startsWith(request()->route()->getName(), 'patra.kalender')) active @endif">
                 <i class="bx bx-calendar col-3 bx-tada-hover"></i>
                 <p>
                   Kalender
                 </p>
               </a>
-            </li>
+            </li> --}}
 
             <li class="nav-item">
               <a href="{{route('patra.kontak.index')}}" class="nav-link @if(Str::startsWith(request()->route()->getName(), 'patra.kontak')) active @endif">
@@ -159,13 +159,15 @@
     </a>
 </li>
             <li class="nav-item">
+
+            {{-- <li class="nav-item">
               <a href="{{route('patra.so.index')}}" class="nav-link @if(Str::startsWith(request()->route()->getName(), 'patra.so')) active @endif">
                 <i class="bx bxs-vector col-3 bx-tada-hover"></i>
                 <p>
                   Struktur Organisasi
                 </p>
               </a>
-            </li>
+            </li> --}}
 
             <li class="nav-item">
               <a href="{{route('patra.vm.index')}}" class="nav-link @if(Str::startsWith(request()->route()->getName(), 'patra.vm')) active @endif">
@@ -177,10 +179,10 @@
             </li>
 
             <li class="nav-item">
-              <a href="{{route('patra.pejabat.index')}}" class="nav-link @if(Str::startsWith(request()->route()->getName(), 'patra.pejabat')) active @endif">
+              <a href="{{route('patra.team.index')}}" class="nav-link @if(Str::startsWith(request()->route()->getName(), 'patra.team')) active @endif">
                 <i class='bx bx-group col-3 bx-tada-hover'></i>
                 <p>
-                  Pejabat
+                  Team
                 </p>
               </a>
             </li>

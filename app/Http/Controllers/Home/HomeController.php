@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Models\Kalender;
 use App\Models\Tautan;
-use App\Models\Berita;
+use App\Models\Portofolio;
 use App\Models\Banner;
 use App\Models\Pengaturan;
 use App\Models\Layanan;
@@ -27,7 +27,10 @@ class HomeController extends Controller
     public function index(Request $request)
     {
         $table_tautan = Tautan::all();
-        $table_berita = Berita::all();
+
+        // FIXED: Changed from orderBy('date') to orderBy('created_at')
+        $table_portofolio = Portofolio::orderBy('created_at', 'DESC')->take(6)->get();
+
         $table_banner = Banner::all();
         $table_layanan = Layanan::all();
         $table_pengaturan = Pengaturan::first();
@@ -47,7 +50,7 @@ class HomeController extends Controller
             ->orderBy('created_at', 'ASC')
             ->get();
 
-        // Fetch the most viewed berita id
+        // Fetch the most viewed portofolio id
         $count_view = DB::table('views')
             ->select('viewable_id', DB::raw('COUNT(*) as total'))
             ->groupBy('viewable_id')
@@ -58,42 +61,39 @@ class HomeController extends Controller
         if ($count_view == null) {
             $data = [
                 'table_tautan' => $table_tautan,
-                'table_berita' => $table_berita,
+                'table_portofolio' => $table_portofolio,
                 'table_banner' => $table_banner,
                 'table_pengaturan' => $table_pengaturan,
                 'table_layanan' => $table_layanan,
                 'table_view' => null,
                 'table_menu' => $table_menu,
-                'paket_website' => $paket_website, // Tambahkan ini
+                'paket_website' => $paket_website,
                 'paket_app' => $paket_app,
             ];
 
             return view($this->view . "index", $data);
         } else {
-            // Get the id of the most viewed berita
+            // Get the id of the most viewed portofolio
             $id_count = $count_view->viewable_id;
-            // Fetch the berita record with the most views
-            $table_view = $table_berita->where('id', $id_count)->first();
+            // Fetch the portofolio record with the most views
+            $table_view = $table_portofolio->where('id', $id_count)->first();
 
 
             $data = [
                 'table_tautan' => $table_tautan,
-                'table_berita' => $table_berita,
+                'table_portofolio' => $table_portofolio,
                 'table_banner' => $table_banner,
                 'table_layanan' => $table_layanan,
                 'table_pengaturan' => $table_pengaturan,
                 'table_view' => $table_view,
                 'count_view' => $count_view,
                 'table_menu' => $table_menu,
-                'paket_website' => $paket_website, // Tambahkan ini
+                'paket_website' => $paket_website,
                 'paket_app' => $paket_app,
             ];
-            // dd($data);
 
             return view($this->view . "index", $data);
         }
-        // return dd($data );
-
     }
 
     //function for calendar handler in json

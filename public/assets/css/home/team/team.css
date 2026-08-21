@@ -1,0 +1,412 @@
+/* ========================================
+   TEAM SECTION STYLES
+   ======================================== */
+
+/* Hero Banner Section */
+.so {
+    position: relative;
+    width: 100%;
+    height: 400px;
+    margin-top: 80px;
+    overflow: hidden;
+    background-color: var(--gray-900);
+}
+
+.so-bg {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+.so-bg img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+}
+
+.so-bg::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(
+        135deg,
+        rgba(15, 60, 93, 0.85) 0%,
+        rgba(176, 46, 54, 0.75) 100%
+    );
+}
+
+/* Section Title */
+.section-title {
+    text-align: center;
+    margin-bottom: var(--spacing-2xl);
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.section-title h2 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: var(--gray-900);
+    position: relative;
+    display: inline-block;
+    padding-bottom: var(--spacing-sm);
+    margin-bottom: 0;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.section-title h2::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80px;
+    height: 4px;
+    background: linear-gradient(90deg, var(--primary) 0%, var(--secondary) 100%);
+    border-radius: 2px;
+}
+
+/* Empty State */
+.empty-state {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: var(--spacing-3xl) var(--spacing-lg);
+    text-align: center;
+    color: var(--gray-500);
+}
+
+.empty-state svg {
+    margin-bottom: var(--spacing-lg);
+    opacity: 0.5;
+}
+
+.empty-state p {
+    font-size: 1.125rem;
+    margin: 0;
+}
+
+/* Team Cards Container */
+.cards {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: var(--spacing-xl);
+    padding-bottom: var(--spacing-3xl);
+    max-width: 1400px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* Team Card */
+.card {
+    position: relative;
+    height: 450px;
+    border-radius: var(--radius-xl);
+    overflow: hidden;
+    background: var(--gray-100);
+    box-shadow: var(--shadow-sm);
+    border: 1px solid var(--gray-200);
+    transition: all var(--transition-base);
+    cursor: pointer;
+}
+
+.card:hover {
+    transform: translateY(-12px);
+    box-shadow: var(--shadow-xl);
+    border-color: var(--gray-300);
+}
+
+/* Card Image */
+.card__image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    transition: transform var(--transition-slow);
+}
+
+.card:hover .card__image {
+    transform: scale(1.08);
+}
+
+/* Card Overlay */
+.card__overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: linear-gradient(
+        180deg,
+        transparent 0%,
+        rgba(15, 60, 93, 0.85) 40%,
+        rgba(15, 60, 93, 0.95) 100%
+    );
+    padding: var(--spacing-xl);
+    transform: translateY(0);
+    transition: all var(--transition-base);
+}
+
+.card:hover .card__overlay {
+    background: linear-gradient(
+        180deg,
+        transparent 0%,
+        rgba(176, 46, 54, 0.85) 40%,
+        rgba(176, 46, 54, 0.95) 100%
+    );
+}
+
+/* Card Header */
+.card__header {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    gap: var(--spacing-sm);
+}
+
+.card__header-text {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    transform: translateY(0);
+    transition: transform var(--transition-base);
+}
+
+.card:hover .card__header-text {
+    transform: translateY(-8px);
+}
+
+/* Card Title (Name) */
+.card__title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--white);
+    margin: 0 0 var(--spacing-xs) 0;
+    line-height: 1.2;
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+    text-align: center;
+    width: 100%;
+}
+
+/* Card Status (Position) */
+.card__status {
+    display: inline-block;
+    font-size: 0.9375rem;
+    font-weight: 500;
+    color: rgba(255, 255, 255, 0.95);
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(10px);
+    padding: 0.375rem 0.875rem;
+    border-radius: var(--radius-md);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    transition: all var(--transition-base);
+    text-align: center;
+    margin-bottom: var(--spacing-sm);
+}
+
+.card:hover .card__status {
+    background: rgba(255, 255, 255, 0.25);
+    border-color: rgba(255, 255, 255, 0.4);
+    transform: translateY(-4px);
+}
+
+/* Social Media Links */
+.card__social {
+    display: flex;
+    gap: var(--spacing-sm);
+    justify-content: center;
+    margin-top: var(--spacing-md);
+    opacity: 0;
+    transform: translateY(10px);
+    transition: all var(--transition-base);
+}
+
+.card:hover .card__social {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.social-link {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(10px);
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    color: white;
+    font-size: 1.125rem;
+    transition: all var(--transition-base);
+    text-decoration: none;
+}
+
+.social-link:hover {
+    transform: translateY(-4px) scale(1.1);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+}
+
+.social-link.linkedin:hover {
+    background: #0077b5;
+    border-color: #0077b5;
+    color: white;
+}
+
+.social-link.instagram:hover {
+    background: linear-gradient(135deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
+    border-color: #bc1888;
+    color: white;
+}
+
+/* ========================================
+   RESPONSIVE DESIGN - TEAM SECTION
+   ======================================== */
+
+@media (max-width: 1200px) {
+    .cards {
+        grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    }
+}
+
+@media (max-width: 992px) {
+    .so {
+        height: 350px;
+    }
+
+    .section-title h2 {
+        font-size: 2.25rem;
+    }
+
+    .cards {
+        grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+        gap: var(--spacing-md);
+    }
+
+    .card {
+        height: 360px;
+    }
+}
+
+@media (max-width: 768px) {
+    .so {
+        margin-top: 70px;
+        height: 300px;
+    }
+
+    .section-title {
+        padding-top: 40px !important;
+    }
+
+    .section-title h2 {
+        font-size: 2rem;
+    }
+
+    .cards {
+        grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    }
+
+    .card {
+        height: 340px;
+    }
+
+    .card__title {
+        font-size: 1.375rem;
+    }
+
+    .card__status {
+        font-size: 0.875rem;
+        padding: 0.3125rem 0.75rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .so {
+        height: 250px;
+    }
+
+    .section-title h2 {
+        font-size: 1.75rem;
+    }
+
+    .cards {
+        grid-template-columns: 1fr;
+        gap: var(--spacing-md);
+    }
+
+    .card {
+        height: 400px;
+    }
+
+    .card__overlay {
+        padding: var(--spacing-lg);
+    }
+
+    .card__title {
+        font-size: 1.5rem;
+    }
+}
+
+/* ========================================
+   ANIMATIONS
+   ======================================== */
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Add animation on page load */
+.card {
+    animation: fadeInUp 0.6s ease-out backwards;
+}
+
+.card:nth-child(1) { animation-delay: 0.1s; }
+.card:nth-child(2) { animation-delay: 0.2s; }
+.card:nth-child(3) { animation-delay: 0.3s; }
+.card:nth-child(4) { animation-delay: 0.4s; }
+.card:nth-child(5) { animation-delay: 0.5s; }
+.card:nth-child(6) { animation-delay: 0.6s; }
+.card:nth-child(7) { animation-delay: 0.7s; }
+.card:nth-child(8) { animation-delay: 0.8s; }
+
+/* ========================================
+   ACCESSIBILITY
+   ======================================== */
+
+@media (prefers-reduced-motion: reduce) {
+    .card,
+    .card__image,
+    .card__overlay,
+    .card__header-text,
+    .card__status {
+        animation: none;
+        transition: none;
+    }
+}
+
+/* Focus state for accessibility */
+.card:focus {
+    outline: 2px solid var(--primary);
+    outline-offset: 4px;
+}

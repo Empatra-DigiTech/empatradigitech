@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -20,30 +19,9 @@
         <!-- Vendor CSS Files -->
         <link href="{{URL::to('/')}}/assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
         <link href="{{URL::to('/')}}/assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
-        <link href="{{URL::to('/')}}/assets/vendor/aos/aos.css" rel="stylesheet">
-        <link href="{{URL::to('/')}}/assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
-        <link href="{{URL::to('/')}}/assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
 
-        {{-- login css --}}
-        <link href="https://fonts.googleapis.com/css?family=Roboto:300,400&display=swap" rel="stylesheet">
-        <link rel="stylesheet" href="{{ asset('assets/fonts/icomoon/style.css') }}">
-        <link rel="stylesheet" href="{{ asset('assets/css/login/owl.carousel.min.css') }}">
-        <link rel="stylesheet" href="{{ asset('assets/css/login/bootstrap.min.css') }}">
-        <link rel="stylesheet" href="{{ asset('assets/css/login/style.css') }}">
-
-        {{-- CDN --}}
-        {{-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous"> --}}
-
-        <!-- Main CSS File -->
-        <link href="{{URL::to('/')}}/assets/css/main.css" rel="stylesheet">
-        <link href="{{URL::to('/')}}/assets/css/profil/so.css" rel="stylesheet">
-        <link href="{{URL::to('/')}}/assets/css/profil/vm.css" rel="stylesheet">
-
-        {{-- KAIADMIN CSS --}}
-        <link rel="stylesheet" href="{{URL::to('/')}}/assets/css/home/plugins.min.css" />
-        <link rel="stylesheet" href="{{URL::to('/')}}/assets/css/home/kaiadmin.min.css" />
-        <!-- CSS Just for demo purpose, don't include it in your project -->
-        <link rel="stylesheet" href="{{URL::to('/')}}/assets/css/home/demo.css" />
+        <!-- Login CSS - CUSTOM STYLING -->
+        <link href="{{URL::to('/')}}/assets/css/login/login.css" rel="stylesheet">
 
     </head>
 <body>
@@ -54,47 +32,46 @@
 
         <div class="container">
             <div class="row align-items-center justify-content-center">
-                <div class="col-md-7">
+                <div class="col-md-12">
                     <h3>Login ke</h3>
-                        <strong>EMPATRA DIGITECH</strong>
-                            <form action="{{ route('auth.login.index') }}" method="POST" class="user">
-                                @csrf
-                                <div class="form-group first">
-                                    <label align="left" for="email">Email</label>
-                                    <input type="email" class="form-control" placeholder="Masukan Email" id="email" name="email">
-                                </div>
-                                <div class="form-group last mb-3">
-                                    <label align="left" for="password">Password</label>
-                                    <input type="password" class="form-control" placeholder="Masukan Password" id="password" name="password">
-                                </div>
-                                <div class="d-flex mb-5 align-items-center">
-                                    <label class="control control--checkbox mb-0"><span class="caption">Remember me</span>
-                                        <input type="checkbox" checked="checked"/>
-                                        <div class="control__indicator"></div>
-                                    </label>
-                                    <span class="ml-auto"><a href="{{ route('auth.forgot_pw.index') }}" class="forgot-pass">Forgot Password</a></span>
-                                </div>
-                                {{-- <!-- {{-- captcha --}}
-                                {{-- <div class="m-3">
-                                    <div class="col-md-4"></div>
-                                    <div class="col-md-6">
-                                        {!! NoCaptcha::display() !!}
-                                        {!! NoCaptcha::renderJs() !!}
-                                    </div>
-                                </div> --}}
-                                {{-- end captcha --}}
-                                <input type="submit" value="Log In" class="btn btn-block btn-primary" style="background-color: #2a0f60 !important; border:none !important;">
-                            </form>
+                    <strong>EMPATRA DIGITECH</strong>
+
+                    <form action="{{ route('auth.login.index') }}" method="POST" class="user">
+                        @csrf
+
+                        <div class="form-group first">
+                            <label for="email">Email</label>
+                            <input type="email" class="form-control" placeholder="Masukan Email" id="email" name="email" required>
                         </div>
+
+                        <div class="form-group last mb-3">
+                            <label for="password">Password</label>
+                            <input type="password" class="form-control" placeholder="Masukan Password" id="password" name="password" required>
+                        </div>
+
+                        <div class="d-flex mb-5 align-items-center">
+                            <label class="control control--checkbox mb-0">
+                                <span class="caption">Remember me</span>
+                                <input type="checkbox" checked="checked"/>
+                                <div class="control__indicator"></div>
+                            </label>
+                            <span class="ml-auto">
+                                <a href="{{ route('auth.forgot_pw.index') }}" class="forgot-pass">Forgot Password</a>
+                            </span>
+                        </div>
+
+                        <input type="submit" value="Log In" class="btn btn-block btn-primary">
+                    </form>
                 </div>
             </div>
         </div>
+        </div>
     </div>
-        {{-- login script --}}
-        <script src="assets/js/login/jquery-3.3.1.min.js"></script>
-        <script src="assets/js/login/popper.min.js"></script>
-        <script src="assets/js/login/bootstrap.min.js"></script>
-        <script src="assets/js/login/main.js"></script>
+
+    <!-- Login Scripts -->
+    <script src="{{URL::to('/')}}/assets/js/login/jquery-3.3.1.min.js"></script>
+    <script src="{{URL::to('/')}}/assets/js/login/popper.min.js"></script>
+    <script src="{{URL::to('/')}}/assets/js/login/bootstrap.min.js"></script>
+    <script src="{{URL::to('/')}}/assets/js/login/main.js"></script>
 </body>
 </html>
-
