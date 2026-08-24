@@ -12,6 +12,7 @@ use App\Models\Banner;
 use App\Models\Pengaturan;
 use App\Models\Layanan;
 use App\Models\Paket;
+use App\Models\Faq;
 use App\Models\Menu;
 
 class HomeController extends Controller
@@ -50,6 +51,11 @@ class HomeController extends Controller
             ->orderBy('created_at', 'ASC')
             ->get();
 
+        $table_faq = Faq::where('is_active', true)
+            ->orderBy('urutan', 'ASC')
+            ->orderBy('created_at', 'ASC')
+            ->get();
+
         // Fetch the most viewed portofolio id
         $count_view = DB::table('views')
             ->select('viewable_id', DB::raw('COUNT(*) as total'))
@@ -69,6 +75,7 @@ class HomeController extends Controller
                 'table_menu' => $table_menu,
                 'paket_website' => $paket_website,
                 'paket_app' => $paket_app,
+                'table_faq' => $table_faq,
             ];
 
             return view($this->view . "index", $data);
@@ -90,6 +97,7 @@ class HomeController extends Controller
                 'table_menu' => $table_menu,
                 'paket_website' => $paket_website,
                 'paket_app' => $paket_app,
+                'table_faq' => $table_faq,
             ];
 
             return view($this->view . "index", $data);

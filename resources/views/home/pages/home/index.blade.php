@@ -630,6 +630,64 @@
 
 
 <!-- ========================================
+     8b. FAQ SECTION
+     ======================================== -->
+@if($table_faq->count())
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+        @foreach($table_faq as $index => $faqItem)
+        {
+            "@type": "Question",
+            "name": @json(strip_tags($faqItem->question)),
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": @json(strip_tags($faqItem->answer))
+            }
+        }@if(!$loop->last),@endif
+        @endforeach
+    ]
+}
+</script>
+
+<section id="faq" class="faq-section">
+    <div class="container">
+        <div class="section-header">
+            <h2 class="section-title">Pertanyaan yang Sering Diajukan</h2>
+            <p class="section-subtitle">Jawaban atas keraguan umum sebelum Anda memutuskan bekerja sama dengan kami</p>
+        </div>
+
+        <div class="faq-accordion">
+            @foreach($table_faq as $index => $faqItem)
+                <div class="faq-item">
+                    <button type="button" class="faq-question" data-faq-toggle aria-expanded="false">
+                        <span>{{ $faqItem->question }}</span>
+                        <i class='bx bx-chevron-down faq-icon'></i>
+                    </button>
+                    <div class="faq-answer">
+                        <div class="faq-answer-inner">
+                            {!! nl2br(e($faqItem->answer)) !!}
+                        </div>
+                    </div>
+                </div>
+            @endforeach
+        </div>
+
+        <div class="faq-cta-note">
+            <p>Masih ada pertanyaan lain?
+                <a href="https://wa.me/6285151811055?text={{ urlencode('Halo Empatra DigiTech, saya ada pertanyaan yang belum terjawab di FAQ.') }}" target="_blank" rel="noopener">
+                    Tanya langsung via WhatsApp
+                </a>
+            </p>
+        </div>
+    </div>
+</section>
+@endif
+
+
+<!-- ========================================
      9. CONTACT SECTION
      ======================================== -->
 <section id="kontak" class="contact-section">
@@ -1135,6 +1193,41 @@ document.addEventListener('DOMContentLoaded', function() {
     // ========================================
     console.log('Total slides in hero:', document.querySelectorAll('.hero-carousel .swiper-slide').length);
     console.log('Total slides in testimonials:', document.querySelectorAll('.testimonials-slider .swiper-slide').length);
+});
+
+// ========================================
+// FAQ ACCORDION
+// ========================================
+
+document.addEventListener('DOMContentLoaded', function() {
+    const faqButtons = document.querySelectorAll('[data-faq-toggle]');
+
+    faqButtons.forEach(function(button) {
+        button.addEventListener('click', function() {
+            const item = button.closest('.faq-item');
+            const answer = item.querySelector('.faq-answer');
+            const isActive = item.classList.contains('active');
+
+            // Close all other items (single-open accordion)
+            document.querySelectorAll('.faq-item.active').forEach(function(openItem) {
+                if (openItem !== item) {
+                    openItem.classList.remove('active');
+                    openItem.querySelector('.faq-answer').style.maxHeight = null;
+                    openItem.querySelector('[data-faq-toggle]').setAttribute('aria-expanded', 'false');
+                }
+            });
+
+            if (isActive) {
+                item.classList.remove('active');
+                answer.style.maxHeight = null;
+                button.setAttribute('aria-expanded', 'false');
+            } else {
+                item.classList.add('active');
+                answer.style.maxHeight = answer.scrollHeight + 'px';
+                button.setAttribute('aria-expanded', 'true');
+            }
+        });
+    });
 });
 
 // ========================================

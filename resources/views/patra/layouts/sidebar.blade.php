@@ -160,6 +160,14 @@
                 </p>
               </a>
             </li>
+            <li class="nav-item">
+              <a href="{{route('patra.faq.index')}}" class="nav-link @if(Str::startsWith(request()->route()->getName(), 'patra.faq')) active @endif">
+                <i class="bx bx-help-circle col-3 bx-tada-hover"></i>
+                <p>
+                  FAQ
+                </p>
+              </a>
+            </li>
 <li class="nav-item">
     <a href="{{route('patra.invoice.index')}}" class="nav-link @if(Str::startsWith(request()->route()->getName(), 'patra.invoice')) active @endif">
         <i class='bx bx-file col-3 bx-tada-hover'></i>

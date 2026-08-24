@@ -78,6 +78,16 @@ Route::group(["middleware" => ["patra.access"], "namespace" => "App\Http\Control
         Route::delete('/{id}', 'BlogController@destroy')->name("destroy");
     });
 
+    Route::group(["as" => "faq.", "prefix" => "faq"], function () {
+        Route::get('/', 'FaqController@index')->name("index");
+        Route::get('/create', 'FaqController@create')->name("create");
+        Route::post('/', 'FaqController@store')->name("store");
+        Route::get('/{id}', 'FaqController@show')->name("show");
+        Route::get('/{id}/edit', 'FaqController@edit')->name("edit");
+        Route::put('/{id}', 'FaqController@update')->name("update");
+        Route::delete('/{id}', 'FaqController@destroy')->name("destroy");
+    });
+
     Route::group(["as" => "banner.", "prefix" => "banner"], function () {
         Route::get('/', 'BannerController@index')->name("index")->middleware('role:' . implode('|', [RoleEnum::SuperAdmin, RoleEnum::Admin]));
         Route::get('/create', 'BannerController@create')->name("create")->middleware('role:' . implode('|', [RoleEnum::SuperAdmin, RoleEnum::Admin]));
