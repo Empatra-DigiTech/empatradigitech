@@ -38,69 +38,118 @@
                     <div class="article-content">
                         <!-- Article Header -->
                         <div class="article-header">
+                            @if($result->industry)
+                                <span class="case-study-kicker">Case Study — {{ $result->industry }}</span>
+                            @else
+                                <span class="case-study-kicker">Case Study</span>
+                            @endif
                             <h1 class="article-title">{{ $result->title }}</h1>
                         </div>
 
-                        <!-- Info Section -->
+                        <!-- Meta Bar: Client / Industry / Service / Brand -->
                         @if($result->klien || $result->industry || $result->layanan || $result->brand)
-                        <div class="info-section">
-                            <h4>
-                                <i class="bi bi-info-circle"></i>
-                                Informasi Umum
-                            </h4>
+                        <div class="case-meta-bar">
                             @if($result->klien)
-                            <div class="info-item">
-                                <span class="info-label">Klien:</span>
-                                <span class="info-value">{{ $result->klien }}</span>
+                            <div class="case-meta-item">
+                                <span class="case-meta-label"><i class='bx bx-buildings'></i> Client</span>
+                                <span class="case-meta-value">{{ $result->klien }}</span>
                             </div>
                             @endif
                             @if($result->industry)
-                            <div class="info-item">
-                                <span class="info-label">Industri:</span>
-                                <span class="info-value">{{ $result->industry }}</span>
+                            <div class="case-meta-item">
+                                <span class="case-meta-label"><i class='bx bx-briefcase'></i> Industry</span>
+                                <span class="case-meta-value">{{ $result->industry }}</span>
                             </div>
                             @endif
                             @if($result->layanan)
-                            <div class="info-item">
-                                <span class="info-label">Layanan:</span>
-                                <span class="info-value">{{ $result->layanan }}</span>
+                            <div class="case-meta-item">
+                                <span class="case-meta-label"><i class='bx bx-cog'></i> Service</span>
+                                <span class="case-meta-value">{{ $result->layanan }}</span>
                             </div>
                             @endif
                             @if($result->brand)
-                            <div class="info-item">
-                                <span class="info-label">Brand:</span>
-                                <span class="info-value">{{ $result->brand }}</span>
+                            <div class="case-meta-item">
+                                <span class="case-meta-label"><i class='bx bx-badge-check'></i> Brand</span>
+                                <span class="case-meta-value">{{ $result->brand }}</span>
                             </div>
                             @endif
                         </div>
                         @endif
 
-                        <!-- Main Content -->
+                        <!-- CTA Buttons (top) -->
+                        @php
+                            $waDemoMessage = "Halo Empatra DigiTech, saya tertarik untuk membuat sistem serupa dengan proyek \"{$result->title}\", boleh minta info lebih lanjut?";
+                            $waDemoLink = "https://wa.me/6285151811055?text=" . urlencode($waDemoMessage);
+                        @endphp
+                        <div class="case-cta-row">
+                            @if($result->demo_url)
+                            <a href="{{ $result->demo_url }}" target="_blank" rel="noopener" class="case-btn case-btn-outline">
+                                <i class='bx bx-globe'></i>
+                                Lihat Demo
+                            </a>
+                            @endif
+                            <a href="{{ $waDemoLink }}" target="_blank" rel="noopener" class="case-btn case-btn-primary">
+                                <i class='bx bxl-whatsapp'></i>
+                                Buat Sistem Serupa
+                            </a>
+                        </div>
+
+                        <!-- Overview (Main Trix Content) -->
                         <div class="article-body">
                             {!! $result->renderTrix("content") !!}
                         </div>
 
-                        <!-- Tantangan Section -->
+                        <!-- Tantangan Section (The Challenge) -->
                         @if($result->tantangan)
-                        <div class="section-content">
-                            <h2 class="section-title">Tantangan</h2>
-                            <p>{!! nl2br(e($result->tantangan)) !!}</p>
+                        <div class="case-narrative-section case-challenge">
+                            <div class="case-narrative-icon"><i class='bx bx-error-circle'></i></div>
+                            <div class="case-narrative-body">
+                                <span class="case-narrative-eyebrow">The Challenge</span>
+                                <h2 class="section-title">Tantangan</h2>
+                                <p>{!! nl2br(e($result->tantangan)) !!}</p>
+                            </div>
                         </div>
                         @endif
 
-                        <!-- Solusi Section -->
+                        <!-- Solusi Section (The Solution) -->
                         @if($result->solusi)
-                        <div class="section-content">
-                            <h2 class="section-title">Solusi</h2>
-                            <p>{!! nl2br(e($result->solusi)) !!}</p>
+                        <div class="case-narrative-section case-solution">
+                            <div class="case-narrative-icon"><i class='bx bx-bulb'></i></div>
+                            <div class="case-narrative-body">
+                                <span class="case-narrative-eyebrow">The Solution</span>
+                                <h2 class="section-title">Solusi</h2>
+                                <p>{!! nl2br(e($result->solusi)) !!}</p>
+                            </div>
                         </div>
                         @endif
 
-                        <!-- Fitur Section -->
+                        <!-- Fitur Section (Key Features) -->
                         @if($result->fitur)
-                        <div class="section-content">
-                            <h2 class="section-title">Fitur</h2>
-                            <p>{!! nl2br(e($result->fitur)) !!}</p>
+                        <div class="case-features-section">
+                            <span class="case-narrative-eyebrow">Key Features</span>
+                            <h2 class="section-title">Fitur Utama</h2>
+                            <ul class="case-features-list">
+                                @foreach(preg_split('/\r\n|\r|\n/', trim($result->fitur)) as $fiturLine)
+                                    @if(trim($fiturLine) !== '')
+                                        <li>
+                                            <i class='bx bx-check-circle'></i>
+                                            <span>{{ trim($fiturLine, "- \t") }}</span>
+                                        </li>
+                                    @endif
+                                @endforeach
+                            </ul>
+                        </div>
+                        @endif
+
+                        <!-- Hasil Section (The Result) -->
+                        @if($result->hasil)
+                        <div class="case-result-section">
+                            <div class="case-result-icon"><i class='bx bx-trending-up'></i></div>
+                            <div class="case-result-body">
+                                <span class="case-narrative-eyebrow case-narrative-eyebrow-light">The Result</span>
+                                <h2 class="section-title case-result-title">Hasil &amp; Dampak</h2>
+                                <p>{!! nl2br(e($result->hasil)) !!}</p>
+                            </div>
                         </div>
                         @endif
 
@@ -126,6 +175,24 @@
                             </div>
                         </div>
                         @endif
+
+                        <!-- CTA Buttons (bottom) -->
+                        <div class="case-cta-bottom">
+                            <h3 class="case-cta-bottom-title">Tertarik dengan hasil seperti ini?</h3>
+                            <p class="case-cta-bottom-subtitle">Mari diskusikan bagaimana kami bisa membantu proyek Anda berikutnya.</p>
+                            <div class="case-cta-row case-cta-row-center">
+                                @if($result->demo_url)
+                                <a href="{{ $result->demo_url }}" target="_blank" rel="noopener" class="case-btn case-btn-outline">
+                                    <i class='bx bx-globe'></i>
+                                    Lihat Demo
+                                </a>
+                                @endif
+                                <a href="{{ $waDemoLink }}" target="_blank" rel="noopener" class="case-btn case-btn-primary">
+                                    <i class='bx bxl-whatsapp'></i>
+                                    Buat Sistem Serupa
+                                </a>
+                            </div>
+                        </div>
                     </div>
                 </article>
             </div>

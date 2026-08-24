@@ -92,6 +92,24 @@
                                         </div>
                                     </div>
 
+                                    <!-- Hasil -->
+                                    <div class="form-group row">
+                                        <label class="col-md-2 col-form-label">Hasil</label>
+                                        <div class="col-md-10">
+                                            <textarea class="form-control" name="hasil" rows="4" placeholder="Deskripsikan hasil/dampak yang dicapai klien...">{{ old('hasil', $result->hasil) }}</textarea>
+                                        </div>
+                                    </div>
+
+                                    <!-- Demo URL -->
+                                    <div class="form-group row">
+                                        <label class="col-md-2 col-form-label">Link Demo</label>
+                                        <div class="col-md-10">
+                                            <input type="url" class="form-control" name="demo_url" placeholder="https://contoh-demo-proyek.com"
+                                                value="{{ old('demo_url', $result->demo_url) }}">
+                                            <small class="form-text text-muted">Opsional — kosongkan jika tidak ada demo publik.</small>
+                                        </div>
+                                    </div>
+
                                     <!-- Image -->
                                     <div class="form-group row">
                                         <label class="col-md-2 col-form-label">Image <span class="text-danger">*</span></label>

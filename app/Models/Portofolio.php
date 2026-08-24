@@ -28,5 +28,7 @@ class Portofolio extends Model implements Viewable
         'tantangan',
         'solusi',
         'fitur',
+        'hasil',
+        'demo_url',
     ];
 }

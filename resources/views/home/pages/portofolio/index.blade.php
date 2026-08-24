@@ -13,8 +13,8 @@
         <div class="row">
             <div class="col-12">
                 <div class="page-header-content">
-                    <h1 class="page-title">Our Portfolio</h1>
-                    <p class="page-subtitle">Recent projects that showcase our expertise</p>
+                    <h1 class="page-title">Case Studies</h1>
+                    <p class="page-subtitle">Bagaimana kami membantu klien menyelesaikan masalah nyata dengan solusi digital</p>
                 </div>
             </div>
         </div>
@@ -33,7 +33,7 @@
                             <a href="{{ route('home.portofolio.show', $row->id) }}">
                                 <img src="{{ asset('storage/' . $row->image) }}" alt="{{ $row->title }}" class="img-fluid">
                                 <div class="image-overlay">
-                                    <span class="read-more-badge">Baca Selengkapnya</span>
+                                    <span class="read-more-badge">Lihat Studi Kasus</span>
                                 </div>
                             </a>
                         </div>
@@ -48,15 +48,16 @@
                             </a>
 
                             <p class="news-excerpt">
-                                @if($row->brand)
-                                    {{ $row->brand }}
+                                @if($row->klien)
+                                    <strong>Client:</strong> {{ $row->klien }}
+                                    @if($row->industry) &middot; {{ $row->industry }} @endif
                                 @else
                                     {!! Str::limit(strip_tags($row->renderTrix('content')), 120) !!}
                                 @endif
                             </p>
 
                             <a href="{{ route('home.portofolio.show', $row->id) }}" class="btn-read-more">
-                                Selengkapnya
+                                Lihat Studi Kasus
                                 <i class="bi bi-arrow-right"></i>
                             </a>
                         </div>

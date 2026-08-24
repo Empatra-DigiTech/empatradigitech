@@ -1349,3 +1349,305 @@
 .section-content {
     scroll-margin-top: 6rem;
 }
+
+/* ========================================
+   CASE STUDY — KICKER
+   ======================================== */
+
+.case-study-kicker {
+    display: inline-block;
+    background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+    color: #fff;
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    padding: 0.4rem 1rem;
+    border-radius: 999px;
+    margin-bottom: 1rem;
+}
+
+/* ========================================
+   CASE STUDY — META BAR (Client / Industry / Service / Brand)
+   ======================================== */
+
+.case-meta-bar {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 1rem;
+    background: var(--gray-100, #f3f4f6);
+    border-radius: 0.75rem;
+    padding: 1.25rem 1.5rem;
+    margin-bottom: 1.75rem;
+}
+
+.case-meta-item {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+}
+
+.case-meta-label {
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+    color: var(--gray-500, #6b7280);
+}
+
+.case-meta-label i {
+    font-size: 1rem;
+    color: var(--primary);
+}
+
+.case-meta-value {
+    font-size: 0.9375rem;
+    font-weight: 600;
+    color: var(--gray-900, #1a1a1a);
+}
+
+/* ========================================
+   CASE STUDY — CTA BUTTONS
+   ======================================== */
+
+.case-cta-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.85rem;
+    margin-bottom: 2.25rem;
+}
+
+.case-cta-row-center {
+    justify-content: center;
+}
+
+.case-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.8rem 1.6rem;
+    border-radius: 0.5rem;
+    font-weight: 700;
+    font-size: 0.9375rem;
+    text-decoration: none;
+    transition: all 0.25s ease;
+}
+
+.case-btn i {
+    font-size: 1.15rem;
+}
+
+.case-btn-primary {
+    background: #25D366;
+    color: #fff;
+}
+
+.case-btn-primary:hover {
+    background: #1DA851;
+    color: #fff;
+    text-decoration: none;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 18px -4px rgba(37, 211, 102, 0.45);
+}
+
+.case-btn-outline {
+    background: transparent;
+    color: var(--primary);
+    border: 2px solid var(--primary);
+}
+
+.case-btn-outline:hover {
+    background: var(--primary);
+    color: #fff;
+    text-decoration: none;
+    transform: translateY(-2px);
+}
+
+/* ========================================
+   CASE STUDY — NARRATIVE SECTIONS (Challenge / Solution)
+   ======================================== */
+
+.case-narrative-section {
+    display: flex;
+    gap: 1.25rem;
+    background: var(--gray-100, #f3f4f6);
+    border-radius: 0.85rem;
+    padding: 1.75rem;
+    margin-bottom: 1.75rem;
+}
+
+.case-narrative-icon {
+    flex-shrink: 0;
+    width: 3rem;
+    height: 3rem;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    color: #fff;
+}
+
+.case-challenge .case-narrative-icon {
+    background: var(--secondary);
+}
+
+.case-solution .case-narrative-icon {
+    background: var(--primary);
+}
+
+.case-narrative-eyebrow {
+    display: block;
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--primary);
+    margin-bottom: 0.25rem;
+}
+
+.case-narrative-eyebrow-light {
+    color: rgba(255, 255, 255, 0.85);
+}
+
+.case-narrative-body .section-title {
+    margin-top: 0;
+}
+
+/* ========================================
+   CASE STUDY — FEATURES LIST
+   ======================================== */
+
+.case-features-section {
+    margin-bottom: 1.75rem;
+}
+
+.case-features-list {
+    list-style: none;
+    margin: 1rem 0 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 0.85rem;
+}
+
+.case-features-list li {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.6rem;
+    background: #fff;
+    border: 1px solid var(--gray-200, #e5e7eb);
+    border-radius: 0.6rem;
+    padding: 0.85rem 1rem;
+    font-size: 0.9375rem;
+    color: var(--gray-700, #4a4a4a);
+}
+
+.case-features-list li i {
+    color: #22c55e;
+    font-size: 1.15rem;
+    flex-shrink: 0;
+    margin-top: 0.1rem;
+}
+
+/* ========================================
+   CASE STUDY — RESULT (highlighted impact box)
+   ======================================== */
+
+.case-result-section {
+    display: flex;
+    gap: 1.25rem;
+    background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+    border-radius: 0.85rem;
+    padding: 1.75rem;
+    margin-bottom: 1.75rem;
+    color: #fff;
+}
+
+.case-result-icon {
+    flex-shrink: 0;
+    width: 3rem;
+    height: 3rem;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    color: #fff;
+}
+
+.case-result-title {
+    color: #fff !important;
+}
+
+.case-result-title::before {
+    background: #fff !important;
+}
+
+.case-result-body p {
+    color: rgba(255, 255, 255, 0.95);
+}
+
+/* ========================================
+   CASE STUDY — BOTTOM CTA
+   ======================================== */
+
+.case-cta-bottom {
+    text-align: center;
+    padding: 2.5rem 1.5rem;
+    background: var(--gray-100, #f3f4f6);
+    border-radius: 0.85rem;
+    margin-top: 2.5rem;
+}
+
+.case-cta-bottom-title {
+    font-size: 1.375rem;
+    font-weight: 700;
+    color: var(--gray-900, #1a1a1a);
+    margin-bottom: 0.4rem;
+}
+
+.case-cta-bottom-subtitle {
+    color: var(--gray-500, #6b7280);
+    margin-bottom: 1.5rem;
+}
+
+.case-cta-bottom .case-cta-row {
+    margin-bottom: 0;
+}
+
+/* ========================================
+   CASE STUDY — RESPONSIVE
+   ======================================== */
+
+@media (max-width: 768px) {
+    .case-narrative-section,
+    .case-result-section {
+        flex-direction: column;
+        padding: 1.25rem;
+    }
+
+    .case-meta-bar {
+        grid-template-columns: repeat(2, 1fr);
+        padding: 1rem;
+    }
+
+    .case-cta-row {
+        flex-direction: column;
+    }
+
+    .case-btn {
+        width: 100%;
+        justify-content: center;
+    }
+}
+
+@media (max-width: 480px) {
+    .case-meta-bar {
+        grid-template-columns: 1fr;
+    }
+}

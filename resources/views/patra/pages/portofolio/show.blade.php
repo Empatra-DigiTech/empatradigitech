@@ -110,6 +110,28 @@
                         </div>
                         @endif
 
+                        @if($result->hasil)
+                        <div class="row mb-2">
+                            <div class="col-md-2">
+                                Hasil
+                            </div>
+                            <div class="col-md-8 text-justify">
+                                : {{ $result->hasil }}
+                            </div>
+                        </div>
+                        @endif
+
+                        @if($result->demo_url)
+                        <div class="row mb-2">
+                            <div class="col-md-2">
+                                Link Demo
+                            </div>
+                            <div class="col-md-8 text-justify">
+                                : <a href="{{ $result->demo_url }}" target="_blank">{{ $result->demo_url }}</a>
+                            </div>
+                        </div>
+                        @endif
+
                         <div class="row mb-2">
                             <div class="col-md-2">
                                 Image

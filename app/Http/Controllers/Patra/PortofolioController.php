@@ -74,6 +74,8 @@ class PortofolioController extends Controller
                     'tantangan' => $request->tantangan,
                     'solusi' => $request->solusi,
                     'fitur' => $request->fitur,
+                    'hasil' => $request->hasil,
+                    'demo_url' => $request->demo_url,
                 ]);
             }
             alert()->html('Berhasil','Data berhasil ditambahkan','success');
@@ -160,6 +162,8 @@ class PortofolioController extends Controller
                 'tantangan' => $request->tantangan,
                 'solusi' => $request->solusi,
                 'fitur' => $request->fitur,
+                'hasil' => $request->hasil,
+                'demo_url' => $request->demo_url,
             ]);
 
             alert()->html('Berhasil','Data berhasil diubah','success');
