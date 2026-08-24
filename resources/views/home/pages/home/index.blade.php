@@ -2,7 +2,7 @@
 @section("title","Home | EMPATRA DIGITECH")
 
 @section('css')
-    <link href="assets/css/home/home.css" rel="stylesheet">
+    <link href="{{ asset('assets/css/home/home.css') }}" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
 @endsection
 
@@ -28,8 +28,8 @@
                                                 <p class="hero-subheadline">{{ $row->description }}</p>
                                             @endif
                                             <div class="hero-cta">
-                                                <a href="#kontak" class="btn-cta-primary">Get a Quote</a>
-                                                <a href="#portfolio" class="btn-cta-secondary">View Portfolio</a>
+                                                <a href="https://wa.me/6285151811055?text={{ urlencode('Halo Empatra DigiTech, saya ingin konsultasi gratis untuk kebutuhan digital saya.') }}" target="_blank" rel="noopener" class="btn-cta-primary"><i class='bx bxl-whatsapp'></i> Konsultasi Gratis via WhatsApp</a>
+                                                <a href="#portfolio" class="btn-cta-secondary">Lihat Portofolio Kami</a>
                                             </div>
                                         </div>
                                     </div>
@@ -48,10 +48,10 @@
                                     <div class="col-lg-8">
                                         <div class="hero-text-wrapper">
                                             <h1 class="hero-headline">Transform Your Digital Vision Into Reality</h1>
-                                            <p class="hero-subheadline">Expert web and mobile development solutions tailored for your business growth</p>
+                                            <p class="hero-subheadline">Konsultasi gratis, tanpa komitmen — kami balas dalam 1 hari kerja</p>
                                             <div class="hero-cta">
-                                                <a href="#kontak" class="btn-cta-primary">Get a Quote</a>
-                                                <a href="#portfolio" class="btn-cta-secondary">View Portfolio</a>
+                                                <a href="https://wa.me/6285151811055?text={{ urlencode('Halo Empatra DigiTech, saya ingin konsultasi gratis untuk kebutuhan digital saya.') }}" target="_blank" rel="noopener" class="btn-cta-primary"><i class='bx bxl-whatsapp'></i> Konsultasi Gratis via WhatsApp</a>
+                                                <a href="#portfolio" class="btn-cta-secondary">Lihat Portofolio Kami</a>
                                             </div>
                                         </div>
                                     </div>
@@ -76,11 +76,12 @@
 <section id="services" class="services-section">
     <div class="container">
         <!-- Section Header -->
-        <div class="section-header">
-            <h2 class="section-title">Our Services</h2>
-            <p class="section-subtitle">Comprehensive digital solutions for your business needs</p>
-        </div>
-
+        <section id="layanan">
+            <div class="section-header">
+                <h2 class="section-title">Our Services</h2>
+                <p class="section-subtitle">Comprehensive digital solutions for your business needs</p>
+            </div>
+        </section>
         <!-- Services Grid -->
         <div class="services-grid">
             @forelse ($table_layanan as $index => $row)
@@ -148,7 +149,11 @@
                                 </ul>
                             </div>
                             <div class="package-footer">
-                                <a href="{{ route('home.kontak.index') }}?paket=website_{{ $paket->id }}" class="btn-package">
+                                <a href="#kontak"
+                                class="btn-package"
+                                data-package-type="Website Development"
+                                data-package-name="{{ $paket->nama_paket }}"
+                                data-package-price="Rp {{ number_format($paket->harga, 0, ',', '.') }}">
                                     Choose Package
                                 </a>
                             </div>
@@ -189,7 +194,11 @@
                                 </ul>
                             </div>
                             <div class="package-footer">
-                                <a href="{{ route('home.kontak.index') }}?paket=app_{{ $paket->id }}" class="btn-package">
+                                <a href="#kontak"
+                                class="btn-package"
+                                data-package-type="App Development"
+                                data-package-name="{{ $paket->nama_paket }}"
+                                data-package-price="Rp {{ number_format($paket->harga, 0, ',', '.') }}">
                                     Choose Package
                                 </a>
                             </div>
@@ -217,21 +226,63 @@
         </div>
 
         <div class="portfolio-grid">
-            <!-- Portfolio items will be added from backend -->
-            @for($i = 1; $i <= 6; $i++)
+            @forelse ($table_portofolio as $index => $row)
                 <div class="portfolio-item">
                     <div class="portfolio-image">
-                        <img src="https://via.placeholder.com/600x400" alt="Project {{ $i }}">
+                        <img src="{{ asset('storage/' . $row->image) }}" alt="{{ $row->title }}">
                         <div class="portfolio-overlay">
                             <div class="portfolio-info">
-                                <h4 class="portfolio-title">Project Title {{ $i }}</h4>
-                                <p class="portfolio-category">Web Development</p>
-                                <a href="#" class="btn-portfolio">View Details</a>
+                                <h4 class="portfolio-title">{{ $row->title }}</h4>
+                                @if($row->layanan)
+                                    <p class="portfolio-category">{{ $row->layanan }}</p>
+                                @endif
+                                @if($row->brand)
+                                    <p class="portfolio-brand">{{ $row->brand }}</p>
+                                @endif
+                                <a href="{{ route('home.portofolio.show', $row->id) }}" class="btn-portfolio">View Details</a>
                             </div>
                         </div>
                     </div>
                 </div>
-            @endfor
+            @empty
+                <div class="col-12 text-center">
+                    <div class="empty-portfolio">
+                        <i class='bx bx-folder-open'></i>
+                        <p>No portfolio items available at the moment.</p>
+                    </div>
+                </div>
+            @endforelse
+        </div>
+
+        @if($table_portofolio->count() >= 6)
+            <div class="portfolio-cta">
+                <a href="{{ route('home.portofolio.index') }}" class="btn-view-all">
+                    View All Projects
+                    <i class='bx bx-right-arrow-alt'></i>
+                </a>
+            </div>
+        @endif
+    </div>
+</section>
+
+<!-- ========================================
+     3b. POST-PORTFOLIO CTA SECTION
+     ======================================== -->
+<section id="portfolio-cta-banner" class="portfolio-cta-banner-section">
+    <div class="container">
+        <div class="portfolio-cta-banner-box">
+            <div class="portfolio-cta-banner-text">
+                <h2 class="portfolio-cta-banner-title">Suka dengan hasil kerja kami?</h2>
+                <p class="portfolio-cta-banner-subtitle">Ceritakan proyek Anda, kami bantu wujudkan dalam 24 jam respons.</p>
+            </div>
+            <div class="portfolio-cta-banner-buttons">
+                <a href="https://wa.me/6285151811055?text={{ urlencode('Halo Empatra DigiTech, saya ingin mendiskusikan sebuah proyek.') }}"
+                   target="_blank" rel="noopener" class="btn-cta-primary">
+                    <i class='bx bxl-whatsapp'></i>
+                    Diskusikan Proyek Anda via WhatsApp
+                </a>
+                <a href="#services" class="btn-cta-secondary">Lihat Semua Layanan</a>
+            </div>
         </div>
     </div>
 </section>
@@ -584,8 +635,8 @@
 <section id="kontak" class="contact-section">
     <div class="container">
         <div class="section-header">
-            <h2 class="section-title">Get In Touch</h2>
-            <p class="section-subtitle">Let's discuss your project and bring your ideas to life</p>
+            <h2 class="section-title">Siap Mulai Proyek Anda?</h2>
+            <p class="section-subtitle">Pilih cara paling nyaman untuk Anda — chat cepat atau isi form untuk penawaran detail</p>
         </div>
 
         <div class="row">
@@ -624,49 +675,72 @@
                 </div>
             </div>
 
-            <!-- Contact Form -->
+            <!-- WhatsApp Lead System (replaces the conventional contact form) -->
             <div class="col-lg-8">
-                <div class="contact-form-wrapper">
-                    <form action="{{ route('home.kontak.store') }}" method="post" class="contact-form"
-                          onsubmit="return confirm('Are you sure you want to send this message?')"
-                          enctype="multipart/form-data">
-                        @csrf
+                <div class="contact-form-wrapper wa-lead-system">
+                    <div class="wa-lead-header">
+                        <div class="wa-lead-header-icon"><i class='bx bxl-whatsapp'></i></div>
+                        <div class="wa-lead-header-text">
+                            <h3>Konsultasi via WhatsApp</h3>
+                            <p>Isi kebutuhan Anda, pesan otomatis tersusun rapi — tinggal kirim</p>
+                        </div>
+                    </div>
 
+                    <div class="wa-lead-body">
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="name">Full Name</label>
-                                    <input type="text" id="name" name="name" class="form-control" required>
+                                    <label for="leadName">Nama Anda</label>
+                                    <input type="text" id="leadName" class="form-control" placeholder="cth. Sahabat Empatra">
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="email">Email Address</label>
-                                    <input type="email" id="email" name="email" class="form-control" required>
+                                    <label for="leadLayanan">Layanan yang Diminati</label>
+                                    <select id="leadLayanan" class="form-control">
+                                        <option value="">-- Pilih Layanan --</option>
+                                        @foreach($table_layanan as $layananItem)
+                                            <option value="{{ $layananItem->title }}">{{ $layananItem->title }}</option>
+                                        @endforeach
+                                        <option value="Lainnya / Belum yakin">Lainnya / Belum yakin</option>
+                                    </select>
                                 </div>
                             </div>
                         </div>
 
                         <div class="form-group">
-                            <label for="subject">Subject</label>
-                            <input type="text" id="subject" name="subject" class="form-control" required>
+                            <label for="leadBudget">Estimasi Anggaran</label>
+                            <select id="leadBudget" class="form-control">
+                                <option value="">-- Pilih Estimasi Anggaran (opsional) --</option>
+                                <option value="< Rp 5 juta">&lt; Rp 5 juta</option>
+                                <option value="Rp 5 - 15 juta">Rp 5 - 15 juta</option>
+                                <option value="Rp 15 - 50 juta">Rp 15 - 50 juta</option>
+                                <option value="> Rp 50 juta">&gt; Rp 50 juta</option>
+                                <option value="Belum tahu, perlu diskusi">Belum tahu, perlu diskusi</option>
+                            </select>
                         </div>
 
                         <div class="form-group">
-                            <label for="message">Message</label>
-                            <textarea id="message" name="message" class="form-control" rows="5" required></textarea>
+                            <label for="leadDesc">Deskripsi Kebutuhan</label>
+                            <textarea id="leadDesc" class="form-control" rows="4" placeholder="Ceritakan singkat kebutuhan proyek Anda..."></textarea>
                         </div>
 
-                        <div class="form-group">
-                            <label for="image">Attachment (Optional)</label>
-                            <input type="file" id="image" name="image" class="form-control" accept="image/*">
+                        <div class="wa-lead-preview">
+                            <div class="wa-lead-preview-label">
+                                <i class='bx bx-message-square-dots'></i> Preview Pesan WhatsApp
+                            </div>
+                            <div class="wa-lead-preview-bubble" id="waPreviewText"></div>
                         </div>
 
-                        <button type="submit" class="btn-submit">
-                            <span>Send Message</span>
-                            <i class='bx bx-send'></i>
+                        <button type="button" id="waSendLeadBtn" class="btn-wa-send" disabled>
+                            <i class='bx bxl-whatsapp'></i>
+                            <span>Kirim ke WhatsApp</span>
                         </button>
-                    </form>
+                        <p class="wa-lead-note">
+                            <i class='bx bx-info-circle'></i>
+                            Lengkapi Nama, Layanan, dan Deskripsi — Anda akan diarahkan ke WhatsApp dengan pesan yang sudah otomatis terisi.
+                        </p>
+                    </div>
                 </div>
             </div>
         </div>
@@ -689,6 +763,213 @@
 @section('script')
 <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 <script>
+// ========================================
+// PACKAGE SELECTION & AUTO-FILL CONTACT FORM
+// ========================================
+
+document.addEventListener('DOMContentLoaded', function() {
+
+    // Get all package selection buttons
+    const packageButtons = document.querySelectorAll('.btn-package');
+
+    packageButtons.forEach(button => {
+        button.addEventListener('click', function(e) {
+            e.preventDefault();
+
+            // Get package information from data attributes
+            const packageType = this.getAttribute('data-package-type');
+            const packageName = this.getAttribute('data-package-name');
+            const packagePrice = this.getAttribute('data-package-price');
+
+            // Create description text for the WA Lead System
+            const descText = `Saya tertarik dengan paket ${packageType} - ${packageName} (${packagePrice}). Mohon info lebih lanjut mengenai timeline, fitur yang termasuk, dan syarat pembayaran.`;
+
+            // Scroll to contact section smoothly
+            const contactSection = document.getElementById('kontak');
+            if (contactSection) {
+                const header = document.querySelector('.header, .navbar, header');
+                const headerHeight = header ? header.offsetHeight : 80;
+                const targetPosition = contactSection.offsetTop - headerHeight - 20;
+
+                window.scrollTo({
+                    top: targetPosition,
+                    behavior: 'smooth'
+                });
+
+                // Wait for scroll to complete, then fill the lead form
+                setTimeout(() => {
+                    // Try to match the package type to an existing Layanan option
+                    const layananField = document.getElementById('leadLayanan');
+                    if (layananField) {
+                        let matched = false;
+                        for (const option of layananField.options) {
+                            if (option.value && packageType.toLowerCase().includes(option.value.toLowerCase())) {
+                                layananField.value = option.value;
+                                matched = true;
+                                break;
+                            }
+                        }
+                        if (!matched) {
+                            layananField.value = 'Lainnya / Belum yakin';
+                        }
+                        layananField.style.transition = 'all 0.3s ease';
+                        layananField.style.backgroundColor = '#fff3cd';
+                        setTimeout(() => { layananField.style.backgroundColor = ''; }, 1000);
+                    }
+
+                    // Fill description field
+                    const descField = document.getElementById('leadDesc');
+                    if (descField) {
+                        descField.value = descText;
+                        descField.focus();
+
+                        descField.style.transition = 'all 0.3s ease';
+                        descField.style.backgroundColor = '#fff3cd';
+                        setTimeout(() => { descField.style.backgroundColor = ''; }, 1000);
+                    }
+
+                    // Refresh the live WA message preview
+                    if (typeof updateWaLeadPreview === 'function') {
+                        updateWaLeadPreview();
+                    }
+
+                    // Show success notification
+                    showPackageNotification(packageName);
+
+                }, 800);
+            }
+        });
+    });
+
+    // Function to show notification
+    function showPackageNotification(packageName) {
+        const notification = document.createElement('div');
+        notification.className = 'package-notification';
+        notification.innerHTML = `
+            <div class="notification-content">
+                <i class='bx bx-check-circle'></i>
+                <span>Package "${packageName}" selected! Form pre-filled for you.</span>
+            </div>
+        `;
+
+        notification.style.cssText = `
+            position: fixed;
+            top: 100px;
+            right: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 15px 25px;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            z-index: 10000;
+            animation: slideInRight 0.5s ease;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        `;
+
+        notification.querySelector('.notification-content').style.cssText = `
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        `;
+
+        notification.querySelector('i').style.cssText = `
+            font-size: 24px;
+        `;
+
+        if (!document.getElementById('package-notification-styles')) {
+            const style = document.createElement('style');
+            style.id = 'package-notification-styles';
+            style.textContent = `
+                @keyframes slideInRight {
+                    from { transform: translateX(400px); opacity: 0; }
+                    to { transform: translateX(0); opacity: 1; }
+                }
+                @keyframes slideOutRight {
+                    from { transform: translateX(0); opacity: 1; }
+                    to { transform: translateX(400px); opacity: 0; }
+                }
+            `;
+            document.head.appendChild(style);
+        }
+
+        document.body.appendChild(notification);
+
+        setTimeout(() => {
+            notification.style.animation = 'slideOutRight 0.5s ease';
+            setTimeout(() => notification.remove(), 500);
+        }, 4000);
+    }
+
+    console.log('Package selection initialized:', packageButtons.length, 'buttons');
+});
+    // ========================================
+// Portfolio Section Animations
+// ========================================
+
+// Portfolio Items Animation on Scroll
+const portfolioItems = document.querySelectorAll('.portfolio-item');
+
+const portfolioObserverOptions = {
+    threshold: 0.15,
+    rootMargin: '0px 0px -50px 0px'
+};
+
+const portfolioObserver = new IntersectionObserver(function(entries) {
+    entries.forEach((entry, index) => {
+        if (entry.isIntersecting) {
+            setTimeout(() => {
+                entry.target.style.opacity = '1';
+                entry.target.style.transform = 'translateY(0)';
+            }, index * 100); // Stagger animation
+
+            portfolioObserver.unobserve(entry.target);
+        }
+    });
+}, portfolioObserverOptions);
+
+portfolioItems.forEach((item, index) => {
+    item.style.opacity = '0';
+    item.style.transform = 'translateY(30px)';
+    item.style.transition = 'all 0.6s cubic-bezier(0.4, 0, 0.2, 1)';
+    portfolioObserver.observe(item);
+});
+
+// Portfolio Image Loading
+const portfolioImages = document.querySelectorAll('.portfolio-image img');
+
+portfolioImages.forEach(img => {
+    img.addEventListener('load', function() {
+        this.classList.add('loaded');
+        this.style.opacity = '1';
+    });
+
+    // If image already loaded
+    if (img.complete) {
+        img.classList.add('loaded');
+        img.style.opacity = '1';
+    }
+});
+
+// Enhanced Hover Effect
+portfolioItems.forEach(item => {
+    const overlay = item.querySelector('.portfolio-overlay');
+    const info = item.querySelector('.portfolio-info');
+
+    item.addEventListener('mouseenter', function() {
+        overlay.style.opacity = '1';
+        info.style.transform = 'translateY(0)';
+    });
+
+    item.addEventListener('mouseleave', function() {
+        overlay.style.opacity = '0';
+        info.style.transform = 'translateY(20px)';
+    });
+});
+
+console.log('Portfolio animations initialized:', portfolioItems.length, 'items');
 // ========================================
 // WAIT FOR DOM TO LOAD
 // ========================================
@@ -854,6 +1135,84 @@ document.addEventListener('DOMContentLoaded', function() {
     // ========================================
     console.log('Total slides in hero:', document.querySelectorAll('.hero-carousel .swiper-slide').length);
     console.log('Total slides in testimonials:', document.querySelectorAll('.testimonials-slider .swiper-slide').length);
+});
+
+// ========================================
+// WHATSAPP LEAD SYSTEM
+// Builds a ready-to-send WhatsApp message live
+// from the interactive lead form, replacing the
+// conventional contact form.
+// ========================================
+
+const WA_LEAD_NUMBER = '6285151811055';
+
+function buildWaLeadMessage() {
+    const nameEl = document.getElementById('leadName');
+    const layananEl = document.getElementById('leadLayanan');
+    const budgetEl = document.getElementById('leadBudget');
+    const descEl = document.getElementById('leadDesc');
+
+    const name = nameEl ? nameEl.value.trim() : '';
+    const layanan = layananEl ? layananEl.value : '';
+    const budget = budgetEl ? budgetEl.value : '';
+    const desc = descEl ? descEl.value.trim() : '';
+
+    const namePart = name || '[Nama Anda]';
+    const layananPart = layanan || '[Belum dipilih]';
+    const budgetPart = budget || 'Belum ditentukan';
+    const descPart = desc || '[Belum diisi]';
+
+    return 'Halo Empatra DigiTech!' +
+        'Saya ' + namePart + ', tertarik untuk berkonsultasi.\n\n' +
+        'Layanan: ' + layananPart + '\n' +
+        'Estimasi Budget: ' + budgetPart + '\n' +
+        'Kebutuhan: ' + descPart + '\n\n' +
+        'Mohon info lebih lanjut. Terima kasih!';
+}
+
+function isWaLeadFormValid() {
+    const name = document.getElementById('leadName');
+    const layanan = document.getElementById('leadLayanan');
+    const desc = document.getElementById('leadDesc');
+
+    return !!(name && name.value.trim() &&
+        layanan && layanan.value &&
+        desc && desc.value.trim());
+}
+
+function updateWaLeadPreview() {
+    const preview = document.getElementById('waPreviewText');
+    const sendBtn = document.getElementById('waSendLeadBtn');
+
+    if (preview) {
+        preview.innerText = buildWaLeadMessage();
+    }
+
+    if (sendBtn) {
+        sendBtn.disabled = !isWaLeadFormValid();
+    }
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+    ['leadName', 'leadLayanan', 'leadBudget', 'leadDesc'].forEach(function(id) {
+        const el = document.getElementById(id);
+        if (!el) return;
+        el.addEventListener('input', updateWaLeadPreview);
+        el.addEventListener('change', updateWaLeadPreview);
+    });
+
+    const sendBtn = document.getElementById('waSendLeadBtn');
+    if (sendBtn) {
+        sendBtn.addEventListener('click', function() {
+            if (!isWaLeadFormValid()) return;
+            const message = buildWaLeadMessage();
+            const waLink = 'https://wa.me/' + WA_LEAD_NUMBER + '?text=' + encodeURIComponent(message);
+            window.open(waLink, '_blank', 'noopener');
+        });
+    }
+
+    // Initialize preview on page load
+    updateWaLeadPreview();
 });
 </script>
 @endsection

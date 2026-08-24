@@ -33,15 +33,21 @@ class MenuSeeder extends Seeder
         ]);
 
         Menu::firstOrCreate([
-            'title' => 'Berita'
+            'title' => 'Portofolio'
             ],[
-            'title' => 'Berita',
+            'title' => 'Portofolio',
         ]);
 
         Menu::firstOrCreate([
             'title' => 'Inovasi'
             ],[
             'title' => 'Inovasi',
+        ]);
+
+        Menu::firstOrCreate([
+            'title' => 'Blog'
+            ],[
+            'title' => 'Blog',
         ]);
 
         Menu::firstOrCreate([

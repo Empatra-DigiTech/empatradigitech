@@ -15,19 +15,19 @@
                 <div class="pembelajaran">
                     <div class="pembelajaran-item">
                         <a href="{{ route('home.pembelajaran.showsd') }}">
-                            <img src="assets/img/pembelajaran/PAUD.png" alt="">
+                            <img src="{{ asset('assets/img/pembelajaran/PAUD.png') }}" alt="">
                             <h3>PAUD</h3>
                         </a>
                     </div>
                     <div class="pembelajaran-item">
                         <a href="{{ route('home.pembelajaran.showsd') }}">
-                            <img src="assets/img/pembelajaran/1.png" alt="">
+                            <img src="{{ asset('assets/img/pembelajaran/1.png') }}" alt="">
                             <h3>Sekolah Dasar</h3>
                         </a>
                     </div>
                     <div class="pembelajaran-item">
                         <a href="{{ route('home.pembelajaran.showsmp') }}">
-                            <img src="assets/img/pembelajaran/2.png" alt="">
+                            <img src="{{ asset('assets/img/pembelajaran/2.png') }}" alt="">
                             <h3>Sekolah Menengah Pertama</h3>
                         </a>
                     </div>

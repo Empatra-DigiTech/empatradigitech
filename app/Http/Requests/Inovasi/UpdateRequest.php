@@ -13,6 +13,11 @@ class UpdateRequest extends FormRequest
             'title' => [
                 'required',
             ],
+            'harga' => [
+                'nullable',
+                'numeric',
+                'min:0',
+            ],
             // 'description'=> [
             //     'required',
             //     ],
@@ -29,6 +34,8 @@ class UpdateRequest extends FormRequest
         return [
             'title.required' => 'Judul harus diisi',
             'slug.required' => 'Deksripsi harus diisi',
+            'harga.numeric' => 'Harga harus berupa angka',
+            'harga.min' => 'Harga tidak boleh negatif',
             'image.image' => 'Foto harus berupa gambar',
             'image.mimes' => 'Foto harus berupa jpeg, bmp, png, gif, svg , jpg',
             'image.max' => 'Foto tidak boleh lebih dari 2MB',

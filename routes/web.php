@@ -48,14 +48,14 @@ Route::group(["middleware" => ["patra.access"], "namespace" => "App\Http\Control
         Route::delete('/{id}', 'InformasiController@destroy')->name("destroy")->middleware('role:' . implode('|', [RoleEnum::SuperAdmin, RoleEnum::Admin]));
     });
 
-    Route::group(["as" => "berita.", "prefix" => "berita"], function () {
-        Route::get('/', 'BeritaController@index')->name("index");
-        Route::get('/create', 'BeritaController@create')->name("create");
-        Route::post('/', 'BeritaController@store')->name("store");
-        Route::get('/{id}', 'BeritaController@show')->name("show");
-        Route::get('/{id}/edit', 'BeritaController@edit')->name("edit");
-        Route::put('/{id}', 'BeritaController@update')->name("update");
-        Route::delete('/{id}', 'BeritaController@destroy')->name("destroy");
+    Route::group(["as" => "portofolio.", "prefix" => "portofolio"], function () {
+        Route::get('/', 'PortofolioController@index')->name("index");
+        Route::get('/create', 'PortofolioController@create')->name("create");
+        Route::post('/', 'PortofolioController@store')->name("store");
+        Route::get('/{id}', 'PortofolioController@show')->name("show");
+        Route::get('/{id}/edit', 'PortofolioController@edit')->name("edit");
+        Route::put('/{id}', 'PortofolioController@update')->name("update");
+        Route::delete('/{id}', 'PortofolioController@destroy')->name("destroy");
     });
 
     Route::group(["as" => "inovasi.", "prefix" => "inovasi"], function () {
@@ -66,6 +66,16 @@ Route::group(["middleware" => ["patra.access"], "namespace" => "App\Http\Control
         Route::get('/{id}/edit', 'InovasiController@edit')->name("edit");
         Route::put('/{id}', 'InovasiController@update')->name("update");
         Route::delete('/{id}', 'InovasiController@destroy')->name("destroy");
+    });
+
+    Route::group(["as" => "blog.", "prefix" => "blog"], function () {
+        Route::get('/', 'BlogController@index')->name("index");
+        Route::get('/create', 'BlogController@create')->name("create");
+        Route::post('/', 'BlogController@store')->name("store");
+        Route::get('/{id}', 'BlogController@show')->name("show");
+        Route::get('/{id}/edit', 'BlogController@edit')->name("edit");
+        Route::put('/{id}', 'BlogController@update')->name("update");
+        Route::delete('/{id}', 'BlogController@destroy')->name("destroy");
     });
 
     Route::group(["as" => "banner.", "prefix" => "banner"], function () {
@@ -162,7 +172,16 @@ Route::group(["middleware" => ["patra.access"], "namespace" => "App\Http\Control
     Route::group(["as" => "log.", "prefix" => "log"], function () {
         Route::get("/", "LogController@index")->name("index")->middleware('role:' . implode('|', [RoleEnum::SuperAdmin]));
     });
-
+Route::group(["as" => "invoice.", "prefix" => "invoice"], function () {
+    Route::get('/', 'InvoiceController@index')->name("index")->middleware('role:' . implode('|', [RoleEnum::SuperAdmin, RoleEnum::Admin]));
+    Route::get('/create', 'InvoiceController@create')->name("create")->middleware('role:' . implode('|', [RoleEnum::SuperAdmin, RoleEnum::Admin]));
+    Route::post('/', 'InvoiceController@store')->name("store")->middleware('role:' . implode('|', [RoleEnum::SuperAdmin, RoleEnum::Admin]));
+    Route::get('/{id}', 'InvoiceController@show')->name("show")->middleware('role:' . implode('|', [RoleEnum::SuperAdmin, RoleEnum::Admin]));
+    Route::get('/{id}/edit', 'InvoiceController@edit')->name("edit")->middleware('role:' . implode('|', [RoleEnum::SuperAdmin, RoleEnum::Admin]));
+    Route::put('/{id}', 'InvoiceController@update')->name("update")->middleware('role:' . implode('|', [RoleEnum::SuperAdmin, RoleEnum::Admin]));
+    Route::delete('/{id}', 'InvoiceController@destroy')->name("destroy")->middleware('role:' . implode('|', [RoleEnum::SuperAdmin, RoleEnum::Admin]));
+    Route::get('/{id}/download', 'InvoiceController@download')->name("download")->middleware('role:' . implode('|', [RoleEnum::SuperAdmin, RoleEnum::Admin]));
+});
     Route::group(["as" => "users.", "prefix" => "users"], function () {
         Route::get("/", "UserController@index")->name("index")->middleware('role:' . implode('|', [RoleEnum::SuperAdmin]));
         Route::get('/create', 'UserController@create')->name("create")->middleware('role:' . implode('|', [RoleEnum::SuperAdmin]));
@@ -220,14 +239,19 @@ Route::group(["namespace" => "App\Http\Controllers\Home", "as" => "home."], func
         Route::get("/", "ProfilController@index")->name("index");
     });
 
-    Route::group(["as" => "berita.", "prefix" => "berita"], function () {
-        Route::get("/", "BeritaController@index")->name("index");
-        Route::get("/{id}", "BeritaController@show")->name("show");
+    Route::group(["as" => "portofolio.", "prefix" => "portfolio"], function () {
+        Route::get("/", "PortofolioController@index")->name("index");
+        Route::get("/{id}", "PortofolioController@show")->name("show");
     });
 
     Route::group(["as" => "inovasi.", "prefix" => "inovasi"], function () {
         Route::get("/", "InovasiController@index")->name("index");
         Route::get("/{id}", "InovasiController@show")->name("show");
+    });
+
+    Route::group(["as" => "blog.", "prefix" => "blog"], function () {
+        Route::get("/", "BlogController@index")->name("index");
+        Route::get("/{slug}", "BlogController@show")->name("show");
     });
 
     Route::group(["as" => "galeri.", "prefix" => "galeri"], function () {

@@ -63,11 +63,11 @@
             @endif
 
             <li class="nav-item">
-              <a href="{{route('patra.berita.index')}}" class="nav-link @if(Str::startsWith(request()->route()->getName(), 'patra.berita')) active @endif">
+              <a href="{{route('patra.portofolio.index')}}" class="nav-link @if(Str::startsWith(request()->route()->getName(), 'patra.portofolio')) active @endif">
                 <col class="row">
                 <i class="bx bx-news col-3 bx-tada-hover"></i>
                 <p>
-                  Berita
+                  Portofolio
                 </p>
                 </col>
               </a>
@@ -118,14 +118,14 @@
             </li>
             <!-- END TAMBAHAN -->
 
-            <li class="nav-item">
+            {{-- <li class="nav-item">
               <a href="{{route('patra.kalender.index')}}" class="nav-link @if(Str::startsWith(request()->route()->getName(), 'patra.kalender')) active @endif">
                 <i class="bx bx-calendar col-3 bx-tada-hover"></i>
                 <p>
                   Kalender
                 </p>
               </a>
-            </li>
+            </li> --}}
 
             <li class="nav-item">
               <a href="{{route('patra.kontak.index')}}" class="nav-link @if(Str::startsWith(request()->route()->getName(), 'patra.kontak')) active @endif">
@@ -152,6 +152,21 @@
                 </p>
               </a>
             </li>
+            <li class="nav-item">
+              <a href="{{route('patra.blog.index')}}" class="nav-link @if(Str::startsWith(request()->route()->getName(), 'patra.blog')) active @endif">
+                <i class="bx bx-news col-3 bx-tada-hover"></i>
+                <p>
+                  Blog / Insight
+                </p>
+              </a>
+            </li>
+<li class="nav-item">
+    <a href="{{route('patra.invoice.index')}}" class="nav-link @if(Str::startsWith(request()->route()->getName(), 'patra.invoice')) active @endif">
+        <i class='bx bx-file col-3 bx-tada-hover'></i>
+        <p>Invoice</p>
+    </a>
+</li>
+            <li class="nav-item">
 
             {{-- <li class="nav-item">
               <a href="{{route('patra.so.index')}}" class="nav-link @if(Str::startsWith(request()->route()->getName(), 'patra.so')) active @endif">

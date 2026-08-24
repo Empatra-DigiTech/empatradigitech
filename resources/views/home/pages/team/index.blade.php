@@ -1,6 +1,10 @@
 @extends('home.layouts.master')
 @section("title","Team | EMPATRA DIGITECH")
 
+@section('css')
+    <link href="{{ asset('assets/css/home/team/team.css') }}" rel="stylesheet">
+@endsection
+
 @section("content")
 
 {{-- Hero Section --}}
@@ -42,6 +46,23 @@
                                 <div class="card__header-text">
                                     <h3 class="card__title">{{ $row->nama }}</h3>
                                     <span class="card__status">{{ $row->jabatan }}</span>
+
+                                    {{-- Social Media Links --}}
+                                    @if($row->linkedin || $row->instagram)
+                                        <div class="card__social">
+                                            @if($row->linkedin)
+                                                <a href="{{ $row->linkedin }}" target="_blank" rel="noopener noreferrer" class="social-link linkedin" aria-label="LinkedIn">
+                                                    <i class="bi bi-linkedin"></i>
+                                                </a>
+                                            @endif
+
+                                            @if($row->instagram)
+                                                <a href="{{ $row->instagram }}" target="_blank" rel="noopener noreferrer" class="social-link instagram" aria-label="Instagram">
+                                                    <i class="bi bi-instagram"></i>
+                                                </a>
+                                            @endif
+                                        </div>
+                                    @endif
                                 </div>
                             </div>
                         </div>

@@ -1,0 +1,457 @@
+/* ========================================
+   VISI MISI SECTION STYLES
+   ======================================== */
+
+/* Hero Banner Section */
+.so {
+    position: relative;
+    width: 100%;
+    height: 400px;
+    margin-top: 80px;
+    overflow: hidden;
+    background-color: var(--gray-900);
+}
+
+.so-bg {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+.so-bg img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+}
+
+.so-bg::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(
+        135deg,
+        rgba(15, 60, 93, 0.85) 0%,
+        rgba(176, 46, 54, 0.75) 100%
+    );
+}
+
+/* Section Title */
+.section-title {
+    text-align: center;
+    margin-bottom: var(--spacing-2xl);
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.section-title h2 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: var(--gray-900);
+    position: relative;
+    display: inline-block;
+    padding-bottom: var(--spacing-sm);
+    margin-bottom: 0;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.section-title h2::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80px;
+    height: 4px;
+    background: linear-gradient(90deg, var(--primary) 0%, var(--secondary) 100%);
+    border-radius: 2px;
+}
+
+/* Visi Misi Container */
+.vm-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
+    gap: var(--spacing-2xl);
+    padding-bottom: var(--spacing-3xl);
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+/* Visi Misi Card */
+.vm-card {
+    position: relative;
+    background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+    border-radius: var(--radius-xl);
+    padding: var(--spacing-2xl);
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+    border: 1px solid var(--gray-200);
+    transition: all var(--transition-base);
+    overflow: hidden;
+}
+
+.vm-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 5px;
+    background: linear-gradient(90deg, var(--primary) 0%, var(--secondary) 100%);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform var(--transition-base);
+}
+
+.vm-card:hover {
+    transform: translateY(-12px);
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+    border-color: var(--gray-300);
+}
+
+.vm-card:hover::before {
+    transform: scaleX(1);
+}
+
+/* Visi Card Specific Styles */
+.visi-card {
+    background: linear-gradient(135deg, rgba(15, 60, 93, 0.03) 0%, rgba(15, 60, 93, 0.08) 100%);
+}
+
+.visi-card .vm-card-icon {
+    background: linear-gradient(135deg, rgba(15, 60, 93, 0.1) 0%, rgba(15, 60, 93, 0.2) 100%);
+    color: rgb(15, 60, 93);
+}
+
+/* Misi Card Specific Styles */
+.misi-card {
+    background: linear-gradient(135deg, rgba(176, 46, 54, 0.03) 0%, rgba(176, 46, 54, 0.08) 100%);
+}
+
+.misi-card .vm-card-icon {
+    background: linear-gradient(135deg, rgba(176, 46, 54, 0.1) 0%, rgba(176, 46, 54, 0.2) 100%);
+    color: rgb(176, 46, 54);
+}
+
+/* Card Icon */
+.vm-card-icon {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto var(--spacing-lg);
+    transition: all var(--transition-base);
+    position: relative;
+}
+
+.vm-card-icon::after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    border: 2px solid currentColor;
+    opacity: 0.2;
+    animation: pulse 2s ease-in-out infinite;
+}
+
+.vm-card:hover .vm-card-icon {
+    transform: scale(1.1) rotate(5deg);
+}
+
+@keyframes pulse {
+    0%, 100% {
+        transform: scale(1);
+        opacity: 0.2;
+    }
+    50% {
+        transform: scale(1.15);
+        opacity: 0;
+    }
+}
+
+/* Card Title */
+.vm-title {
+    font-size: 2rem;
+    font-weight: 700;
+    text-align: center;
+    color: var(--gray-900);
+    margin-bottom: var(--spacing-lg);
+    position: relative;
+    padding-bottom: var(--spacing-sm);
+}
+
+.vm-title::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60px;
+    height: 3px;
+    background: linear-gradient(90deg, var(--primary) 0%, var(--secondary) 100%);
+    border-radius: 2px;
+}
+
+/* Card Content */
+.vm-content {
+    color: var(--gray-700);
+    line-height: 1.8;
+}
+
+.vm-content p {
+    font-size: 1.125rem;
+    text-align: center;
+    margin: 0;
+    font-weight: 400;
+}
+
+/* Misi List */
+.misi-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.misi-list li {
+    display: flex;
+    gap: var(--spacing-md);
+    align-items: flex-start;
+    margin-bottom: var(--spacing-lg);
+    padding: var(--spacing-md);
+    background: rgba(255, 255, 255, 0.6);
+    border-radius: var(--radius-md);
+    transition: all var(--transition-base);
+    border: 1px solid transparent;
+}
+
+.misi-list li:hover {
+    background: rgba(255, 255, 255, 0.9);
+    border-color: rgba(176, 46, 54, 0.2);
+    transform: translateX(8px);
+}
+
+.misi-list li:last-child {
+    margin-bottom: 0;
+}
+
+/* Bullet Number */
+.bullet {
+    flex-shrink: 0;
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, rgb(176, 46, 54) 0%, rgb(140, 30, 40) 100%);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 1rem;
+    box-shadow: 0 4px 12px rgba(176, 46, 54, 0.3);
+    transition: all var(--transition-base);
+}
+
+.misi-list li:hover .bullet {
+    transform: scale(1.15) rotate(10deg);
+    box-shadow: 0 6px 20px rgba(176, 46, 54, 0.4);
+}
+
+.misi-list p {
+    font-size: 1rem;
+    text-align: left;
+    margin: 0;
+    padding-top: 0.5rem;
+}
+
+/* ========================================
+   RESPONSIVE DESIGN - VISI MISI
+   ======================================== */
+
+@media (max-width: 992px) {
+    .so {
+        height: 350px;
+    }
+
+    .section-title h2 {
+        font-size: 2.25rem;
+    }
+
+    .vm-container {
+        grid-template-columns: 1fr;
+        gap: var(--spacing-xl);
+    }
+
+    .vm-card {
+        padding: var(--spacing-xl);
+    }
+
+    .vm-card-icon {
+        width: 80px;
+        height: 80px;
+    }
+
+    .vm-title {
+        font-size: 1.75rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .so {
+        margin-top: 70px;
+        height: 300px;
+    }
+
+    .section-title {
+        padding-top: 40px !important;
+    }
+
+    .section-title h2 {
+        font-size: 2rem;
+    }
+
+    .vm-card {
+        padding: var(--spacing-lg);
+    }
+
+    .vm-card-icon {
+        width: 70px;
+        height: 70px;
+    }
+
+    .vm-card-icon svg {
+        width: 40px;
+        height: 40px;
+    }
+
+    .vm-title {
+        font-size: 1.5rem;
+    }
+
+    .vm-content p {
+        font-size: 1rem;
+    }
+
+    .bullet {
+        width: 40px;
+        height: 40px;
+        font-size: 0.9rem;
+    }
+
+    .misi-list p {
+        font-size: 0.9375rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .so {
+        height: 250px;
+    }
+
+    .section-title h2 {
+        font-size: 1.75rem;
+    }
+
+    .vm-container {
+        gap: var(--spacing-lg);
+    }
+
+    .vm-card {
+        padding: var(--spacing-md);
+    }
+
+    .vm-card-icon {
+        width: 60px;
+        height: 60px;
+        margin-bottom: var(--spacing-md);
+    }
+
+    .vm-card-icon svg {
+        width: 35px;
+        height: 35px;
+    }
+
+    .vm-title {
+        font-size: 1.375rem;
+        margin-bottom: var(--spacing-md);
+    }
+
+    .misi-list li {
+        gap: var(--spacing-sm);
+        padding: var(--spacing-sm);
+    }
+
+    .bullet {
+        width: 35px;
+        height: 35px;
+        font-size: 0.875rem;
+    }
+}
+
+/* ========================================
+   ANIMATIONS
+   ======================================== */
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.vm-card {
+    animation: fadeInUp 0.6s ease-out backwards;
+}
+
+.visi-card {
+    animation-delay: 0.2s;
+}
+
+.misi-card {
+    animation-delay: 0.4s;
+}
+
+.misi-list li {
+    animation: fadeInUp 0.5s ease-out backwards;
+}
+
+.misi-list li:nth-child(1) { animation-delay: 0.5s; }
+.misi-list li:nth-child(2) { animation-delay: 0.6s; }
+.misi-list li:nth-child(3) { animation-delay: 0.7s; }
+.misi-list li:nth-child(4) { animation-delay: 0.8s; }
+.misi-list li:nth-child(5) { animation-delay: 0.9s; }
+
+/* ========================================
+   ACCESSIBILITY
+   ======================================== */
+
+@media (prefers-reduced-motion: reduce) {
+    .vm-card,
+    .vm-card-icon,
+    .misi-list li,
+    .bullet {
+        animation: none;
+        transition: none;
+    }
+
+    .vm-card-icon::after {
+        animation: none;
+    }
+}
+
+/* Focus state for accessibility */
+.vm-card:focus-within {
+    outline: 2px solid var(--primary);
+    outline-offset: 4px;
+}

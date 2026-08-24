@@ -1,0 +1,90 @@
+.layanan-cta-section {
+    padding: 3rem 0 4rem;
+    background: #F4F6F9;
+}
+
+.layanan-cta-box {
+    background: linear-gradient(135deg, rgb(15, 60, 93) 0%, rgb(176, 46, 54) 100%);
+    border-radius: 1rem;
+    padding: 3rem 2rem;
+    text-align: center;
+    box-shadow: 0 10px 30px -8px rgba(15, 23, 42, 0.25);
+}
+
+.layanan-cta-title {
+    color: #fff;
+    font-size: 1.75rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+}
+
+.layanan-cta-subtitle {
+    color: rgba(255, 255, 255, 0.9);
+    font-size: 1.0625rem;
+    margin-bottom: 1.75rem;
+}
+
+.layanan-cta-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1rem;
+}
+
+.layanan-btn-primary,
+.layanan-btn-secondary {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.85rem 1.75rem;
+    border-radius: 0.5rem;
+    font-weight: 700;
+    font-size: 0.9375rem;
+    text-decoration: none;
+    transition: all 0.25s ease;
+}
+
+.layanan-btn-primary {
+    background: #25D366;
+    color: #fff;
+}
+
+.layanan-btn-primary:hover {
+    background: #1DA851;
+    color: #fff;
+    text-decoration: none;
+    transform: translateY(-2px);
+}
+
+.layanan-btn-primary i {
+    font-size: 1.15rem;
+}
+
+.layanan-btn-secondary {
+    background: transparent;
+    color: #fff;
+    border: 2px solid rgba(255, 255, 255, 0.6);
+}
+
+.layanan-btn-secondary:hover {
+    background: rgba(255, 255, 255, 0.12);
+    color: #fff;
+    text-decoration: none;
+    border-color: #fff;
+}
+
+@media (max-width: 576px) {
+    .layanan-cta-box {
+        padding: 2rem 1.25rem;
+    }
+
+    .layanan-cta-title {
+        font-size: 1.375rem;
+    }
+
+    .layanan-btn-primary,
+    .layanan-btn-secondary {
+        width: 100%;
+        justify-content: center;
+    }
+}

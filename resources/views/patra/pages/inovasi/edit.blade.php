@@ -39,6 +39,24 @@
                                         </div>
                                     </div>
                                     <div class="form-group row">
+                                        <label class="col-md-2 col-form-label">Kategori</label>
+                                        <div class="col-md-10">
+                                            <input type="text" class="form-control" name="kategori" placeholder="Kategori"
+                                                value="{{ old('kategori', $result->kategori) }}">
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-md-2 col-form-label">Harga</label>
+                                        <div class="col-md-10">
+                                            <div class="input-group">
+                                                <span class="input-group-text">Rp</span>
+                                                <input type="number" step="0.01" min="0" class="form-control" name="harga"
+                                                    placeholder="Harga" value="{{ old('harga', $result->harga) }}">
+                                            </div>
+                                            <small class="text-muted">Kosongkan jika produk tidak memiliki harga tetap</small>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
                                         <label class="col-md-2 col-form-label">Image <span
                                                 class="text-danger">*</span></label>
                                         <div class="col-md-10">
