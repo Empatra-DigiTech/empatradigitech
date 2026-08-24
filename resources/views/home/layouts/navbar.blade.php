@@ -1,4 +1,3 @@
-```php
 @php
     use App\Models\Menu;
 @endphp
@@ -211,4 +210,3 @@ document.addEventListener('DOMContentLoaded', function() {
 
 });
 </script>
-```

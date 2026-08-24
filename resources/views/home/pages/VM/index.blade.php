@@ -2,7 +2,7 @@
 @section("title","Visi & Misi | EMPATRA DIGITECH")
 
 @section('css')
-    <link href="assets/css/home/vm/vm.css" rel="stylesheet">
+    <link href="{{ asset('assets/css/home/vm/vm.css') }}" rel="stylesheet">
 @endsection
 
 @section("content")

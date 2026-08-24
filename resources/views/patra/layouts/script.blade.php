@@ -31,7 +31,7 @@
 <!-- AdminLTE for demo purposes -->
 <script src="{{URL::to('/')}}/dist/js/demo.js"></script>
 <!-- AdminLTE patra demo (This is only for demo purposes) -->
-<script src="{{URL::to('/')}}/dist/js/pages/patra.js"></script>
+<!-- <script src="{{URL::to('/')}}/dist/js/pages/patra.js"></script>  -->
 <script src="https://unpkg.com/boxicons@2.1.4/dist/boxicons.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/quill@2.0.2/dist/quill.js"></script>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/trix/1.3.1/trix.js"></script>

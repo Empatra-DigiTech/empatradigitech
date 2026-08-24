@@ -36,8 +36,8 @@
     <link href="{{URL::to('/')}}/assets/css/patra/assets/css/style.css" rel="stylesheet" type="text/css">
 
     <!-- Select2 -->
-    <link rel="stylesheet" href="{{URL::to('/')}}/templates/patra/assets/plugins/bootstrap-select2/select2.min.css" />
-    <link rel="stylesheet" href="{{URL::to('/')}}/templates/patra/assets/plugins/bootstrap-select2/select2-bootstrap.min.css">
+    <link rel="stylesheet" href="{{URL::to('/')}}/plugins/select2/css/select2.min.css" />
+    <link rel="stylesheet" href="{{URL::to('/')}}/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css">
   <!--end css yudo-->
 
     <link href="https://cdn.jsdelivr.net/npm/quill@2.0.2/dist/quill.snow.css" rel="stylesheet">

@@ -2,7 +2,7 @@
 @section("title","Home | EMPATRA DIGITECH")
 
 @section('css')
-    <link href="assets/css/home/home.css" rel="stylesheet">
+    <link href="{{ asset('assets/css/home/home.css') }}" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
 @endsection
 

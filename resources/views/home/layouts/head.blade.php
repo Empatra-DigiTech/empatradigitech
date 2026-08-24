@@ -1,8 +1,7 @@
 <head>
     <meta charset="utf-8">
     <meta content="width=device-width, initial-scale=1.0" name="viewport" shrink-to-fit=no">
-    <title>@yield('title')</title>
-    <title>Home | Empatra Digitech</title>
+    <title>@yield('title', 'Home | Empatra Digitech')</title>
     <meta content="" name="description">
     <meta content="" name="keywords">
 
@@ -23,13 +22,6 @@
     <link href="{{URL::to('/')}}/assets/vendor/aos/aos.css" rel="stylesheet">
     <link href="{{URL::to('/')}}/assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
     {{-- <link href="{{URL::to('/')}}/assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet"> --}}
-
-    {{-- login css --}}
-    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="{{ asset('assets/fonts/icomoon/style.css') }}">
-    <link rel="stylesheet" href="{{ asset('assets/css/login/owl.carousel.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('assets/css/login/bootstrap.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('assets/css/login/style.css') }}">
 
     {{-- CDN --}}
     {{-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous"> --}}
