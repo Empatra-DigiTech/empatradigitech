@@ -28,8 +28,8 @@
                                                 <p class="hero-subheadline">{{ $row->description }}</p>
                                             @endif
                                             <div class="hero-cta">
-                                                <a href="#kontak" class="btn-cta-primary">Get a Quote</a>
-                                                <a href="#portfolio" class="btn-cta-secondary">View Portfolio</a>
+                                                <a href="https://wa.me/6285151811055?text={{ urlencode('Halo Empatra DigiTech, saya ingin konsultasi gratis untuk kebutuhan digital saya.') }}" target="_blank" rel="noopener" class="btn-cta-primary"><i class='bx bxl-whatsapp'></i> Konsultasi Gratis via WhatsApp</a>
+                                                <a href="#portfolio" class="btn-cta-secondary">Lihat Portofolio Kami</a>
                                             </div>
                                         </div>
                                     </div>
@@ -48,10 +48,10 @@
                                     <div class="col-lg-8">
                                         <div class="hero-text-wrapper">
                                             <h1 class="hero-headline">Transform Your Digital Vision Into Reality</h1>
-                                            <p class="hero-subheadline">Expert web and mobile development solutions tailored for your business growth</p>
+                                            <p class="hero-subheadline">Konsultasi gratis, tanpa komitmen — kami balas dalam 1 hari kerja</p>
                                             <div class="hero-cta">
-                                                <a href="#kontak" class="btn-cta-primary">Get a Quote</a>
-                                                <a href="#portfolio" class="btn-cta-secondary">View Portfolio</a>
+                                                <a href="https://wa.me/6285151811055?text={{ urlencode('Halo Empatra DigiTech, saya ingin konsultasi gratis untuk kebutuhan digital saya.') }}" target="_blank" rel="noopener" class="btn-cta-primary"><i class='bx bxl-whatsapp'></i> Konsultasi Gratis via WhatsApp</a>
+                                                <a href="#portfolio" class="btn-cta-secondary">Lihat Portofolio Kami</a>
                                             </div>
                                         </div>
                                     </div>
@@ -262,6 +262,28 @@
                 </a>
             </div>
         @endif
+    </div>
+</section>
+
+<!-- ========================================
+     3b. POST-PORTFOLIO CTA SECTION
+     ======================================== -->
+<section id="portfolio-cta-banner" class="portfolio-cta-banner-section">
+    <div class="container">
+        <div class="portfolio-cta-banner-box">
+            <div class="portfolio-cta-banner-text">
+                <h2 class="portfolio-cta-banner-title">Suka dengan hasil kerja kami?</h2>
+                <p class="portfolio-cta-banner-subtitle">Ceritakan proyek Anda, kami bantu wujudkan dalam 24 jam respons.</p>
+            </div>
+            <div class="portfolio-cta-banner-buttons">
+                <a href="https://wa.me/6285151811055?text={{ urlencode('Halo Empatra DigiTech, saya ingin mendiskusikan sebuah proyek.') }}"
+                   target="_blank" rel="noopener" class="btn-cta-primary">
+                    <i class='bx bxl-whatsapp'></i>
+                    Diskusikan Proyek Anda via WhatsApp
+                </a>
+                <a href="#services" class="btn-cta-secondary">Lihat Semua Layanan</a>
+            </div>
+        </div>
     </div>
 </section>
 
@@ -613,8 +635,30 @@
 <section id="kontak" class="contact-section">
     <div class="container">
         <div class="section-header">
-            <h2 class="section-title">Get In Touch</h2>
-            <p class="section-subtitle">Let's discuss your project and bring your ideas to life</p>
+            <h2 class="section-title">Siap Mulai Proyek Anda?</h2>
+            <p class="section-subtitle">Pilih cara paling nyaman untuk Anda — chat cepat atau isi form untuk penawaran detail</p>
+        </div>
+
+        <div class="contact-choice-row">
+            <a href="https://wa.me/6285151811055?text={{ urlencode('Halo Empatra DigiTech, saya ingin konsultasi terkait kebutuhan digital saya.') }}"
+               target="_blank" rel="noopener" class="contact-choice-card contact-choice-wa">
+                <div class="contact-choice-icon">
+                    <i class='bx bxl-whatsapp'></i>
+                </div>
+                <div class="contact-choice-text">
+                    <h4>Chat Sekarang</h4>
+                    <p>Respons rata-rata &lt; 1 jam</p>
+                </div>
+            </a>
+            <div class="contact-choice-card contact-choice-form">
+                <div class="contact-choice-icon">
+                    <i class='bx bx-file'></i>
+                </div>
+                <div class="contact-choice-text">
+                    <h4>Isi Form</h4>
+                    <p>Untuk kebutuhan detail &amp; lampiran file</p>
+                </div>
+            </div>
         </div>
 
         <div class="row">
@@ -692,7 +736,7 @@
                         </div>
 
                         <button type="submit" class="btn-submit">
-                            <span>Send Message</span>
+                            <span>Kirim & Minta Penawaran</span>
                             <i class='bx bx-send'></i>
                         </button>
                     </form>
