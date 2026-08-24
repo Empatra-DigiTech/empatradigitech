@@ -639,28 +639,6 @@
             <p class="section-subtitle">Pilih cara paling nyaman untuk Anda — chat cepat atau isi form untuk penawaran detail</p>
         </div>
 
-        <div class="contact-choice-row">
-            <a href="https://wa.me/6285151811055?text={{ urlencode('Halo Empatra DigiTech, saya ingin konsultasi terkait kebutuhan digital saya.') }}"
-               target="_blank" rel="noopener" class="contact-choice-card contact-choice-wa">
-                <div class="contact-choice-icon">
-                    <i class='bx bxl-whatsapp'></i>
-                </div>
-                <div class="contact-choice-text">
-                    <h4>Chat Sekarang</h4>
-                    <p>Respons rata-rata &lt; 1 jam</p>
-                </div>
-            </a>
-            <div class="contact-choice-card contact-choice-form">
-                <div class="contact-choice-icon">
-                    <i class='bx bx-file'></i>
-                </div>
-                <div class="contact-choice-text">
-                    <h4>Isi Form</h4>
-                    <p>Untuk kebutuhan detail &amp; lampiran file</p>
-                </div>
-            </div>
-        </div>
-
         <div class="row">
             <!-- Contact Info -->
             <div class="col-lg-4">
@@ -697,49 +675,72 @@
                 </div>
             </div>
 
-            <!-- Contact Form -->
+            <!-- WhatsApp Lead System (replaces the conventional contact form) -->
             <div class="col-lg-8">
-                <div class="contact-form-wrapper">
-                    <form action="{{ route('home.kontak.store') }}" method="post" class="contact-form"
-                          onsubmit="return confirm('Are you sure you want to send this message?')"
-                          enctype="multipart/form-data">
-                        @csrf
+                <div class="contact-form-wrapper wa-lead-system">
+                    <div class="wa-lead-header">
+                        <div class="wa-lead-header-icon"><i class='bx bxl-whatsapp'></i></div>
+                        <div class="wa-lead-header-text">
+                            <h3>Konsultasi via WhatsApp</h3>
+                            <p>Isi kebutuhan Anda, pesan otomatis tersusun rapi — tinggal kirim</p>
+                        </div>
+                    </div>
 
+                    <div class="wa-lead-body">
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="name">Full Name</label>
-                                    <input type="text" id="name" name="name" class="form-control" required>
+                                    <label for="leadName">Nama Anda</label>
+                                    <input type="text" id="leadName" class="form-control" placeholder="cth. Sahabat Empatra">
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="email">Email Address</label>
-                                    <input type="email" id="email" name="email" class="form-control" required>
+                                    <label for="leadLayanan">Layanan yang Diminati</label>
+                                    <select id="leadLayanan" class="form-control">
+                                        <option value="">-- Pilih Layanan --</option>
+                                        @foreach($table_layanan as $layananItem)
+                                            <option value="{{ $layananItem->title }}">{{ $layananItem->title }}</option>
+                                        @endforeach
+                                        <option value="Lainnya / Belum yakin">Lainnya / Belum yakin</option>
+                                    </select>
                                 </div>
                             </div>
                         </div>
 
                         <div class="form-group">
-                            <label for="subject">Subject</label>
-                            <input type="text" id="subject" name="subject" class="form-control" required>
+                            <label for="leadBudget">Estimasi Anggaran</label>
+                            <select id="leadBudget" class="form-control">
+                                <option value="">-- Pilih Estimasi Anggaran (opsional) --</option>
+                                <option value="< Rp 5 juta">&lt; Rp 5 juta</option>
+                                <option value="Rp 5 - 15 juta">Rp 5 - 15 juta</option>
+                                <option value="Rp 15 - 50 juta">Rp 15 - 50 juta</option>
+                                <option value="> Rp 50 juta">&gt; Rp 50 juta</option>
+                                <option value="Belum tahu, perlu diskusi">Belum tahu, perlu diskusi</option>
+                            </select>
                         </div>
 
                         <div class="form-group">
-                            <label for="message">Message</label>
-                            <textarea id="message" name="message" class="form-control" rows="5" required></textarea>
+                            <label for="leadDesc">Deskripsi Kebutuhan</label>
+                            <textarea id="leadDesc" class="form-control" rows="4" placeholder="Ceritakan singkat kebutuhan proyek Anda..."></textarea>
                         </div>
 
-                        <div class="form-group">
-                            <label for="image">Attachment (Optional)</label>
-                            <input type="file" id="image" name="image" class="form-control" accept="image/*">
+                        <div class="wa-lead-preview">
+                            <div class="wa-lead-preview-label">
+                                <i class='bx bx-message-square-dots'></i> Preview Pesan WhatsApp
+                            </div>
+                            <div class="wa-lead-preview-bubble" id="waPreviewText"></div>
                         </div>
 
-                        <button type="submit" class="btn-submit">
-                            <span>Kirim & Minta Penawaran</span>
-                            <i class='bx bx-send'></i>
+                        <button type="button" id="waSendLeadBtn" class="btn-wa-send" disabled>
+                            <i class='bx bxl-whatsapp'></i>
+                            <span>Kirim ke WhatsApp</span>
                         </button>
-                    </form>
+                        <p class="wa-lead-note">
+                            <i class='bx bx-info-circle'></i>
+                            Lengkapi Nama, Layanan, dan Deskripsi — Anda akan diarahkan ke WhatsApp dengan pesan yang sudah otomatis terisi.
+                        </p>
+                    </div>
                 </div>
             </div>
         </div>
@@ -780,23 +781,8 @@ document.addEventListener('DOMContentLoaded', function() {
             const packageName = this.getAttribute('data-package-name');
             const packagePrice = this.getAttribute('data-package-price');
 
-            // Create subject text
-            const subjectText = `Inquiry: ${packageType} - ${packageName} (${packagePrice})`;
-
-            // Create message text
-            const messageText = `Hello EMPATRA DIGITECH,
-
-I'm interested in your ${packageType} package: ${packageName} (${packagePrice}).
-
-I would like to know more details about:
-- Project timeline
-- Included features
-- Payment terms
-- Support and maintenance
-
-Please contact me to discuss further.
-
-Thank you!`;
+            // Create description text for the WA Lead System
+            const descText = `Saya tertarik dengan paket ${packageType} - ${packageName} (${packagePrice}). Mohon info lebih lanjut mengenai timeline, fitur yang termasuk, dan syarat pembayaran.`;
 
             // Scroll to contact section smoothly
             const contactSection = document.getElementById('kontak');
@@ -810,33 +796,41 @@ Thank you!`;
                     behavior: 'smooth'
                 });
 
-                // Wait for scroll to complete, then fill form
+                // Wait for scroll to complete, then fill the lead form
                 setTimeout(() => {
-                    // Fill subject field
-                    const subjectField = document.getElementById('subject');
-                    if (subjectField) {
-                        subjectField.value = subjectText;
-                        subjectField.focus();
-
-                        // Add highlight animation
-                        subjectField.style.transition = 'all 0.3s ease';
-                        subjectField.style.backgroundColor = '#fff3cd';
-                        setTimeout(() => {
-                            subjectField.style.backgroundColor = '';
-                        }, 1000);
+                    // Try to match the package type to an existing Layanan option
+                    const layananField = document.getElementById('leadLayanan');
+                    if (layananField) {
+                        let matched = false;
+                        for (const option of layananField.options) {
+                            if (option.value && packageType.toLowerCase().includes(option.value.toLowerCase())) {
+                                layananField.value = option.value;
+                                matched = true;
+                                break;
+                            }
+                        }
+                        if (!matched) {
+                            layananField.value = 'Lainnya / Belum yakin';
+                        }
+                        layananField.style.transition = 'all 0.3s ease';
+                        layananField.style.backgroundColor = '#fff3cd';
+                        setTimeout(() => { layananField.style.backgroundColor = ''; }, 1000);
                     }
 
-                    // Fill message field
-                    const messageField = document.getElementById('message');
-                    if (messageField) {
-                        messageField.value = messageText;
+                    // Fill description field
+                    const descField = document.getElementById('leadDesc');
+                    if (descField) {
+                        descField.value = descText;
+                        descField.focus();
 
-                        // Add highlight animation
-                        messageField.style.transition = 'all 0.3s ease';
-                        messageField.style.backgroundColor = '#fff3cd';
-                        setTimeout(() => {
-                            messageField.style.backgroundColor = '';
-                        }, 1000);
+                        descField.style.transition = 'all 0.3s ease';
+                        descField.style.backgroundColor = '#fff3cd';
+                        setTimeout(() => { descField.style.backgroundColor = ''; }, 1000);
+                    }
+
+                    // Refresh the live WA message preview
+                    if (typeof updateWaLeadPreview === 'function') {
+                        updateWaLeadPreview();
                     }
 
                     // Show success notification
@@ -1141,6 +1135,84 @@ document.addEventListener('DOMContentLoaded', function() {
     // ========================================
     console.log('Total slides in hero:', document.querySelectorAll('.hero-carousel .swiper-slide').length);
     console.log('Total slides in testimonials:', document.querySelectorAll('.testimonials-slider .swiper-slide').length);
+});
+
+// ========================================
+// WHATSAPP LEAD SYSTEM
+// Builds a ready-to-send WhatsApp message live
+// from the interactive lead form, replacing the
+// conventional contact form.
+// ========================================
+
+const WA_LEAD_NUMBER = '6285151811055';
+
+function buildWaLeadMessage() {
+    const nameEl = document.getElementById('leadName');
+    const layananEl = document.getElementById('leadLayanan');
+    const budgetEl = document.getElementById('leadBudget');
+    const descEl = document.getElementById('leadDesc');
+
+    const name = nameEl ? nameEl.value.trim() : '';
+    const layanan = layananEl ? layananEl.value : '';
+    const budget = budgetEl ? budgetEl.value : '';
+    const desc = descEl ? descEl.value.trim() : '';
+
+    const namePart = name || '[Nama Anda]';
+    const layananPart = layanan || '[Belum dipilih]';
+    const budgetPart = budget || 'Belum ditentukan';
+    const descPart = desc || '[Belum diisi]';
+
+    return 'Halo Empatra DigiTech!' +
+        'Saya ' + namePart + ', tertarik untuk berkonsultasi.\n\n' +
+        'Layanan: ' + layananPart + '\n' +
+        'Estimasi Budget: ' + budgetPart + '\n' +
+        'Kebutuhan: ' + descPart + '\n\n' +
+        'Mohon info lebih lanjut. Terima kasih!';
+}
+
+function isWaLeadFormValid() {
+    const name = document.getElementById('leadName');
+    const layanan = document.getElementById('leadLayanan');
+    const desc = document.getElementById('leadDesc');
+
+    return !!(name && name.value.trim() &&
+        layanan && layanan.value &&
+        desc && desc.value.trim());
+}
+
+function updateWaLeadPreview() {
+    const preview = document.getElementById('waPreviewText');
+    const sendBtn = document.getElementById('waSendLeadBtn');
+
+    if (preview) {
+        preview.innerText = buildWaLeadMessage();
+    }
+
+    if (sendBtn) {
+        sendBtn.disabled = !isWaLeadFormValid();
+    }
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+    ['leadName', 'leadLayanan', 'leadBudget', 'leadDesc'].forEach(function(id) {
+        const el = document.getElementById(id);
+        if (!el) return;
+        el.addEventListener('input', updateWaLeadPreview);
+        el.addEventListener('change', updateWaLeadPreview);
+    });
+
+    const sendBtn = document.getElementById('waSendLeadBtn');
+    if (sendBtn) {
+        sendBtn.addEventListener('click', function() {
+            if (!isWaLeadFormValid()) return;
+            const message = buildWaLeadMessage();
+            const waLink = 'https://wa.me/' + WA_LEAD_NUMBER + '?text=' + encodeURIComponent(message);
+            window.open(waLink, '_blank', 'noopener');
+        });
+    }
+
+    // Initialize preview on page load
+    updateWaLeadPreview();
 });
 </script>
 @endsection
