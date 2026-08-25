@@ -6,7 +6,7 @@
     <div class="container container-xl position-relative d-flex align-items-center">
 
         <!-- Logo Section -->
-        <a href="{{ route('home.home.index') }}" class="logo d-flex align-items-center me-auto">
+        <a href="{{ route('home.index') }}" class="logo d-flex align-items-center me-auto">
             @if ($table_pengaturan->website_logo == null)
                 <img src="{{ URL::to('/') }}/assets/img/favicon.png" alt="Company Logo">
             @else
@@ -26,22 +26,22 @@
                         <li><a href="{{ route('home.home.index') }}#kontak">{{ $row->title }}</a></li>
 
                     @elseif($row->title == 'Informasi Publik')
-                        <!-- <li><a href="{{ route('home.informasi.index') }}"></a></li> -->
+                        <!-- <li><a href="{{ route('home.home.informasi.index') }}"></a></li> -->
 
                     @elseif($row->title == 'Home')
                         <li><a href="{{ route('home.home.index') }}" class="active">{{ $row->title }}</a></li>
 
                     @elseif($row->title == 'Portofolio')
-                        <li><a href="{{ route('home.portofolio.index') }}">{{ $row->title }}</a></li>
+                        <li><a href="{{ route('home.home.portofolio.index') }}">{{ $row->title }}</a></li>
 
                     @elseif($row->title == 'Inovasi')
-                        <li><a href="{{ route('home.inovasi.index') }}">{{ $row->title }}</a></li>
+                        <li><a href="{{ route('home.home.inovasi.index') }}">{{ $row->title }}</a></li>
 
                     @elseif($row->title == 'Blog')
-                        <li><a href="{{ route('home.blog.index') }}">{{ $row->title }}</a></li>
+                        <li><a href="{{ route('home.home.blog.index') }}">{{ $row->title }}</a></li>
 
                     @elseif($row->title == 'Galeri')
-                        <li><a href="{{ route('home.galeri.index') }}">{{ $row->title }}</a></li>
+                        <li><a href="{{ route('home.home.galeri.index') }}">{{ $row->title }}</a></li>
 
                     @elseif($row->title == 'Profil')
                         <li class="dropdown">
@@ -50,9 +50,9 @@
                                 <!-- <i class="bi bi-chevron-down toggle-dropdown"></i> -->
                             </a>
                             <ul class="dropdown-menu">
-                                <li><a href="{{ route('home.team.index') }}">Team</a></li>
-                                {{-- <li><a href="{{ route('home.SO.index') }}">Struktur Organisasi</a></li> --}}
-                                <li><a href="{{ route('home.VM.index') }}">Visi & Misi</a></li>
+                                <li><a href="{{ route('home.home.team.index') }}">Team</a></li>
+                                {{-- <li><a href="{{ route('home.home.SO.index') }}">Struktur Organisasi</a></li> --}}
+                                <li><a href="{{ route('home.home.VM.index') }}">Visi & Misi</a></li>
                             </ul>
                         </li>
 
