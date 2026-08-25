@@ -168,6 +168,22 @@
                 </p>
               </a>
             </li>
+            <li class="nav-item">
+              <a href="{{route('patra.calculator-service.index')}}" class="nav-link @if(Str::startsWith(request()->route()->getName(), 'patra.calculator-service')) active @endif">
+                <i class="bx bx-calculator col-3 bx-tada-hover"></i>
+                <p>
+                  Kalkulator: Layanan
+                </p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="{{route('patra.calculator-feature.index')}}" class="nav-link @if(Str::startsWith(request()->route()->getName(), 'patra.calculator-feature')) active @endif">
+                <i class="bx bx-list-plus col-3 bx-tada-hover"></i>
+                <p>
+                  Kalkulator: Fitur Tambahan
+                </p>
+              </a>
+            </li>
 <li class="nav-item">
     <a href="{{route('patra.invoice.index')}}" class="nav-link @if(Str::startsWith(request()->route()->getName(), 'patra.invoice')) active @endif">
         <i class='bx bx-file col-3 bx-tada-hover'></i>

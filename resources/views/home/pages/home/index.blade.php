@@ -2,7 +2,7 @@
 @section("title","Home | EMPATRA DIGITECH")
 
 @section('css')
-    <link href="{{ asset('assets/css/home/home.css') }}" rel="stylesheet">
+    <link href="assets/css/home/home.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
 @endsection
 
@@ -79,75 +79,31 @@
         <section id="layanan">
             <div class="section-header">
                 <h2 class="section-title">Our Services</h2>
-                <p class="section-subtitle">Jenis project yang bisa kami kerjakan &mdash; pilih kategori sesuai kebutuhan Anda</p>
+                <p class="section-subtitle">Comprehensive digital solutions for your business needs</p>
             </div>
         </section>
-
-        @php
-            // Fixed display order for the built-in categories; anything else
-            // (including services without a category yet) is grouped under "Lainnya"
-            // so nothing ever disappears from the homepage after this feature is added.
-            $serviceCategoryOrder = \App\Models\Layanan::kategoriOptions();
-            $serviceCategoryIcons = [
-                'Website' => 'bx-laptop',
-                'Web Application' => 'bx-window-alt',
-                'Mobile Application' => 'bx-mobile-alt',
-                'Custom Software' => 'bx-customize',
-                'Lainnya' => 'bx-grid-alt',
-            ];
-
-            $serviceGrouped = $table_layanan->groupBy(function ($item) use ($serviceCategoryOrder) {
-                return in_array($item->kategori, $serviceCategoryOrder) ? $item->kategori : 'Lainnya';
-            });
-
-            $serviceCategories = collect($serviceCategoryOrder)->filter(fn($cat) => $serviceGrouped->has($cat))->values();
-            if ($serviceGrouped->has('Lainnya')) {
-                $serviceCategories->push('Lainnya');
-            }
-        @endphp
-
-        @if($serviceCategories->isEmpty())
-            <div class="services-grid">
+        <!-- Services Grid -->
+        <div class="services-grid">
+            @forelse ($table_layanan as $index => $row)
+                <div class="service-card">
+                    <div class="service-icon">
+                        <img src="{{ asset('storage/' . $row->image) }}" alt="{{ $row->title }}">
+                    </div>
+                    <h3 class="service-title">{{ $row->title }}</h3>
+                    <p class="service-description">{{ Str::limit(strip_tags($row->description ?? ''), 120) }}</p>
+                    <a href="{{ route('home.layanan.show', $row->id) }}" class="service-link">
+                        Learn More <i class='bx bx-right-arrow-alt'></i>
+                    </a>
+                </div>
+            @empty
                 <div class="col-12 text-center">
                     <p>No services available at the moment.</p>
                 </div>
-            </div>
-        @else
-            <!-- Service Category Tabs -->
-            <div class="service-category-tabs">
-                @foreach($serviceCategories as $i => $cat)
-                    <button type="button" class="service-tab-button {{ $i === 0 ? 'active' : '' }}" data-service-tab="service-cat-{{ Str::slug($cat) }}">
-                        <i class='bx {{ $serviceCategoryIcons[$cat] ?? 'bx-grid-alt' }}'></i>
-                        <span>{{ $cat }}</span>
-                    </button>
-                @endforeach
-            </div>
-
-            <!-- Service Category Panels -->
-            <div class="service-tabs-content">
-                @foreach($serviceCategories as $i => $cat)
-                    <div id="service-cat-{{ Str::slug($cat) }}" class="service-tab-panel {{ $i === 0 ? 'active' : '' }}">
-                        <div class="services-grid">
-                            @foreach($serviceGrouped[$cat] as $row)
-                                <div class="service-card">
-                                    <div class="service-icon">
-                                        <img src="{{ asset('storage/' . $row->image) }}" alt="{{ $row->title }}">
-                                    </div>
-                                    <h3 class="service-title">{{ $row->title }}</h3>
-                                    <p class="service-description">{{ Str::limit(strip_tags($row->description ?? ''), 120) }}</p>
-                                    <a href="{{ route('home.layanan.show', $row->id) }}" class="service-link">
-                                        Learn More <i class='bx bx-right-arrow-alt'></i>
-                                    </a>
-                                </div>
-                            @endforeach
-                        </div>
-                    </div>
-                @endforeach
-            </div>
-        @endif
+            @endforelse
+        </div>
 
         <!-- Package Deals Section -->
-        <div class="packages-section">
+        <div id="pricing" class="packages-section">
             <div class="packages-header">
                 <h3 class="packages-title">Package Deals</h3>
                 <p class="packages-subtitle">Choose the perfect package for your project</p>
@@ -163,6 +119,12 @@
                     <i class='bx bx-mobile-alt'></i>
                     <span>App Development</span>
                 </button>
+                @if($calculator_services->count())
+                <button class="tab-button" data-tab="calculator-packages">
+                    <i class='bx bx-calculator'></i>
+                    <span>Kalkulator Kustom</span>
+                </button>
+                @endif
             </div>
 
             <!-- Web Development Packages -->
@@ -254,6 +216,72 @@
                     @endforelse
                 </div>
             </div>
+
+            <!-- Custom Project Calculator Tab -->
+            @if($calculator_services->count())
+            <div id="calculator-packages" class="package-content">
+                <div class="calculator-box" data-aos="fade-up">
+                    <div class="calculator-form">
+
+                        <div class="calc-group">
+                            <label class="calc-label">1. Pilih Jenis Layanan</label>
+                            <div class="calc-service-options">
+                                @foreach($calculator_services as $index => $service)
+                                    <label class="calc-service-card">
+                                        <input type="radio" name="calc_service" value="{{ $service->id }}"
+                                            data-base="{{ $service->harga_dasar }}"
+                                            data-perpage="{{ $service->harga_per_halaman }}"
+                                            data-name="{{ $service->nama_layanan }}"
+                                            {{ $index === 0 ? 'checked' : '' }}>
+                                        <span class="calc-service-card-inner">
+                                            <span class="calc-service-name">{{ $service->nama_layanan }}</span>
+                                            <span class="calc-service-price">mulai Rp {{ number_format($service->harga_dasar,0,',','.') }}</span>
+                                        </span>
+                                    </label>
+                                @endforeach
+                            </div>
+                        </div>
+
+                        <div class="calc-group">
+                            <label class="calc-label" for="calc_pages">2. Jumlah Halaman / Fitur Inti</label>
+                            <input type="number" id="calc_pages" class="calc-input-number" value="5" min="1" max="100">
+                            <small class="calc-hint">Perkiraan jumlah halaman utama (Home, Tentang, Layanan, dsb).</small>
+                        </div>
+
+                        @if($calculator_features->count())
+                        <div class="calc-group">
+                            <label class="calc-label">3. Fitur Tambahan (opsional)</label>
+                            <div class="calc-feature-options">
+                                @foreach($calculator_features as $feature)
+                                    <label class="calc-feature-item">
+                                        <input type="checkbox" name="calc_feature" value="{{ $feature->id }}"
+                                            data-price="{{ $feature->harga_tambahan }}"
+                                            data-name="{{ $feature->nama_fitur }}">
+                                        <span class="calc-feature-inner">
+                                            <span class="calc-feature-name">{{ $feature->nama_fitur }}</span>
+                                            <span class="calc-feature-price">+Rp {{ number_format($feature->harga_tambahan,0,',','.') }}</span>
+                                        </span>
+                                    </label>
+                                @endforeach
+                            </div>
+                        </div>
+                        @endif
+
+                    </div>
+
+                    <div class="calculator-result">
+                        <span class="calc-result-label">Estimasi Biaya Proyek Anda</span>
+                        <div class="calc-result-range" id="calcResultRange">Rp 0 &ndash; Rp 0</div>
+                        <p class="calc-result-note">*Estimasi awal, harga final ditentukan setelah konsultasi kebutuhan detail.</p>
+
+                        <a href="#" id="calcConsultButton" target="_blank" rel="noopener" class="btn-calc-consult">
+                            <i class='bx bxl-whatsapp'></i>
+                            Konsultasikan Project
+                        </a>
+                    </div>
+                </div>
+            </div>
+            @endif
         </div>
     </div>
 </section>
@@ -793,7 +821,7 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="leadName">Nama Anda</label>
-                                    <input type="text" id="leadName" class="form-control" placeholder="cth. Sahabat Empatra">
+                                    <input type="text" id="leadName" class="form-control" placeholder="cth. Budi Santoso">
                                 </div>
                             </div>
                             <div class="col-md-6">
@@ -1159,27 +1187,6 @@ document.addEventListener('DOMContentLoaded', function() {
     console.log('Testimonials Slider initialized:', testimonialsSlider);
 
     // ========================================
-    // Service Category Tabs Functionality
-    // ========================================
-    const serviceTabButtons = document.querySelectorAll('.service-tab-button');
-    const serviceTabPanels = document.querySelectorAll('.service-tab-panel');
-
-    serviceTabButtons.forEach(button => {
-        button.addEventListener('click', function() {
-            const targetTab = this.getAttribute('data-service-tab');
-
-            serviceTabButtons.forEach(btn => btn.classList.remove('active'));
-            serviceTabPanels.forEach(panel => panel.classList.remove('active'));
-
-            this.classList.add('active');
-            const targetPanel = document.getElementById(targetTab);
-            if (targetPanel) {
-                targetPanel.classList.add('active');
-            }
-        });
-    });
-
-    // ========================================
     // Package Tabs Functionality
     // ========================================
     const tabButtons = document.querySelectorAll('.tab-button');
@@ -1198,6 +1205,18 @@ document.addEventListener('DOMContentLoaded', function() {
             const targetContent = document.getElementById(targetTab);
             if (targetContent) {
                 targetContent.classList.add('active');
+            }
+        });
+    });
+
+    // Navbar "Kalkulator" link should jump straight to the calculator tab
+    document.querySelectorAll('.nav-open-calculator-tab').forEach(function(link) {
+        link.addEventListener('click', function() {
+            const calcTabButton = document.querySelector('.tab-button[data-tab="calculator-packages"]');
+            if (calcTabButton) {
+                setTimeout(function() {
+                    calcTabButton.click();
+                }, 150);
             }
         });
     });
@@ -1261,6 +1280,91 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 // ========================================
+// PROJECT COST CALCULATOR
+// ========================================
+
+document.addEventListener('DOMContentLoaded', function() {
+    const serviceInputs = document.querySelectorAll('input[name="calc_service"]');
+    const featureInputs = document.querySelectorAll('input[name="calc_feature"]');
+    const pagesInput = document.getElementById('calc_pages');
+    const resultRange = document.getElementById('calcResultRange');
+    const consultButton = document.getElementById('calcConsultButton');
+
+    if (!serviceInputs.length || !pagesInput || !resultRange) return;
+
+    const CALC_WA_NUMBER = '6285151811055';
+    const RANGE_LOW = 0.9;
+    const RANGE_HIGH = 1.25;
+
+    function formatRupiah(num) {
+        return 'Rp ' + Math.round(num).toLocaleString('id-ID');
+    }
+
+    function getSelectedService() {
+        let selected = null;
+        serviceInputs.forEach(function(input) {
+            if (input.checked) selected = input;
+        });
+        return selected;
+    }
+
+    function getSelectedFeatures() {
+        const selected = [];
+        featureInputs.forEach(function(input) {
+            if (input.checked) {
+                selected.push({
+                    name: input.dataset.name,
+                    price: parseFloat(input.dataset.price) || 0
+                });
+            }
+        });
+        return selected;
+    }
+
+    function calculateAndRender() {
+        const service = getSelectedService();
+        if (!service) return;
+
+        const base = parseFloat(service.dataset.base) || 0;
+        const perPage = parseFloat(service.dataset.perpage) || 0;
+        const pages = Math.max(1, parseInt(pagesInput.value, 10) || 1);
+        const features = getSelectedFeatures();
+        const featureTotal = features.reduce(function(sum, f) { return sum + f.price; }, 0);
+
+        const subtotal = base + (perPage * pages) + featureTotal;
+        const low = subtotal * RANGE_LOW;
+        const high = subtotal * RANGE_HIGH;
+
+        resultRange.textContent = formatRupiah(low) + ' \u2013 ' + formatRupiah(high);
+
+        // Build WhatsApp consultation link with the full breakdown
+        let message = 'Halo Empatra DigiTech, saya sudah coba Project Cost Calculator di website dengan rincian:\n\n';
+        message += '\uD83D\uDCCC Layanan: ' + service.dataset.name + '\n';
+        message += '\uD83D\uDCC4 Jumlah Halaman: ' + pages + '\n';
+        if (features.length) {
+            message += '\u2795 Fitur Tambahan: ' + features.map(function(f) { return f.name; }).join(', ') + '\n';
+        }
+        message += '\uD83D\uDCB0 Estimasi: ' + formatRupiah(low) + ' - ' + formatRupiah(high) + '\n\n';
+        message += 'Boleh dibantu konsultasikan lebih lanjut untuk project ini?';
+
+        if (consultButton) {
+            consultButton.href = 'https://wa.me/' + CALC_WA_NUMBER + '?text=' + encodeURIComponent(message);
+        }
+    }
+
+    serviceInputs.forEach(function(input) {
+        input.addEventListener('change', calculateAndRender);
+    });
+    featureInputs.forEach(function(input) {
+        input.addEventListener('change', calculateAndRender);
+    });
+    pagesInput.addEventListener('input', calculateAndRender);
+
+    // Initial calculation on page load
+    calculateAndRender();
+});
+
+// ========================================
 // FAQ ACCORDION
 // ========================================
 
@@ -1320,11 +1424,11 @@ function buildWaLeadMessage() {
     const budgetPart = budget || 'Belum ditentukan';
     const descPart = desc || '[Belum diisi]';
 
-    return 'Halo Empatra DigiTech!' +
+    return 'Halo Empatra DigiTech! \uD83D\uDC4B\n\n' +
         'Saya ' + namePart + ', tertarik untuk berkonsultasi.\n\n' +
-        'Layanan: ' + layananPart + '\n' +
-        'Estimasi Budget: ' + budgetPart + '\n' +
-        'Kebutuhan: ' + descPart + '\n\n' +
+        '\uD83D\uDCCC Layanan: ' + layananPart + '\n' +
+        '\uD83D\uDCB0 Estimasi Budget: ' + budgetPart + '\n' +
+        '\uD83D\uDCDD Kebutuhan: ' + descPart + '\n\n' +
         'Mohon info lebih lanjut. Terima kasih!';
 }
 
