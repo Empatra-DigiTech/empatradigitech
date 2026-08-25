@@ -14,8 +14,23 @@ class Layanan extends Model
     
     protected $fillable = [
         'title',
+        'kategori',
         'description',
         'image',
         'layanan-trixFields',
     ];
+
+    /**
+     * Fixed category list used to group services on the public homepage.
+     * Any service without a matching value falls under "Lainnya".
+     */
+    public static function kategoriOptions(): array
+    {
+        return [
+            'Website',
+            'Web Application',
+            'Mobile Application',
+            'Custom Software',
+        ];
+    }
 }

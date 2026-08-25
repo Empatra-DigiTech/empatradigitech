@@ -22,6 +22,18 @@
                                         <input type="text" class="form-control" name="title" placeholder="Judul"  value="{{old('title')}}" required>
                                     </div>
                                 </div>
+                                <div class="form-group row">
+                                    <label class="col-md-2 col-form-label">Kategori</label>
+                                    <div class="col-md-10">
+                                        <select class="form-control" name="kategori">
+                                            <option value="">-- Pilih Kategori (opsional) --</option>
+                                            @foreach(\App\Models\Layanan::kategoriOptions() as $kategoriOption)
+                                                <option value="{{ $kategoriOption }}" {{ old('kategori') == $kategoriOption ? 'selected' : '' }}>{{ $kategoriOption }}</option>
+                                            @endforeach
+                                        </select>
+                                        <small class="text-muted">Menentukan tab kategori layanan ini di halaman utama (Our Services)</small>
+                                    </div>
+                                </div>
                                 <div class="form-group row mb-5" >
                                     <label class="col-md-2 col-form-label" for="description">Deskripsi <span class="text-danger">*</span></label>
                                     <div class="col-md-10"   >

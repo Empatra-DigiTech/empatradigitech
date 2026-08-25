@@ -13,6 +13,10 @@ class StoreRequest extends FormRequest
             'title' => [
                 'required',
             ],
+            'kategori' => [
+                'nullable',
+                'in:' . implode(',', \App\Models\Layanan::kategoriOptions()),
+            ],
             // 'description'=> [
             //     'required',
             //     ''
@@ -30,6 +34,7 @@ class StoreRequest extends FormRequest
     {
         return [
             'title.required' => 'Judul harus diisi',
+            'kategori.in' => 'Kategori tidak valid',
             // 'description.required' => 'Deksripsi harus diisi',
             'image.required' => 'File harus diisi',
             'image.image' => 'Foto harus berupa gambar',

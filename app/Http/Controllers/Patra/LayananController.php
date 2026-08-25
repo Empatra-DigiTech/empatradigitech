@@ -63,6 +63,7 @@ class LayananController extends Controller
     {
         try {
             $title = $request->title;
+            $kategori = $request->kategori;
             // $description = $request->description;
             $image = $request->file("image");
 
@@ -77,6 +78,7 @@ class LayananController extends Controller
                 $image = $upload["Path"];
                 $create = $this->layanan->create([
                     'title' => $title,
+                    'kategori' => $kategori,
                     'layanan-trixFields' => $request->input('layanan-trixFields'),
                     'image' => $image,
                 ]);
@@ -142,6 +144,7 @@ class LayananController extends Controller
             }
 
             $title = $request->title;
+            $kategori = $request->kategori;
             // $description = $request->description;
             $image = $request->file("image");
 
@@ -160,6 +163,7 @@ class LayananController extends Controller
 
             $result->update([
                 'title' => $title,
+                'kategori' => $kategori,
                 'layanan-trixFields' => $request->input('layanan-trixFields'),
                 'image' => $image,
             ]);

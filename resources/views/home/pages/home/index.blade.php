@@ -79,28 +79,72 @@
         <section id="layanan">
             <div class="section-header">
                 <h2 class="section-title">Our Services</h2>
-                <p class="section-subtitle">Comprehensive digital solutions for your business needs</p>
+                <p class="section-subtitle">Jenis project yang bisa kami kerjakan &mdash; pilih kategori sesuai kebutuhan Anda</p>
             </div>
         </section>
-        <!-- Services Grid -->
-        <div class="services-grid">
-            @forelse ($table_layanan as $index => $row)
-                <div class="service-card">
-                    <div class="service-icon">
-                        <img src="{{ asset('storage/' . $row->image) }}" alt="{{ $row->title }}">
-                    </div>
-                    <h3 class="service-title">{{ $row->title }}</h3>
-                    <p class="service-description">{{ Str::limit(strip_tags($row->description ?? ''), 120) }}</p>
-                    <a href="{{ route('home.layanan.show', $row->id) }}" class="service-link">
-                        Learn More <i class='bx bx-right-arrow-alt'></i>
-                    </a>
-                </div>
-            @empty
+
+        @php
+            // Fixed display order for the built-in categories; anything else
+            // (including services without a category yet) is grouped under "Lainnya"
+            // so nothing ever disappears from the homepage after this feature is added.
+            $serviceCategoryOrder = \App\Models\Layanan::kategoriOptions();
+            $serviceCategoryIcons = [
+                'Website' => 'bx-laptop',
+                'Web Application' => 'bx-window-alt',
+                'Mobile Application' => 'bx-mobile-alt',
+                'Custom Software' => 'bx-customize',
+                'Lainnya' => 'bx-grid-alt',
+            ];
+
+            $serviceGrouped = $table_layanan->groupBy(function ($item) use ($serviceCategoryOrder) {
+                return in_array($item->kategori, $serviceCategoryOrder) ? $item->kategori : 'Lainnya';
+            });
+
+            $serviceCategories = collect($serviceCategoryOrder)->filter(fn($cat) => $serviceGrouped->has($cat))->values();
+            if ($serviceGrouped->has('Lainnya')) {
+                $serviceCategories->push('Lainnya');
+            }
+        @endphp
+
+        @if($serviceCategories->isEmpty())
+            <div class="services-grid">
                 <div class="col-12 text-center">
                     <p>No services available at the moment.</p>
                 </div>
-            @endforelse
-        </div>
+            </div>
+        @else
+            <!-- Service Category Tabs -->
+            <div class="service-category-tabs">
+                @foreach($serviceCategories as $i => $cat)
+                    <button type="button" class="service-tab-button {{ $i === 0 ? 'active' : '' }}" data-service-tab="service-cat-{{ Str::slug($cat) }}">
+                        <i class='bx {{ $serviceCategoryIcons[$cat] ?? 'bx-grid-alt' }}'></i>
+                        <span>{{ $cat }}</span>
+                    </button>
+                @endforeach
+            </div>
+
+            <!-- Service Category Panels -->
+            <div class="service-tabs-content">
+                @foreach($serviceCategories as $i => $cat)
+                    <div id="service-cat-{{ Str::slug($cat) }}" class="service-tab-panel {{ $i === 0 ? 'active' : '' }}">
+                        <div class="services-grid">
+                            @foreach($serviceGrouped[$cat] as $row)
+                                <div class="service-card">
+                                    <div class="service-icon">
+                                        <img src="{{ asset('storage/' . $row->image) }}" alt="{{ $row->title }}">
+                                    </div>
+                                    <h3 class="service-title">{{ $row->title }}</h3>
+                                    <p class="service-description">{{ Str::limit(strip_tags($row->description ?? ''), 120) }}</p>
+                                    <a href="{{ route('home.layanan.show', $row->id) }}" class="service-link">
+                                        Learn More <i class='bx bx-right-arrow-alt'></i>
+                                    </a>
+                                </div>
+                            @endforeach
+                        </div>
+                    </div>
+                @endforeach
+            </div>
+        @endif
 
         <!-- Package Deals Section -->
         <div class="packages-section">
@@ -630,6 +674,64 @@
 
 
 <!-- ========================================
+     8b. FAQ SECTION
+     ======================================== -->
+@if($table_faq->count())
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+        @foreach($table_faq as $index => $faqItem)
+        {
+            "@type": "Question",
+            "name": @json(strip_tags($faqItem->question)),
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": @json(strip_tags($faqItem->answer))
+            }
+        }@if(!$loop->last),@endif
+        @endforeach
+    ]
+}
+</script>
+
+<section id="faq" class="faq-section">
+    <div class="container">
+        <div class="section-header">
+            <h2 class="section-title">Pertanyaan yang Sering Diajukan</h2>
+            <p class="section-subtitle">Jawaban atas keraguan umum sebelum Anda memutuskan bekerja sama dengan kami</p>
+        </div>
+
+        <div class="faq-accordion">
+            @foreach($table_faq as $index => $faqItem)
+                <div class="faq-item">
+                    <button type="button" class="faq-question" data-faq-toggle aria-expanded="false">
+                        <span>{{ $faqItem->question }}</span>
+                        <i class='bx bx-chevron-down faq-icon'></i>
+                    </button>
+                    <div class="faq-answer">
+                        <div class="faq-answer-inner">
+                            {!! nl2br(e($faqItem->answer)) !!}
+                        </div>
+                    </div>
+                </div>
+            @endforeach
+        </div>
+
+        <div class="faq-cta-note">
+            <p>Masih ada pertanyaan lain?
+                <a href="https://wa.me/6285151811055?text={{ urlencode('Halo Empatra DigiTech, saya ada pertanyaan yang belum terjawab di FAQ.') }}" target="_blank" rel="noopener">
+                    Tanya langsung via WhatsApp
+                </a>
+            </p>
+        </div>
+    </div>
+</section>
+@endif
+
+
+<!-- ========================================
      9. CONTACT SECTION
      ======================================== -->
 <section id="kontak" class="contact-section">
@@ -1057,6 +1159,27 @@ document.addEventListener('DOMContentLoaded', function() {
     console.log('Testimonials Slider initialized:', testimonialsSlider);
 
     // ========================================
+    // Service Category Tabs Functionality
+    // ========================================
+    const serviceTabButtons = document.querySelectorAll('.service-tab-button');
+    const serviceTabPanels = document.querySelectorAll('.service-tab-panel');
+
+    serviceTabButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            const targetTab = this.getAttribute('data-service-tab');
+
+            serviceTabButtons.forEach(btn => btn.classList.remove('active'));
+            serviceTabPanels.forEach(panel => panel.classList.remove('active'));
+
+            this.classList.add('active');
+            const targetPanel = document.getElementById(targetTab);
+            if (targetPanel) {
+                targetPanel.classList.add('active');
+            }
+        });
+    });
+
+    // ========================================
     // Package Tabs Functionality
     // ========================================
     const tabButtons = document.querySelectorAll('.tab-button');
@@ -1135,6 +1258,41 @@ document.addEventListener('DOMContentLoaded', function() {
     // ========================================
     console.log('Total slides in hero:', document.querySelectorAll('.hero-carousel .swiper-slide').length);
     console.log('Total slides in testimonials:', document.querySelectorAll('.testimonials-slider .swiper-slide').length);
+});
+
+// ========================================
+// FAQ ACCORDION
+// ========================================
+
+document.addEventListener('DOMContentLoaded', function() {
+    const faqButtons = document.querySelectorAll('[data-faq-toggle]');
+
+    faqButtons.forEach(function(button) {
+        button.addEventListener('click', function() {
+            const item = button.closest('.faq-item');
+            const answer = item.querySelector('.faq-answer');
+            const isActive = item.classList.contains('active');
+
+            // Close all other items (single-open accordion)
+            document.querySelectorAll('.faq-item.active').forEach(function(openItem) {
+                if (openItem !== item) {
+                    openItem.classList.remove('active');
+                    openItem.querySelector('.faq-answer').style.maxHeight = null;
+                    openItem.querySelector('[data-faq-toggle]').setAttribute('aria-expanded', 'false');
+                }
+            });
+
+            if (isActive) {
+                item.classList.remove('active');
+                answer.style.maxHeight = null;
+                button.setAttribute('aria-expanded', 'false');
+            } else {
+                item.classList.add('active');
+                answer.style.maxHeight = answer.scrollHeight + 'px';
+                button.setAttribute('aria-expanded', 'true');
+            }
+        });
+    });
 });
 
 // ========================================
