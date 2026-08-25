@@ -28,6 +28,9 @@
                     @elseif($row->title == 'FAQ')
                         <li><a href="{{ route('home.home.index') }}#faq">{{ $row->title }}</a></li>
 
+                    @elseif($row->title == 'Kalkulator')
+                        <li><a href="{{ route('home.home.index') }}#kalkulator">{{ $row->title }}</a></li>
+
                     @elseif($row->title == 'Informasi Publik')
                         <!-- <li><a href="{{ route('home.informasi.index') }}"></a></li> -->
 

@@ -88,6 +88,24 @@ Route::group(["middleware" => ["patra.access"], "namespace" => "App\Http\Control
         Route::delete('/{id}', 'FaqController@destroy')->name("destroy");
     });
 
+    Route::group(["as" => "calculator-service.", "prefix" => "calculator-service"], function () {
+        Route::get('/', 'CalculatorServiceController@index')->name("index");
+        Route::get('/create', 'CalculatorServiceController@create')->name("create");
+        Route::post('/', 'CalculatorServiceController@store')->name("store");
+        Route::get('/{id}/edit', 'CalculatorServiceController@edit')->name("edit");
+        Route::put('/{id}', 'CalculatorServiceController@update')->name("update");
+        Route::delete('/{id}', 'CalculatorServiceController@destroy')->name("destroy");
+    });
+
+    Route::group(["as" => "calculator-feature.", "prefix" => "calculator-feature"], function () {
+        Route::get('/', 'CalculatorFeatureController@index')->name("index");
+        Route::get('/create', 'CalculatorFeatureController@create')->name("create");
+        Route::post('/', 'CalculatorFeatureController@store')->name("store");
+        Route::get('/{id}/edit', 'CalculatorFeatureController@edit')->name("edit");
+        Route::put('/{id}', 'CalculatorFeatureController@update')->name("update");
+        Route::delete('/{id}', 'CalculatorFeatureController@destroy')->name("destroy");
+    });
+
     Route::group(["as" => "banner.", "prefix" => "banner"], function () {
         Route::get('/', 'BannerController@index')->name("index")->middleware('role:' . implode('|', [RoleEnum::SuperAdmin, RoleEnum::Admin]));
         Route::get('/create', 'BannerController@create')->name("create")->middleware('role:' . implode('|', [RoleEnum::SuperAdmin, RoleEnum::Admin]));

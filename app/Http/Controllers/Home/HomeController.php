@@ -13,6 +13,8 @@ use App\Models\Pengaturan;
 use App\Models\Layanan;
 use App\Models\Paket;
 use App\Models\Faq;
+use App\Models\CalculatorService;
+use App\Models\CalculatorFeature;
 use App\Models\Menu;
 
 class HomeController extends Controller
@@ -56,6 +58,14 @@ class HomeController extends Controller
             ->orderBy('created_at', 'ASC')
             ->get();
 
+        $calculator_services = CalculatorService::where('is_active', true)
+            ->orderBy('urutan', 'ASC')
+            ->get();
+
+        $calculator_features = CalculatorFeature::where('is_active', true)
+            ->orderBy('urutan', 'ASC')
+            ->get();
+
         // Fetch the most viewed portofolio id
         $count_view = DB::table('views')
             ->select('viewable_id', DB::raw('COUNT(*) as total'))
@@ -76,6 +86,8 @@ class HomeController extends Controller
                 'paket_website' => $paket_website,
                 'paket_app' => $paket_app,
                 'table_faq' => $table_faq,
+                'calculator_services' => $calculator_services,
+                'calculator_features' => $calculator_features,
             ];
 
             return view($this->view . "index", $data);
@@ -98,6 +110,8 @@ class HomeController extends Controller
                 'paket_website' => $paket_website,
                 'paket_app' => $paket_app,
                 'table_faq' => $table_faq,
+                'calculator_services' => $calculator_services,
+                'calculator_features' => $calculator_features,
             ];
 
             return view($this->view . "index", $data);
