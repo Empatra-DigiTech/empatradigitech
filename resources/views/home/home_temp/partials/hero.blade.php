@@ -1,5 +1,3 @@
-{{-- resources/views/components/hero.blade.php --}}
-
 <section class="hero-section">
     <div class="hero-bg-shape hero-bg-blue"></div>
     <div class="hero-bg-shape hero-bg-red"></div>
