@@ -21,6 +21,15 @@
                 </div>
                 <div class="row mb-2">
                     <div class="col-md-3">
+                        Kategori
+                    </div>
+                    <div class="col-md-8">
+                        : {{ $result->kategori ?? 'Belum diatur' }}
+                    </div>
+                </div>
+
+                <div class="row mb-2">
+                    <div class="col-md-3">
                         Deskripsi
                     </div>
                     <div class="col-md-8">

@@ -24,6 +24,7 @@
                                 <thead>
                                     <th>No</th>
                                     <th>Judul</th>
+                                    <th>Kategori</th>
                                     <th>Deskripsi</th>
                                     <th>Icon</th>
                                     <th>Dibuat Pada</th>
@@ -34,6 +35,13 @@
                                     <tr>
                                         <td>{{$table->firstItem() + $index}}</td>
                                         <td>{{$row->title}}</td>
+                                        <td>
+                                            @if($row->kategori)
+                                                <span class="badge badge-info">{{ $row->kategori }}</span>
+                                            @else
+                                                <span class="badge badge-secondary">Belum diatur</span>
+                                            @endif
+                                        </td>
                                         <td>{{$row->description}}</td>
                                         <td>
                                             <img src="{{ asset('storage/'.$row->image) }}" alt="" style="width: 80px;height:80px;">

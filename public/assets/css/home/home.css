@@ -470,6 +470,79 @@
 
 
 /* ========================================
+   SERVICE CATEGORY TABS (inside Our Services)
+   ======================================== */
+
+.service-category-tabs {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: var(--spacing-sm);
+    margin-bottom: var(--spacing-xl);
+    background: var(--gray-100);
+    padding: 0.5rem;
+    border-radius: var(--radius-lg);
+    width: fit-content;
+    max-width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.service-tab-button {
+    display: flex;
+    align-items: center;
+    gap: 0.625rem;
+    padding: 0.875rem 1.5rem;
+    background: transparent;
+    border: none;
+    border-radius: var(--radius-md);
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--gray-700);
+    cursor: pointer;
+    transition: all var(--transition-base);
+    font-family: var(--font-heading);
+    white-space: nowrap;
+}
+
+.service-tab-button i {
+    font-size: 1.25rem;
+}
+
+.service-tab-button:hover {
+    background: rgba(176, 46, 54, 0.1);
+    color: var(--primary);
+}
+
+.service-tab-button.active {
+    background: var(--primary);
+    color: var(--white);
+    box-shadow: var(--shadow-md);
+}
+
+.service-tab-panel {
+    display: none;
+    animation: fadeInUp 0.5s ease-out;
+}
+
+.service-tab-panel.active {
+    display: block;
+}
+
+@media (max-width: 768px) {
+    .service-category-tabs {
+        flex-direction: column;
+        width: 100%;
+    }
+
+    .service-tab-button {
+        width: 100%;
+        justify-content: center;
+    }
+}
+
+
+/* ========================================
    PACKAGES SECTION
    ======================================== */
 
