@@ -17,5 +17,9 @@ class Pengaturan extends Model
         'website_phone',
         'website_address',
         'website_email',
+        'stat_projects',
+        'stat_clients',
+        'stat_industries',
+        'stat_years_experience',
     ];
 }

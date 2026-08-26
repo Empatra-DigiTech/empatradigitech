@@ -90,6 +90,45 @@
                                 </div>
                             </div>
                         </div>
+
+                        <hr>
+                        <h5 class="mb-3">Angka Pencapaian (ditampilkan di halaman utama)</h5>
+                        <p class="text-muted" style="margin-top:-10px;"><small>Isi dengan data yang benar-benar sesuai kondisi bisnis Anda. Kosongkan field yang belum ingin ditampilkan.</small></p>
+                        <div class="row mb-3">
+                            <div class="col-lg-6">
+                                <div class="form-group row">
+                                    <label class="col-md-4 col-form-label">Projects Completed</label>
+                                    <div class="col-md-8">
+                                        <input type="text" class="form-control" name="stat_projects" placeholder="cth. 20+" value="{{old('stat_projects',$result->stat_projects)}}">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="form-group row">
+                                    <label class="col-md-4 col-form-label">Happy Clients</label>
+                                    <div class="col-md-8">
+                                        <input type="text" class="form-control" name="stat_clients" placeholder="cth. 15+" value="{{old('stat_clients',$result->stat_clients)}}">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="form-group row">
+                                    <label class="col-md-4 col-form-label">Industries Served</label>
+                                    <div class="col-md-8">
+                                        <input type="text" class="form-control" name="stat_industries" placeholder="cth. 5+" value="{{old('stat_industries',$result->stat_industries)}}">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="form-group row">
+                                    <label class="col-md-4 col-form-label">Years Experience</label>
+                                    <div class="col-md-8">
+                                        <input type="text" class="form-control" name="stat_years_experience" placeholder="cth. 3+" value="{{old('stat_years_experience',$result->stat_years_experience)}}">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
                         <div class="row">
                             <div class="col-lg-12">
                                 <a href="{{route('patra.pengaturan.index')}}" class="btn btn-warning"><i class="fa fa-arrow-left"></i> Kembali</a>

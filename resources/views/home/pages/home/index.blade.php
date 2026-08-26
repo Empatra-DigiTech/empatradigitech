@@ -71,6 +71,31 @@
 
 
 <!-- ========================================
+     1b. TRUSTED BY / CLIENT LOGOS SECTION
+     ======================================== -->
+@if($table_client_logo->count())
+<section id="trusted-by" class="trusted-by-section">
+    <div class="container">
+        <p class="trusted-by-label">Trusted by Businesses &amp; Organizations</p>
+        <div class="trusted-by-logos">
+            @foreach($table_client_logo as $clientLogoItem)
+                @if($clientLogoItem->website_url)
+                    <a href="{{ $clientLogoItem->website_url }}" target="_blank" rel="noopener" class="trusted-by-logo-item" title="{{ $clientLogoItem->nama_client }}">
+                        <img src="{{ asset('storage/' . $clientLogoItem->logo) }}" alt="{{ $clientLogoItem->nama_client }}" loading="lazy">
+                    </a>
+                @else
+                    <div class="trusted-by-logo-item" title="{{ $clientLogoItem->nama_client }}">
+                        <img src="{{ asset('storage/' . $clientLogoItem->logo) }}" alt="{{ $clientLogoItem->nama_client }}" loading="lazy">
+                    </div>
+                @endif
+            @endforeach
+        </div>
+    </div>
+</section>
+@endif
+
+
+<!-- ========================================
      2. SERVICES OVERVIEW SECTION
      ======================================== -->
 <section id="services" class="services-section">
@@ -79,28 +104,72 @@
         <section id="layanan">
             <div class="section-header">
                 <h2 class="section-title">Our Services</h2>
-                <p class="section-subtitle">Comprehensive digital solutions for your business needs</p>
+                <p class="section-subtitle">Jenis project yang bisa kami kerjakan &mdash; pilih kategori sesuai kebutuhan Anda</p>
             </div>
         </section>
-        <!-- Services Grid -->
-        <div class="services-grid">
-            @forelse ($table_layanan as $index => $row)
-                <div class="service-card">
-                    <div class="service-icon">
-                        <img src="{{ asset('storage/' . $row->image) }}" alt="{{ $row->title }}">
-                    </div>
-                    <h3 class="service-title">{{ $row->title }}</h3>
-                    <p class="service-description">{{ Str::limit(strip_tags($row->description ?? ''), 120) }}</p>
-                    <a href="{{ route('home.layanan.show', $row->id) }}" class="service-link">
-                        Learn More <i class='bx bx-right-arrow-alt'></i>
-                    </a>
-                </div>
-            @empty
+
+        @php
+            // Fixed display order for the built-in categories; anything else
+            // (including services without a category yet) is grouped under "Lainnya"
+            // so nothing ever disappears from the homepage after this feature is added.
+            $serviceCategoryOrder = \App\Models\Layanan::kategoriOptions();
+            $serviceCategoryIcons = [
+                'Website' => 'bx-laptop',
+                'Web Application' => 'bx-window-alt',
+                'Mobile Application' => 'bx-mobile-alt',
+                'Custom Software' => 'bx-customize',
+                'Lainnya' => 'bx-grid-alt',
+            ];
+
+            $serviceGrouped = $table_layanan->groupBy(function ($item) use ($serviceCategoryOrder) {
+                return in_array($item->kategori, $serviceCategoryOrder) ? $item->kategori : 'Lainnya';
+            });
+
+            $serviceCategories = collect($serviceCategoryOrder)->filter(fn($cat) => $serviceGrouped->has($cat))->values();
+            if ($serviceGrouped->has('Lainnya')) {
+                $serviceCategories->push('Lainnya');
+            }
+        @endphp
+
+        @if($serviceCategories->isEmpty())
+            <div class="services-grid">
                 <div class="col-12 text-center">
                     <p>No services available at the moment.</p>
                 </div>
-            @endforelse
-        </div>
+            </div>
+        @else
+            <!-- Service Category Tabs -->
+            <div class="service-category-tabs">
+                @foreach($serviceCategories as $i => $cat)
+                    <button type="button" class="service-tab-button {{ $i === 0 ? 'active' : '' }}" data-service-tab="service-cat-{{ Str::slug($cat) }}">
+                        <i class='bx {{ $serviceCategoryIcons[$cat] ?? 'bx-grid-alt' }}'></i>
+                        <span>{{ $cat }}</span>
+                    </button>
+                @endforeach
+            </div>
+
+            <!-- Service Category Panels -->
+            <div class="service-tabs-content">
+                @foreach($serviceCategories as $i => $cat)
+                    <div id="service-cat-{{ Str::slug($cat) }}" class="service-tab-panel {{ $i === 0 ? 'active' : '' }}">
+                        <div class="services-grid">
+                            @foreach($serviceGrouped[$cat] as $row)
+                                <div class="service-card">
+                                    <div class="service-icon">
+                                        <img src="{{ asset('storage/' . $row->image) }}" alt="{{ $row->title }}">
+                                    </div>
+                                    <h3 class="service-title">{{ $row->title }}</h3>
+                                    <p class="service-description">{{ Str::limit(strip_tags($row->description ?? ''), 120) }}</p>
+                                    <a href="{{ route('home.layanan.show', $row->id) }}" class="service-link">
+                                        Learn More <i class='bx bx-right-arrow-alt'></i>
+                                    </a>
+                                </div>
+                            @endforeach
+                        </div>
+                    </div>
+                @endforeach
+            </div>
+        @endif
 
         <!-- Package Deals Section -->
         <div id="pricing" class="packages-section">
@@ -614,6 +683,7 @@
 <!-- ========================================
      7. TESTIMONIALS SECTION
      ======================================== -->
+@if($table_testimoni->count())
 <section id="testimonials" class="testimonials-section">
     <div class="container">
         <div class="section-header">
@@ -623,32 +693,44 @@
 
         <div class="testimonials-slider swiper-container">
             <div class="swiper-wrapper">
-                @for($i = 1; $i <= 5; $i++)
+                @foreach($table_testimoni as $testimoniItem)
                     <div class="swiper-slide">
                         <div class="testimonial-card">
                             <div class="testimonial-quote">
                                 <i class='bx bxs-quote-alt-left'></i>
                             </div>
+                            <div class="testimonial-rating">
+                                @for($i=1;$i<=5;$i++)
+                                    <i class='bx {{ $i <= $testimoniItem->rating ? "bxs-star" : "bx-star" }}'></i>
+                                @endfor
+                            </div>
                             <p class="testimonial-text">
-                                "Working with EMPATRA DIGITECH was an absolute pleasure. They delivered our project on time and exceeded our expectations. Highly recommended!"
+                                "{{ $testimoniItem->testimoni }}"
                             </p>
                             <div class="testimonial-author">
                                 <div class="author-avatar">
-                                    <img src="https://i.pravatar.cc/100?img={{ $i }}" alt="Client {{ $i }}">
+                                    @if($testimoniItem->foto)
+                                        <img src="{{ asset('storage/' . $testimoniItem->foto) }}" alt="{{ $testimoniItem->nama_client }}">
+                                    @else
+                                        <div class="author-avatar-fallback">{{ strtoupper(substr($testimoniItem->nama_client, 0, 1)) }}</div>
+                                    @endif
                                 </div>
                                 <div class="author-info">
-                                    <h4 class="author-name">John Doe {{ $i }}</h4>
-                                    <p class="author-role">CEO, Tech Company</p>
+                                    <h4 class="author-name">{{ $testimoniItem->nama_client }}</h4>
+                                    @if($testimoniItem->jabatan || $testimoniItem->perusahaan)
+                                        <p class="author-role">{{ $testimoniItem->jabatan }}{{ $testimoniItem->jabatan && $testimoniItem->perusahaan ? ', ' : '' }}{{ $testimoniItem->perusahaan }}</p>
+                                    @endif
                                 </div>
                             </div>
                         </div>
                     </div>
-                @endfor
+                @endforeach
             </div>
             <div class="swiper-pagination"></div>
         </div>
     </div>
 </section>
+@endif
 
 
 <!-- ========================================
@@ -662,16 +744,24 @@
                     <div class="about-image">
                         <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=800" alt="Our Team">
                         <div class="about-image-overlay">
+                            @php
+                                $aboutStats = collect([
+                                    ['value' => $table_pengaturan->stat_projects ?? null, 'label' => 'Projects Completed'],
+                                    ['value' => $table_pengaturan->stat_clients ?? null, 'label' => 'Happy Clients'],
+                                    ['value' => $table_pengaturan->stat_industries ?? null, 'label' => 'Industries Served'],
+                                    ['value' => $table_pengaturan->stat_years_experience ?? null, 'label' => 'Years Experience'],
+                                ])->filter(fn($stat) => !empty($stat['value']));
+                            @endphp
+                            @if($aboutStats->count())
                             <div class="about-stats">
+                                @foreach($aboutStats as $stat)
                                 <div class="stat-item">
-                                    <h3 class="stat-number">100+</h3>
-                                    <p class="stat-label">Projects Completed</p>
+                                    <h3 class="stat-number">{{ $stat['value'] }}</h3>
+                                    <p class="stat-label">{{ $stat['label'] }}</p>
                                 </div>
-                                <div class="stat-item">
-                                    <h3 class="stat-number">50+</h3>
-                                    <p class="stat-label">Happy Clients</p>
-                                </div>
+                                @endforeach
                             </div>
+                            @endif
                         </div>
                     </div>
                 </div>
@@ -1155,36 +1245,60 @@ document.addEventListener('DOMContentLoaded', function() {
     // ========================================
     // Testimonials Slider Initialization
     // ========================================
-    const testimonialsSlider = new Swiper('.testimonials-slider', {
-        loop: true,
-        speed: 600,
-        spaceBetween: 30,
-        slidesPerView: 1,
+    const testimonialsSliderEl = document.querySelector('.testimonials-slider');
+    if (testimonialsSliderEl) {
+        const testimonialsSlider = new Swiper('.testimonials-slider', {
+            loop: true,
+            speed: 600,
+            spaceBetween: 30,
+            slidesPerView: 1,
 
-        autoplay: {
-            delay: 5000,
-            disableOnInteraction: false,
-        },
-
-        pagination: {
-            el: '.testimonials-slider .swiper-pagination',
-            clickable: true,
-        },
-
-        // Responsive breakpoints
-        breakpoints: {
-            768: {
-                slidesPerView: 2,
-                spaceBetween: 30,
+            autoplay: {
+                delay: 5000,
+                disableOnInteraction: false,
             },
-            1024: {
-                slidesPerView: 3,
-                spaceBetween: 30,
-            }
-        }
-    });
 
-    console.log('Testimonials Slider initialized:', testimonialsSlider);
+            pagination: {
+                el: '.testimonials-slider .swiper-pagination',
+                clickable: true,
+            },
+
+            // Responsive breakpoints
+            breakpoints: {
+                768: {
+                    slidesPerView: 2,
+                    spaceBetween: 30,
+                },
+                1024: {
+                    slidesPerView: 3,
+                    spaceBetween: 30,
+                }
+            }
+        });
+
+        console.log('Testimonials Slider initialized:', testimonialsSlider);
+    }
+
+    // ========================================
+    // Service Category Tabs Functionality
+    // ========================================
+    const serviceTabButtons = document.querySelectorAll('.service-tab-button');
+    const serviceTabPanels = document.querySelectorAll('.service-tab-panel');
+
+    serviceTabButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            const targetTab = this.getAttribute('data-service-tab');
+
+            serviceTabButtons.forEach(btn => btn.classList.remove('active'));
+            serviceTabPanels.forEach(panel => panel.classList.remove('active'));
+
+            this.classList.add('active');
+            const targetPanel = document.getElementById(targetTab);
+            if (targetPanel) {
+                targetPanel.classList.add('active');
+            }
+        });
+    });
 
     // ========================================
     // Package Tabs Functionality

@@ -88,6 +88,26 @@ Route::group(["middleware" => ["patra.access"], "namespace" => "App\Http\Control
         Route::delete('/{id}', 'FaqController@destroy')->name("destroy");
     });
 
+    Route::group(["as" => "testimoni.", "prefix" => "testimoni"], function () {
+        Route::get('/', 'TestimoniController@index')->name("index");
+        Route::get('/create', 'TestimoniController@create')->name("create");
+        Route::post('/', 'TestimoniController@store')->name("store");
+        Route::get('/{id}', 'TestimoniController@show')->name("show");
+        Route::get('/{id}/edit', 'TestimoniController@edit')->name("edit");
+        Route::put('/{id}', 'TestimoniController@update')->name("update");
+        Route::delete('/{id}', 'TestimoniController@destroy')->name("destroy");
+    });
+
+    Route::group(["as" => "client-logo.", "prefix" => "client-logo"], function () {
+        Route::get('/', 'ClientLogoController@index')->name("index");
+        Route::get('/create', 'ClientLogoController@create')->name("create");
+        Route::post('/', 'ClientLogoController@store')->name("store");
+        Route::get('/{id}', 'ClientLogoController@show')->name("show");
+        Route::get('/{id}/edit', 'ClientLogoController@edit')->name("edit");
+        Route::put('/{id}', 'ClientLogoController@update')->name("update");
+        Route::delete('/{id}', 'ClientLogoController@destroy')->name("destroy");
+    });
+
     Route::group(["as" => "calculator-service.", "prefix" => "calculator-service"], function () {
         Route::get('/', 'CalculatorServiceController@index')->name("index");
         Route::get('/create', 'CalculatorServiceController@create')->name("create");

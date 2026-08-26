@@ -45,6 +45,10 @@ class PengaturanController extends Controller
             $website_address = $request->website_address;
             $website_email = $request->website_email;
             $website_logo = $request->file("website_logo");
+            $stat_projects = $request->stat_projects;
+            $stat_clients = $request->stat_clients;
+            $stat_industries = $request->stat_industries;
+            $stat_years_experience = $request->stat_years_experience;
 
             if($website_logo){
                 $upload = UploadHelper::upload_file($website_logo,'settings',['jpeg','jpg','png','gif']);
@@ -66,6 +70,10 @@ class PengaturanController extends Controller
                 'website_address' => $website_address,
                 'website_email' => $website_email,
                 'website_logo' => $website_logo,
+                'stat_projects' => $stat_projects,
+                'stat_clients' => $stat_clients,
+                'stat_industries' => $stat_industries,
+                'stat_years_experience' => $stat_years_experience,
             ]);
 
             alert()->html('Berhasil','Pengaturan website berhasil diperbarui','success');
