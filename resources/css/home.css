@@ -214,6 +214,10 @@
 .site-navbar.is-scrolled .site-navbar__dropdown-toggle {
     color: var(--enav-text-scrolled);
 }
+.site-navbar.is-scrolled .site-navbar__dropdown {
+    background: var(--enav-navy);
+    color: var(--enav-text-scrolled);
+}
 .site-navbar__dropdown-toggle:hover {
     opacity: 0.75;
 }

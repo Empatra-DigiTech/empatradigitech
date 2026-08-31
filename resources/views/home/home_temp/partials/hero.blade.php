@@ -221,21 +221,27 @@
     }
 
     .hero-bg-blue {
-        width: 720px;
-        height: 720px;
-        right: -250px;
-        top: -330px;
+        width: 600px;
+        height: 600px;
+        left: -70px;
+        top: 170px;
         background: var(--hero-blue);
         border-radius: 50%;
+        filter: blur(120px);
+        opacity: 0.35;
+        pointer-events: none;
     }
 
     .hero-bg-red {
         width: 600px;
         height: 600px;
         right: -70px;
-        top: -170px;
+        bottom: -170px;
         background: var(--hero-red);
         border-radius: 50%;
+        filter: blur(120px);
+        opacity: 0.30;
+        pointer-events: none;
     }
 
     .hero-container {
@@ -484,7 +490,7 @@
 
     .hero-dots-top {
         right: 10px;
-        top: 35px;
+        bottom: 35px;
 
         grid-template-columns: repeat(6, 4px);
     }
