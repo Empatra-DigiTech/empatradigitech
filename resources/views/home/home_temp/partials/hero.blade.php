@@ -8,7 +8,7 @@
         <div class="hero-content">
 
             <div class="hero-badge">
-                Solusi Digital untuk Bisnis Anda
+                Solusi Digital <span>untuk Bisnis Anda</span>
             </div>
 
             <h1 class="hero-title">
@@ -195,11 +195,11 @@
 
 <style>
     :root {
-        --hero-blue: #07356d;
-        --hero-blue-dark: #062b59;
-        --hero-red: #d7192d;
-        --hero-text: #12345b;
-        --hero-light: #ffffff;
+        --hero-blue: var(--secondary, #0F3C5D);
+        --hero-blue-dark: var(--secondary-dark, #0A2840);
+        --hero-red: var(--primary, #B02E36);
+        --hero-text: var(--secondary-dark, #0A2840);
+        --hero-light: var(--white, #FFFFFF);
     }
 
     .hero-section {
@@ -279,6 +279,10 @@
         letter-spacing: .1px;
     }
 
+    .hero-badge span {
+        color: var(--hero-red);
+    }
+
     .hero-title {
         margin: 0;
         max-width: 610px;
@@ -294,7 +298,7 @@
     .hero-title span {
         display: block;
         margin-top: 4px;
-        color: #ad2029;
+        color: var(--hero-red);
     }
 
     .hero-description {
@@ -389,7 +393,7 @@
     .hero-btn-primary {
         color: #fff;
         background: var(--hero-blue);
-        box-shadow: 0 7px 18px rgba(7, 53, 109, .16);
+        box-shadow: 0 7px 18px rgba(15, 60, 93, .16);
     }
 
     .hero-btn-primary:hover {

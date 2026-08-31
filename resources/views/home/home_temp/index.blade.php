@@ -7,5 +7,6 @@
     @include('home.home_temp.partials.process')
     @include('home.home_temp.partials.price')
     @include('home.home_temp.partials.testimonial')
+    @include('home.home_temp.partials.faq')
     @include('home.home_temp.partials.consultation')
 @endsection
