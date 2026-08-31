@@ -26,10 +26,10 @@
                         <li><a href="{{ route('home.home.index') }}#kontak">{{ $row->title }}</a></li>
 
                     @elseif($row->title == 'FAQ')
-                        <li><a href="{{ route('home.home.index') }}#faq">{{ $row->title }}</a></li>
+                        {{-- moved into "Lainnya" dropdown below --}}
 
                     @elseif($row->title == 'Kalkulator')
-                        <li><a href="{{ route('home.home.index') }}#kalkulator">{{ $row->title }}</a></li>
+                        {{-- moved into "Lainnya" dropdown below --}}
 
                     @elseif($row->title == 'Informasi Publik')
                         <!-- <li><a href="{{ route('home.home.informasi.index') }}"></a></li> -->
@@ -44,7 +44,7 @@
                         <li><a href="{{ route('home.home.inovasi.index') }}">{{ $row->title }}</a></li>
 
                     @elseif($row->title == 'Blog')
-                        <li><a href="{{ route('home.home.blog.index') }}">{{ $row->title }}</a></li>
+                        {{-- moved into "Lainnya" dropdown below --}}
 
                     @elseif($row->title == 'Galeri')
                         <li><a href="{{ route('home.home.galeri.index') }}">{{ $row->title }}</a></li>
@@ -89,6 +89,19 @@
                     @endif
 
                 @endforeach
+
+                <!-- Grouped secondary items to keep the navbar compact -->
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle">
+                        <span>Lainnya</span>
+                        <i class="bi bi-chevron-down toggle-dropdown"></i>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a href="{{ route('home.blog.index') }}">Blog</a></li>
+                        <li><a href="{{ route('home.home.index') }}#faq">FAQ</a></li>
+                        <li><a href="{{ route('home.home.index') }}#pricing" class="nav-open-calculator-tab">Kalkulator</a></li>
+                    </ul>
+                </li>
             </ul>
 
             <!-- Mobile Navigation Toggle -->

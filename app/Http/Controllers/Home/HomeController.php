@@ -13,6 +13,8 @@ use App\Models\Pengaturan;
 use App\Models\Layanan;
 use App\Models\Paket;
 use App\Models\Faq;
+use App\Models\Testimoni;
+use App\Models\ClientLogo;
 use App\Models\CalculatorService;
 use App\Models\CalculatorFeature;
 use App\Models\Menu;
@@ -58,6 +60,16 @@ class HomeController extends Controller
             ->orderBy('created_at', 'ASC')
             ->get();
 
+        $table_testimoni = Testimoni::where('is_active', true)
+            ->orderBy('urutan', 'ASC')
+            ->orderBy('created_at', 'DESC')
+            ->get();
+
+        $table_client_logo = ClientLogo::where('is_active', true)
+            ->orderBy('urutan', 'ASC')
+            ->orderBy('created_at', 'ASC')
+            ->get();
+
         $calculator_services = CalculatorService::where('is_active', true)
             ->orderBy('urutan', 'ASC')
             ->get();
@@ -86,6 +98,8 @@ class HomeController extends Controller
                 'paket_website' => $paket_website,
                 'paket_app' => $paket_app,
                 'table_faq' => $table_faq,
+                'table_testimoni' => $table_testimoni,
+                'table_client_logo' => $table_client_logo,
                 'calculator_services' => $calculator_services,
                 'calculator_features' => $calculator_features,
             ];
@@ -110,6 +124,8 @@ class HomeController extends Controller
                 'paket_website' => $paket_website,
                 'paket_app' => $paket_app,
                 'table_faq' => $table_faq,
+                'table_testimoni' => $table_testimoni,
+                'table_client_logo' => $table_client_logo,
                 'calculator_services' => $calculator_services,
                 'calculator_features' => $calculator_features,
             ];

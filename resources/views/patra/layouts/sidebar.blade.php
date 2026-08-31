@@ -169,6 +169,22 @@
               </a>
             </li>
             <li class="nav-item">
+              <a href="{{route('patra.testimoni.index')}}" class="nav-link @if(Str::startsWith(request()->route()->getName(), 'patra.testimoni')) active @endif">
+                <i class="bx bx-comment-detail col-3 bx-tada-hover"></i>
+                <p>
+                  Testimoni
+                </p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="{{route('patra.client-logo.index')}}" class="nav-link @if(Str::startsWith(request()->route()->getName(), 'patra.client-logo')) active @endif">
+                <i class="bx bx-buildings col-3 bx-tada-hover"></i>
+                <p>
+                  Client / Partner
+                </p>
+              </a>
+            </li>
+            <li class="nav-item">
               <a href="{{route('patra.calculator-service.index')}}" class="nav-link @if(Str::startsWith(request()->route()->getName(), 'patra.calculator-service')) active @endif">
                 <i class="bx bx-calculator col-3 bx-tada-hover"></i>
                 <p>
