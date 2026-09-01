@@ -25,7 +25,7 @@ class HomeController extends Controller
 
     public function __construct()
     {
-        $this->view = "home.pages.home.";
+        $this->view = "home.";
         $this->tautan = new Tautan();
     }
 

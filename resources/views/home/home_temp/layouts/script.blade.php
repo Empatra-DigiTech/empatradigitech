@@ -26,7 +26,7 @@
     {{-- <script src="{{URL::to('/')}}/assets/js/home/navbar.js"></script> --}}
 
     <!--maps handler script-->
-    @include('home.components.maps_script')
+    @include('home.component.maps_script')
     
 {{-- END KAIADMIN JS --}}
 

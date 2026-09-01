@@ -1,233 +1,107 @@
 @php
     use App\Models\Menu;
+
+    // Titles already rendered as fixed nav sections above/below —
+    // skipped here so admin-managed items aren't duplicated.
+    $reservedMenuTitles = ['Home', 'Layanan', 'Portofolio', 'Inovasi', 'Informasi', 'Informasi Publik', 'Blog', 'Galeri', 'Profil', 'Kontak', 'FAQ', 'Kalkulator'];
+    $customMenuItems = $table_menu->whereNull('parent')->whereNotIn('title', $reservedMenuTitles);
 @endphp
 
-<header id="header" data-aos="fade-down" class="header d-flex align-items-center fixed-top">
-    <div class="container container-xl position-relative d-flex align-items-center">
+<header class="site-navbar" id="siteNavbar">
+    <div class="site-navbar__container">
 
-        <!-- Logo Section -->
-        <a href="{{ route('home.home.index') }}" class="logo d-flex align-items-center me-auto">
+        <a href="{{ url('/') }}" class="site-navbar__brand" aria-label="Empatra DigiTech - Home">
             @if ($table_pengaturan->website_logo == null)
-                <img src="{{ URL::to('/') }}/assets/img/favicon.png" alt="Company Logo">
+                <img src="{{ URL::to('/') }}/assets/img/favicon.png" alt="Empatra DigiTech" class="site-navbar__logo">
             @else
-                <img src="{{ asset('storage/' . $table_pengaturan->website_logo) }}" alt="Company Logo">
+                <img src="{{ asset('storage/' . $table_pengaturan->website_logo) }}" alt="Empatra DigiTech" class="site-navbar__logo">
             @endif
-        </a>
+            </a>
 
-        <!-- Navigation Menu -->
-        <nav id="navmenu" class="navmenu">
-            <ul>
-                @foreach ($table_menu as $index => $row)
+        <button type="button"
+                class="site-navbar__toggle"
+                id="siteNavbarToggle"
+                aria-expanded="false"
+                aria-controls="siteNavbarNav"
+                aria-label="Toggle navigation menu">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
 
-                    @if ($row->title == 'Layanan')
-                        <li><a href="{{ route('home.home.index') }}#layanan">{{ $row->title }}</a></li>
+        <nav class="site-navbar__nav" id="siteNavbarNav" aria-label="Main navigation">
+            <ul class="site-navbar__links">
+                <li><a href="{{ route('home.home.index') }}" class="is-active">Home</a></li>
+                <li><a href="{{ route('home.home.index') }}#layanan">Layanan</a></li>
+                <li><a href="{{ route('home.portofolio.index') }}">Portfolio</a></li>
+                <li><a href="{{ route('home.inovasi.index') }}">Inovasi</a></li>
+                <li><a href="{{ route('home.informasi.index') }}">Informasi</a></li>
 
-                    @elseif($row->title == 'Kontak')
-                        <li><a href="{{ route('home.home.index') }}#kontak">{{ $row->title }}</a></li>
+                @foreach ($customMenuItems as $row)
+                    @php
+                        $children = Menu::where('parent', $row->id)->orderBy('created_at')->get();
+                    @endphp
 
-                    @elseif($row->title == 'FAQ')
-                        {{-- moved into "Lainnya" dropdown below --}}
-
-                    @elseif($row->title == 'Kalkulator')
-                        {{-- moved into "Lainnya" dropdown below --}}
-
-                    @elseif($row->title == 'Informasi Publik')
-                        <!-- <li><a href="{{ route('home.informasi.index') }}"></a></li> -->
-
-                    @elseif($row->title == 'Home')
-                        <li><a href="{{ route('home.home.index') }}" class="active">{{ $row->title }}</a></li>
-
-                    @elseif($row->title == 'Portofolio')
-                        <li><a href="{{ route('home.portofolio.index') }}">{{ $row->title }}</a></li>
-
-                    @elseif($row->title == 'Inovasi')
-                        <li><a href="{{ route('home.inovasi.index') }}">{{ $row->title }}</a></li>
-
-                    @elseif($row->title == 'Blog')
-                        {{-- moved into "Lainnya" dropdown below --}}
-
-                    @elseif($row->title == 'Galeri')
-                        <li><a href="{{ route('home.galeri.index') }}">{{ $row->title }}</a></li>
-
-                    @elseif($row->title == 'Profil')
-                        <li class="dropdown">
-                            <a href="#" class="dropdown-toggle">
-                                <span>{{ $row->title }}</span>
-                                <!-- <i class="bi bi-chevron-down toggle-dropdown"></i> -->
-                            </a>
-                            <ul class="dropdown-menu">
-                                <li><a href="{{ route('home.team.index') }}">Team</a></li>
-                                {{-- <li><a href="{{ route('home.SO.index') }}">Struktur Organisasi</a></li> --}}
-                                <li><a href="{{ route('home.VM.index') }}">Visi & Misi</a></li>
+                    @if ($children->count() == 0)
+                        <li><a href="{{ '/' . strtolower($row->title) . '/show' }}">{{ $row->title }}</a></li>
+                    @else
+                        <li class="site-navbar__item--dropdown">
+                            <button type="button"
+                                    class="site-navbar__dropdown-toggle"
+                                    aria-expanded="false"
+                                    aria-haspopup="true"
+                                    aria-controls="siteNavbarDropdownMenu{{ $row->id }}">
+                                {{ $row->title }}
+                                <svg class="site-navbar__caret" viewBox="0 0 12 8" aria-hidden="true">
+                                    <path d="M1 1l5 5 5-5" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                            </button>
+                            <ul class="site-navbar__dropdown" id="siteNavbarDropdownMenu{{ $row->id }}">
+                                @foreach ($children as $child)
+                                    <li><a href="{{ '/' . strtolower($child->title) . '/show' }}">{{ $child->title }}</a></li>
+                                @endforeach
                             </ul>
                         </li>
-
-                    @else
-                        @if ($row->parent == null)
-                            @php
-                                $child = Menu::where('parent', $row->id)
-                                    ->orderBy('created_at')
-                                    ->get();
-                            @endphp
-
-                            @if ($child->count() == 0)
-                                <li><a href="{{ '/' . strtolower($row->title) . '/show' }}">{{ $row->title }}</a></li>
-                            @else
-                                <li class="dropdown">
-                                    <a href="#" class="dropdown-toggle">
-                                        <span>{{ $row->title }}</span>
-                                        <i class="bi bi-chevron-down toggle-dropdown"></i>
-                                    </a>
-                                    <ul class="dropdown-menu">
-                                        @foreach ($child as $ch)
-                                            <li><a href="{{ '/' . strtolower($ch->title) . '/show' }}">{{ $ch->title }}</a></li>
-                                        @endforeach
-                                    </ul>
-                                </li>
-                            @endif
-                        @endif
                     @endif
-
                 @endforeach
 
-                <!-- Grouped secondary items to keep the navbar compact -->
-                <li class="dropdown">
-                    <a href="#" class="dropdown-toggle">
-                        <span>Lainnya</span>
-                        <i class="bi bi-chevron-down toggle-dropdown"></i>
-                    </a>
-                    <ul class="dropdown-menu">
+                <li class="site-navbar__item--dropdown">
+                    <button type="button"
+                            class="site-navbar__dropdown-toggle"
+                            aria-expanded="false"
+                            aria-haspopup="true"
+                            aria-controls="siteNavbarDropdownMedia">
+                        Media
+                        <svg class="site-navbar__caret" viewBox="0 0 12 8" aria-hidden="true">
+                            <path d="M1 1l5 5 5-5" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </button>
+                    <ul class="site-navbar__dropdown" id="siteNavbarDropdownMedia">
                         <li><a href="{{ route('home.blog.index') }}">Blog</a></li>
-                        <li><a href="{{ route('home.home.index') }}#faq">FAQ</a></li>
-                        <li><a href="{{ route('home.home.index') }}#pricing" class="nav-open-calculator-tab">Kalkulator</a></li>
+                        <li><a href="{{ route('home.galeri.index') }}">Galeri</a></li>
                     </ul>
                 </li>
-            </ul>
 
-            <!-- Mobile Navigation Toggle -->
-            <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
+                <li class="site-navbar__item--dropdown">
+                    <button type="button"
+                            class="site-navbar__dropdown-toggle"
+                            aria-expanded="false"
+                            aria-haspopup="true"
+                            aria-controls="siteNavbarDropdownTentang">
+                        Tentang Kami
+                        <svg class="site-navbar__caret" viewBox="0 0 12 8" aria-hidden="true">
+                            <path d="M1 1l5 5 5-5" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </button>
+                    <ul class="site-navbar__dropdown" id="siteNavbarDropdownTentang">
+                        <li><a href="{{ route('home.VM.index') }}">Visi &amp; Misi</a></li>
+                        <li><a href="{{ route('home.SO.index') }}">Struktur Organisasi</a></li>
+                        <li><a href="{{ route('home.team.index') }}">Team</a></li>
+                    </ul>
+                </li>
+                <li><a href="{{ route('home.home.index') }}#pricing" class="nav-open-calculator-tab">Kalkulator</a></li>
+            </ul>
         </nav>
 
     </div>
 </header>
-
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-        const header = document.getElementById('header');
-        const mobileNavToggle = document.querySelector('.mobile-nav-toggle');
-        const navmenu = document.querySelector('.navmenu');
-        const dropdowns = document.querySelectorAll('.dropdown');
-
-        // ========================================
-        // Sticky Header on Scroll
-        // ========================================
-        function handleScroll() {
-            if (window.scrollY > 100) {
-                header.classList.add('scrolled');
-            } else {
-                header.classList.remove('scrolled');
-            }
-        }
-
-        window.addEventListener('scroll', handleScroll);
-
-
-        // ========================================
-        // Mobile Navigation Toggle
-        // ========================================
-        if (mobileNavToggle) {
-            mobileNavToggle.addEventListener('click', function() {
-                navmenu.classList.toggle('active');
-                this.classList.toggle('bi-list');
-                this.classList.toggle('bi-x');
-            });
-        }
-
-
-        // ========================================
-        // Dropdown Menu Functionality
-        // ========================================
-        dropdowns.forEach(dropdown => {
-            const toggle = dropdown.querySelector('.dropdown-toggle');
-            const menu = dropdown.querySelector('.dropdown-menu');
-
-            if (toggle) {
-                toggle.addEventListener('click', function(e) {
-                    e.preventDefault();
-
-                    // Close other dropdowns
-                    dropdowns.forEach(otherDropdown => {
-                        if (otherDropdown !== dropdown) {
-                            otherDropdown.classList.remove('active');
-                        }
-                    });
-
-                    // Toggle current dropdown
-                    dropdown.classList.toggle('active');
-                });
-            }
-        });
-
-
-        // ========================================
-        // Close Dropdown on Outside Click
-        // ========================================
-        document.addEventListener('click', function(e) {
-            if (!e.target.closest('.dropdown')) {
-                dropdowns.forEach(dropdown => {
-                    dropdown.classList.remove('active');
-                });
-            }
-        });
-
-
-        // ========================================
-        // Active Link Highlighting
-        // ========================================
-        const currentPath = window.location.pathname;
-        const navLinks = document.querySelectorAll('.navmenu a');
-
-        navLinks.forEach(link => {
-            if (link.getAttribute('href') === currentPath) {
-                link.classList.add('active');
-            }
-        });
-
-
-        // ========================================
-        // Smooth Scroll for Anchor Links
-        // ========================================
-        const anchorLinks = document.querySelectorAll('a[href^="#"]');
-
-        anchorLinks.forEach(link => {
-            link.addEventListener('click', function(e) {
-                const href = this.getAttribute('href');
-
-                if (href !== '#' && href.includes('#')) {
-                    const targetId = href.split('#')[1];
-                    const targetElement = document.getElementById(targetId);
-
-                    if (targetElement) {
-                        e.preventDefault();
-
-                        // Close mobile menu if open
-                        navmenu.classList.remove('active');
-                        if (mobileNavToggle) {
-                            mobileNavToggle.classList.add('bi-list');
-                            mobileNavToggle.classList.remove('bi-x');
-                        }
-
-                        // Smooth scroll to target
-                        const headerHeight = header.offsetHeight;
-                        const targetPosition = targetElement.offsetTop - headerHeight - 20;
-
-                        window.scrollTo({
-                            top: targetPosition,
-                            behavior: 'smooth'
-                        });
-                    }
-                }
-            });
-        });
-    });
-</script>
