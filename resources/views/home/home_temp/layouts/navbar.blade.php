@@ -65,7 +65,3 @@
 
     </div>
 </header>
-
-<script>
-
-</script>
