@@ -336,6 +336,7 @@
 .site-navbar.is-menu-open .site-navbar__toggle span:nth-child(3) {
     transform: translateY(-8px) rotate(-45deg);
 }
+
 /* Responsive */
 @media (max-width: 991px) {
     .site-navbar__container {
@@ -370,6 +371,11 @@
     .site-navbar.is-menu-open .site-navbar__dropdown-toggle {
         color: var(--enav-text-scrolled);
     }
+
+    .site-navbar.is-menu-open .site-navbar__brand{
+        background-color: var(--enav-text-scrolled);
+    }
+
     .site-navbar__links {
         flex-direction: column;
         align-items: flex-start;

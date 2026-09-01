@@ -333,9 +333,6 @@ Route::group(["namespace" => "App\Http\Controllers\Home", "as" => "home."], func
 // IMAGE SHOW
 Route::get('/inovasi/image/{id}/{jenis}', [GambarController::class, 'show'])->name('image.show');
 
-// TEST
-// routes/web.php
-Route::get('/preview/home-temp', fn () => view('home.home_temp.index'));
 
 
 
