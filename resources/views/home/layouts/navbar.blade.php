@@ -31,11 +31,11 @@
 
         <nav class="site-navbar__nav" id="siteNavbarNav" aria-label="Main navigation">
             <ul class="site-navbar__links">
-                <li><a href="{{ route('home.home.index') }}" class="is-active">Home</a></li>
+                <li><a href="{{ route('home.home.index') }}" class="{{ request()->routeIs('home.home.index') ? 'is-active' : '' }}">Home</a></li>
                 <li><a href="{{ route('home.home.index') }}#layanan">Layanan</a></li>
-                <li><a href="{{ route('home.portofolio.index') }}">Portfolio</a></li>
-                <li><a href="{{ route('home.inovasi.index') }}">Inovasi</a></li>
-                <li><a href="{{ route('home.informasi.index') }}">Informasi</a></li>
+                <li><a href="{{ route('home.portofolio.index') }}" class="{{ request()->routeIs('home.portofolio.*') ? 'is-active' : '' }}">Portfolio</a></li>
+                <li><a href="{{ route('home.inovasi.index') }}" class="{{ request()->routeIs('home.inovasi.*') ? 'is-active' : '' }}">Inovasi</a></li>
+                <li><a href="{{ route('home.informasi.index') }}" class="{{ request()->routeIs('home.informasi.*') ? 'is-active' : '' }}">Informasi</a></li>
 
                 @foreach ($customMenuItems as $row)
                     @php
@@ -43,9 +43,13 @@
                     @endphp
 
                     @if ($children->count() == 0)
-                        <li><a href="{{ '/' . strtolower($row->title) . '/show' }}">{{ $row->title }}</a></li>
+                        <li><a href="{{ '/' . strtolower($row->title) . '/show' }}" class="{{ request()->is(strtolower($row->title) . '/show') ? 'is-active' : '' }}">{{ $row->title }}</a></li>
                     @else
-                        <li class="site-navbar__item--dropdown">
+                        @php
+                            $childSlugs = $children->map(fn ($child) => strtolower($child->title) . '/show');
+                            $groupActive = $childSlugs->contains(fn ($slug) => request()->is($slug));
+                        @endphp
+                        <li class="site-navbar__item--dropdown{{ $groupActive ? ' is-active' : '' }}">
                             <button type="button"
                                     class="site-navbar__dropdown-toggle"
                                     aria-expanded="false"
@@ -58,14 +62,14 @@
                             </button>
                             <ul class="site-navbar__dropdown" id="siteNavbarDropdownMenu{{ $row->id }}">
                                 @foreach ($children as $child)
-                                    <li><a href="{{ '/' . strtolower($child->title) . '/show' }}">{{ $child->title }}</a></li>
+                                    <li><a href="{{ '/' . strtolower($child->title) . '/show' }}" class="{{ request()->is(strtolower($child->title) . '/show') ? 'is-active' : '' }}">{{ $child->title }}</a></li>
                                 @endforeach
                             </ul>
                         </li>
                     @endif
                 @endforeach
 
-                <li class="site-navbar__item--dropdown">
+                <li class="site-navbar__item--dropdown{{ request()->routeIs('home.blog.*') || request()->routeIs('home.galeri.*') ? ' is-active' : '' }}">
                     <button type="button"
                             class="site-navbar__dropdown-toggle"
                             aria-expanded="false"
@@ -77,12 +81,12 @@
                         </svg>
                     </button>
                     <ul class="site-navbar__dropdown" id="siteNavbarDropdownMedia">
-                        <li><a href="{{ route('home.blog.index') }}">Blog</a></li>
-                        <li><a href="{{ route('home.galeri.index') }}">Galeri</a></li>
+                        <li><a href="{{ route('home.blog.index') }}" class="{{ request()->routeIs('home.blog.*') ? 'is-active' : '' }}">Blog</a></li>
+                        <li><a href="{{ route('home.galeri.index') }}" class="{{ request()->routeIs('home.galeri.*') ? 'is-active' : '' }}">Galeri</a></li>
                     </ul>
                 </li>
 
-                <li class="site-navbar__item--dropdown">
+                <li class="site-navbar__item--dropdown{{ request()->routeIs('home.VM.*') || request()->routeIs('home.SO.*') || request()->routeIs('home.team.*') ? ' is-active' : '' }}">
                     <button type="button"
                             class="site-navbar__dropdown-toggle"
                             aria-expanded="false"
@@ -94,9 +98,9 @@
                         </svg>
                     </button>
                     <ul class="site-navbar__dropdown" id="siteNavbarDropdownTentang">
-                        <li><a href="{{ route('home.VM.index') }}">Visi &amp; Misi</a></li>
-                        <li><a href="{{ route('home.SO.index') }}">Struktur Organisasi</a></li>
-                        <li><a href="{{ route('home.team.index') }}">Team</a></li>
+                        <li><a href="{{ route('home.VM.index') }}" class="{{ request()->routeIs('home.VM.*') ? 'is-active' : '' }}">Visi &amp; Misi</a></li>
+                        <li><a href="{{ route('home.SO.index') }}" class="{{ request()->routeIs('home.SO.*') ? 'is-active' : '' }}">Struktur Organisasi</a></li>
+                        <li><a href="{{ route('home.team.index') }}" class="{{ request()->routeIs('home.team.*') ? 'is-active' : '' }}">Team</a></li>
                     </ul>
                 </li>
                 <li><a href="{{ route('home.home.index') }}#pricing" class="nav-open-calculator-tab">Kalkulator</a></li>
