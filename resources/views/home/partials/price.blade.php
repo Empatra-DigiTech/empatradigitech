@@ -47,110 +47,39 @@
             class="pricing-grid pricing-grid-website"
             data-pricing-content="website">
 
+            @forelse($paket_website as $row)
+            <article class="pricing-card @if($row->is_recommended) pricing-card-popular @endif">
 
-            {{-- LANDING PAGE --}}
-            <article class="pricing-card">
-
-                <div class="pricing-card-header">
-
-                    <h3>
-                        Landing Page
-                    </h3>
-
-                    <span class="pricing-start">
-                        Mulai dari
-                    </span>
-
-                    <div class="pricing-price">
-                        Rp 1.500.000
-                    </div>
-
-                </div>
-
-
-                <ul class="pricing-features">
-
-                    <li>
-                        <span class="pricing-check">✓</span>
-                        <span>1 Halaman</span>
-                    </li>
-
-                    <li>
-                        <span class="pricing-check">✓</span>
-                        <span>Desain Premium</span>
-                    </li>
-
-                    <li>
-                        <span class="pricing-check">✓</span>
-                        <span>Responsive</span>
-                    </li>
-
-                    <li>
-                        <span class="pricing-check">✓</span>
-                        <span>Gratis Konsultasi</span>
-                    </li>
-
-                </ul>
-
-
-                <a href="#contact" class="pricing-button">
-                    Pilih Paket
-                </a>
-
-            </article>
-
-
-            {{-- COMPANY PROFILE --}}
-            <article class="pricing-card pricing-card-popular">
-
+                @if($row->is_recommended)
                 <span class="pricing-popular">
                     Popular
                 </span>
+                @endif
 
                 <div class="pricing-card-header">
 
                     <h3>
-                        Company Profile
+                        {{ $row->nama_paket }}
                     </h3>
 
                     <span class="pricing-start">
-                        Mulai dari
+                        @if($row->tagline){{ $row->tagline }}@else Mulai dari @endif
                     </span>
 
                     <div class="pricing-price">
-                        Rp 3.000.000
+                        {{ $row->formatted_harga }}@if($row->periode)<span style="font-size:11px;font-weight:600;">/{{ $row->periode }}</span>@endif
                     </div>
 
                 </div>
 
 
                 <ul class="pricing-features">
-
+                    @foreach($row->fitur_list as $fitur)
                     <li>
                         <span class="pricing-check">✓</span>
-                        <span>5 Halaman</span>
+                        <span>{{ $fitur }}</span>
                     </li>
-
-                    <li>
-                        <span class="pricing-check">✓</span>
-                        <span>Desain Premium</span>
-                    </li>
-
-                    <li>
-                        <span class="pricing-check">✓</span>
-                        <span>CMS (Kelola Konten)</span>
-                    </li>
-
-                    <li>
-                        <span class="pricing-check">✓</span>
-                        <span>SEO Friendly</span>
-                    </li>
-
-                    <li>
-                        <span class="pricing-check">✓</span>
-                        <span>Gratis Konsultasi</span>
-                    </li>
-
+                    @endforeach
                 </ul>
 
 
@@ -159,120 +88,9 @@
                 </a>
 
             </article>
-
-
-            {{-- E-COMMERCE --}}
-            <article class="pricing-card">
-
-                <div class="pricing-card-header">
-
-                    <h3>
-                        E-Commerce
-                    </h3>
-
-                    <span class="pricing-start">
-                        Mulai dari
-                    </span>
-
-                    <div class="pricing-price">
-                        Rp 6.000.000
-                    </div>
-
-                </div>
-
-
-                <ul class="pricing-features">
-
-                    <li>
-                        <span class="pricing-check">✓</span>
-                        <span>Unlimited Produk</span>
-                    </li>
-
-                    <li>
-                        <span class="pricing-check">✓</span>
-                        <span>Keranjang Belanja</span>
-                    </li>
-
-                    <li>
-                        <span class="pricing-check">✓</span>
-                        <span>Payment Gateway</span>
-                    </li>
-
-                    <li>
-                        <span class="pricing-check">✓</span>
-                        <span>Laporan Penjualan</span>
-                    </li>
-
-                    <li>
-                        <span class="pricing-check">✓</span>
-                        <span>Gratis Konsultasi</span>
-                    </li>
-
-                </ul>
-
-
-                <a href="#contact" class="pricing-button">
-                    Pilih Paket
-                </a>
-
-            </article>
-
-
-            {{-- CUSTOM WEBSITE --}}
-            <article class="pricing-card">
-
-                <div class="pricing-card-header">
-
-                    <h3>
-                        Custom Website
-                    </h3>
-
-                    <span class="pricing-start">
-                        Mulai dari
-                    </span>
-
-                    <div class="pricing-price">
-                        Rp 8.000.000
-                    </div>
-
-                </div>
-
-
-                <ul class="pricing-features">
-
-                    <li>
-                        <span class="pricing-check">✓</span>
-                        <span>Fitur Custom</span>
-                    </li>
-
-                    <li>
-                        <span class="pricing-check">✓</span>
-                        <span>Desain Premium</span>
-                    </li>
-
-                    <li>
-                        <span class="pricing-check">✓</span>
-                        <span>CMS Lengkap</span>
-                    </li>
-
-                    <li>
-                        <span class="pricing-check">✓</span>
-                        <span>Integrasi API</span>
-                    </li>
-
-                    <li>
-                        <span class="pricing-check">✓</span>
-                        <span>Gratis Konsultasi</span>
-                    </li>
-
-                </ul>
-
-
-                <a href="#contact" class="pricing-button">
-                    Pilih Paket
-                </a>
-
-            </article>
+            @empty
+            <p style="text-align:center;color:#667080;font-size:13px;grid-column:1/-1;">Belum ada paket website yang ditambahkan.</p>
+            @endforelse
 
         </div>
 
@@ -285,110 +103,39 @@
             data-pricing-content="application"
             style="display: none;">
 
+            @forelse($paket_app as $row)
+            <article class="pricing-card @if($row->is_recommended) pricing-card-popular @endif">
 
-            {{-- BASIC APPLICATION --}}
-            <article class="pricing-card">
-
-                <div class="pricing-card-header">
-
-                    <h3>
-                        Aplikasi Basic
-                    </h3>
-
-                    <span class="pricing-start">
-                        Mulai dari
-                    </span>
-
-                    <div class="pricing-price">
-                        Rp 7.500.000
-                    </div>
-
-                </div>
-
-
-                <ul class="pricing-features">
-
-                    <li>
-                        <span class="pricing-check">✓</span>
-                        <span>Fitur Dasar</span>
-                    </li>
-
-                    <li>
-                        <span class="pricing-check">✓</span>
-                        <span>Responsive</span>
-                    </li>
-
-                    <li>
-                        <span class="pricing-check">✓</span>
-                        <span>Database</span>
-                    </li>
-
-                    <li>
-                        <span class="pricing-check">✓</span>
-                        <span>Gratis Konsultasi</span>
-                    </li>
-
-                </ul>
-
-
-                <a href="#contact" class="pricing-button">
-                    Pilih Paket
-                </a>
-
-            </article>
-
-
-            {{-- BUSINESS APPLICATION --}}
-            <article class="pricing-card pricing-card-popular">
-
+                @if($row->is_recommended)
                 <span class="pricing-popular">
                     Popular
                 </span>
+                @endif
 
                 <div class="pricing-card-header">
 
                     <h3>
-                        Aplikasi Business
+                        {{ $row->nama_paket }}
                     </h3>
 
                     <span class="pricing-start">
-                        Mulai dari
+                        @if($row->tagline){{ $row->tagline }}@else Mulai dari @endif
                     </span>
 
                     <div class="pricing-price">
-                        Rp 12.000.000
+                        {{ $row->formatted_harga }}@if($row->periode)<span style="font-size:11px;font-weight:600;">/{{ $row->periode }}</span>@endif
                     </div>
 
                 </div>
 
 
                 <ul class="pricing-features">
-
+                    @foreach($row->fitur_list as $fitur)
                     <li>
                         <span class="pricing-check">✓</span>
-                        <span>Multi User</span>
+                        <span>{{ $fitur }}</span>
                     </li>
-
-                    <li>
-                        <span class="pricing-check">✓</span>
-                        <span>Dashboard Admin</span>
-                    </li>
-
-                    <li>
-                        <span class="pricing-check">✓</span>
-                        <span>Database Management</span>
-                    </li>
-
-                    <li>
-                        <span class="pricing-check">✓</span>
-                        <span>API Integration</span>
-                    </li>
-
-                    <li>
-                        <span class="pricing-check">✓</span>
-                        <span>Gratis Konsultasi</span>
-                    </li>
-
+                    @endforeach
                 </ul>
 
 
@@ -397,120 +144,9 @@
                 </a>
 
             </article>
-
-
-            {{-- ADVANCED APPLICATION --}}
-            <article class="pricing-card">
-
-                <div class="pricing-card-header">
-
-                    <h3>
-                        Aplikasi Advanced
-                    </h3>
-
-                    <span class="pricing-start">
-                        Mulai dari
-                    </span>
-
-                    <div class="pricing-price">
-                        Rp 20.000.000
-                    </div>
-
-                </div>
-
-
-                <ul class="pricing-features">
-
-                    <li>
-                        <span class="pricing-check">✓</span>
-                        <span>Fitur Kompleks</span>
-                    </li>
-
-                    <li>
-                        <span class="pricing-check">✓</span>
-                        <span>Multi Platform</span>
-                    </li>
-
-                    <li>
-                        <span class="pricing-check">✓</span>
-                        <span>API Integration</span>
-                    </li>
-
-                    <li>
-                        <span class="pricing-check">✓</span>
-                        <span>Advanced Security</span>
-                    </li>
-
-                    <li>
-                        <span class="pricing-check">✓</span>
-                        <span>Gratis Konsultasi</span>
-                    </li>
-
-                </ul>
-
-
-                <a href="#contact" class="pricing-button">
-                    Pilih Paket
-                </a>
-
-            </article>
-
-
-            {{-- CUSTOM APPLICATION --}}
-            <article class="pricing-card">
-
-                <div class="pricing-card-header">
-
-                    <h3>
-                        Custom Application
-                    </h3>
-
-                    <span class="pricing-start">
-                        Mulai dari
-                    </span>
-
-                    <div class="pricing-price">
-                        Custom
-                    </div>
-
-                </div>
-
-
-                <ul class="pricing-features">
-
-                    <li>
-                        <span class="pricing-check">✓</span>
-                        <span>Fitur Custom</span>
-                    </li>
-
-                    <li>
-                        <span class="pricing-check">✓</span>
-                        <span>Arsitektur Custom</span>
-                    </li>
-
-                    <li>
-                        <span class="pricing-check">✓</span>
-                        <span>Integrasi API</span>
-                    </li>
-
-                    <li>
-                        <span class="pricing-check">✓</span>
-                        <span>Scalable System</span>
-                    </li>
-
-                    <li>
-                        <span class="pricing-check">✓</span>
-                        <span>Gratis Konsultasi</span>
-                    </li>
-
-                </ul>
-
-
-                <a href="#contact" class="pricing-button">
-                    Konsultasi
-                </a>
-
-            </article>
+            @empty
+            <p style="text-align:center;color:#667080;font-size:13px;grid-column:1/-1;">Belum ada paket aplikasi yang ditambahkan.</p>
+            @endforelse
 
         </div>
 

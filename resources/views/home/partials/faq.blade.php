@@ -21,18 +21,19 @@
 
 
         {{-- FAQ LIST --}}
+        @if($table_faq->count())
         <div class="faq-list">
 
-            {{-- FAQ 1 --}}
-            <div class="faq-item active">
+            @foreach($table_faq as $faq)
+            <div class="faq-item @if($loop->first) active @endif">
 
                 <button
                     type="button"
                     class="faq-question"
-                    aria-expanded="true">
+                    aria-expanded="{{ $loop->first ? 'true' : 'false' }}">
 
                     <span>
-                        Berapa biaya pembuatan website?
+                        {{ $faq->question }}
                     </span>
 
                     <span class="faq-icon">
@@ -46,220 +47,18 @@
                 <div class="faq-answer">
 
                     <p>
-                        Biaya pembuatan website menyesuaikan jenis website,
-                        fitur, tingkat kompleksitas, dan kebutuhan bisnis Anda.
-                        Paket website kami tersedia mulai dari Rp 1.500.000.
-                        Untuk kebutuhan khusus, kami dapat memberikan estimasi
-                        harga setelah konsultasi.
+                        {{ $faq->answer }}
                     </p>
 
                 </div>
 
             </div>
-
-
-            {{-- FAQ 2 --}}
-            <div class="faq-item">
-
-                <button
-                    type="button"
-                    class="faq-question"
-                    aria-expanded="false">
-
-                    <span>
-                        Berapa lama proses pengerjaan project?
-                    </span>
-
-                    <span class="faq-icon">
-                        <svg viewBox="0 0 24 24" fill="none">
-                            <path d="M6 9l6 6 6-6"/>
-                        </svg>
-                    </span>
-
-                </button>
-
-                <div class="faq-answer">
-
-                    <p>
-                        Waktu pengerjaan tergantung pada skala dan kompleksitas
-                        project. Website sederhana umumnya dapat diselesaikan
-                        dalam beberapa minggu, sedangkan sistem atau aplikasi
-                        dengan fitur kompleks membutuhkan waktu lebih lama.
-                    </p>
-
-                </div>
-
-            </div>
-
-
-            {{-- FAQ 3 --}}
-            <div class="faq-item">
-
-                <button
-                    type="button"
-                    class="faq-question"
-                    aria-expanded="false">
-
-                    <span>
-                        Apakah website bisa disesuaikan dengan kebutuhan bisnis?
-                    </span>
-
-                    <span class="faq-icon">
-                        <svg viewBox="0 0 24 24" fill="none">
-                            <path d="M6 9l6 6 6-6"/>
-                        </svg>
-                    </span>
-
-                </button>
-
-                <div class="faq-answer">
-
-                    <p>
-                        Ya. Setiap project dapat disesuaikan dengan kebutuhan
-                        bisnis Anda, mulai dari desain, struktur halaman,
-                        fitur, integrasi sistem, hingga kebutuhan khusus lainnya.
-                    </p>
-
-                </div>
-
-            </div>
-
-
-            {{-- FAQ 4 --}}
-            <div class="faq-item">
-
-                <button
-                    type="button"
-                    class="faq-question"
-                    aria-expanded="false">
-
-                    <span>
-                        Apakah website sudah responsive?
-                    </span>
-
-                    <span class="faq-icon">
-                        <svg viewBox="0 0 24 24" fill="none">
-                            <path d="M6 9l6 6 6-6"/>
-                        </svg>
-                    </span>
-
-                </button>
-
-                <div class="faq-answer">
-
-                    <p>
-                        Ya. Website dirancang agar dapat digunakan dengan baik
-                        pada berbagai ukuran layar seperti desktop, laptop,
-                        tablet, dan smartphone.
-                    </p>
-
-                </div>
-
-            </div>
-
-
-            {{-- FAQ 5 --}}
-            <div class="faq-item">
-
-                <button
-                    type="button"
-                    class="faq-question"
-                    aria-expanded="false">
-
-                    <span>
-                        Apakah tersedia CMS untuk mengelola konten?
-                    </span>
-
-                    <span class="faq-icon">
-                        <svg viewBox="0 0 24 24" fill="none">
-                            <path d="M6 9l6 6 6-6"/>
-                        </svg>
-                    </span>
-
-                </button>
-
-                <div class="faq-answer">
-
-                    <p>
-                        CMS tersedia pada paket atau project yang membutuhkan
-                        pengelolaan konten secara mandiri. Anda dapat mengelola
-                        konten seperti artikel, produk, gambar, dan informasi
-                        lainnya melalui halaman admin.
-                    </p>
-
-                </div>
-
-            </div>
-
-
-            {{-- FAQ 6 --}}
-            <div class="faq-item">
-
-                <button
-                    type="button"
-                    class="faq-question"
-                    aria-expanded="false">
-
-                    <span>
-                        Apakah tersedia maintenance setelah website selesai?
-                    </span>
-
-                    <span class="faq-icon">
-                        <svg viewBox="0 0 24 24" fill="none">
-                            <path d="M6 9l6 6 6-6"/>
-                        </svg>
-                    </span>
-
-                </button>
-
-                <div class="faq-answer">
-
-                    <p>
-                        Ya. Kami menyediakan layanan maintenance dan support
-                        setelah project selesai. Bentuk maintenance dapat
-                        disesuaikan dengan kebutuhan, seperti update konten,
-                        perbaikan bug, monitoring, dan pengembangan fitur.
-                    </p>
-
-                </div>
-
-            </div>
-
-
-            {{-- FAQ 7 --}}
-            <div class="faq-item">
-
-                <button
-                    type="button"
-                    class="faq-question"
-                    aria-expanded="false">
-
-                    <span>
-                        Bagaimana cara memulai project?
-                    </span>
-
-                    <span class="faq-icon">
-                        <svg viewBox="0 0 24 24" fill="none">
-                            <path d="M6 9l6 6 6-6"/>
-                        </svg>
-                    </span>
-
-                </button>
-
-                <div class="faq-answer">
-
-                    <p>
-                        Anda dapat memulai dengan melakukan konsultasi terlebih
-                        dahulu. Sampaikan kebutuhan, tujuan, dan gambaran project
-                        Anda kepada kami. Setelah itu kami akan membantu menentukan
-                        solusi, fitur, estimasi waktu, dan biaya yang sesuai.
-                    </p>
-
-                </div>
-
-            </div>
+            @endforeach
 
         </div>
+        @else
+        <p style="text-align:center;color:#667080;font-size:13px;">Belum ada pertanyaan yang ditambahkan.</p>
+        @endif
 
 
         {{-- CTA --}}

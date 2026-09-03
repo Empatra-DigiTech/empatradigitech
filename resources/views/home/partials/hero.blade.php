@@ -119,76 +119,40 @@
 
 
     {{-- STATISTICS --}}
-    <div class="hero-stats">
+    @php
+        $heroStatIcons = [
+            'projects' => '<svg viewBox="0 0 32 32" fill="none"><rect x="8" y="6" width="16" height="22" rx="2"/><path d="M12 4h8v4h-8z"/><path d="M12 13h8"/><path d="M12 18h8"/><path d="M12 23h5"/></svg>',
+            'clients' => '<svg viewBox="0 0 32 32" fill="none"><circle cx="16" cy="9" r="5"/><circle cx="7" cy="13" r="4"/><circle cx="25" cy="13" r="4"/><path d="M7 28c0-5 3.5-8 9-8s9 3 9 8"/><path d="M2 27c0-3.5 2-6 5.5-6"/><path d="M30 27c0-3.5-2-6-5.5-6"/></svg>',
+            'years' => '<svg viewBox="0 0 32 32" fill="none"><circle cx="16" cy="13" r="9"/><path d="m11 21-2 8 7-4 7 4-2-8"/><path d="m16 8 1.5 3 3.5.5-2.5 2.5.5 3.5-3-1.5-3 1.5.5-3.5-2.5-2.5 3.5-.5L16 8Z"/></svg>',
+            'industries' => '<svg viewBox="0 0 32 32" fill="none"><path d="M16 3 27 7v8c0 7-4.5 11.5-11 14-6.5-2.5-11-7-11-14V7l11-4Z"/><path d="m11 16 3.2 3.2L21 12"/></svg>',
+        ];
 
+        $heroStats = collect([
+            ['key' => 'projects', 'value' => $table_pengaturan->stat_projects ?? null, 'label' => 'Project Selesai'],
+            ['key' => 'clients', 'value' => $table_pengaturan->stat_clients ?? null, 'label' => 'Klien Puas'],
+            ['key' => 'years', 'value' => $table_pengaturan->stat_years_experience ?? null, 'label' => 'Tahun Pengalaman'],
+            ['key' => 'industries', 'value' => $table_pengaturan->stat_industries ?? null, 'label' => 'Industri Terlayani'],
+        ])->filter(fn($stat) => !empty($stat['value']))->values();
+    @endphp
+
+    @if($heroStats->count())
+    <div class="hero-stats" style="grid-template-columns: repeat({{ $heroStats->count() }}, 1fr);">
+
+        @foreach($heroStats as $stat)
         <div class="hero-stat">
             <div class="stat-icon">
-                <svg viewBox="0 0 32 32" fill="none">
-                    <rect x="8" y="6" width="16" height="22" rx="2"/>
-                    <path d="M12 4h8v4h-8z"/>
-                    <path d="M12 13h8"/>
-                    <path d="M12 18h8"/>
-                    <path d="M12 23h5"/>
-                </svg>
+                {!! $heroStatIcons[$stat['key']] !!}
             </div>
 
             <div class="stat-content">
-                <strong>50+</strong>
-                <span>Project Selesai</span>
+                <strong>{{ $stat['value'] }}</strong>
+                <span>{{ $stat['label'] }}</span>
             </div>
         </div>
-
-
-        <div class="hero-stat">
-            <div class="stat-icon">
-                <svg viewBox="0 0 32 32" fill="none">
-                    <circle cx="16" cy="9" r="5"/>
-                    <circle cx="7" cy="13" r="4"/>
-                    <circle cx="25" cy="13" r="4"/>
-                    <path d="M7 28c0-5 3.5-8 9-8s9 3 9 8"/>
-                    <path d="M2 27c0-3.5 2-6 5.5-6"/>
-                    <path d="M30 27c0-3.5-2-6-5.5-6"/>
-                </svg>
-            </div>
-
-            <div class="stat-content">
-                <strong>30+</strong>
-                <span>Klien Puas</span>
-            </div>
-        </div>
-
-
-        <div class="hero-stat">
-            <div class="stat-icon">
-                <svg viewBox="0 0 32 32" fill="none">
-                    <circle cx="16" cy="13" r="9"/>
-                    <path d="m11 21-2 8 7-4 7 4-2-8"/>
-                    <path d="m16 8 1.5 3 3.5.5-2.5 2.5.5 3.5-3-1.5-3 1.5.5-3.5-2.5-2.5 3.5-.5L16 8Z"/>
-                </svg>
-            </div>
-
-            <div class="stat-content">
-                <strong>5+</strong>
-                <span>Tahun Pengalaman</span>
-            </div>
-        </div>
-
-
-        <div class="hero-stat">
-            <div class="stat-icon">
-                <svg viewBox="0 0 32 32" fill="none">
-                    <path d="M16 3 27 7v8c0 7-4.5 11.5-11 14-6.5-2.5-11-7-11-14V7l11-4Z"/>
-                    <path d="m11 16 3.2 3.2L21 12"/>
-                </svg>
-            </div>
-
-            <div class="stat-content">
-                <strong>100%</strong>
-                <span>Komitmen Kualitas</span>
-            </div>
-        </div>
+        @endforeach
 
     </div>
+    @endif
 
 </section>
 

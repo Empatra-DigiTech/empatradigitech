@@ -19,19 +19,18 @@
 
         </div>
 
+        @if($table_testimoni->count())
 
         {{-- TESTIMONIALS --}}
         <div class="testimonial-grid">
 
-            {{-- TESTIMONIAL 1 --}}
-            <article class="testimonial-card">
+            @foreach($table_testimoni as $t)
+            <article class="testimonial-card @if($loop->index === 1 && $table_testimoni->count() > 1) testimonial-card-featured @endif">
 
-                <div class="testimonial-stars" aria-label="5 out of 5 stars">
-                    <span>★</span>
-                    <span>★</span>
-                    <span>★</span>
-                    <span>★</span>
-                    <span>★</span>
+                <div class="testimonial-stars" aria-label="{{ $t->rating }} out of 5 stars">
+                    @for($i = 1; $i <= 5; $i++)
+                        <span>{{ $i <= $t->rating ? '★' : '☆' }}</span>
+                    @endfor
                 </div>
 
                 <div class="testimonial-quote">
@@ -42,115 +41,47 @@
                 </div>
 
                 <p class="testimonial-text">
-                    "Pelayanan sangat baik dan komunikasinya mudah. Website
-                    yang dibuat sesuai dengan kebutuhan bisnis kami dan
-                    tampilannya juga sangat profesional."
+                    "{{ $t->testimoni }}"
                 </p>
 
                 <div class="testimonial-client">
 
                     <div class="testimonial-avatar">
-                        AS
+                        @if($t->foto)
+                            <img src="{{ asset('storage/' . $t->foto) }}" alt="{{ $t->nama_client }}" style="width:100%;height:100%;object-fit:cover;border-radius:50%;">
+                        @else
+                            {{ collect(explode(' ', $t->nama_client))->map(fn($w) => Str::substr($w, 0, 1))->take(2)->implode('') }}
+                        @endif
                     </div>
 
                     <div class="testimonial-client-info">
-                        <strong>Andi Setiawan</strong>
-                        <span>Business Owner</span>
+                        <strong>{{ $t->nama_client }}</strong>
+                        @if($t->jabatan || $t->perusahaan)
+                        <span>{{ $t->jabatan }}{{ $t->jabatan && $t->perusahaan ? ', ' : '' }}{{ $t->perusahaan }}</span>
+                        @endif
                     </div>
 
                 </div>
 
             </article>
-
-
-            {{-- TESTIMONIAL 2 --}}
-            <article class="testimonial-card testimonial-card-featured">
-
-                <div class="testimonial-stars" aria-label="5 out of 5 stars">
-                    <span>★</span>
-                    <span>★</span>
-                    <span>★</span>
-                    <span>★</span>
-                    <span>★</span>
-                </div>
-
-                <div class="testimonial-quote">
-                    <svg viewBox="0 0 48 48" fill="none">
-                        <path d="M14 11H8a4 4 0 0 0-4 4v10a4 4 0 0 0 4 4h6l-5 8h7l7-12V15a4 4 0 0 0-4-4h-5Z"/>
-                        <path d="M38 11h-6a4 4 0 0 0-4 4v10a4 4 0 0 0 4 4h6l-5 8h7l7-12V15a4 4 0 0 0-4-4h-5Z"/>
-                    </svg>
-                </div>
-
-                <p class="testimonial-text">
-                    "Sangat terbantu dengan tim Empatra Digitech. Dari tahap
-                    konsultasi sampai development semuanya dijelaskan dengan
-                    jelas. Hasil akhirnya melebihi ekspektasi kami."
-                </p>
-
-                <div class="testimonial-client">
-
-                    <div class="testimonial-avatar">
-                        RP
-                    </div>
-
-                    <div class="testimonial-client-info">
-                        <strong>Rina Pratiwi</strong>
-                        <span>Project Manager</span>
-                    </div>
-
-                </div>
-
-            </article>
-
-
-            {{-- TESTIMONIAL 3 --}}
-            <article class="testimonial-card">
-
-                <div class="testimonial-stars" aria-label="5 out of 5 stars">
-                    <span>★</span>
-                    <span>★</span>
-                    <span>★</span>
-                    <span>★</span>
-                    <span>★</span>
-                </div>
-
-                <div class="testimonial-quote">
-                    <svg viewBox="0 0 48 48" fill="none">
-                        <path d="M14 11H8a4 4 0 0 0-4 4v10a4 4 0 0 0 4 4h6l-5 8h7l7-12V15a4 4 0 0 0-4-4h-5Z"/>
-                        <path d="M38 11h-6a4 4 0 0 0-4 4v10a4 4 0 0 0 4 4h6l-5 8h7l7-12V15a4 4 0 0 0-4-4h-5Z"/>
-                    </svg>
-                </div>
-
-                <p class="testimonial-text">
-                    "Timnya responsif dan sangat membantu ketika ada perubahan
-                    kebutuhan. Sistem berjalan dengan baik dan support setelah
-                    project selesai juga sangat memuaskan."
-                </p>
-
-                <div class="testimonial-client">
-
-                    <div class="testimonial-avatar">
-                        DF
-                    </div>
-
-                    <div class="testimonial-client-info">
-                        <strong>Dimas Firmansyah</strong>
-                        <span>Business Owner</span>
-                    </div>
-
-                </div>
-
-            </article>
+            @endforeach
 
         </div>
 
 
         {{-- TRUST INDICATOR --}}
+        @php
+            $avgRating = round($table_testimoni->avg('rating'), 1);
+            $trustItems = collect([
+                ['value' => $table_pengaturan->stat_clients ?? null, 'label' => 'Klien Puas'],
+                ['value' => $table_pengaturan->stat_projects ?? null, 'label' => 'Project Selesai'],
+            ])->filter(fn($item) => !empty($item['value']))->values();
+        @endphp
         <div class="testimonial-trust">
 
             <div class="testimonial-trust-rating">
 
-                <strong>5.0</strong>
+                <strong>{{ number_format($avgRating, 1) }}</strong>
 
                 <div>
                     <div class="testimonial-trust-stars">
@@ -162,31 +93,21 @@
 
             </div>
 
-
+            @foreach($trustItems as $item)
             <div class="testimonial-trust-divider"></div>
-
 
             <div class="testimonial-trust-item">
 
-                <strong>30+</strong>
+                <strong>{{ $item['value'] }}</strong>
 
-                <span>Klien Puas</span>
-
-            </div>
-
-
-            <div class="testimonial-trust-divider"></div>
-
-
-            <div class="testimonial-trust-item">
-
-                <strong>50+</strong>
-
-                <span>Project Selesai</span>
+                <span>{{ $item['label'] }}</span>
 
             </div>
+            @endforeach
 
         </div>
+
+        @endif
 
     </div>
 

@@ -64,10 +64,11 @@
 
 
                     {{-- Floating experience card --}}
+                    @if(!empty($table_pengaturan->stat_years_experience))
                     <div class="about-experience">
 
                         <strong>
-                            5+
+                            {{ $table_pengaturan->stat_years_experience }}
                         </strong>
 
                         <span>
@@ -76,9 +77,11 @@
                         </span>
 
                     </div>
+                    @endif
 
 
                     {{-- Floating project card --}}
+                    @if(!empty($table_pengaturan->stat_projects))
                     <div class="about-project">
 
                         <span class="about-project-icon">
@@ -91,11 +94,12 @@
                         </span>
 
                         <div>
-                            <strong>50+</strong>
+                            <strong>{{ $table_pengaturan->stat_projects }}</strong>
                             <span>Project Selesai</span>
                         </div>
 
                     </div>
+                    @endif
 
                 </div>
 
@@ -243,88 +247,46 @@
         {{-- =========================================
              STATISTICS
         ========================================== --}}
+        @php
+            $aboutStatIcons = [
+                'projects' => '<svg viewBox="0 0 24 24" fill="none"><path d="M5 20V10"/><path d="M12 20V4"/><path d="M19 20v-7"/></svg>',
+                'clients' => '<svg viewBox="0 0 24 24" fill="none"><circle cx="9" cy="8" r="3"/><circle cx="17" cy="10" r="2.5"/><path d="M3.5 19c.6-3.1 2.4-5 5.5-5s4.9 1.9 5.5 5"/><path d="M14 15c2.8-.3 5 1.1 6 4"/></svg>',
+                'years' => '<svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="8"/><path d="m12 7 1.5 3.5L17 12l-3.5 1.5L12 17l-1.5-3.5L7 12l3.5-1.5L12 7Z"/></svg>',
+                'industries' => '<svg viewBox="0 0 24 24" fill="none"><path d="M12 3 5 6v5c0 4.5 2.8 7.8 7 9 4.2-1.2 7-4.5 7-9V6l-7-3Z"/><path d="m8.5 12 2.2 2.2 4.8-5"/></svg>',
+            ];
+
+            $aboutStats = collect([
+                ['key' => 'projects', 'value' => $table_pengaturan->stat_projects ?? null, 'label' => 'Project Selesai'],
+                ['key' => 'clients', 'value' => $table_pengaturan->stat_clients ?? null, 'label' => 'Klien Puas'],
+                ['key' => 'years', 'value' => $table_pengaturan->stat_years_experience ?? null, 'label' => 'Tahun Pengalaman'],
+                ['key' => 'industries', 'value' => $table_pengaturan->stat_industries ?? null, 'label' => 'Industri Terlayani'],
+            ])->filter(fn($stat) => !empty($stat['value']))->values();
+        @endphp
+
+        @if($aboutStats->count())
         <div class="about-stats">
 
+            @foreach($aboutStats as $stat)
             <div class="about-stat">
 
                 <span class="about-stat-icon">
-                    <svg viewBox="0 0 24 24" fill="none">
-                        <path d="M5 20V10"/>
-                        <path d="M12 20V4"/>
-                        <path d="M19 20v-7"/>
-                    </svg>
+                    {!! $aboutStatIcons[$stat['key']] !!}
                 </span>
 
                 <div>
-                    <strong>50+</strong>
-                    <span>Project Selesai</span>
+                    <strong>{{ $stat['value'] }}</strong>
+                    <span>{{ $stat['label'] }}</span>
                 </div>
 
             </div>
 
-
+            @if(!$loop->last)
             <div class="about-stat-divider"></div>
-
-
-            <div class="about-stat">
-
-                <span class="about-stat-icon">
-                    <svg viewBox="0 0 24 24" fill="none">
-                        <circle cx="9" cy="8" r="3"/>
-                        <circle cx="17" cy="10" r="2.5"/>
-                        <path d="M3.5 19c.6-3.1 2.4-5 5.5-5s4.9 1.9 5.5 5"/>
-                        <path d="M14 15c2.8-.3 5 1.1 6 4"/>
-                    </svg>
-                </span>
-
-                <div>
-                    <strong>30+</strong>
-                    <span>Klien Puas</span>
-                </div>
-
-            </div>
-
-
-            <div class="about-stat-divider"></div>
-
-
-            <div class="about-stat">
-
-                <span class="about-stat-icon">
-                    <svg viewBox="0 0 24 24" fill="none">
-                        <circle cx="12" cy="12" r="8"/>
-                        <path d="m12 7 1.5 3.5L17 12l-3.5 1.5L12 17l-1.5-3.5L7 12l3.5-1.5L12 7Z"/>
-                    </svg>
-                </span>
-
-                <div>
-                    <strong>5+</strong>
-                    <span>Tahun Pengalaman</span>
-                </div>
-
-            </div>
-
-
-            <div class="about-stat-divider"></div>
-
-
-            <div class="about-stat">
-
-                <span class="about-stat-icon">
-                    <svg viewBox="0 0 24 24" fill="none">
-                        <path d="M12 3 5 6v5c0 4.5 2.8 7.8 7 9 4.2-1.2 7-4.5 7-9V6l-7-3Z"/>
-                        <path d="m8.5 12 2.2 2.2 4.8-5"/>
-                    </svg>
-                </span>
-
-                <div>
-                    <strong>100%</strong>
-                    <span>Komitmen Kualitas</span>
-                </div>
-
-            </div>
+            @endif
+            @endforeach
 
         </div>
+        @endif
 
     </div>
 

@@ -13,6 +13,11 @@
                 Project yang Telah Kami Kerjakan
             </h2>
 
+            @php
+                $portfolioCategories = $table_portofolio->pluck('layanan')->filter()->unique()->values();
+            @endphp
+
+            @if($portfolioCategories->count() > 1)
             {{-- CATEGORY FILTER --}}
             <div class="portfolio-filter">
 
@@ -23,71 +28,58 @@
                     Semua
                 </button>
 
+                @foreach($portfolioCategories as $cat)
                 <button
                     type="button"
                     class="portfolio-filter-btn"
-                    data-filter="website">
-                    Website
+                    data-filter="{{ Str::slug($cat) }}">
+                    {{ $cat }}
                 </button>
-
-                <button
-                    type="button"
-                    class="portfolio-filter-btn"
-                    data-filter="web-application">
-                    Web Application
-                </button>
-
-                <button
-                    type="button"
-                    class="portfolio-filter-btn"
-                    data-filter="mobile-app">
-                    Mobile App
-                </button>
-
-                <button
-                    type="button"
-                    class="portfolio-filter-btn"
-                    data-filter="custom-system">
-                    Sistem Custom
-                </button>
+                @endforeach
 
             </div>
+            @endif
 
         </div>
 
 
+        @if($table_portofolio->count())
         {{-- PORTFOLIO GRID --}}
         <div class="portfolio-grid">
 
-
-            {{-- EMPATRA POS --}}
+            @foreach($table_portofolio as $row)
             <article
                 class="portfolio-card"
-                data-category="web-application">
+                data-category="{{ $row->layanan ? Str::slug($row->layanan) : '' }}">
 
                 <div class="portfolio-image">
                     <img
-                        src="{{ asset('images/portfolio/empatra-pos.jpg') }}"
-                        alt="Empatra POS"
+                        src="{{ asset('storage/' . $row->image) }}"
+                        alt="{{ $row->title }}"
                         loading="lazy">
                 </div>
 
                 <div class="portfolio-card-content">
 
                     <h3>
-                        Empatra POS
+                        {{ $row->title }}
                     </h3>
 
+                    @if($row->layanan)
                     <span class="portfolio-category">
-                        Web Application
+                        {{ $row->layanan }}
                     </span>
+                    @endif
 
                     <p>
-                        Sistem Point of Sale berbasis web dengan fitur lengkap
-                        untuk UMKM.
+                        @if($row->klien)
+                            <strong>Client:</strong> {{ $row->klien }}@if($row->industry) &middot; {{ $row->industry }}@endif
+                        @else
+                            {{ Str::limit(strip_tags($row->renderTrix('content')), 90) }}
+                        @endif
                     </p>
 
-                    <a href="#" class="portfolio-detail">
+                    <a href="{{ route('home.portofolio.show', $row->id) }}" class="portfolio-detail">
                         Lihat Detail
 
                         <svg viewBox="0 0 24 24" fill="none">
@@ -99,137 +91,18 @@
                 </div>
 
             </article>
-
-
-            {{-- LMS KAIGO --}}
-            <article
-                class="portfolio-card"
-                data-category="web-application">
-
-                <div class="portfolio-image">
-                    <img
-                        src="{{ asset('images/portfolio/lms-kaigo.jpg') }}"
-                        alt="LMS Kaigo Laboratory"
-                        loading="lazy">
-                </div>
-
-                <div class="portfolio-card-content">
-
-                    <h3>
-                        LMS Kaigo Laboratory
-                    </h3>
-
-                    <span class="portfolio-category">
-                        Web Application
-                    </span>
-
-                    <p>
-                        Learning Management System untuk pelatihan dan
-                        manajemen pembelajaran.
-                    </p>
-
-                    <a href="#" class="portfolio-detail">
-                        Lihat Detail
-
-                        <svg viewBox="0 0 24 24" fill="none">
-                            <path d="M5 12h13"/>
-                            <path d="m13 6 6 6-6 6"/>
-                        </svg>
-                    </a>
-
-                </div>
-
-            </article>
-
-
-            {{-- EMPATRA TRAVEL --}}
-            <article
-                class="portfolio-card"
-                data-category="website">
-
-                <div class="portfolio-image">
-                    <img
-                        src="{{ asset('images/portfolio/empatra-travel.jpg') }}"
-                        alt="Empatra Travel & Tours"
-                        loading="lazy">
-                </div>
-
-                <div class="portfolio-card-content">
-
-                    <h3>
-                        Empatra Travel & Tours
-                    </h3>
-
-                    <span class="portfolio-category">
-                        Website
-                    </span>
-
-                    <p>
-                        Website perusahaan travel dengan sistem booking
-                        terintegrasi.
-                    </p>
-
-                    <a href="#" class="portfolio-detail">
-                        Lihat Detail
-
-                        <svg viewBox="0 0 24 24" fill="none">
-                            <path d="M5 12h13"/>
-                            <path d="m13 6 6 6-6 6"/>
-                        </svg>
-                    </a>
-
-                </div>
-
-            </article>
-
-
-            {{-- DIGITAL INVITATION --}}
-            <article
-                class="portfolio-card"
-                data-category="website">
-
-                <div class="portfolio-image">
-                    <img
-                        src="{{ asset('images/portfolio/digital-invitation.jpg') }}"
-                        alt="Digital Invitation"
-                        loading="lazy">
-                </div>
-
-                <div class="portfolio-card-content">
-
-                    <h3>
-                        Digital Invitation
-                    </h3>
-
-                    <span class="portfolio-category">
-                        Website
-                    </span>
-
-                    <p>
-                        Undangan digital modern dengan fitur konfirmasi
-                        kehadiran.
-                    </p>
-
-                    <a href="#" class="portfolio-detail">
-                        Lihat Detail
-
-                        <svg viewBox="0 0 24 24" fill="none">
-                            <path d="M5 12h13"/>
-                            <path d="m13 6 6 6-6 6"/>
-                        </svg>
-                    </a>
-
-                </div>
-
-            </article>
+            @endforeach
 
         </div>
+        @else
+        <p style="text-align:center;color:#667080;font-size:13px;">Belum ada portfolio yang ditambahkan.</p>
+        @endif
 
 
         {{-- VIEW ALL --}}
         <div class="portfolio-footer">
 
-            <a href="#" class="portfolio-all-btn">
+            <a href="{{ route('home.portofolio.index') }}" class="portfolio-all-btn">
                 Lihat Semua Portfolio
 
                 <svg viewBox="0 0 24 24" fill="none">
