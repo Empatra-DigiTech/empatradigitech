@@ -2,25 +2,26 @@
 //! locale : Uyghur (China) [ug-cn]
 //! author: boyaq : https://github.com/boyaq
 
-;(function (global, factory) {
-   typeof exports === 'object' && typeof module !== 'undefined'
-       && typeof require === 'function' ? factory(require('../moment')) :
-   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
-   factory(global.moment)
-}(this, (function (moment) { 'use strict';
+(function (global, factory) {
+    typeof exports === 'object' && typeof module !== 'undefined' && typeof require === 'function'
+        ? factory(require('../moment'))
+        : typeof define === 'function' && define.amd
+          ? define(['../moment'], factory)
+          : factory(global.moment);
+})(this, function (moment) {
+    'use strict';
 
     //! moment.js locale configuration
 
     var ugCn = moment.defineLocale('ug-cn', {
         months: 'يانۋار_فېۋرال_مارت_ئاپرېل_ماي_ئىيۇن_ئىيۇل_ئاۋغۇست_سېنتەبىر_ئۆكتەبىر_نويابىر_دېكابىر'.split(
-            '_'
+            '_',
         ),
-        monthsShort: 'يانۋار_فېۋرال_مارت_ئاپرېل_ماي_ئىيۇن_ئىيۇل_ئاۋغۇست_سېنتەبىر_ئۆكتەبىر_نويابىر_دېكابىر'.split(
-            '_'
-        ),
-        weekdays: 'يەكشەنبە_دۈشەنبە_سەيشەنبە_چارشەنبە_پەيشەنبە_جۈمە_شەنبە'.split(
-            '_'
-        ),
+        monthsShort:
+            'يانۋار_فېۋرال_مارت_ئاپرېل_ماي_ئىيۇن_ئىيۇل_ئاۋغۇست_سېنتەبىر_ئۆكتەبىر_نويابىر_دېكابىر'.split(
+                '_',
+            ),
+        weekdays: 'يەكشەنبە_دۈشەنبە_سەيشەنبە_چارشەنبە_پەيشەنبە_جۈمە_شەنبە'.split('_'),
         weekdaysShort: 'يە_دۈ_سە_چا_پە_جۈ_شە'.split('_'),
         weekdaysMin: 'يە_دۈ_سە_چا_پە_جۈ_شە'.split('_'),
         longDateFormat: {
@@ -36,11 +37,7 @@
             if (hour === 12) {
                 hour = 0;
             }
-            if (
-                meridiem === 'يېرىم كېچە' ||
-                meridiem === 'سەھەر' ||
-                meridiem === 'چۈشتىن بۇرۇن'
-            ) {
+            if (meridiem === 'يېرىم كېچە' || meridiem === 'سەھەر' || meridiem === 'چۈشتىن بۇرۇن') {
                 return hour;
             } else if (meridiem === 'چۈشتىن كېيىن' || meridiem === 'كەچ') {
                 return hour + 12;
@@ -117,5 +114,4 @@
     });
 
     return ugCn;
-
-})));
+});

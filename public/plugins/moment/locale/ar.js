@@ -4,12 +4,14 @@
 //! author : Ahmed Elkhatib
 //! author : forabi https://github.com/forabi
 
-;(function (global, factory) {
-   typeof exports === 'object' && typeof module !== 'undefined'
-       && typeof require === 'function' ? factory(require('../moment')) :
-   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
-   factory(global.moment)
-}(this, (function (moment) { 'use strict';
+(function (global, factory) {
+    typeof exports === 'object' && typeof module !== 'undefined' && typeof require === 'function'
+        ? factory(require('../moment'))
+        : typeof define === 'function' && define.amd
+          ? define(['../moment'], factory)
+          : factory(global.moment);
+})(this, function (moment) {
+    'use strict';
 
     //! moment.js locale configuration
 
@@ -41,14 +43,14 @@
             return n === 0
                 ? 0
                 : n === 1
-                ? 1
-                : n === 2
-                ? 2
-                : n % 100 >= 3 && n % 100 <= 10
-                ? 3
-                : n % 100 >= 11
-                ? 4
-                : 5;
+                  ? 1
+                  : n === 2
+                    ? 2
+                    : n % 100 >= 3 && n % 100 <= 10
+                      ? 3
+                      : n % 100 >= 11
+                        ? 4
+                        : 5;
         },
         plurals = {
             s: [
@@ -75,30 +77,9 @@
                 '%d ساعة',
                 '%d ساعة',
             ],
-            d: [
-                'أقل من يوم',
-                'يوم واحد',
-                ['يومان', 'يومين'],
-                '%d أيام',
-                '%d يومًا',
-                '%d يوم',
-            ],
-            M: [
-                'أقل من شهر',
-                'شهر واحد',
-                ['شهران', 'شهرين'],
-                '%d أشهر',
-                '%d شهرا',
-                '%d شهر',
-            ],
-            y: [
-                'أقل من عام',
-                'عام واحد',
-                ['عامان', 'عامين'],
-                '%d أعوام',
-                '%d عامًا',
-                '%d عام',
-            ],
+            d: ['أقل من يوم', 'يوم واحد', ['يومان', 'يومين'], '%d أيام', '%d يومًا', '%d يوم'],
+            M: ['أقل من شهر', 'شهر واحد', ['شهران', 'شهرين'], '%d أشهر', '%d شهرا', '%d شهر'],
+            y: ['أقل من عام', 'عام واحد', ['عامان', 'عامين'], '%d أعوام', '%d عامًا', '%d عام'],
         },
         pluralize = function (u) {
             return function (number, withoutSuffix, string, isFuture) {
@@ -196,5 +177,4 @@
     });
 
     return ar;
-
-})));
+});

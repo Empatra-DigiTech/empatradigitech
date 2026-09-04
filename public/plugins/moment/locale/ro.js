@@ -4,12 +4,14 @@
 //! author : Valentin Agachi : https://github.com/avaly
 //! author : Emanuel Cepoi : https://github.com/cepem
 
-;(function (global, factory) {
-   typeof exports === 'object' && typeof module !== 'undefined'
-       && typeof require === 'function' ? factory(require('../moment')) :
-   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
-   factory(global.moment)
-}(this, (function (moment) { 'use strict';
+(function (global, factory) {
+    typeof exports === 'object' && typeof module !== 'undefined' && typeof require === 'function'
+        ? factory(require('../moment'))
+        : typeof define === 'function' && define.amd
+          ? define(['../moment'], factory)
+          : factory(global.moment);
+})(this, function (moment) {
+    'use strict';
 
     //! moment.js locale configuration
 
@@ -32,11 +34,9 @@
 
     var ro = moment.defineLocale('ro', {
         months: 'ianuarie_februarie_martie_aprilie_mai_iunie_iulie_august_septembrie_octombrie_noiembrie_decembrie'.split(
-            '_'
+            '_',
         ),
-        monthsShort: 'ian._feb._mart._apr._mai_iun._iul._aug._sept._oct._nov._dec.'.split(
-            '_'
-        ),
+        monthsShort: 'ian._feb._mart._apr._mai_iun._iul._aug._sept._oct._nov._dec.'.split('_'),
         monthsParseExact: true,
         weekdays: 'duminică_luni_marți_miercuri_joi_vineri_sâmbătă'.split('_'),
         weekdaysShort: 'Dum_Lun_Mar_Mie_Joi_Vin_Sâm'.split('_'),
@@ -82,5 +82,4 @@
     });
 
     return ro;
-
-})));
+});

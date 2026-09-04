@@ -3,12 +3,14 @@
 //! author : Robin van der Vliet : https://github.com/robin0van0der0v
 //! author : Iustì Canun
 
-;(function (global, factory) {
-   typeof exports === 'object' && typeof module !== 'undefined'
-       && typeof require === 'function' ? factory(require('../moment')) :
-   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
-   factory(global.moment)
-}(this, (function (moment) { 'use strict';
+(function (global, factory) {
+    typeof exports === 'object' && typeof module !== 'undefined' && typeof require === 'function'
+        ? factory(require('../moment'))
+        : typeof define === 'function' && define.amd
+          ? define(['../moment'], factory)
+          : factory(global.moment);
+})(this, function (moment) {
+    'use strict';
 
     //! moment.js locale configuration
 
@@ -16,7 +18,7 @@
     // This is currently too difficult (maybe even impossible) to add.
     var tzl = moment.defineLocale('tzl', {
         months: 'Januar_Fevraglh_Març_Avrïu_Mai_Gün_Julia_Guscht_Setemvar_Listopäts_Noemvar_Zecemvar'.split(
-            '_'
+            '_',
         ),
         monthsShort: 'Jan_Fev_Mar_Avr_Mai_Gün_Jul_Gus_Set_Lis_Noe_Zec'.split('_'),
         weekdays: 'Súladi_Lúneçi_Maitzi_Márcuri_Xhúadi_Viénerçi_Sáturi'.split('_'),
@@ -88,13 +90,8 @@
             y: ["'n ar", "'iens ar"],
             yy: [number + ' ars', '' + number + ' ars'],
         };
-        return isFuture
-            ? format[key][0]
-            : withoutSuffix
-            ? format[key][0]
-            : format[key][1];
+        return isFuture ? format[key][0] : withoutSuffix ? format[key][0] : format[key][1];
     }
 
     return tzl;
-
-})));
+});

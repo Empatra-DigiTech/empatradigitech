@@ -21,7 +21,9 @@
          */
         function SearchPane(paneSettings, opts, idx, layout, panesContainer, panes) {
             var _this = this;
-            if (panes === void 0) { panes = null; }
+            if (panes === void 0) {
+                panes = null;
+            }
             // Check that the required version of DataTables is included
             if (!dataTable || !dataTable.versionCheck || !dataTable.versionCheck('1.10.0')) {
                 throw new Error('SearchPane requires DataTables 1.10 or newer');
@@ -35,7 +37,11 @@
             this.classes = $.extend(true, {}, SearchPane.classes);
             // Get options from user
             this.c = $.extend(true, {}, SearchPane.defaults, opts);
-            if (opts !== undefined && opts.hideCount !== undefined && opts.viewCount === undefined) {
+            if (
+                opts !== undefined &&
+                opts.hideCount !== undefined &&
+                opts.viewCount === undefined
+            ) {
                 this.c.viewCount = !this.c.hideCount;
             }
             this.customPaneSettings = panes;
@@ -65,7 +71,7 @@
                     binsOriginal: {},
                     binsTotal: {},
                     filterMap: new Map(),
-                    totalOptions: 0
+                    totalOptions: 0,
                 },
                 scrollTop: 0,
                 searchFunction: undefined,
@@ -74,7 +80,7 @@
                 serverSelecting: false,
                 showFiltered: false,
                 tableLength: null,
-                updating: false
+                updating: false,
             };
             var rowLength = table.columns().eq(0).toArray().length;
             this.colExists = this.s.index < rowLength;
@@ -88,32 +94,45 @@
                     .attr('disabled', 'true')
                     .addClass(this.classes.paneButton)
                     .addClass(this.classes.clearButton),
-                collapseButton: $('<button type="button"><span class="dtsp-caret">&#x5e;</span></button>')
+                collapseButton: $(
+                    '<button type="button"><span class="dtsp-caret">&#x5e;</span></button>',
+                )
                     .addClass(this.classes.paneButton)
                     .addClass(this.classes.collapseButton),
                 container: $('<div/>')
                     .addClass(this.classes.container)
-                    .addClass(this.classes.layout +
-                    (layVal < 10 ? layout : layout.split('-')[0] + '-9')),
+                    .addClass(
+                        this.classes.layout + (layVal < 10 ? layout : layout.split('-')[0] + '-9'),
+                    ),
                 countButton: $('<button type="button"></button>')
                     .addClass(this.classes.paneButton)
                     .addClass(this.classes.countButton),
-                dtP: $('<table><thead><tr><th>' +
-                    (this.colExists
-                        ? $(table.column(this.colExists ? this.s.index : 0).header()).text()
-                        : this.customPaneSettings.header || 'Custom Pane') + '</th><th/></tr></thead></table>'),
-                lower: $('<div/>').addClass(this.classes.subRow2).addClass(this.classes.narrowButton),
+                dtP: $(
+                    '<table><thead><tr><th>' +
+                        (this.colExists
+                            ? $(table.column(this.colExists ? this.s.index : 0).header()).text()
+                            : this.customPaneSettings.header || 'Custom Pane') +
+                        '</th><th/></tr></thead></table>',
+                ),
+                lower: $('<div/>')
+                    .addClass(this.classes.subRow2)
+                    .addClass(this.classes.narrowButton),
                 nameButton: $('<button type="button"></button>')
                     .addClass(this.classes.paneButton)
                     .addClass(this.classes.nameButton),
                 panesContainer: panesContainer,
-                searchBox: $('<input/>').addClass(this.classes.paneInputButton).addClass(this.classes.search),
-                searchButton: $('<button type = "button" class="' + this.classes.searchIcon + '"></button>')
-                    .addClass(this.classes.paneButton),
+                searchBox: $('<input/>')
+                    .addClass(this.classes.paneInputButton)
+                    .addClass(this.classes.search),
+                searchButton: $(
+                    '<button type = "button" class="' + this.classes.searchIcon + '"></button>',
+                ).addClass(this.classes.paneButton),
                 searchCont: $('<div/>').addClass(this.classes.searchCont),
                 searchLabelCont: $('<div/>').addClass(this.classes.searchLabelCont),
                 topRow: $('<div/>').addClass(this.classes.topRow),
-                upper: $('<div/>').addClass(this.classes.subRow1).addClass(this.classes.narrowSearch)
+                upper: $('<div/>')
+                    .addClass(this.classes.subRow1)
+                    .addClass(this.classes.narrowSearch),
             };
             this.s.displayed = false;
             table = this.s.dt;
@@ -123,20 +142,23 @@
             var clear = $('<button type="button">X</button>').addClass(this.classes.paneButton);
             clear.text(table.i18n('searchPanes.clearPane', this.c.i18n.clearPane));
             this.dom.container.addClass(colOpts.className);
-            this.dom.container.addClass(this.customPaneSettings !== null && this.customPaneSettings.className !== undefined
-                ? this.customPaneSettings.className
-                : '');
+            this.dom.container.addClass(
+                this.customPaneSettings !== null && this.customPaneSettings.className !== undefined
+                    ? this.customPaneSettings.className
+                    : '',
+            );
             // Set the value of name incase ordering is desired
             if (this.s.colOpts.name !== undefined) {
                 this.s.name = this.s.colOpts.name;
-            }
-            else if (this.customPaneSettings !== null && this.customPaneSettings.name !== undefined) {
+            } else if (
+                this.customPaneSettings !== null &&
+                this.customPaneSettings.name !== undefined
+            ) {
                 this.s.name = this.customPaneSettings.name;
-            }
-            else {
-                this.s.name = this.colExists ?
-                    $(table.column(this.s.index).header()).text() :
-                    this.customPaneSettings.header || 'Custom Pane';
+            } else {
+                this.s.name = this.colExists
+                    ? $(table.column(this.s.index).header()).text()
+                    : this.customPaneSettings.header || 'Custom Pane';
             }
             $(panesContainer).append(this.dom.container);
             var tableNode = table.table(0).node();
@@ -168,7 +190,9 @@
             // If the clear button for this pane is clicked clear the selections
             if (this.c.clear) {
                 clear.on('click', function () {
-                    var searches = _this.dom.container.find('.' + _this.classes.search.replace(/\s+/g, '.'));
+                    var searches = _this.dom.container.find(
+                        '.' + _this.classes.search.replace(/\s+/g, '.'),
+                    );
                     searches.each(function () {
                         $(this).val('');
                         $(this).trigger('input');
@@ -202,7 +226,15 @@
          * @param sort the value to be sorted in the pane table
          * @param type the value of which the type is to be derived from
          */
-        SearchPane.prototype.addRow = function (display, filter, shown, total, sort, type, className) {
+        SearchPane.prototype.addRow = function (
+            display,
+            filter,
+            shown,
+            total,
+            sort,
+            type,
+            className,
+        ) {
             var index;
             for (var _i = 0, _a = this.s.indexes; _i < _a.length; _i++) {
                 var entry = _a[_i];
@@ -216,36 +248,46 @@
             }
             return this.s.dtPane.row.add({
                 className: className,
-                display: display !== '' ?
-                    display :
-                    this.emptyMessage(),
+                display: display !== '' ? display : this.emptyMessage(),
                 filter: filter,
                 index: index,
                 shown: shown,
                 sort: sort,
                 total: total,
-                type: type
+                type: type,
             });
         };
         /**
          * Adjusts the layout of the top row when the screen is resized
          */
         SearchPane.prototype.adjustTopRow = function () {
-            var subContainers = this.dom.container.find('.' + this.classes.subRowsContainer.replace(/\s+/g, '.'));
+            var subContainers = this.dom.container.find(
+                '.' + this.classes.subRowsContainer.replace(/\s+/g, '.'),
+            );
             var subRow1 = this.dom.container.find('.' + this.classes.subRow1.replace(/\s+/g, '.'));
             var subRow2 = this.dom.container.find('.' + this.classes.subRow2.replace(/\s+/g, '.'));
             var topRow = this.dom.container.find('.' + this.classes.topRow.replace(/\s+/g, '.'));
             // If the width is 0 then it is safe to assume that the pane has not yet been displayed.
             //  Even if it has, if the width is 0 it won't make a difference if it has the narrow class or not
-            if (($(subContainers[0]).width() < 252 || $(topRow[0]).width() < 252) && $(subContainers[0]).width() !== 0) {
+            if (
+                ($(subContainers[0]).width() < 252 || $(topRow[0]).width() < 252) &&
+                $(subContainers[0]).width() !== 0
+            ) {
                 $(subContainers[0]).addClass(this.classes.narrow);
-                $(subRow1[0]).addClass(this.classes.narrowSub).removeClass(this.classes.narrowSearch);
-                $(subRow2[0]).addClass(this.classes.narrowSub).removeClass(this.classes.narrowButton);
-            }
-            else {
+                $(subRow1[0])
+                    .addClass(this.classes.narrowSub)
+                    .removeClass(this.classes.narrowSearch);
+                $(subRow2[0])
+                    .addClass(this.classes.narrowSub)
+                    .removeClass(this.classes.narrowButton);
+            } else {
                 $(subContainers[0]).removeClass(this.classes.narrow);
-                $(subRow1[0]).removeClass(this.classes.narrowSub).addClass(this.classes.narrowSearch);
-                $(subRow2[0]).removeClass(this.classes.narrowSub).addClass(this.classes.narrowButton);
+                $(subRow1[0])
+                    .removeClass(this.classes.narrowSub)
+                    .addClass(this.classes.narrowSearch);
+                $(subRow2[0])
+                    .removeClass(this.classes.narrowSub)
+                    .addClass(this.classes.narrowButton);
             }
         };
         /**
@@ -261,7 +303,7 @@
                 binsOriginal: {},
                 binsTotal: {},
                 filterMap: new Map(),
-                totalOptions: 0
+                totalOptions: 0,
             };
         };
         /**
@@ -278,9 +320,11 @@
          */
         SearchPane.prototype.collapse = function () {
             var _this = this;
-            if (!this.s.displayed ||
-                (!this.c.collapse && this.s.colOpts.collapse !== true ||
-                    this.s.colOpts.collapse === false)) {
+            if (
+                !this.s.displayed ||
+                (!this.c.collapse && this.s.colOpts.collapse !== true) ||
+                this.s.colOpts.collapse === false
+            ) {
                 return;
             }
             this.dom.collapseButton.addClass(this.classes.rotated);
@@ -336,9 +380,9 @@
          * Updates the number of filters that have been applied in the title
          */
         SearchPane.prototype.getPaneCount = function () {
-            return this.s.dtPane !== undefined ?
-                this.s.dtPane.rows({ selected: true }).data().toArray().length :
-                0;
+            return this.s.dtPane !== undefined
+                ? this.s.dtPane.rows({ selected: true }).data().toArray().length
+                : 0;
         };
         /**
          * Rebuilds the panes from the start having deleted the old ones
@@ -349,10 +393,18 @@
          * @param? maintainSelection Whether the current selections are to be maintained over rebuild
          */
         SearchPane.prototype.rebuildPane = function (last, dataIn, init, maintainSelection) {
-            if (last === void 0) { last = false; }
-            if (dataIn === void 0) { dataIn = null; }
-            if (init === void 0) { init = null; }
-            if (maintainSelection === void 0) { maintainSelection = false; }
+            if (last === void 0) {
+                last = false;
+            }
+            if (dataIn === void 0) {
+                dataIn = null;
+            }
+            if (init === void 0) {
+                init = null;
+            }
+            if (maintainSelection === void 0) {
+                maintainSelection = false;
+            }
             this.clearData();
             var selectedRows = [];
             this.s.serverSelect = [];
@@ -362,9 +414,11 @@
                 if (maintainSelection) {
                     if (!this.s.dt.page.info().serverSide) {
                         selectedRows = this.s.dtPane.rows({ selected: true }).data().toArray();
-                    }
-                    else {
-                        this.s.serverSelect = this.s.dtPane.rows({ selected: true }).data().toArray();
+                    } else {
+                        this.s.serverSelect = this.s.dtPane
+                            .rows({ selected: true })
+                            .data()
+                            .toArray();
                     }
                 }
                 this.s.dtPane.clear().destroy();
@@ -375,9 +429,13 @@
             }
             this.dom.container.removeClass(this.classes.hidden);
             this.s.displayed = false;
-            this._buildPane(!this.s.dt.page.info().serverSide ?
-                selectedRows :
-                this.s.serverSelect, last, dataIn, init, prevEl);
+            this._buildPane(
+                !this.s.dt.page.info().serverSide ? selectedRows : this.s.serverSelect,
+                last,
+                dataIn,
+                init,
+                prevEl,
+            );
             return this;
         };
         /**
@@ -398,12 +456,16 @@
             this.dom.container
                 .removeClass()
                 .addClass(this.classes.container)
-                .addClass(this.classes.layout +
-                (layVal < 10 ? layout : layout.split('-')[0] + '-9'))
+                .addClass(
+                    this.classes.layout + (layVal < 10 ? layout : layout.split('-')[0] + '-9'),
+                )
                 .addClass(this.s.colOpts.className)
-                .addClass(this.customPaneSettings !== null && this.customPaneSettings.className !== undefined
-                ? this.customPaneSettings.className
-                : '')
+                .addClass(
+                    this.customPaneSettings !== null &&
+                        this.customPaneSettings.className !== undefined
+                        ? this.customPaneSettings.className
+                        : '',
+                )
                 .addClass(this.classes.show);
             this.adjustTopRow();
         };
@@ -446,7 +508,9 @@
          * @param draw whether this has been triggered by a draw event or not
          */
         SearchPane.prototype.updatePane = function (draw) {
-            if (draw === void 0) { draw = false; }
+            if (draw === void 0) {
+                draw = false;
+            }
             this.s.updating = true;
             this._updateCommon(draw);
             this.s.updating = false;
@@ -480,13 +544,15 @@
                 clearTimeout(t0);
                 if (_this.s.dt.page.info().serverSide && !_this.s.updating) {
                     if (!_this.s.serverSelecting) {
-                        _this.s.serverSelect = _this.s.dtPane.rows({ selected: true }).data().toArray();
+                        _this.s.serverSelect = _this.s.dtPane
+                            .rows({ selected: true })
+                            .data()
+                            .toArray();
                         _this.s.scrollTop = $(_this.s.dtPane.table().node()).parent()[0].scrollTop;
                         _this.s.selectPresent = true;
                         _this.s.dt.draw(false);
                     }
-                }
-                else if (!_this.s.updating) {
+                } else if (!_this.s.updating) {
                     _this.s.selectPresent = true;
                     _this._makeSelection();
                     _this.s.selectPresent = false;
@@ -501,18 +567,22 @@
                     _this.s.scrollTop = $(_this.s.dtPane.table().node()).parent()[0].scrollTop;
                     if (_this.s.dt.page.info().serverSide && !_this.s.updating) {
                         if (!_this.s.serverSelecting) {
-                            _this.s.serverSelect = _this.s.dtPane.rows({ selected: true }).data().toArray();
+                            _this.s.serverSelect = _this.s.dtPane
+                                .rows({ selected: true })
+                                .data()
+                                .toArray();
                             _this.s.deselect = true;
                             _this.s.dt.draw(false);
                         }
-                    }
-                    else {
+                    } else {
                         _this.s.deselect = true;
                         _this._makeSelection();
                         _this.s.deselect = false;
                     }
                     if (_this.s.dtPane.rows({ selected: true }).data().toArray().length === 0) {
-                        _this.dom.clear.addClass(_this.classes.disabledButton).attr('disabled', 'true');
+                        _this.dom.clear
+                            .addClass(_this.classes.disabledButton)
+                            .attr('disabled', 'true');
                     }
                 }, 50);
             });
@@ -539,7 +609,9 @@
                         selected = _this.s.dtPane
                             .rows({ selected: true })
                             .data()
-                            .map(function (item) { return item.filter.toString(); })
+                            .map(function (item) {
+                                return item.filter.toString();
+                            })
                             .toArray();
                         searchTerm = _this.dom.searchBox.val();
                         order = _this.s.dtPane.order();
@@ -567,7 +639,7 @@
                         id: _this.s.index,
                         order: order,
                         searchTerm: searchTerm,
-                        selected: selected
+                        selected: selected,
                     });
                 });
             }
@@ -611,9 +683,10 @@
                 _this.dom.nameButton.toggleClass(_this.classes.disabledButton);
                 _this.dom.searchButton.toggleClass(_this.classes.disabledButton);
                 if (container.hasClass(_this.classes.hidden)) {
-                    _this.dom.topRow.on('click', function () { return _this.dom.collapseButton.click(); });
-                }
-                else {
+                    _this.dom.topRow.on('click', function () {
+                        return _this.dom.collapseButton.click();
+                    });
+                } else {
                     _this.dom.topRow.off('click');
                 }
                 _this.s.dt.state.save();
@@ -622,7 +695,9 @@
             // When the clear button is clicked reset the pane
             this.dom.clear.off('click.dtsp');
             this.dom.clear.on('click.dtsp', function () {
-                var searches = _this.dom.container.find('.' + _this.classes.search.replace(/ /g, '.'));
+                var searches = _this.dom.container.find(
+                    '.' + _this.classes.search.replace(/ /g, '.'),
+                );
                 searches.each(function () {
                     // set the value of the search box to be an empty string and then search on that, effectively reseting
                     $(this).val('');
@@ -641,12 +716,16 @@
             this.dom.searchBox.on('input.dtsp', function () {
                 var searchval = _this.dom.searchBox.val();
                 _this.s.dtPane.search(searchval).draw();
-                if (typeof searchval === 'string' &&
+                if (
+                    typeof searchval === 'string' &&
                     (searchval.length > 0 ||
-                        searchval.length === 0 && _this.s.dtPane.rows({ selected: true }).data().toArray().length > 0)) {
-                    _this.dom.clear.removeClass(_this.classes.disabledButton).removeAttr('disabled');
-                }
-                else {
+                        (searchval.length === 0 &&
+                            _this.s.dtPane.rows({ selected: true }).data().toArray().length > 0))
+                ) {
+                    _this.dom.clear
+                        .removeClass(_this.classes.disabledButton)
+                        .removeAttr('disabled');
+                } else {
                     _this.dom.clear.addClass(_this.classes.disabledButton).attr('disabled', 'true');
                 }
                 // This state save is required so that the searching on the panes is maintained
@@ -664,7 +743,14 @@
          * @param arrayFilter the array to be populated
          * @param bins the bins to be populated
          */
-        SearchPane.prototype._addOption = function (filter, display, sort, type, arrayFilter, bins) {
+        SearchPane.prototype._addOption = function (
+            filter,
+            display,
+            sort,
+            type,
+            arrayFilter,
+            bins,
+        ) {
             // If the filter is an array then take a note of this, and add the elements to the arrayFilter array
             if (Array.isArray(filter) || filter instanceof dataTable.Api) {
                 // Convert to an array so that we can work with it
@@ -681,7 +767,7 @@
                                 display: display[i],
                                 filter: filter[i],
                                 sort: sort[i],
-                                type: type[i]
+                                type: type[i],
                             });
                         }
                         // Otherwise just increment the count
@@ -691,8 +777,7 @@
                         this.s.rowData.totalOptions++;
                     }
                     return;
-                }
-                else {
+                } else {
                     throw new Error('display and filter not the same length');
                 }
             }
@@ -704,11 +789,10 @@
                         display: display,
                         filter: filter,
                         sort: sort,
-                        type: type
+                        type: type,
                     });
                     this.s.rowData.totalOptions++;
-                }
-                else {
+                } else {
                     bins[filter]++;
                     this.s.rowData.totalOptions++;
                     return;
@@ -720,7 +804,7 @@
                     display: display,
                     filter: filter,
                     sort: sort,
-                    type: type
+                    type: type,
                 });
             }
         };
@@ -732,11 +816,21 @@
          */
         SearchPane.prototype._buildPane = function (selectedRows, last, dataIn, init, prevEl) {
             var _this = this;
-            if (selectedRows === void 0) { selectedRows = []; }
-            if (last === void 0) { last = false; }
-            if (dataIn === void 0) { dataIn = null; }
-            if (init === void 0) { init = null; }
-            if (prevEl === void 0) { prevEl = null; }
+            if (selectedRows === void 0) {
+                selectedRows = [];
+            }
+            if (last === void 0) {
+                last = false;
+            }
+            if (dataIn === void 0) {
+                dataIn = null;
+            }
+            if (init === void 0) {
+                init = null;
+            }
+            if (prevEl === void 0) {
+                prevEl = null;
+            }
             // Aliases
             this.selections = [];
             var table = this.s.dt;
@@ -745,7 +839,10 @@
             var rowData = this.s.rowData;
             // Other Variables
             var countMessage = table.i18n('searchPanes.count', this.c.i18n.count);
-            var filteredMessage = table.i18n('searchPanes.countFiltered', this.c.i18n.countFiltered);
+            var filteredMessage = table.i18n(
+                'searchPanes.countFiltered',
+                this.c.i18n.countFiltered,
+            );
             var loadedFilter = table.state.loaded();
             // If the listeners have not been set yet then using the latest state may result in funny errors
             if (this.s.listSet) {
@@ -763,20 +860,23 @@
                     }
                 }
                 // Perform checks that do not require populate pane to run
-                if ((colOpts.show === false ||
-                    colOpts.show !== undefined && colOpts.show !== true) &&
-                    idx === -1) {
+                if (
+                    (colOpts.show === false ||
+                        (colOpts.show !== undefined && colOpts.show !== true)) &&
+                    idx === -1
+                ) {
                     this.dom.container.addClass(this.classes.hidden);
                     this.s.displayed = false;
                     return false;
-                }
-                else if (colOpts.show === true || idx !== -1) {
+                } else if (colOpts.show === true || idx !== -1) {
                     this.s.displayed = true;
                 }
-                if (!this.s.dt.page.info().serverSide &&
+                if (
+                    !this.s.dt.page.info().serverSide &&
                     (dataIn === null ||
                         dataIn.searchPanes === null ||
-                        dataIn.searchPanes.options === null)) {
+                        dataIn.searchPanes.options === null)
+                ) {
                     // Only run populatePane if the data has not been collected yet
                     if (rowData.arrayFilter.length === 0) {
                         this._populatePane(last);
@@ -789,11 +889,13 @@
                     var uniqueRatio = this._uniqueRatio(binLength, table.rows()[0].length);
                     // Don't show the pane if there isn't enough variance in the data, or there is only 1 entry
                     //  for that pane
-                    if (this.s.displayed === false &&
-                        ((colOpts.show === undefined && colOpts.threshold === null ?
-                            uniqueRatio > this.c.threshold :
-                            uniqueRatio > colOpts.threshold) ||
-                            colOpts.show !== true && binLength <= 1)) {
+                    if (
+                        this.s.displayed === false &&
+                        ((colOpts.show === undefined && colOpts.threshold === null
+                            ? uniqueRatio > this.c.threshold
+                            : uniqueRatio > colOpts.threshold) ||
+                            (colOpts.show !== true && binLength <= 1))
+                    ) {
                         this.dom.container.addClass(this.classes.hidden);
                         this.s.displayed = false;
                         return;
@@ -803,46 +905,57 @@
                     if (this.c.viewTotal && rowData.arrayTotals.length === 0) {
                         this.s.rowData.totalOptions = 0;
                         this._detailsPane();
-                    }
-                    else {
+                    } else {
                         rowData.binsTotal = rowData.bins;
                     }
                     this.dom.container.addClass(this.classes.show);
                     this.s.displayed = true;
-                }
-                else if (dataIn !== null && dataIn.searchPanes !== null && dataIn.searchPanes.options !== null) {
+                } else if (
+                    dataIn !== null &&
+                    dataIn.searchPanes !== null &&
+                    dataIn.searchPanes.options !== null
+                ) {
                     if (dataIn.tableLength !== undefined) {
                         this.s.tableLength = dataIn.tableLength;
                         this.s.rowData.totalOptions = this.s.tableLength;
-                    }
-                    else if (this.s.tableLength === null || table.rows()[0].length > this.s.tableLength) {
+                    } else if (
+                        this.s.tableLength === null ||
+                        table.rows()[0].length > this.s.tableLength
+                    ) {
                         this.s.tableLength = table.rows()[0].length;
                         this.s.rowData.totalOptions = this.s.tableLength;
                     }
                     var colTitle = table.column(this.s.index).dataSrc();
                     if (dataIn.searchPanes.options[colTitle] !== undefined) {
-                        for (var _i = 0, _a = dataIn.searchPanes.options[colTitle]; _i < _a.length; _i++) {
+                        for (
+                            var _i = 0, _a = dataIn.searchPanes.options[colTitle];
+                            _i < _a.length;
+                            _i++
+                        ) {
                             var dataPoint = _a[_i];
                             this.s.rowData.arrayFilter.push({
                                 display: dataPoint.label,
                                 filter: dataPoint.value,
                                 sort: dataPoint.label,
-                                type: dataPoint.label
+                                type: dataPoint.label,
                             });
-                            this.s.rowData.bins[dataPoint.value] = this.c.viewTotal || this.c.cascadePanes ?
-                                dataPoint.count :
-                                dataPoint.total;
+                            this.s.rowData.bins[dataPoint.value] =
+                                this.c.viewTotal || this.c.cascadePanes
+                                    ? dataPoint.count
+                                    : dataPoint.total;
                             this.s.rowData.binsTotal[dataPoint.value] = dataPoint.total;
                         }
                     }
                     var binLength = Object.keys(rowData.binsTotal).length;
                     var uniqueRatio = this._uniqueRatio(binLength, this.s.tableLength);
                     // Don't show the pane if there isnt enough variance in the data, or there is only 1 entry for that pane
-                    if (this.s.displayed === false &&
-                        ((colOpts.show === undefined && colOpts.threshold === null ?
-                            uniqueRatio > this.c.threshold :
-                            uniqueRatio > colOpts.threshold) ||
-                            colOpts.show !== true && binLength <= 1)) {
+                    if (
+                        this.s.displayed === false &&
+                        ((colOpts.show === undefined && colOpts.threshold === null
+                            ? uniqueRatio > this.c.threshold
+                            : uniqueRatio > colOpts.threshold) ||
+                            (colOpts.show !== true && binLength <= 1))
+                    ) {
                         this.dom.container.addClass(this.classes.hidden);
                         this.s.displayed = false;
                         return;
@@ -851,8 +964,7 @@
                     this.s.rowData.binsOriginal = this.s.rowData.bins;
                     this.s.displayed = true;
                 }
-            }
-            else {
+            } else {
                 this.s.displayed = true;
             }
             // If the variance is accceptable then display the search pane
@@ -871,8 +983,7 @@
             // Add the container to the document in its original location
             if (prevEl !== null && this.dom.panesContainer.has(prevEl).length > 0) {
                 this.dom.container.insertAfter(prevEl);
-            }
-            else {
+            } else {
                 this.dom.panesContainer.prepend(this.dom.container);
             }
             // Declare the datatable for the pane
@@ -880,112 +991,135 @@
             $.fn.dataTable.ext.errMode = 'none';
             // eslint-disable-next-line no-extra-parens
             var haveScroller = dataTable.Scroller;
-            this.s.dtPane = this.dom.dtP.DataTable($.extend(true, {
-                columnDefs: [
+            this.s.dtPane = this.dom.dtP.DataTable(
+                $.extend(
+                    true,
                     {
-                        className: 'dtsp-nameColumn',
-                        data: 'display',
-                        render: function (data, type, row) {
-                            if (type === 'sort') {
-                                return row.sort;
-                            }
-                            else if (type === 'type') {
-                                return row.type;
-                            }
-                            var message;
-                            message =
-                                (_this.s.filteringActive || _this.s.showFiltered) && _this.c.viewTotal ||
-                                    _this.c.viewTotal && _this.s.forceViewTotal ?
-                                    filteredMessage.replace(/{total}/, row.total) :
-                                    countMessage.replace(/{total}/, row.total);
-                            message = message.replace(/{shown}/, row.shown);
-                            while (message.includes('{total}')) {
-                                message = message.replace(/{total}/, row.total);
-                            }
-                            while (message.includes('{shown}')) {
-                                message = message.replace(/{shown}/, row.shown);
-                            }
-                            // We are displaying the count in the same columne as the name of the search option.
-                            // This is so that there is not need to call columns.adjust()
-                            //  which in turn speeds up the code
-                            var pill = '<span class="' + _this.classes.pill + '">' + message + '</span>';
-                            if (!_this.c.viewCount || !colOpts.viewCount) {
-                                pill = '';
-                            }
-                            if (type === 'filter') {
-                                return typeof data === 'string' && data.match(/<[^>]*>/) !== null ?
-                                    data.replace(/<[^>]*>/g, '') :
-                                    data;
-                            }
-                            return '<div class="' + _this.classes.nameCont + '"><span title="' +
-                                (typeof data === 'string' && data.match(/<[^>]*>/) !== null ?
-                                    data.replace(/<[^>]*>/g, '') :
-                                    data) +
-                                '" class="' + _this.classes.name + '">' +
-                                data + '</span>' +
-                                pill + '</div>';
-                        },
-                        targets: 0,
-                        // Accessing the private datatables property to set type based on the original table.
-                        // This is null if not defined by the user, meaning that automatic type detection
-                        //  would take place
-                        type: table.settings()[0].aoColumns[this.s.index] !== undefined ?
-                            table.settings()[0].aoColumns[this.s.index]._sManualType :
-                            null
+                        columnDefs: [
+                            {
+                                className: 'dtsp-nameColumn',
+                                data: 'display',
+                                render: function (data, type, row) {
+                                    if (type === 'sort') {
+                                        return row.sort;
+                                    } else if (type === 'type') {
+                                        return row.type;
+                                    }
+                                    var message;
+                                    message =
+                                        ((_this.s.filteringActive || _this.s.showFiltered) &&
+                                            _this.c.viewTotal) ||
+                                        (_this.c.viewTotal && _this.s.forceViewTotal)
+                                            ? filteredMessage.replace(/{total}/, row.total)
+                                            : countMessage.replace(/{total}/, row.total);
+                                    message = message.replace(/{shown}/, row.shown);
+                                    while (message.includes('{total}')) {
+                                        message = message.replace(/{total}/, row.total);
+                                    }
+                                    while (message.includes('{shown}')) {
+                                        message = message.replace(/{shown}/, row.shown);
+                                    }
+                                    // We are displaying the count in the same columne as the name of the search option.
+                                    // This is so that there is not need to call columns.adjust()
+                                    //  which in turn speeds up the code
+                                    var pill =
+                                        '<span class="' +
+                                        _this.classes.pill +
+                                        '">' +
+                                        message +
+                                        '</span>';
+                                    if (!_this.c.viewCount || !colOpts.viewCount) {
+                                        pill = '';
+                                    }
+                                    if (type === 'filter') {
+                                        return typeof data === 'string' &&
+                                            data.match(/<[^>]*>/) !== null
+                                            ? data.replace(/<[^>]*>/g, '')
+                                            : data;
+                                    }
+                                    return (
+                                        '<div class="' +
+                                        _this.classes.nameCont +
+                                        '"><span title="' +
+                                        (typeof data === 'string' && data.match(/<[^>]*>/) !== null
+                                            ? data.replace(/<[^>]*>/g, '')
+                                            : data) +
+                                        '" class="' +
+                                        _this.classes.name +
+                                        '">' +
+                                        data +
+                                        '</span>' +
+                                        pill +
+                                        '</div>'
+                                    );
+                                },
+                                targets: 0,
+                                // Accessing the private datatables property to set type based on the original table.
+                                // This is null if not defined by the user, meaning that automatic type detection
+                                //  would take place
+                                type:
+                                    table.settings()[0].aoColumns[this.s.index] !== undefined
+                                        ? table.settings()[0].aoColumns[this.s.index]._sManualType
+                                        : null,
+                            },
+                            {
+                                className: 'dtsp-countColumn ' + this.classes.badgePill,
+                                data: 'shown',
+                                orderData: [1, 2],
+                                searchable: false,
+                                targets: 1,
+                                visible: false,
+                            },
+                            {
+                                data: 'total',
+                                searchable: false,
+                                targets: 2,
+                                visible: false,
+                            },
+                        ],
+                        deferRender: true,
+                        dom: 't',
+                        info: false,
+                        language: this.s.dt.settings()[0].oLanguage,
+                        paging: haveScroller ? true : false,
+                        scrollX: false,
+                        scrollY: '200px',
+                        scroller: haveScroller ? true : false,
+                        select: true,
+                        stateSave: table.settings()[0].oFeatures.bStateSave ? true : false,
                     },
-                    {
-                        className: 'dtsp-countColumn ' + this.classes.badgePill,
-                        data: 'shown',
-                        orderData: [1, 2],
-                        searchable: false,
-                        targets: 1,
-                        visible: false
-                    },
-                    {
-                        data: 'total',
-                        searchable: false,
-                        targets: 2,
-                        visible: false
-                    }
-                ],
-                deferRender: true,
-                dom: 't',
-                info: false,
-                language: this.s.dt.settings()[0].oLanguage,
-                paging: haveScroller ? true : false,
-                scrollX: false,
-                scrollY: '200px',
-                scroller: haveScroller ? true : false,
-                select: true,
-                stateSave: table.settings()[0].oFeatures.bStateSave ? true : false
-            }, this.c.dtOpts, colOpts !== undefined ? colOpts.dtOpts : {}, this.s.colOpts.options !== undefined || !this.colExists ?
-                {
-                    createdRow: function (row, data, dataIndex) {
-                        $(row).addClass(data.className);
-                    }
-                } :
-                undefined, this.customPaneSettings !== null && this.customPaneSettings.dtOpts !== undefined ?
-                this.customPaneSettings.dtOpts :
-                {}, $.fn.dataTable.versionCheck('2')
-                ? {
-                    layout: {
-                        bottomLeft: null,
-                        bottomRight: null,
-                        topLeft: null,
-                        topRight: null
-                    }
-                }
-                : {}));
+                    this.c.dtOpts,
+                    colOpts !== undefined ? colOpts.dtOpts : {},
+                    this.s.colOpts.options !== undefined || !this.colExists
+                        ? {
+                              createdRow: function (row, data, dataIndex) {
+                                  $(row).addClass(data.className);
+                              },
+                          }
+                        : undefined,
+                    this.customPaneSettings !== null && this.customPaneSettings.dtOpts !== undefined
+                        ? this.customPaneSettings.dtOpts
+                        : {},
+                    $.fn.dataTable.versionCheck('2')
+                        ? {
+                              layout: {
+                                  bottomLeft: null,
+                                  bottomRight: null,
+                                  topLeft: null,
+                                  topRight: null,
+                              },
+                          }
+                        : {},
+                ),
+            );
             this.dom.dtP.addClass(this.classes.table);
             // Getting column titles is a little messy
             var headerText = 'Custom Pane';
             if (this.customPaneSettings && this.customPaneSettings.header) {
                 headerText = this.customPaneSettings.header;
-            }
-            else if (colOpts.header) {
+            } else if (colOpts.header) {
                 headerText = colOpts.header;
-            }
-            else if (this.colExists) {
+            } else if (this.colExists) {
                 headerText = $.fn.dataTable.versionCheck('2')
                     ? table.column(this.s.index).title()
                     : table.settings()[0].aoColumns[this.s.index].sTitle;
@@ -1017,16 +1151,26 @@
                             selected = true;
                         }
                     }
-                    if (this.s.dt.page.info().serverSide &&
+                    if (
+                        this.s.dt.page.info().serverSide &&
                         (!this.c.cascadePanes ||
-                            this.c.cascadePanes && rowData.bins[rowData.arrayFilter[i].filter] !== 0 ||
-                            this.c.cascadePanes && init !== null ||
-                            selected)) {
-                        var row = this.addRow(rowData.arrayFilter[i].display, rowData.arrayFilter[i].filter, init ?
-                            rowData.binsTotal[rowData.arrayFilter[i].filter] :
-                            rowData.bins[rowData.arrayFilter[i].filter], this.c.viewTotal || init
-                            ? String(rowData.binsTotal[rowData.arrayFilter[i].filter])
-                            : rowData.bins[rowData.arrayFilter[i].filter], rowData.arrayFilter[i].sort, rowData.arrayFilter[i].type);
+                            (this.c.cascadePanes &&
+                                rowData.bins[rowData.arrayFilter[i].filter] !== 0) ||
+                            (this.c.cascadePanes && init !== null) ||
+                            selected)
+                    ) {
+                        var row = this.addRow(
+                            rowData.arrayFilter[i].display,
+                            rowData.arrayFilter[i].filter,
+                            init
+                                ? rowData.binsTotal[rowData.arrayFilter[i].filter]
+                                : rowData.bins[rowData.arrayFilter[i].filter],
+                            this.c.viewTotal || init
+                                ? String(rowData.binsTotal[rowData.arrayFilter[i].filter])
+                                : rowData.bins[rowData.arrayFilter[i].filter],
+                            rowData.arrayFilter[i].sort,
+                            rowData.arrayFilter[i].type,
+                        );
                         for (var _d = 0, _e = this.s.serverSelect; _d < _e.length; _d++) {
                             var option = _e[_d];
                             if (option.filter === rowData.arrayFilter[i].filter) {
@@ -1035,13 +1179,21 @@
                                 this.s.serverSelecting = false;
                             }
                         }
-                    }
-                    else if (!this.s.dt.page.info().serverSide &&
+                    } else if (
+                        !this.s.dt.page.info().serverSide &&
                         rowData.arrayFilter[i] &&
-                        (rowData.bins[rowData.arrayFilter[i].filter] !== undefined || !this.c.cascadePanes)) {
-                        this.addRow(rowData.arrayFilter[i].display, rowData.arrayFilter[i].filter, rowData.bins[rowData.arrayFilter[i].filter], rowData.binsTotal[rowData.arrayFilter[i].filter], rowData.arrayFilter[i].sort, rowData.arrayFilter[i].type);
-                    }
-                    else if (!this.s.dt.page.info().serverSide) {
+                        (rowData.bins[rowData.arrayFilter[i].filter] !== undefined ||
+                            !this.c.cascadePanes)
+                    ) {
+                        this.addRow(
+                            rowData.arrayFilter[i].display,
+                            rowData.arrayFilter[i].filter,
+                            rowData.bins[rowData.arrayFilter[i].filter],
+                            rowData.binsTotal[rowData.arrayFilter[i].filter],
+                            rowData.arrayFilter[i].sort,
+                            rowData.arrayFilter[i].type,
+                        );
+                    } else if (!this.s.dt.page.info().serverSide) {
                         // Just pass an empty string as the message will be calculated based on that in addRow()
                         this.addRow('', count_1, count_1, '', '', '');
                     }
@@ -1050,8 +1202,10 @@
             // eslint-disable-next-line no-extra-parens
             dataTable.select.init(this.s.dtPane);
             // If there are custom options set or it is a custom pane then get them
-            if (colOpts.options !== undefined ||
-                this.customPaneSettings !== null && this.customPaneSettings.options !== undefined) {
+            if (
+                colOpts.options !== undefined ||
+                (this.customPaneSettings !== null && this.customPaneSettings.options !== undefined)
+            ) {
                 this._getComparisonRows();
             }
             // Display the pane
@@ -1065,18 +1219,23 @@
             for (var _f = 0, selectedRows_1 = selectedRows; _f < selectedRows_1.length; _f++) {
                 var selection = selectedRows_1[_f];
                 if (selection !== undefined) {
-                    for (var _g = 0, _h = this.s.dtPane.rows().indexes().toArray(); _g < _h.length; _g++) {
+                    for (
+                        var _g = 0, _h = this.s.dtPane.rows().indexes().toArray();
+                        _g < _h.length;
+                        _g++
+                    ) {
                         var row = _h[_g];
-                        if (this.s.dtPane.row(row).data() !== undefined &&
-                            selection.filter === this.s.dtPane.row(row).data().filter) {
+                        if (
+                            this.s.dtPane.row(row).data() !== undefined &&
+                            selection.filter === this.s.dtPane.row(row).data().filter
+                        ) {
                             // If this is happening when serverSide processing is happening then
                             //  different behaviour is needed
                             if (this.s.dt.page.info().serverSide) {
                                 this.s.serverSelecting = true;
                                 this.s.dtPane.row(row).select();
                                 this.s.serverSelecting = false;
-                            }
-                            else {
+                            } else {
                                 this.s.dtPane.row(row).select();
                             }
                         }
@@ -1087,19 +1246,21 @@
             if (this.s.dt.page.info().serverSide) {
                 this.s.dtPane.search(this.dom.searchBox.val()).draw();
             }
-            if ((this.c.initCollapsed && this.s.colOpts.initCollapsed !== false ||
-                this.s.colOpts.initCollapsed) &&
-                (this.c.collapse && this.s.colOpts.collapse !== false ||
-                    this.s.colOpts.collapse)) {
+            if (
+                ((this.c.initCollapsed && this.s.colOpts.initCollapsed !== false) ||
+                    this.s.colOpts.initCollapsed) &&
+                ((this.c.collapse && this.s.colOpts.collapse !== false) || this.s.colOpts.collapse)
+            ) {
                 this.collapse();
             }
             // Reload the selection, searchbox entry and ordering from the previous state
             // Need to check here if SSP that this is the first draw, otherwise it will infinite loop
-            if (loadedFilter &&
+            if (
+                loadedFilter &&
                 loadedFilter.searchPanes &&
                 loadedFilter.searchPanes.panes &&
-                (dataIn === null ||
-                    dataIn.draw === 1)) {
+                (dataIn === null || dataIn.draw === 1)
+            ) {
                 if (!this.c.cascadePanes) {
                     this._reloadSelect(loadedFilter);
                 }
@@ -1115,8 +1276,7 @@
                         // Is the pane to be hidden or shown?
                         if (pane.collapsed) {
                             this.collapse();
-                        }
-                        else {
+                        } else {
                             this.show();
                         }
                     }
@@ -1136,7 +1296,12 @@
             if (!this.s.dt.page.info().serverSide) {
                 for (var _i = 0, indexArray_1 = indexArray; _i < indexArray_1.length; _i++) {
                     var rowIdx = indexArray_1[_i];
-                    this._populatePaneArray(rowIdx, this.s.rowData.arrayTotals, settings, this.s.rowData.binsTotal);
+                    this._populatePaneArray(
+                        rowIdx,
+                        this.s.rowData.arrayTotals,
+                        settings,
+                        this.s.rowData.binsTotal,
+                    );
                 }
             }
         };
@@ -1161,13 +1326,16 @@
             this.dom.searchCont.appendTo(this.dom.upper);
             this.dom.buttonGroup.appendTo(this.dom.lower);
             // If no selections have been made in the pane then disable the clear button
-            if (this.c.dtOpts.searching === false ||
-                colOpts.dtOpts !== undefined && colOpts.dtOpts.searching === false ||
-                (!this.c.controls || !colOpts.controls) ||
-                this.customPaneSettings !== null &&
+            if (
+                this.c.dtOpts.searching === false ||
+                (colOpts.dtOpts !== undefined && colOpts.dtOpts.searching === false) ||
+                !this.c.controls ||
+                !colOpts.controls ||
+                (this.customPaneSettings !== null &&
                     this.customPaneSettings.dtOpts !== undefined &&
                     this.customPaneSettings.dtOpts.searching !== undefined &&
-                    !this.customPaneSettings.dtOpts.searching) {
+                    !this.customPaneSettings.dtOpts.searching)
+            ) {
                 this.dom.searchBox
                     .removeClass(this.classes.paneInputButton)
                     .addClass(this.classes.disabledButton)
@@ -1184,17 +1352,22 @@
                 this.dom.nameButton.appendTo(this.dom.buttonGroup);
             }
             // If the count column is hidden then don't display the ordering button for it
-            if (this.c.viewCount &&
+            if (
+                this.c.viewCount &&
                 colOpts.viewCount &&
                 this.c.orderable &&
                 colOpts.orderable &&
                 this.c.controls &&
-                colOpts.controls) {
+                colOpts.controls
+            ) {
                 this.dom.countButton.appendTo(this.dom.buttonGroup);
             }
-            if ((this.c.collapse && this.s.colOpts.collapse !== false ||
-                this.s.colOpts.collapse) &&
-                this.c.controls && colOpts.controls) {
+            if (
+                ((this.c.collapse && this.s.colOpts.collapse !== false) ||
+                    this.s.colOpts.collapse) &&
+                this.c.controls &&
+                colOpts.controls
+            ) {
                 this.dom.collapseButton.appendTo(this.dom.buttonGroup);
             }
             this.dom.topRow.prependTo(this.dom.container);
@@ -1210,11 +1383,17 @@
             // We need to reset the thresholds as if they have a value in colOpts then that value will be used
             var defaultMutator = {
                 orthogonal: {
-                    threshold: null
+                    threshold: null,
                 },
-                threshold: null
+                threshold: null,
             };
-            return $.extend(true, {}, SearchPane.defaults, defaultMutator, this.c !== undefined ? this.c : {});
+            return $.extend(
+                true,
+                {},
+                SearchPane.defaults,
+                defaultMutator,
+                this.c !== undefined ? this.c : {},
+            );
         };
         /**
          * Adds the custom options to the pane
@@ -1224,11 +1403,13 @@
         SearchPane.prototype._getComparisonRows = function () {
             var colOpts = this.s.colOpts;
             // Find the appropriate options depending on whether this is a pane for a specific column or a custom pane
-            var options = colOpts.options !== undefined
-                ? colOpts.options
-                : this.customPaneSettings !== null && this.customPaneSettings.options !== undefined
-                    ? this.customPaneSettings.options
-                    : undefined;
+            var options =
+                colOpts.options !== undefined
+                    ? colOpts.options
+                    : this.customPaneSettings !== null &&
+                        this.customPaneSettings.options !== undefined
+                      ? this.customPaneSettings.options
+                      : undefined;
             if (options === undefined) {
                 return;
             }
@@ -1242,9 +1423,7 @@
             for (var _i = 0, options_1 = options; _i < options_1.length; _i++) {
                 var comp = options_1[_i];
                 // Initialise the object which is to be placed in the row
-                var insert = comp.label !== '' ?
-                    comp.label :
-                    this.emptyMessage();
+                var insert = comp.label !== '' ? comp.label : this.emptyMessage();
                 var comparisonObj = {
                     className: comp.className,
                     display: insert,
@@ -1252,7 +1431,7 @@
                     shown: 0,
                     sort: insert,
                     total: 0,
-                    type: insert
+                    type: insert,
                 };
                 // If a custom function is in place
                 if (typeof comp.value === 'function') {
@@ -1274,8 +1453,18 @@
                     }
                 }
                 // If cascadePanes is not active or if it is and the comparisonObj should be shown then add it to the pane
-                if (!this.c.cascadePanes || this.c.cascadePanes && comparisonObj.shown !== 0) {
-                    rows.push(this.addRow(comparisonObj.display, comparisonObj.filter, comparisonObj.shown, comparisonObj.total, comparisonObj.sort, comparisonObj.type, comparisonObj.className));
+                if (!this.c.cascadePanes || (this.c.cascadePanes && comparisonObj.shown !== 0)) {
+                    rows.push(
+                        this.addRow(
+                            comparisonObj.display,
+                            comparisonObj.filter,
+                            comparisonObj.shown,
+                            comparisonObj.total,
+                            comparisonObj.sort,
+                            comparisonObj.type,
+                            comparisonObj.className,
+                        ),
+                    );
                 }
             }
             return rows;
@@ -1293,15 +1482,17 @@
                 emptyMessage: false,
                 initCollapsed: null,
                 orthogonal: {
-                    threshold: null
+                    threshold: null,
                 },
-                threshold: null
+                threshold: null,
             };
             var columnOptions = table.settings()[0].aoColumns[this.s.index].searchPanes;
             var colOpts = $.extend(true, {}, SearchPane.defaults, defaultMutator, columnOptions);
-            if (columnOptions !== undefined &&
+            if (
+                columnOptions !== undefined &&
                 columnOptions.hideCount !== undefined &&
-                columnOptions.viewCount === undefined) {
+                columnOptions.viewCount === undefined
+            ) {
                 colOpts.viewCount = !columnOptions.hideCount;
             }
             return colOpts;
@@ -1323,7 +1514,9 @@
          * @param last boolean to indicate whether this was the last pane a selection was made in
          */
         SearchPane.prototype._populatePane = function (last) {
-            if (last === void 0) { last = false; }
+            if (last === void 0) {
+                last = false;
+            }
             var table = this.s.dt;
             this.s.rowData.arrayFilter = [];
             this.s.rowData.bins = {};
@@ -1332,9 +1525,10 @@
             // being displayed for their functionality.
             // Also make sure that this was not the last pane to have a selection made
             if (!this.s.dt.page.info().serverSide) {
-                var indexArray = (this.c.cascadePanes || this.c.viewTotal) && (!this.s.clearing && !last) ?
-                    table.rows({ search: 'applied' }).indexes() :
-                    table.rows().indexes();
+                var indexArray =
+                    (this.c.cascadePanes || this.c.viewTotal) && !this.s.clearing && !last
+                        ? table.rows({ search: 'applied' }).indexes()
+                        : table.rows().indexes();
                 for (var _i = 0, _a = indexArray.toArray(); _i < _a.length; _i++) {
                     var index = _a[_i];
                     this._populatePaneArray(index, this.s.rowData.arrayFilter, settings);
@@ -1349,17 +1543,28 @@
          * @param bins The bins object that is to be populated with the row counts
          */
         SearchPane.prototype._populatePaneArray = function (rowIdx, arrayFilter, settings, bins) {
-            if (bins === void 0) { bins = this.s.rowData.bins; }
+            if (bins === void 0) {
+                bins = this.s.rowData.bins;
+            }
             var colOpts = this.s.colOpts;
             // Retrieve the rendered data from the cell using the fnGetCellData function
             // rather than the cell().render API method for optimisation
             if (typeof colOpts.orthogonal === 'string') {
-                var rendered = settings.oApi._fnGetCellData(settings, rowIdx, this.s.index, colOpts.orthogonal);
+                var rendered = settings.oApi._fnGetCellData(
+                    settings,
+                    rowIdx,
+                    this.s.index,
+                    colOpts.orthogonal,
+                );
                 this.s.rowData.filterMap.set(rowIdx, rendered);
                 this._addOption(rendered, rendered, rendered, rendered, arrayFilter, bins);
-            }
-            else {
-                var filter = settings.oApi._fnGetCellData(settings, rowIdx, this.s.index, colOpts.orthogonal.search);
+            } else {
+                var filter = settings.oApi._fnGetCellData(
+                    settings,
+                    rowIdx,
+                    this.s.index,
+                    colOpts.orthogonal.search,
+                );
                 // Null and empty string are to be considered the same value
                 if (filter === null) {
                     filter = '';
@@ -1370,10 +1575,31 @@
                 this.s.rowData.filterMap.set(rowIdx, filter);
                 if (!bins[filter]) {
                     bins[filter] = 1;
-                    this._addOption(filter, settings.oApi._fnGetCellData(settings, rowIdx, this.s.index, colOpts.orthogonal.display), settings.oApi._fnGetCellData(settings, rowIdx, this.s.index, colOpts.orthogonal.sort), settings.oApi._fnGetCellData(settings, rowIdx, this.s.index, colOpts.orthogonal.type), arrayFilter, bins);
+                    this._addOption(
+                        filter,
+                        settings.oApi._fnGetCellData(
+                            settings,
+                            rowIdx,
+                            this.s.index,
+                            colOpts.orthogonal.display,
+                        ),
+                        settings.oApi._fnGetCellData(
+                            settings,
+                            rowIdx,
+                            this.s.index,
+                            colOpts.orthogonal.sort,
+                        ),
+                        settings.oApi._fnGetCellData(
+                            settings,
+                            rowIdx,
+                            this.s.index,
+                            colOpts.orthogonal.type,
+                        ),
+                        arrayFilter,
+                        bins,
+                    );
                     this.s.rowData.totalOptions++;
-                }
-                else {
+                } else {
                     bins[filter]++;
                     this.s.rowData.totalOptions++;
                     return;
@@ -1401,10 +1627,18 @@
             }
             if (idx !== undefined) {
                 var table = this.s.dtPane;
-                var rows = table.rows({ order: 'index' }).data().map(function (item) { return item.filter !== null ?
-                    item.filter.toString() :
-                    null; }).toArray();
-                for (var _i = 0, _a = loadedFilter.searchPanes.panes[idx].selected; _i < _a.length; _i++) {
+                var rows = table
+                    .rows({ order: 'index' })
+                    .data()
+                    .map(function (item) {
+                        return item.filter !== null ? item.filter.toString() : null;
+                    })
+                    .toArray();
+                for (
+                    var _i = 0, _a = loadedFilter.searchPanes.panes[idx].selected;
+                    _i < _a.length;
+                    _i++
+                ) {
                     var filter = _a[_i];
                     var id = -1;
                     if (filter !== null) {
@@ -1459,11 +1693,14 @@
                     }
                 }
                 // otherwise if the two filter values are equal then return true
-                else if (filter === colSelect.filter ||
+                else if (
+                    filter === colSelect.filter ||
                     // Loose type checking incase number type in column comparing to a string
                     // eslint-disable-next-line eqeqeq
-                    !(typeof filter === 'string' && filter.length === 0) && filter == colSelect.filter ||
-                    colSelect.filter === null && typeof filter === 'string' && filter === '') {
+                    (!(typeof filter === 'string' && filter.length === 0) &&
+                        filter == colSelect.filter) ||
+                    (colSelect.filter === null && typeof filter === 'string' && filter === '')
+                ) {
                     return true;
                 }
             }
@@ -1486,12 +1723,14 @@
             if (this.c.controls && this.s.colOpts.controls) {
                 this.dom.searchButton.appendTo(this.dom.searchLabelCont);
             }
-            if (!(this.c.dtOpts.searching === false ||
+            if (!(
+                this.c.dtOpts.searching === false ||
                 this.s.colOpts.dtOpts.searching === false ||
-                this.customPaneSettings !== null &&
+                (this.customPaneSettings !== null &&
                     this.customPaneSettings.dtOpts !== undefined &&
                     this.customPaneSettings.dtOpts.searching !== undefined &&
-                    !this.customPaneSettings.dtOpts.searching)) {
+                    !this.customPaneSettings.dtOpts.searching)
+            )) {
                 this.dom.searchLabelCont.appendTo(this.dom.searchCont);
             }
         };
@@ -1511,8 +1750,7 @@
             // If a filter has been applied then outline the respective pane, remove it when it no longer is.
             if (filters.length > 0) {
                 container.addClass(this.classes.selected);
-            }
-            else if (filters.length === 0) {
+            } else if (filters.length === 0) {
                 container.removeClass(this.classes.selected);
             }
             this.s.updating = updating;
@@ -1525,12 +1763,13 @@
          * @returns {number} returns the ratio
          */
         SearchPane.prototype._uniqueRatio = function (bins, rowCount) {
-            if (rowCount > 0 &&
-                (this.s.rowData.totalOptions > 0 && !this.s.dt.page.info().serverSide ||
-                    this.s.dt.page.info().serverSide && this.s.tableLength > 0)) {
+            if (
+                rowCount > 0 &&
+                ((this.s.rowData.totalOptions > 0 && !this.s.dt.page.info().serverSide) ||
+                    (this.s.dt.page.info().serverSide && this.s.tableLength > 0))
+            ) {
                 return bins / this.s.rowData.totalOptions;
-            }
-            else {
+            } else {
                 return 1;
             }
         };
@@ -1540,14 +1779,18 @@
          * @param draw a flag to define whether this has been called due to a draw event or not
          */
         SearchPane.prototype._updateCommon = function (draw) {
-            if (draw === void 0) { draw = false; }
+            if (draw === void 0) {
+                draw = false;
+            }
             // Update the panes if doing a deselect. if doing a select then
             // update all of the panes except for the one causing the change
-            if (!this.s.dt.page.info().serverSide &&
+            if (
+                !this.s.dt.page.info().serverSide &&
                 this.s.dtPane !== undefined &&
                 (!this.s.filteringActive || this.c.cascadePanes || draw === true) &&
                 (this.c.cascadePanes !== true || this.s.selectPresent !== true) &&
-                (!this.s.lastSelect || !this.s.lastCascade)) {
+                (!this.s.lastSelect || !this.s.lastCascade)
+            ) {
                 var colOpts = this.s.colOpts;
                 var selected = this.s.dtPane.rows({ selected: true }).data().toArray();
                 var rowData = this.s.rowData;
@@ -1561,9 +1804,11 @@
                     }
                     // If cascadePanes is active and the table has returned to its default state then
                     // there is a need to update certain parts ofthe rowData.
-                    else if (this.c.cascadePanes &&
+                    else if (
+                        this.c.cascadePanes &&
                         this.s.dt.rows().data().toArray().length ===
-                            this.s.dt.rows({ search: 'applied' }).data().toArray().length) {
+                            this.s.dt.rows({ search: 'applied' }).data().toArray().length
+                    ) {
                         rowData.arrayFilter = rowData.arrayOriginal;
                         rowData.bins = rowData.binsOriginal;
                     }
@@ -1574,8 +1819,7 @@
                     // If the viewTotal option is selected then find the totals for the table
                     if (this.c.viewTotal) {
                         this._detailsPane();
-                    }
-                    else {
+                    } else {
                         rowData.binsTotal = rowData.bins;
                     }
                     if (this.c.viewTotal && !this.c.cascadePanes) {
@@ -1585,19 +1829,28 @@
                         // If both view Total and cascadePanes have been selected and the count of the row
                         // is not 0 then add it to pane
                         // Do this also if the viewTotal option has been selected and cascadePanes has not
-                        if (dataP &&
-                            (rowData.bins[dataP.filter] !== undefined &&
+                        if (
+                            dataP &&
+                            ((rowData.bins[dataP.filter] !== undefined &&
                                 rowData.bins[dataP.filter] !== 0 &&
-                                this_1.c.cascadePanes ||
+                                this_1.c.cascadePanes) ||
                                 !this_1.c.cascadePanes ||
-                                this_1.s.clearing)) {
-                            var row = this_1.addRow(dataP.display, dataP.filter, !this_1.c.viewTotal ?
-                                rowData.bins[dataP.filter] :
-                                rowData.bins[dataP.filter] !== undefined ?
-                                    rowData.bins[dataP.filter] :
-                                    0, this_1.c.viewTotal ?
-                                String(rowData.binsTotal[dataP.filter]) :
-                                rowData.bins[dataP.filter], dataP.sort, dataP.type);
+                                this_1.s.clearing)
+                        ) {
+                            var row = this_1.addRow(
+                                dataP.display,
+                                dataP.filter,
+                                !this_1.c.viewTotal
+                                    ? rowData.bins[dataP.filter]
+                                    : rowData.bins[dataP.filter] !== undefined
+                                      ? rowData.bins[dataP.filter]
+                                      : 0,
+                                this_1.c.viewTotal
+                                    ? String(rowData.binsTotal[dataP.filter])
+                                    : rowData.bins[dataP.filter],
+                                dataP.sort,
+                                dataP.type,
+                            );
                             // Find out if the filter was selected in the previous search,
                             // if so select it and remove from array.
                             var selectIndex = selected.findIndex(function (element) {
@@ -1615,9 +1868,13 @@
                         _loop_1(dataP);
                     }
                 }
-                if (colOpts.searchPanes !== undefined && colOpts.searchPanes.options !== undefined ||
+                if (
+                    (colOpts.searchPanes !== undefined &&
+                        colOpts.searchPanes.options !== undefined) ||
                     colOpts.options !== undefined ||
-                    this.customPaneSettings !== null && this.customPaneSettings.options !== undefined) {
+                    (this.customPaneSettings !== null &&
+                        this.customPaneSettings.options !== undefined)
+                ) {
                     var rows = this._getComparisonRows();
                     var _loop_2 = function (row) {
                         var selectIndex = selected.findIndex(function (element) {
@@ -1639,9 +1896,14 @@
                 // longer present in the resulting data set.
                 for (var _c = 0, selected_1 = selected; _c < selected_1.length; _c++) {
                     var selectedEl = selected_1[_c];
-                    var row = this.addRow(selectedEl.display, selectedEl.filter, 0, this.c.viewTotal
-                        ? selectedEl.total
-                        : 0, selectedEl.display, selectedEl.display);
+                    var row = this.addRow(
+                        selectedEl.display,
+                        selectedEl.filter,
+                        0,
+                        this.c.viewTotal ? selectedEl.total : 0,
+                        selectedEl.display,
+                        selectedEl.display,
+                    );
                     this.s.updating = true;
                     row.select();
                     this.s.updating = false;
@@ -1684,7 +1946,7 @@
             subRow2: 'dtsp-subRow2',
             subRowsContainer: 'dtsp-subRowsContainer',
             title: 'dtsp-title',
-            topRow: 'dtsp-topRow'
+            topRow: 'dtsp-topRow',
         };
         // Define SearchPanes default options
         SearchPane.defaults = {
@@ -1703,7 +1965,7 @@
                 clearPane: '&times;',
                 count: '{total}',
                 countFiltered: '{shown} ({total})',
-                emptyMessage: '<em>No data</em>'
+                emptyMessage: '<em>No data</em>',
             },
             initCollapsed: false,
             layout: 'auto',
@@ -1718,15 +1980,15 @@
                 sort: 'sort',
                 threshold: 0.6,
                 type: 'type',
-                viewCount: true
+                viewCount: true,
             },
             preSelect: [],
             threshold: 0.6,
             viewCount: true,
-            viewTotal: false
+            viewTotal: false,
         };
         return SearchPane;
-    }());
+    })();
 
     var $$1;
     var dataTable$1;
@@ -1737,7 +1999,9 @@
     var SearchPanes = /** @class */ (function () {
         function SearchPanes(paneSettings, opts, fromInit) {
             var _this = this;
-            if (fromInit === void 0) { fromInit = false; }
+            if (fromInit === void 0) {
+                fromInit = false;
+            }
             this.regenerating = false;
             // Check that the required version of DataTables is included
             if (!dataTable$1 || !dataTable$1.versionCheck || !dataTable$1.versionCheck('1.10.0')) {
@@ -1754,9 +2018,15 @@
             this.c = $$1.extend(true, {}, SearchPanes.defaults, opts);
             // Add extra elements to DOM object including clear
             this.dom = {
-                clearAll: $$1('<button type="button">Clear All</button>').addClass(this.classes.clearAll),
-                collapseAll: $$1('<button type="button">Collapse All</button>').addClass(this.classes.collapseAll),
-                container: $$1('<div/>').addClass(this.classes.panes).text(table.i18n('searchPanes.loadMessage', this.c.i18n.loadMessage)),
+                clearAll: $$1('<button type="button">Clear All</button>').addClass(
+                    this.classes.clearAll,
+                ),
+                collapseAll: $$1('<button type="button">Collapse All</button>').addClass(
+                    this.classes.collapseAll,
+                ),
+                container: $$1('<div/>')
+                    .addClass(this.classes.panes)
+                    .text(table.i18n('searchPanes.loadMessage', this.c.i18n.loadMessage)),
                 emptyMessage: $$1('<div/>').addClass(this.classes.emptyMessage),
                 options: $$1('<div/>').addClass(this.classes.container),
                 panes: $$1('<div/>').addClass(this.classes.container),
@@ -1766,7 +2036,7 @@
                     .attr('disabled', 'true'),
                 title: $$1('<div/>').addClass(this.classes.title),
                 titleRow: $$1('<div/>').addClass(this.classes.titleRow),
-                wrapper: $$1('<div/>')
+                wrapper: $$1('<div/>'),
             };
             this.s = {
                 colOpts: [],
@@ -1779,7 +2049,7 @@
                 selectionList: [],
                 serverData: {},
                 stateRead: false,
-                updating: false
+                updating: false,
             };
             if (table.settings()[0]._searchPanes !== undefined) {
                 return;
@@ -1821,13 +2091,16 @@
                 }
             });
             table.settings()[0]._searchPanes = this;
-            this.dom.clearAll.text(table.i18n('searchPanes.clearMessage', this.c.i18n.clearMessage));
-            this.dom.collapseAll.text(table.i18n('searchPanes.collapseMessage', this.c.i18n.collapseMessage));
+            this.dom.clearAll.text(
+                table.i18n('searchPanes.clearMessage', this.c.i18n.clearMessage),
+            );
+            this.dom.collapseAll.text(
+                table.i18n('searchPanes.collapseMessage', this.c.i18n.collapseMessage),
+            );
             this.dom.showAll.text(table.i18n('searchPanes.showMessage', this.c.i18n.showMessage));
             if (this.s.dt.settings()[0]._bInitComplete || fromInit) {
                 this._paneDeclare(table, paneSettings, opts);
-            }
-            else {
+            } else {
                 table.one('preInit.dt', function (settings) {
                     _this._paneDeclare(table, paneSettings, opts);
                 });
@@ -1868,8 +2141,12 @@
          * rebuilds all of the panes
          */
         SearchPanes.prototype.rebuild = function (targetIdx, maintainSelection) {
-            if (targetIdx === void 0) { targetIdx = false; }
-            if (maintainSelection === void 0) { maintainSelection = false; }
+            if (targetIdx === void 0) {
+                targetIdx = false;
+            }
+            if (maintainSelection === void 0) {
+                maintainSelection = false;
+            }
             this.dom.emptyMessage.remove();
             // As a rebuild from scratch is required, empty the searchpanes container.
             var returnArray = [];
@@ -1884,18 +2161,22 @@
                 }
                 pane.clearData();
                 returnArray.push(
-                // Pass a boolean to say whether this is the last choice made for maintaining selections when rebuilding
-                pane.rebuildPane(this.s.selectionList[this.s.selectionList.length - 1] !== undefined ?
-                    pane.s.index === this.s.selectionList[this.s.selectionList.length - 1].index :
-                    false, this.s.dt.page.info().serverSide ?
-                    this.s.serverData :
-                    undefined, null, maintainSelection));
+                    // Pass a boolean to say whether this is the last choice made for maintaining selections when rebuilding
+                    pane.rebuildPane(
+                        this.s.selectionList[this.s.selectionList.length - 1] !== undefined
+                            ? pane.s.index ===
+                                  this.s.selectionList[this.s.selectionList.length - 1].index
+                            : false,
+                        this.s.dt.page.info().serverSide ? this.s.serverData : undefined,
+                        null,
+                        maintainSelection,
+                    ),
+                );
                 this.dom.panes.append(pane.dom.container);
             }
             if (this.c.cascadePanes || this.c.viewTotal) {
                 this.redrawPanes(true);
-            }
-            else {
+            } else {
                 this._updateSelection();
             }
             // Attach panes, clear buttons, and title bar to the document
@@ -1919,7 +2200,9 @@
          * Redraws all of the panes
          */
         SearchPanes.prototype.redrawPanes = function (rebuild) {
-            if (rebuild === void 0) { rebuild = false; }
+            if (rebuild === void 0) {
+                rebuild = false;
+            }
             var table = this.s.dt;
             // Only do this if the redraw isn't being triggered by the panes updating themselves
             if (!this.s.updating && !this.s.dt.page.info().serverSide) {
@@ -1929,13 +2212,19 @@
                 for (var _i = 0, _a = this.s.panes; _i < _a.length; _i++) {
                     var pane = _a[_i];
                     if (pane.s.dtPane !== undefined) {
-                        selectTotal += pane.s.dtPane.rows({ selected: true }).data().toArray().length;
+                        selectTotal += pane.s.dtPane
+                            .rows({ selected: true })
+                            .data()
+                            .toArray().length;
                     }
                 }
                 // If the number of rows currently visible is equal to the number of rows in the table
                 // then there can't be any filtering taking place
-                if (selectTotal === 0 &&
-                    table.rows({ search: 'applied' }).data().toArray().length === table.rows().data().toArray().length) {
+                if (
+                    selectTotal === 0 &&
+                    table.rows({ search: 'applied' }).data().toArray().length ===
+                        table.rows().data().toArray().length
+                ) {
                     filterActive = false;
                 }
                 // Otherwise if viewTotal is active then it is necessary to determine which panes a select is present in.
@@ -1945,11 +2234,17 @@
                     for (var _b = 0, _c = this.s.panes; _b < _c.length; _b++) {
                         var pane = _c[_b];
                         if (pane.s.dtPane !== undefined) {
-                            var selectLength = pane.s.dtPane.rows({ selected: true }).data().toArray().length;
+                            var selectLength = pane.s.dtPane
+                                .rows({ selected: true })
+                                .data()
+                                .toArray().length;
                             if (selectLength === 0) {
                                 for (var _d = 0, _e = this.s.selectionList; _d < _e.length; _d++) {
                                     var selection = _e[_d];
-                                    if (selection.index === pane.s.index && selection.rows.length !== 0) {
+                                    if (
+                                        selection.index === pane.s.index &&
+                                        selection.rows.length !== 0
+                                    ) {
                                         selectLength = selection.rows.length;
                                     }
                                 }
@@ -1982,18 +2277,20 @@
                             this.s.selectionList.push({
                                 index: pane.s.index,
                                 protect: false,
-                                rows: pane.s.dtPane.rows({ selected: true }).data().toArray()
+                                rows: pane.s.dtPane.rows({ selected: true }).data().toArray(),
                             });
                             break;
-                        }
-                        else if (pane.s.deselect) {
+                        } else if (pane.s.deselect) {
                             deselectIdx = pane.s.index;
-                            var selectedData = pane.s.dtPane.rows({ selected: true }).data().toArray();
+                            var selectedData = pane.s.dtPane
+                                .rows({ selected: true })
+                                .data()
+                                .toArray();
                             if (selectedData.length > 0) {
                                 this.s.selectionList.push({
                                     index: pane.s.index,
                                     protect: true,
-                                    rows: selectedData
+                                    rows: selectedData,
                                 });
                             }
                         }
@@ -2007,11 +2304,16 @@
                     }
                     // Remove selections from the list from the pane where a deselect has taken place
                     for (var i = 0; i < this.s.selectionList.length; i++) {
-                        if (this.s.selectionList[i].index !== deselectIdx || this.s.selectionList[i].protect === true) {
+                        if (
+                            this.s.selectionList[i].index !== deselectIdx ||
+                            this.s.selectionList[i].protect === true
+                        ) {
                             var further = false;
                             // Find out if this selection is the last one in the list for that pane
                             for (var j = i + 1; j < this.s.selectionList.length; j++) {
-                                if (this.s.selectionList[j].index === this.s.selectionList[i].index) {
+                                if (
+                                    this.s.selectionList[j].index === this.s.selectionList[i].index
+                                ) {
                                     further = true;
                                 }
                             }
@@ -2023,7 +2325,11 @@
                         }
                     }
                     var solePane = -1;
-                    if (newSelectionList.length === 1 && selectTotal !== null && selectTotal !== 0) {
+                    if (
+                        newSelectionList.length === 1 &&
+                        selectTotal !== null &&
+                        selectTotal !== 0
+                    ) {
                         solePane = newSelectionList[0].index;
                     }
                     // Update all of the panes to reflect the current state of the filters
@@ -2032,9 +2338,13 @@
                         if (pane.s.dtPane !== undefined) {
                             var tempFilter = true;
                             pane.s.filteringActive = true;
-                            if (filterPane !== -1 && filterPane !== null && filterPane === pane.s.index ||
+                            if (
+                                (filterPane !== -1 &&
+                                    filterPane !== null &&
+                                    filterPane === pane.s.index) ||
                                 filterActive === false ||
-                                pane.s.index === solePane) {
+                                pane.s.index === solePane
+                            ) {
                                 tempFilter = false;
                                 pane.s.filteringActive = false;
                             }
@@ -2043,24 +2353,30 @@
                     }
                     // If the length of the selections are different then some of them have been
                     // removed and a deselect has occured
-                    if (newSelectionList.length > 0 && (newSelectionList.length < this.s.selectionList.length || rebuild)) {
+                    if (
+                        newSelectionList.length > 0 &&
+                        (newSelectionList.length < this.s.selectionList.length || rebuild)
+                    ) {
                         this._cascadeRegen(newSelectionList, selectTotal);
                         var last = newSelectionList[newSelectionList.length - 1].index;
                         for (var _m = 0, _o = this.s.panes; _m < _o.length; _m++) {
                             var pane = _o[_m];
                             pane.s.lastSelect = pane.s.index === last;
                         }
-                    }
-                    else if (newSelectionList.length > 0) {
+                    } else if (newSelectionList.length > 0) {
                         // Update all of the other panes as you would just making a normal selection
                         for (var _p = 0, _q = this.s.panes; _p < _q.length; _p++) {
                             var paneUpdate = _q[_p];
                             if (paneUpdate.s.dtPane !== undefined) {
                                 var tempFilter = true;
                                 paneUpdate.s.filteringActive = true;
-                                if (filterPane !== -1 && filterPane !== null && filterPane === paneUpdate.s.index ||
+                                if (
+                                    (filterPane !== -1 &&
+                                        filterPane !== null &&
+                                        filterPane === paneUpdate.s.index) ||
                                     filterActive === false ||
-                                    paneUpdate.s.index === solePane) {
+                                    paneUpdate.s.index === solePane
+                                ) {
                                     tempFilter = false;
                                     paneUpdate.s.filteringActive = false;
                                 }
@@ -2070,10 +2386,13 @@
                     }
                     // Update the label that shows how many filters are in place
                     this._updateFilterCount();
-                }
-                else {
+                } else {
                     var solePane = -1;
-                    if (newSelectionList.length === 1 && selectTotal !== null && selectTotal !== 0) {
+                    if (
+                        newSelectionList.length === 1 &&
+                        selectTotal !== null &&
+                        selectTotal !== 0
+                    ) {
                         solePane = newSelectionList[0].index;
                     }
                     for (var _r = 0, _s = this.s.panes; _r < _s.length; _r++) {
@@ -2081,9 +2400,13 @@
                         if (pane.s.dtPane !== undefined) {
                             var tempFilter = true;
                             pane.s.filteringActive = true;
-                            if (filterPane !== -1 && filterPane !== null && filterPane === pane.s.index ||
+                            if (
+                                (filterPane !== -1 &&
+                                    filterPane !== null &&
+                                    filterPane === pane.s.index) ||
                                 filterActive === false ||
-                                pane.s.index === solePane) {
+                                pane.s.index === solePane
+                            ) {
                                 tempFilter = false;
                                 pane.s.filteringActive = false;
                             }
@@ -2119,8 +2442,7 @@
                 // If the neatest number is the number we have then use this.
                 if (target === displayCount) {
                     highest = target;
-                }
-                else {
+                } else {
                     // Go from the target down and find the value with the most panes left over, this will be the best fit
                     for (var ppr = target; ppr > 1; ppr--) {
                         var rem = displayCount % ppr;
@@ -2138,17 +2460,21 @@
                     }
                 }
                 // If there is a perfect fit then none are to be wider
-                var widerIndexes = highestmod !== 0 ? dispIndex.slice(dispIndex.length - highestmod, dispIndex.length) : [];
+                var widerIndexes =
+                    highestmod !== 0
+                        ? dispIndex.slice(dispIndex.length - highestmod, dispIndex.length)
+                        : [];
                 for (var _b = 0, _c = this.s.panes; _b < _c.length; _b++) {
                     var pane = _c[_b];
                     // Resize the pane with the new layout
                     if (pane.s.displayed) {
-                        var layout = 'columns-' + (!widerIndexes.includes(pane.s.index) ? highest : highestmod);
+                        var layout =
+                            'columns-' +
+                            (!widerIndexes.includes(pane.s.index) ? highest : highestmod);
                         pane.resize(layout);
                     }
                 }
-            }
-            else {
+            } else {
                 for (var _d = 0, _e = this.s.panes; _d < _e.length; _d++) {
                     var pane = _e[_d];
                     pane.adjustTopRow();
@@ -2217,8 +2543,7 @@
             var message;
             try {
                 message = this.s.dt.i18n('searchPanes.emptyPanes', this.c.i18n.emptyPanes);
-            }
-            catch (error) {
+            } catch (error) {
                 message = null;
             }
             // If the message is an empty string then searchPanes.emptyPanes is undefined,
@@ -2227,8 +2552,7 @@
                 this.dom.container.addClass(this.classes.hide);
                 this.dom.titleRow.removeClass(this.classes.hide);
                 return;
-            }
-            else {
+            } else {
                 this.dom.container.removeClass(this.classes.hide);
                 this.dom.titleRow.addClass(this.classes.hide);
             }
@@ -2271,7 +2595,10 @@
                 pane.setCascadeRegen(true);
                 pane.setClear(true);
                 // If this is the same as the pane with the only selection then pass it as a parameter into clearPane
-                if (pane.s.dtPane !== undefined && pane.s.index === solePane || pane.s.dtPane !== undefined) {
+                if (
+                    (pane.s.dtPane !== undefined && pane.s.index === solePane) ||
+                    pane.s.dtPane !== undefined
+                ) {
                     pane.clearPane();
                 }
                 pane.setClear(false);
@@ -2280,7 +2607,10 @@
             this.s.dt.draw();
             // While all of the selections have been removed, check the table lengths
             // If they are different, another filter is in place and we need to force viewTotal to be used
-            var noSelectionsTableLength = this.s.dt.rows({ search: 'applied' }).data().toArray().length;
+            var noSelectionsTableLength = this.s.dt
+                .rows({ search: 'applied' })
+                .data()
+                .toArray().length;
             var tableLength = this.s.dt.rows().data().toArray().length;
             if (tableLength !== noSelectionsTableLength) {
                 for (var _b = 0, _c = this.s.panes; _b < _c.length; _b++) {
@@ -2341,12 +2671,15 @@
                     // It the pane is not collapsed
                     if (!pane.dom.collapseButton.hasClass(pane.classes.rotated)) {
                         // Enable the collapse all button
-                        this.dom.collapseAll.removeClass(this.classes.disabledButton).removeAttr('disabled');
+                        this.dom.collapseAll
+                            .removeClass(this.classes.disabledButton)
+                            .removeAttr('disabled');
                         disableClose = false;
-                    }
-                    else {
+                    } else {
                         // Otherwise enable the show all button
-                        this.dom.showAll.removeClass(this.classes.disabledButton).removeAttr('disabled');
+                        this.dom.showAll
+                            .removeClass(this.classes.disabledButton)
+                            .removeAttr('disabled');
                         disableShow = false;
                     }
                 }
@@ -2374,7 +2707,11 @@
          */
         SearchPanes.prototype._getState = function () {
             var loadedFilter = this.s.dt.state.loaded();
-            if (loadedFilter && loadedFilter.searchPanes && loadedFilter.searchPanes.selectionList !== undefined) {
+            if (
+                loadedFilter &&
+                loadedFilter.searchPanes &&
+                loadedFilter.searchPanes.selectionList !== undefined
+            ) {
                 this.s.selectionList = loadedFilter.searchPanes.selectionList;
             }
         };
@@ -2397,7 +2734,10 @@
                         }
                         // if there are any selections currently in the pane then
                         // deselect them as we are about to make our new selections
-                        if (pane.s.dtPane.rows({ selected: true }).data().toArray().length > 0 && pane.s.dtPane !== undefined) {
+                        if (
+                            pane.s.dtPane.rows({ selected: true }).data().toArray().length > 0 &&
+                            pane.s.dtPane !== undefined
+                        ) {
                             pane.setClear(true);
                             pane.clearPane();
                             pane.setClear(false);
@@ -2405,15 +2745,25 @@
                         var _loop_2 = function (row) {
                             var found = false;
                             pane.s.dtPane.rows().every(function (rowIdx) {
-                                if (pane.s.dtPane.row(rowIdx).data() !== undefined &&
+                                if (
+                                    pane.s.dtPane.row(rowIdx).data() !== undefined &&
                                     row !== undefined &&
-                                    pane.s.dtPane.row(rowIdx).data().filter === row.filter) {
+                                    pane.s.dtPane.row(rowIdx).data().filter === row.filter
+                                ) {
                                     found = true;
                                     pane.s.dtPane.row(rowIdx).select();
                                 }
                             });
                             if (!found) {
-                                var newRow = pane.addRow(row.display, row.filter, 0, row.total, row.sort, row.type, row.className);
+                                var newRow = pane.addRow(
+                                    row.display,
+                                    row.filter,
+                                    0,
+                                    row.total,
+                                    row.sort,
+                                    row.type,
+                                    row.className,
+                                );
                                 newRow.select();
                             }
                         };
@@ -2453,19 +2803,32 @@
                 .columns(this.c.columns.length > 0 ? this.c.columns : undefined)
                 .eq(0)
                 .each(function (idx) {
-                _this.s.panes.push(new SearchPane(paneSettings, opts, idx, _this.c.layout, _this.dom.panes));
-            });
+                    _this.s.panes.push(
+                        new SearchPane(paneSettings, opts, idx, _this.c.layout, _this.dom.panes),
+                    );
+                });
             // If there is any extra custom panes defined then create panes for them too
             var rowLength = table.columns().eq(0).toArray().length;
             var paneLength = this.c.panes.length;
             for (var i = 0; i < paneLength; i++) {
                 var id = rowLength + i;
-                this.s.panes.push(new SearchPane(paneSettings, opts, id, this.c.layout, this.dom.panes, this.c.panes[i]));
+                this.s.panes.push(
+                    new SearchPane(
+                        paneSettings,
+                        opts,
+                        id,
+                        this.c.layout,
+                        this.dom.panes,
+                        this.c.panes[i],
+                    ),
+                );
             }
             // If a custom ordering is being used
             if (this.c.order.length > 0) {
                 // Make a new Array of panes based upon the order
-                var newPanes = this.c.order.map(function (name, index, values) { return _this._findPane(name); });
+                var newPanes = this.c.order.map(function (name, index, values) {
+                    return _this._findPane(name);
+                });
                 // Remove the old panes from the dom
                 this.dom.panes.empty();
                 this.s.panes = newPanes;
@@ -2478,14 +2841,15 @@
             // If this internal property is true then the DataTable has been initialised already
             if (this.s.dt.settings()[0]._bInitComplete) {
                 this._startup(table);
-            }
-            else {
+            } else {
                 // Otherwise add the paneStartup function to the list of functions
                 // that are to be run when the table is initialised. This will garauntee that the
                 // panes are initialised before the init event and init Complete callback is fired
-                this.s.dt.settings()[0].aoInitComplete.push({ fn: function () {
+                this.s.dt.settings()[0].aoInitComplete.push({
+                    fn: function () {
                         _this._startup(table);
-                    } });
+                    },
+                });
             }
         };
         /**
@@ -2516,19 +2880,18 @@
                     this.s.selectionList.push({
                         index: pane.s.index,
                         protect: false,
-                        rows: pane.s.dtPane.rows({ selected: true }).data().toArray()
+                        rows: pane.s.dtPane.rows({ selected: true }).data().toArray(),
                     });
                     pane.s.selectPresent = false;
                     selectPresent = true;
                     break;
-                }
-                else if (pane.s.deselect) {
+                } else if (pane.s.deselect) {
                     var selectedData = pane.s.dtPane.rows({ selected: true }).data().toArray();
                     if (selectedData.length > 0) {
                         this.s.selectionList.push({
                             index: pane.s.index,
                             protect: true,
-                            rows: selectedData
+                            rows: selectedData,
                         });
                     }
                     selectPresent = true;
@@ -2538,8 +2901,7 @@
             // Build an updated list based on any selections or deselections added
             if (!selectPresent) {
                 this.s.selectionList = [];
-            }
-            else {
+            } else {
                 var newSelectionList = [];
                 for (var i = 0; i < this.s.selectionList.length; i++) {
                     var further = false;
@@ -2554,8 +2916,10 @@
                         var push = false;
                         for (var _b = 0, _c = this.s.panes; _b < _c.length; _b++) {
                             var pane = _c[_b];
-                            if (pane.s.index === this.s.selectionList[i].index &&
-                                pane.s.dtPane.rows({ selected: true }).data().toArray().length > 0) {
+                            if (
+                                pane.s.index === this.s.selectionList[i].index &&
+                                pane.s.dtPane.rows({ selected: true }).data().toArray().length > 0
+                            ) {
                                 push = true;
                             }
                         }
@@ -2573,7 +2937,10 @@
                     var pane = _e[_d];
                     pane.s.lastSelect = false;
                     pane.s.deselect = false;
-                    if (pane.s.dtPane !== undefined && pane.s.dtPane.rows({ selected: true }).data().toArray().length > 0) {
+                    if (
+                        pane.s.dtPane !== undefined &&
+                        pane.s.dtPane.rows({ selected: true }).data().toArray().length > 0
+                    ) {
                         initIdx = pane.s.index;
                     }
                 }
@@ -2601,9 +2968,13 @@
             for (var _k = 0, _l = this.s.panes; _k < _l.length; _k++) {
                 var pane = _l[_k];
                 if (!pane.s.lastSelect) {
-                    pane.rebuildPane(undefined, this.s.dt.page.info().serverSide ? this.s.serverData : undefined, pane.s.index === initIdx ? true : null, true);
-                }
-                else {
+                    pane.rebuildPane(
+                        undefined,
+                        this.s.dt.page.info().serverSide ? this.s.serverData : undefined,
+                        pane.s.index === initIdx ? true : null,
+                        true,
+                    );
+                } else {
                     pane._setListeners();
                 }
                 // append all of the panes and enable select
@@ -2624,20 +2995,26 @@
             var _this = this;
             this.dom.collapseAll.on('click.dtsps', function () {
                 _this._collapseAll();
-                _this.dom.collapseAll.addClass(_this.classes.disabledButton).attr('disabled', 'true');
+                _this.dom.collapseAll
+                    .addClass(_this.classes.disabledButton)
+                    .attr('disabled', 'true');
                 _this.dom.showAll.removeClass(_this.classes.disabledButton).removeAttr('disabled');
                 _this.s.dt.state.save();
             });
             this.dom.showAll.on('click.dtsps', function () {
                 _this._showAll();
                 _this.dom.showAll.addClass(_this.classes.disabledButton).attr('disabled', 'true');
-                _this.dom.collapseAll.removeClass(_this.classes.disabledButton).removeAttr('disabled');
+                _this.dom.collapseAll
+                    .removeClass(_this.classes.disabledButton)
+                    .removeAttr('disabled');
                 _this.s.dt.state.save();
             });
             for (var _i = 0, _a = this.s.panes; _i < _a.length; _i++) {
                 var pane = _a[_i];
                 // We want to make the same check whenever there is a collapse/expand
-                pane.dom.collapseButton.on('click', function () { return _this._checkCollapse(); });
+                pane.dom.collapseButton.on('click', function () {
+                    return _this._checkCollapse();
+                });
             }
             this._checkCollapse();
         };
@@ -2664,10 +3041,12 @@
             this.dom.panes.empty();
             var loadedFilter = this.s.dt.state.loaded();
             if (this.c.viewTotal && !this.c.cascadePanes) {
-                if (loadedFilter !== null &&
+                if (
+                    loadedFilter !== null &&
                     loadedFilter !== undefined &&
                     loadedFilter.searchPanes !== undefined &&
-                    loadedFilter.searchPanes.panes !== undefined) {
+                    loadedFilter.searchPanes.panes !== undefined
+                ) {
                     var filterActive = false;
                     for (var _i = 0, _a = loadedFilter.searchPanes.panes; _i < _a.length; _i++) {
                         var pane = _a[_i];
@@ -2686,7 +3065,10 @@
             }
             for (var _d = 0, _e = this.s.panes; _d < _e.length; _d++) {
                 var pane = _e[_d];
-                pane.rebuildPane(undefined, Object.keys(this.s.serverData).length > 0 ? this.s.serverData : undefined);
+                pane.rebuildPane(
+                    undefined,
+                    Object.keys(this.s.serverData).length > 0 ? this.s.serverData : undefined,
+                );
                 this.dom.panes.append(pane.dom.container);
             }
             // If the layout is set to auto then the panes need to be resized to their best fit
@@ -2711,10 +3093,12 @@
                 // Check that the panes are not updating to avoid infinite loops
                 // Also check that this draw is not due to paging
                 if (!_this.s.updating && !_this.s.paging) {
-                    if ((_this.c.cascadePanes || _this.c.viewTotal) && !_this.s.dt.page.info().serverSide) {
+                    if (
+                        (_this.c.cascadePanes || _this.c.viewTotal) &&
+                        !_this.s.dt.page.info().serverSide
+                    ) {
                         _this.redrawPanes(_this.c.viewTotal);
-                    }
-                    else {
+                    } else {
                         _this._updateFilterCount();
                         _this._updateSelection();
                     }
@@ -2723,9 +3107,12 @@
                 // Paging flag reset - we only need to dodge the draw once
                 _this.s.paging = false;
             });
-            $$1(window).on('resize.dtsp', dataTable$1.util.throttle(function () {
-                _this.resizePanes();
-            }));
+            $$1(window).on(
+                'resize.dtsp',
+                dataTable$1.util.throttle(function () {
+                    _this.resizePanes();
+                }),
+            );
             // Whenever a state save occurs store the selection list in the state object
             this.s.dt.on('stateSaveParams.dtsp', function (e, settings, data) {
                 if (data.searchPanes === undefined) {
@@ -2790,8 +3177,7 @@
                         _this.s.filterCount = filterCount;
                     }
                 });
-            }
-            else {
+            } else {
                 table.on('preXhr.dt', function (e, settings, data) {
                     for (var _i = 0, _a = _this.s.panes; _i < _a.length; _i++) {
                         var pane = _a[_i];
@@ -2820,9 +3206,17 @@
                             pane.clearData(); // Clears all of the bins and will mean that the data has to be re-read
                             // Pass a boolean to say whether this is the last choice made for maintaining selections
                             // when rebuilding
-                            pane.rebuildPane(_this.s.selectionList[_this.s.selectionList.length - 1] !== undefined ?
-                                pane.s.index === _this.s.selectionList[_this.s.selectionList.length - 1].index :
-                                false, undefined, undefined, true);
+                            pane.rebuildPane(
+                                _this.s.selectionList[_this.s.selectionList.length - 1] !==
+                                    undefined
+                                    ? pane.s.index ===
+                                          _this.s.selectionList[_this.s.selectionList.length - 1]
+                                              .index
+                                    : false,
+                                undefined,
+                                undefined,
+                                true,
+                            );
                             _this.dom.panes.append(pane.dom.container);
                         }
                         if (!_this.s.dt.page.info().serverSide) {
@@ -2831,8 +3225,7 @@
                         _this.s.updating = false;
                         if (_this.c.cascadePanes || _this.c.viewTotal) {
                             _this.redrawPanes(_this.c.cascadePanes);
-                        }
-                        else {
+                        } else {
                             _this._updateSelection();
                         }
                         _this._checkMessage();
@@ -2847,18 +3240,25 @@
             // PreSelect any selections which have been defined using the preSelect option
             for (var _h = 0, _j = this.s.panes; _h < _j.length; _h++) {
                 var pane = _j[_h];
-                if (pane !== undefined &&
+                if (
+                    pane !== undefined &&
                     pane.s.dtPane !== undefined &&
-                    (pane.s.colOpts.preSelect !== undefined && pane.s.colOpts.preSelect.length > 0 ||
-                        pane.customPaneSettings !== null &&
+                    ((pane.s.colOpts.preSelect !== undefined &&
+                        pane.s.colOpts.preSelect.length > 0) ||
+                        (pane.customPaneSettings !== null &&
                             pane.customPaneSettings.preSelect !== undefined &&
-                            pane.customPaneSettings.preSelect.length > 0)) {
+                            pane.customPaneSettings.preSelect.length > 0))
+                ) {
                     var tableLength = pane.s.dtPane.rows().data().toArray().length;
                     for (var i = 0; i < tableLength; i++) {
-                        if (pane.s.colOpts.preSelect.includes(pane.s.dtPane.cell(i, 0).data()) ||
-                            pane.customPaneSettings !== null &&
+                        if (
+                            pane.s.colOpts.preSelect.includes(pane.s.dtPane.cell(i, 0).data()) ||
+                            (pane.customPaneSettings !== null &&
                                 pane.customPaneSettings.preSelect !== undefined &&
-                                pane.customPaneSettings.preSelect.includes(pane.s.dtPane.cell(i, 0).data())) {
+                                pane.customPaneSettings.preSelect.includes(
+                                    pane.s.dtPane.cell(i, 0).data(),
+                                ))
+                        ) {
                             pane.s.dtPane.row(i).select();
                         }
                     }
@@ -2910,7 +3310,10 @@
             for (var _i = 0, _a = this.s.panes; _i < _a.length; _i++) {
                 var pane = _a[_i];
                 if (pane.s.dtPane !== undefined) {
-                    var selectLength = pane.s.dtPane.rows({ selected: true }).data().toArray().length;
+                    var selectLength = pane.s.dtPane
+                        .rows({ selected: true })
+                        .data()
+                        .toArray().length;
                     // If filterPane === -1 then a pane with a selection has not been found yet,
                     // so set filterPane to that panes index
                     if (selectLength > 0 && filterPane === -1) {
@@ -2932,8 +3335,10 @@
                 var pane = _c[_b];
                 if (pane.s.dtPane !== undefined) {
                     pane.s.filteringActive = true;
-                    if (filterPane !== -1 && filterPane !== null && filterPane === pane.s.index ||
-                        filterActive === false) {
+                    if (
+                        (filterPane !== -1 && filterPane !== null && filterPane === pane.s.index) ||
+                        filterActive === false
+                    ) {
                         pane.s.filteringActive = false;
                     }
                 }
@@ -2959,8 +3364,7 @@
             }
             if (filterCount === 0) {
                 this.dom.clearAll.addClass(this.classes.disabledButton).attr('disabled', 'true');
-            }
-            else {
+            } else {
                 this.dom.clearAll.removeClass(this.classes.disabledButton).removeAttr('disabled');
             }
         };
@@ -2975,7 +3379,7 @@
                     this.s.selectionList.push({
                         index: pane.s.index,
                         protect: false,
-                        rows: pane.s.dtPane.rows({ selected: true }).data().toArray()
+                        rows: pane.s.dtPane.rows({ selected: true }).data().toArray(),
                     });
                 }
             }
@@ -2993,7 +3397,7 @@
             search: 'dtsp-search',
             showAll: 'dtsp-showAll',
             title: 'dtsp-title',
-            titleRow: 'dtsp-titleRow'
+            titleRow: 'dtsp-titleRow',
         };
         // Define SearchPanes default options
         SearchPanes.defaults = {
@@ -3010,7 +3414,7 @@
                 clearPane: '&times;',
                 collapse: {
                     0: 'SearchPanes',
-                    _: 'SearchPanes (%d)'
+                    _: 'SearchPanes (%d)',
                 },
                 collapseMessage: 'Collapse All',
                 count: '{total}',
@@ -3019,15 +3423,15 @@
                 emptyPanes: 'No SearchPanes',
                 loadMessage: 'Loading Search Panes...',
                 showMessage: 'Show All',
-                title: 'Filters Active - %d'
+                title: 'Filters Active - %d',
             },
             layout: 'auto',
             order: [],
             panes: [],
-            viewTotal: false
+            viewTotal: false,
         };
         return SearchPanes;
-    }());
+    })();
 
     /*! SearchPanes 1.4.0
      * 2019-2020 SpryMedia Ltd - datatables.net/license
@@ -3041,8 +3445,7 @@
             define(['jquery', 'datatables.net'], function ($) {
                 return factory($, window, document);
             });
-        }
-        else if (typeof exports === 'object') {
+        } else if (typeof exports === 'object') {
             // CommonJS
             module.exports = function (root, $) {
                 if (!root) {
@@ -3054,13 +3457,12 @@
                 }
                 return factory($, root, root.document);
             };
-        }
-        else {
+        } else {
             // Browser - assume jQuery has already been loaded
             // eslint-disable-next-line no-extra-parens
             factory(window.jQuery, window, document);
         }
-    }(function ($, window, document) {
+    })(function ($, window, document) {
         setJQuery($);
         setJQuery$1($);
         var dataTable = $.fn.dataTable;
@@ -3093,53 +3495,63 @@
         });
         apiRegister('searchPanes.resizePanes()', function () {
             var ctx = this.context[0];
-            return ctx._searchPanes ?
-                ctx._searchPanes.resizePanes() :
-                null;
+            return ctx._searchPanes ? ctx._searchPanes.resizePanes() : null;
         });
         apiRegister('searchPanes.container()', function () {
             var ctx = this.context[0];
-            return ctx._searchPanes
-                ? ctx._searchPanes.getNode()
-                : null;
+            return ctx._searchPanes ? ctx._searchPanes.getNode() : null;
         });
         $.fn.dataTable.ext.buttons.searchPanesClear = {
             action: function (e, dt, node, config) {
                 dt.searchPanes.clearSelections();
             },
-            text: 'Clear Panes'
+            text: 'Clear Panes',
         };
         $.fn.dataTable.ext.buttons.searchPanes = {
             action: function (e, dt, node, config) {
                 e.stopPropagation();
                 this.popover(config._panes.getNode(), {
-                    align: 'dt-container'
+                    align: 'dt-container',
                 });
                 config._panes.rebuild(undefined, true);
             },
             config: {},
             init: function (dt, node, config) {
-                var panes = new $.fn.dataTable.SearchPanes(dt, $.extend({
-                    filterChanged: function (count) {
-                        // console.log(dt.context[0])
-                        dt.button(node).text(dt.i18n('searchPanes.collapse', dt.context[0].oLanguage.searchPanes !== undefined ?
-                            dt.context[0].oLanguage.searchPanes.collapse :
-                            dt.context[0]._searchPanes.c.i18n.collapse, count));
-                    }
-                }, config.config));
+                var panes = new $.fn.dataTable.SearchPanes(
+                    dt,
+                    $.extend(
+                        {
+                            filterChanged: function (count) {
+                                // console.log(dt.context[0])
+                                dt.button(node).text(
+                                    dt.i18n(
+                                        'searchPanes.collapse',
+                                        dt.context[0].oLanguage.searchPanes !== undefined
+                                            ? dt.context[0].oLanguage.searchPanes.collapse
+                                            : dt.context[0]._searchPanes.c.i18n.collapse,
+                                        count,
+                                    ),
+                                );
+                            },
+                        },
+                        config.config,
+                    ),
+                );
                 var message = dt.i18n('searchPanes.collapse', panes.c.i18n.collapse, 0);
                 dt.button(node).text(message);
                 config._panes = panes;
             },
-            text: 'Search Panes'
+            text: 'Search Panes',
         };
         function _init(settings, options, fromPre) {
-            if (options === void 0) { options = null; }
-            if (fromPre === void 0) { fromPre = false; }
+            if (options === void 0) {
+                options = null;
+            }
+            if (fromPre === void 0) {
+                fromPre = false;
+            }
             var api = new dataTable.Api(settings);
-            var opts = options
-                ? options
-                : api.init().searchPanes || dataTable.defaults.searchPanes;
+            var opts = options ? options : api.init().searchPanes || dataTable.defaults.searchPanes;
             var searchPanes = new SearchPanes(api, opts, fromPre);
             var node = searchPanes.getNode();
             return node;
@@ -3150,8 +3562,7 @@
             if (e.namespace !== 'dt') {
                 return;
             }
-            if (settings.oInit.searchPanes ||
-                dataTable.defaults.searchPanes) {
+            if (settings.oInit.searchPanes || dataTable.defaults.searchPanes) {
                 if (!settings._searchPanes) {
                     _init(settings, null, true);
                 }
@@ -3160,12 +3571,11 @@
         // DataTables `dom` feature option
         dataTable.ext.feature.push({
             cFeature: 'P',
-            fnInit: _init
+            fnInit: _init,
         });
         // DataTables 2 layout feature
         if (dataTable.ext.features) {
             dataTable.ext.features.register('searchPanes', _init);
         }
-    }));
-
-}());
+    });
+})();

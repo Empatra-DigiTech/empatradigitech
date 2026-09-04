@@ -4,8 +4,7 @@
         define(['jquery', 'datatables.net-bs4', 'datatables.net-searchbuilder'], function ($) {
             return factory($);
         });
-    }
-    else if (typeof exports === 'object') {
+    } else if (typeof exports === 'object') {
         // CommonJS
         module.exports = function (root, $) {
             if (!root) {
@@ -21,29 +20,28 @@
             }
             return factory($);
         };
-    }
-    else {
+    } else {
         // Browser
         factory(jQuery);
     }
-}(function ($) {
+})(function ($) {
     'use strict';
     var dataTable = $.fn.dataTable;
     $.extend(true, dataTable.SearchBuilder.classes, {
-        clearAll: 'btn btn-light dtsb-clearAll'
+        clearAll: 'btn btn-light dtsb-clearAll',
     });
     $.extend(true, dataTable.Group.classes, {
         add: 'btn btn-light dtsb-add',
         clearGroup: 'btn btn-light dtsb-clearGroup',
-        logic: 'btn btn-light dtsb-logic'
+        logic: 'btn btn-light dtsb-logic',
     });
     $.extend(true, dataTable.Criteria.classes, {
         condition: 'form-control dtsb-condition',
         data: 'form-control dtsb-data',
-        "delete": 'btn btn-light dtsb-delete',
+        delete: 'btn btn-light dtsb-delete',
         left: 'btn btn-light dtsb-left',
         right: 'btn btn-light dtsb-right',
-        value: 'form-control dtsb-value'
+        value: 'form-control dtsb-value',
     });
     return dataTable.searchPanes;
-}));
+});

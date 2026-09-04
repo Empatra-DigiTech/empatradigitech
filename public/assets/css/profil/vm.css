@@ -120,11 +120,21 @@
     animation: fadeInUp 0.6s ease forwards;
 }
 
-.misi-list li:nth-child(1) { animation-delay: 0.2s; }
-.misi-list li:nth-child(2) { animation-delay: 0.3s; }
-.misi-list li:nth-child(3) { animation-delay: 0.4s; }
-.misi-list li:nth-child(4) { animation-delay: 0.5s; }
-.misi-list li:nth-child(5) { animation-delay: 0.6s; }
+.misi-list li:nth-child(1) {
+    animation-delay: 0.2s;
+}
+.misi-list li:nth-child(2) {
+    animation-delay: 0.3s;
+}
+.misi-list li:nth-child(3) {
+    animation-delay: 0.4s;
+}
+.misi-list li:nth-child(4) {
+    animation-delay: 0.5s;
+}
+.misi-list li:nth-child(5) {
+    animation-delay: 0.6s;
+}
 
 .misi-list li:last-child {
     margin-bottom: 0;

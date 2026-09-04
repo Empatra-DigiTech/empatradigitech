@@ -2,12 +2,14 @@
 //! locale : Maldivian [dv]
 //! author : Jawish Hameed : https://github.com/jawish
 
-;(function (global, factory) {
-   typeof exports === 'object' && typeof module !== 'undefined'
-       && typeof require === 'function' ? factory(require('../moment')) :
-   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
-   factory(global.moment)
-}(this, (function (moment) { 'use strict';
+(function (global, factory) {
+    typeof exports === 'object' && typeof module !== 'undefined' && typeof require === 'function'
+        ? factory(require('../moment'))
+        : typeof define === 'function' && define.amd
+          ? define(['../moment'], factory)
+          : factory(global.moment);
+})(this, function (moment) {
+    'use strict';
 
     //! moment.js locale configuration
 
@@ -25,15 +27,7 @@
             'ނޮވެމްބަރު',
             'ޑިސެމްބަރު',
         ],
-        weekdays = [
-            'އާދިއްތަ',
-            'ހޯމަ',
-            'އަންގާރަ',
-            'ބުދަ',
-            'ބުރާސްފަތި',
-            'ހުކުރު',
-            'ހޮނިހިރު',
-        ];
+        weekdays = ['އާދިއްތަ', 'ހޯމަ', 'އަންގާރަ', 'ބުދަ', 'ބުރާސްފަތި', 'ހުކުރު', 'ހޮނިހިރު'];
 
     var dv = moment.defineLocale('dv', {
         months: months,
@@ -97,5 +91,4 @@
     });
 
     return dv;
-
-})));
+});

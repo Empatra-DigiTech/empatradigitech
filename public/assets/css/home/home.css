@@ -59,11 +59,7 @@
     left: 0;
     right: 0;
     bottom: 0;
-    background: linear-gradient(
-        135deg,
-        rgba(15, 60, 93, 0.92) 0%,
-        rgba(176, 46, 54, 0.88) 100%
-    );
+    background: linear-gradient(135deg, rgba(15, 60, 93, 0.92) 0%, rgba(176, 46, 54, 0.88) 100%);
     z-index: 1;
 }
 
@@ -260,7 +256,6 @@
     border-radius: 6px;
 }
 
-
 /* ========================================
    RESPONSIVE DESIGN
    ======================================== */
@@ -404,7 +399,6 @@
     }
 }
 
-
 /* ========================================
    SERVICES OVERVIEW SECTION
    ======================================== */
@@ -538,7 +532,6 @@
     transform: translateX(4px);
 }
 
-
 /* ========================================
    SERVICE CATEGORY TABS (inside Our Services)
    ======================================== */
@@ -610,7 +603,6 @@
         justify-content: center;
     }
 }
-
 
 /* ========================================
    PACKAGES SECTION
@@ -872,7 +864,6 @@
     font-size: 1rem;
 }
 
-
 /* ========================================
    RESPONSIVE DESIGN - SERVICES
    ======================================== */
@@ -976,11 +967,7 @@
     left: 0;
     width: 100%;
     height: 100%;
-    background: linear-gradient(
-        180deg,
-        transparent 0%,
-        rgba(0, 0, 0, 0.7) 100%
-    );
+    background: linear-gradient(180deg, transparent 0%, rgba(0, 0, 0, 0.7) 100%);
     opacity: 0;
     transition: opacity 0.3s ease;
     display: flex;
@@ -1146,7 +1133,6 @@
     }
 }
 
-
 /* ========================================
    WHY CHOOSE US SECTION
    ======================================== */
@@ -1256,7 +1242,6 @@
     position: relative;
     z-index: 1;
 }
-
 
 /* ========================================
    RESPONSIVE DESIGN - PORTFOLIO & VALUES
@@ -1398,7 +1383,6 @@
     text-align: center;
 }
 
-
 /* ========================================
    PROCESS / HOW WE WORK SECTION
    ======================================== */
@@ -1516,7 +1500,6 @@
     margin: 0;
 }
 
-
 /* ========================================
    RESPONSIVE DESIGN - TECH STACK & PROCESS
    ======================================== */
@@ -1623,7 +1606,7 @@
 
 .testimonial-rating i {
     font-size: 1.1rem;
-    color: #E8B923;
+    color: #e8b923;
 }
 
 .testimonial-rating i.bx-star {
@@ -1726,7 +1709,6 @@
     border-radius: 6px;
 }
 
-
 /* ========================================
    ABOUT US / TEAM SECTION
    ======================================== */
@@ -1770,11 +1752,7 @@
     bottom: 0;
     left: 0;
     right: 0;
-    background: linear-gradient(
-        180deg,
-        transparent 0%,
-        rgba(15, 60, 93, 0.95) 100%
-    );
+    background: linear-gradient(180deg, transparent 0%, rgba(15, 60, 93, 0.95) 100%);
     padding: var(--spacing-xl);
     transform: translateY(100%);
     transition: transform var(--transition-base);
@@ -1885,7 +1863,6 @@
     color: var(--gray-700);
     margin: 0;
 }
-
 
 /* ========================================
    RESPONSIVE DESIGN - TESTIMONIALS & ABOUT
@@ -2156,7 +2133,6 @@
     width: 100%;
 }
 
-
 /* ========================================
    RESPONSIVE DESIGN - CONTACT
    ======================================== */
@@ -2216,7 +2192,6 @@
     }
 }
 
-
 /* ========================================
    UTILITY CLASSES
    ======================================== */
@@ -2240,20 +2215,43 @@
 }
 
 /* Spacing Utilities */
-.mb-0 { margin-bottom: 0; }
-.mb-1 { margin-bottom: var(--spacing-xs); }
-.mb-2 { margin-bottom: var(--spacing-sm); }
-.mb-3 { margin-bottom: var(--spacing-md); }
-.mb-4 { margin-bottom: var(--spacing-lg); }
-.mb-5 { margin-bottom: var(--spacing-xl); }
+.mb-0 {
+    margin-bottom: 0;
+}
+.mb-1 {
+    margin-bottom: var(--spacing-xs);
+}
+.mb-2 {
+    margin-bottom: var(--spacing-sm);
+}
+.mb-3 {
+    margin-bottom: var(--spacing-md);
+}
+.mb-4 {
+    margin-bottom: var(--spacing-lg);
+}
+.mb-5 {
+    margin-bottom: var(--spacing-xl);
+}
 
-.mt-0 { margin-top: 0; }
-.mt-1 { margin-top: var(--spacing-xs); }
-.mt-2 { margin-top: var(--spacing-sm); }
-.mt-3 { margin-top: var(--spacing-md); }
-.mt-4 { margin-top: var(--spacing-lg); }
-.mt-5 { margin-top: var(--spacing-xl); }
-
+.mt-0 {
+    margin-top: 0;
+}
+.mt-1 {
+    margin-top: var(--spacing-xs);
+}
+.mt-2 {
+    margin-top: var(--spacing-sm);
+}
+.mt-3 {
+    margin-top: var(--spacing-md);
+}
+.mt-4 {
+    margin-top: var(--spacing-lg);
+}
+.mt-5 {
+    margin-top: var(--spacing-xl);
+}
 
 /* ========================================
    ANIMATIONS
@@ -2317,7 +2315,6 @@
     }
 }
 
-
 /* ========================================
    PRINT STYLES
    ======================================== */
@@ -2341,7 +2338,7 @@
 
 .portfolio-cta-banner-section {
     padding: 3.5rem 0;
-    background: #F4F6F9;
+    background: #f4f6f9;
 }
 
 .portfolio-cta-banner-box {
@@ -2423,12 +2420,12 @@
 }
 
 .contact-choice-wa {
-    background: #25D366;
+    background: #25d366;
     color: #fff;
 }
 
 .contact-choice-wa:hover {
-    background: #1DA851;
+    background: #1da851;
     color: #fff;
     text-decoration: none;
     transform: translateY(-3px);
@@ -2493,7 +2490,7 @@
     align-items: center;
     gap: 1rem;
     padding: 1.5rem 1.75rem;
-    background: linear-gradient(135deg, #25D366 0%, #128C7E 100%);
+    background: linear-gradient(135deg, #25d366 0%, #128c7e 100%);
     color: #fff;
 }
 
@@ -2535,7 +2532,7 @@
 
 .wa-lead-preview {
     margin: 1.25rem 0 1.5rem;
-    background: #ECE5DD;
+    background: #ece5dd;
     border-radius: 0.75rem;
     padding: 1rem 1.1rem;
 }
@@ -2548,7 +2545,7 @@
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 0.03em;
-    color: #128C7E;
+    color: #128c7e;
     margin-bottom: 0.6rem;
 }
 
@@ -2571,7 +2568,7 @@
     gap: 0.6rem;
     width: 100%;
     padding: 0.95rem 1.5rem;
-    background: #25D366;
+    background: #25d366;
     color: #fff;
     border: none;
     border-radius: 0.6rem;
@@ -2582,7 +2579,7 @@
 }
 
 .btn-wa-send:hover:not(:disabled) {
-    background: #1DA851;
+    background: #1da851;
     transform: translateY(-2px);
     box-shadow: 0 8px 18px -4px rgba(37, 211, 102, 0.5);
 }
@@ -2609,7 +2606,7 @@
 .wa-lead-note i {
     flex-shrink: 0;
     margin-top: 0.1rem;
-    color: #128C7E;
+    color: #128c7e;
 }
 
 @media (max-width: 576px) {
@@ -2641,7 +2638,9 @@
     border-radius: 0.75rem;
     margin-bottom: 1rem;
     overflow: hidden;
-    transition: border-color 0.25s ease, box-shadow 0.25s ease;
+    transition:
+        border-color 0.25s ease,
+        box-shadow 0.25s ease;
 }
 
 .faq-item.active {
@@ -2903,7 +2902,7 @@
     display: inline-flex;
     align-items: center;
     gap: 0.5rem;
-    background: #25D366;
+    background: #25d366;
     color: #fff;
     padding: 0.85rem 1.5rem;
     border-radius: 0.55rem;
@@ -2914,7 +2913,7 @@
 }
 
 .btn-calc-consult:hover {
-    background: #1DA851;
+    background: #1da851;
     color: #fff;
     text-decoration: none;
     transform: translateY(-2px);

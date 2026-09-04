@@ -29,13 +29,13 @@ OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 
-(function($) {
-    "use strict";
+(function ($) {
+    'use strict';
 
     var options = {
         axisLabels: {
-            show: true
-        }
+            show: true,
+        },
     };
 
     function AxisLabel(axisName, position, padding, placeholder, axisLabel, surface) {
@@ -50,7 +50,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
         this.elem = null;
     }
 
-    AxisLabel.prototype.calculateSize = function() {
+    AxisLabel.prototype.calculateSize = function () {
         var axisId = this.axisName + 'Label',
             layerId = axisId + 'Layer',
             className = axisId + ' axisLabels';
@@ -68,8 +68,10 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
         }
     };
 
-    AxisLabel.prototype.transforms = function(degrees, x, y, svgLayer) {
-        var transforms = [], translate, rotate;
+    AxisLabel.prototype.transforms = function (degrees, x, y, svgLayer) {
+        var transforms = [],
+            translate,
+            rotate;
         if (x !== 0 || y !== 0) {
             translate = svgLayer.createSVGTransform();
             translate.setTranslate(x, y);
@@ -86,11 +88,11 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
         return transforms;
     };
 
-    AxisLabel.prototype.calculateOffsets = function(box) {
+    AxisLabel.prototype.calculateOffsets = function (box) {
         var offsets = {
             x: 0,
             y: 0,
-            degrees: 0
+            degrees: 0,
         };
         if (this.position === 'bottom') {
             offsets.x = box.left + box.width / 2 - this.labelWidth / 2;
@@ -113,14 +115,14 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
         return offsets;
     };
 
-    AxisLabel.prototype.cleanup = function() {
+    AxisLabel.prototype.cleanup = function () {
         var axisId = this.axisName + 'Label',
             layerId = axisId + 'Layer',
             className = axisId + ' axisLabels';
         this.surface.removeText(layerId, 0, 0, this.axisLabel, className);
     };
 
-    AxisLabel.prototype.draw = function(box) {
+    AxisLabel.prototype.draw = function (box) {
         var axisId = this.axisName + 'Label',
             layerId = axisId + 'Layer',
             className = axisId + ' axisLabels',
@@ -130,21 +132,32 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
                 bottom: '',
                 right: '',
                 display: 'inline-block',
-                'white-space': 'nowrap'
+                'white-space': 'nowrap',
             };
 
         var layer = this.surface.getSVGLayer(layerId);
         var transforms = this.transforms(offsets.degrees, offsets.x, offsets.y, layer.parentNode);
 
-        this.surface.addText(layerId, 0, 0, this.axisLabel, className, undefined, undefined, undefined, undefined, transforms);
+        this.surface.addText(
+            layerId,
+            0,
+            0,
+            this.axisLabel,
+            className,
+            undefined,
+            undefined,
+            undefined,
+            undefined,
+            transforms,
+        );
         this.surface.render();
-        Object.keys(style).forEach(function(key) {
+        Object.keys(style).forEach(function (key) {
             layer.style[key] = style[key];
         });
     };
 
     function init(plot) {
-        plot.hooks.processOptions.push(function(plot, options) {
+        plot.hooks.processOptions.push(function (plot, options) {
             if (!options.axisLabels.show) {
                 return;
             }
@@ -152,7 +165,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
             var axisLabels = {};
             var defaultPadding = 2; // padding between axis and tick labels
 
-            plot.hooks.axisReserveSpace.push(function(plot, axis) {
+            plot.hooks.axisReserveSpace.push(function (plot, axis) {
                 var opts = axis.options;
                 var axisName = axis.direction + axis.n;
 
@@ -163,15 +176,19 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
                     return;
                 }
 
-                var padding = opts.axisLabelPadding === undefined
-                    ? defaultPadding
-                    : opts.axisLabelPadding;
+                var padding =
+                    opts.axisLabelPadding === undefined ? defaultPadding : opts.axisLabelPadding;
 
                 var axisLabel = axisLabels[axisName];
                 if (!axisLabel) {
-                    axisLabel = new AxisLabel(axisName,
-                        opts.position, padding,
-                        plot.getPlaceholder()[0], opts.axisLabel, plot.getSurface());
+                    axisLabel = new AxisLabel(
+                        axisName,
+                        opts.position,
+                        padding,
+                        plot.getPlaceholder()[0],
+                        opts.axisLabel,
+                        plot.getSurface(),
+                    );
                     axisLabels[axisName] = axisLabel;
                 }
 
@@ -183,8 +200,8 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
             });
 
             // TODO - use the drawAxis hook
-            plot.hooks.draw.push(function(plot, ctx) {
-                $.each(plot.getAxes(), function(flotAxisName, axis) {
+            plot.hooks.draw.push(function (plot, ctx) {
+                $.each(plot.getAxes(), function (flotAxisName, axis) {
                     var opts = axis.options;
                     if (!opts || !opts.axisLabel || !axis.show) {
                         return;
@@ -195,18 +212,18 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
                 });
             });
 
-            plot.hooks.shutdown.push(function(plot, eventHolder) {
+            plot.hooks.shutdown.push(function (plot, eventHolder) {
                 for (var axisName in axisLabels) {
                     axisLabels[axisName].cleanup();
                 }
             });
         });
-    };
+    }
 
     $.plot.plugins.push({
         init: init,
         options: options,
         name: 'axisLabels',
-        version: '3.0'
+        version: '3.0',
     });
 })(jQuery);

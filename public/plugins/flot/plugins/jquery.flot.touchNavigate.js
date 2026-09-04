@@ -1,19 +1,19 @@
 /* global jQuery */
 
-(function($) {
+(function ($) {
     'use strict';
 
     var options = {
         zoom: {
-            enableTouch: false
+            enableTouch: false,
         },
         pan: {
             enableTouch: false,
-            touchMode: 'manual'
+            touchMode: 'manual',
         },
         recenter: {
-            enableTouch: true
-        }
+            enableTouch: true,
+        },
     };
 
     var ZOOM_DISTANCE_MARGIN = $.plot.uiConstants.ZOOM_DISTANCE_MARGIN;
@@ -28,19 +28,22 @@
                 prevDistance: null,
                 prevTapTime: 0,
                 prevPanPosition: { x: 0, y: 0 },
-                prevTapPosition: { x: 0, y: 0 }
+                prevTapPosition: { x: 0, y: 0 },
             },
             navigationState = {
                 prevTouchedAxis: 'none',
                 currentTouchedAxis: 'none',
                 touchedAxis: null,
                 navigationConstraint: 'unconstrained',
-                initialState: null
+                initialState: null,
             },
             useManualPan = options.pan.interactive && options.pan.touchMode === 'manual',
             smartPanLock = options.pan.touchMode === 'smartLock',
-            useSmartPan = options.pan.interactive && (smartPanLock || options.pan.touchMode === 'smart'),
-            pan, pinch, doubleTap;
+            useSmartPan =
+                options.pan.interactive && (smartPanLock || options.pan.touchMode === 'smart'),
+            pan,
+            pinch,
+            doubleTap;
 
         function bindEvents(plot, eventHolder) {
             var o = plot.getOptions();
@@ -57,7 +60,7 @@
                 eventHolder[0].addEventListener('panend', pan.end, false);
             }
 
-            if ((o.recenter.interactive && o.recenter.enableTouch)) {
+            if (o.recenter.interactive && o.recenter.enableTouch) {
                 eventHolder[0].addEventListener('doubletap', doubleTap.recenterPlot, false);
             }
         }
@@ -73,7 +76,7 @@
         }
 
         pan = {
-            start: function(e) {
+            start: function (e) {
                 presetNavigationState(e, 'pan', gestureState);
                 updateData(e, 'pan', gestureState, navigationState);
 
@@ -83,26 +86,32 @@
                 }
             },
 
-            drag: function(e) {
+            drag: function (e) {
                 presetNavigationState(e, 'pan', gestureState);
 
                 if (useSmartPan) {
                     var point = getPoint(e, 'pan');
-                    plot.smartPan({
-                        x: navigationState.initialState.startPageX - point.x,
-                        y: navigationState.initialState.startPageY - point.y
-                    }, navigationState.initialState, navigationState.touchedAxis, false, smartPanLock);
+                    plot.smartPan(
+                        {
+                            x: navigationState.initialState.startPageX - point.x,
+                            y: navigationState.initialState.startPageY - point.y,
+                        },
+                        navigationState.initialState,
+                        navigationState.touchedAxis,
+                        false,
+                        smartPanLock,
+                    );
                 } else if (useManualPan) {
                     plot.pan({
                         left: -delta(e, 'pan', gestureState).x,
                         top: -delta(e, 'pan', gestureState).y,
-                        axes: navigationState.touchedAxis
+                        axes: navigationState.touchedAxis,
                     });
                     updatePrevPanPosition(e, 'pan', gestureState, navigationState);
                 }
             },
 
-            end: function(e) {
+            end: function (e) {
                 presetNavigationState(e, 'pan', gestureState);
 
                 if (useSmartPan) {
@@ -112,12 +121,12 @@
                 if (wasPinchEvent(e, gestureState)) {
                     updateprevPanPosition(e, 'pan', gestureState, navigationState);
                 }
-            }
+            },
         };
 
         var pinchDragTimeout;
         pinch = {
-            start: function(e) {
+            start: function (e) {
                 if (pinchDragTimeout) {
                     clearTimeout(pinchDragTimeout);
                     pinchDragTimeout = null;
@@ -127,22 +136,25 @@
                 updateData(e, 'pinch', gestureState, navigationState);
             },
 
-            drag: function(e) {
+            drag: function (e) {
                 if (pinchDragTimeout) {
                     return;
                 }
-                pinchDragTimeout = setTimeout(function() {
+                pinchDragTimeout = setTimeout(function () {
                     presetNavigationState(e, 'pinch', gestureState);
                     plot.pan({
                         left: -delta(e, 'pinch', gestureState).x,
                         top: -delta(e, 'pinch', gestureState).y,
-                        axes: navigationState.touchedAxis
+                        axes: navigationState.touchedAxis,
                     });
                     updatePrevPanPosition(e, 'pinch', gestureState, navigationState);
 
                     var dist = pinchDistance(e);
 
-                    if (gestureState.zoomEnable || Math.abs(dist - gestureState.prevDistance) > ZOOM_DISTANCE_MARGIN) {
+                    if (
+                        gestureState.zoomEnable ||
+                        Math.abs(dist - gestureState.prevDistance) > ZOOM_DISTANCE_MARGIN
+                    ) {
                         zoomPlot(plot, e, gestureState, navigationState);
 
                         //activate zoom mode
@@ -152,23 +164,23 @@
                 }, 1000 / 60);
             },
 
-            end: function(e) {
+            end: function (e) {
                 if (pinchDragTimeout) {
                     clearTimeout(pinchDragTimeout);
                     pinchDragTimeout = null;
                 }
                 presetNavigationState(e, 'pinch', gestureState);
                 gestureState.prevDistance = null;
-            }
+            },
         };
 
         doubleTap = {
-            recenterPlot: function(e) {
+            recenterPlot: function (e) {
                 if (e && e.detail && e.detail.type === 'touchstart') {
                     // only do not recenter for touch start;
                     recenterPlotOnDoubleTap(plot, e, gestureState, navigationState);
                 }
-            }
+            },
         };
 
         if (options.pan.enableTouch === true || options.zoom.enableTouch === true) {
@@ -190,20 +202,27 @@
         init: init,
         options: options,
         name: 'navigateTouch',
-        version: '0.3'
+        version: '0.3',
     });
 
     function recenterPlotOnDoubleTap(plot, e, gestureState, navigationState) {
         checkAxesForDoubleTap(plot, e, navigationState);
-        if ((navigationState.currentTouchedAxis === 'x' && navigationState.prevTouchedAxis === 'x') ||
-            (navigationState.currentTouchedAxis === 'y' && navigationState.prevTouchedAxis === 'y') ||
-            (navigationState.currentTouchedAxis === 'none' && navigationState.prevTouchedAxis === 'none')) {
+        if (
+            (navigationState.currentTouchedAxis === 'x' &&
+                navigationState.prevTouchedAxis === 'x') ||
+            (navigationState.currentTouchedAxis === 'y' &&
+                navigationState.prevTouchedAxis === 'y') ||
+            (navigationState.currentTouchedAxis === 'none' &&
+                navigationState.prevTouchedAxis === 'none')
+        ) {
             var event;
 
             plot.recenter({ axes: navigationState.touchedAxis });
 
             if (navigationState.touchedAxis) {
-                event = new $.Event('re-center', { detail: { axisTouched: navigationState.touchedAxis } });
+                event = new $.Event('re-center', {
+                    detail: { axisTouched: navigationState.touchedAxis },
+                });
             } else {
                 event = new $.Event('re-center', { detail: e });
             }
@@ -234,7 +253,7 @@
         var offset = plot.offset(),
             center = {
                 left: 0,
-                top: 0
+                top: 0,
             },
             zoomAmount = pinchDistance(e) / gestureState.prevDistance,
             dist = pinchDistance(e);
@@ -246,21 +265,30 @@
         plot.zoom({
             center: center,
             amount: zoomAmount,
-            axes: navigationState.touchedAxis
+            axes: navigationState.touchedAxis,
         });
         gestureState.prevDistance = dist;
     }
 
     function wasPinchEvent(e, gestureState) {
-        return (gestureState.zoomEnable && e.detail.touches.length === 1);
+        return gestureState.zoomEnable && e.detail.touches.length === 1;
     }
 
     function getAxis(plot, e, gesture, navigationState) {
         if (e.type === 'pinchstart') {
-            var axisTouch1 = plot.getTouchedAxis(e.detail.touches[0].pageX, e.detail.touches[0].pageY);
-            var axisTouch2 = plot.getTouchedAxis(e.detail.touches[1].pageX, e.detail.touches[1].pageY);
+            var axisTouch1 = plot.getTouchedAxis(
+                e.detail.touches[0].pageX,
+                e.detail.touches[0].pageY,
+            );
+            var axisTouch2 = plot.getTouchedAxis(
+                e.detail.touches[1].pageX,
+                e.detail.touches[1].pageY,
+            );
 
-            if (axisTouch1.length === axisTouch2.length && axisTouch1.toString() === axisTouch2.toString()) {
+            if (
+                axisTouch1.length === axisTouch2.length &&
+                axisTouch1.toString() === axisTouch2.toString()
+            ) {
                 return axisTouch1;
             }
         } else if (e.type === 'panstart') {
@@ -274,7 +302,7 @@
     }
 
     function noAxisTouched(navigationState) {
-        return (!navigationState.touchedAxis || navigationState.touchedAxis.length === 0);
+        return !navigationState.touchedAxis || navigationState.touchedAxis.length === 0;
     }
 
     function setPrevDistance(e, gestureState) {
@@ -290,11 +318,11 @@
                 navigationState.touchedAxis = null;
                 gestureState.prevTapPosition = {
                     x: gestureState.prevPanPosition.x,
-                    y: gestureState.prevPanPosition.y
+                    y: gestureState.prevPanPosition.y,
                 };
                 gestureState.prevPanPosition = {
                     x: point.x,
-                    y: point.y
+                    y: point.y,
                 };
                 break;
             case 'axisConstrained':
@@ -328,7 +356,7 @@
                 break;
             case 'axisConstrained':
                 gestureState.prevPanPosition[navigationState.currentTouchedAxis] =
-                point[navigationState.currentTouchedAxis];
+                    point[navigationState.currentTouchedAxis];
                 break;
             default:
                 break;
@@ -340,21 +368,21 @@
 
         return {
             x: point.x - gestureState.prevPanPosition.x,
-            y: point.y - gestureState.prevPanPosition.y
-        }
+            y: point.y - gestureState.prevPanPosition.y,
+        };
     }
 
     function getPoint(e, gesture) {
         if (gesture === 'pinch') {
             return {
                 x: (e.detail.touches[0].pageX + e.detail.touches[1].pageX) / 2,
-                y: (e.detail.touches[0].pageY + e.detail.touches[1].pageY) / 2
-            }
+                y: (e.detail.touches[0].pageY + e.detail.touches[1].pageY) / 2,
+            };
         } else {
             return {
                 x: e.detail.touches[0].pageX,
-                y: e.detail.touches[0].pageY
-            }
+                y: e.detail.touches[0].pageY,
+            };
         }
     }
 })(jQuery);

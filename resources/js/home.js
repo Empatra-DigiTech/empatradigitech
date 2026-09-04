@@ -35,28 +35,35 @@
     }
 })();
 
-    document.querySelectorAll('.site-navbar__dropdown-toggle').forEach(function (toggle) {
-        toggle.addEventListener('click', function () {
-            var item = toggle.closest('.site-navbar__item--dropdown');
-            var isOpen = item.classList.contains('is-open');
+document.querySelectorAll('.site-navbar__dropdown-toggle').forEach(function (toggle) {
+    toggle.addEventListener('click', function () {
+        var item = toggle.closest('.site-navbar__item--dropdown');
+        var isOpen = item.classList.contains('is-open');
 
-            document.querySelectorAll('.site-navbar__item--dropdown.is-open').forEach(function (openItem) {
+        document
+            .querySelectorAll('.site-navbar__item--dropdown.is-open')
+            .forEach(function (openItem) {
                 if (openItem !== item) {
                     openItem.classList.remove('is-open');
-                    openItem.querySelector('.site-navbar__dropdown-toggle').setAttribute('aria-expanded', 'false');
+                    openItem
+                        .querySelector('.site-navbar__dropdown-toggle')
+                        .setAttribute('aria-expanded', 'false');
                 }
             });
 
-            item.classList.toggle('is-open', !isOpen);
-            toggle.setAttribute('aria-expanded', String(!isOpen));
-        });
+        item.classList.toggle('is-open', !isOpen);
+        toggle.setAttribute('aria-expanded', String(!isOpen));
     });
+});
 
-    document.addEventListener('click', function (e) {
-        document.querySelectorAll('.site-navbar__item--dropdown.is-open').forEach(function (item) {
-            if (!item.contains(e.target)) {
-                item.classList.remove('is-open');
-                item.querySelector('.site-navbar__dropdown-toggle').setAttribute('aria-expanded', 'false');
-            }
-        });
+document.addEventListener('click', function (e) {
+    document.querySelectorAll('.site-navbar__item--dropdown.is-open').forEach(function (item) {
+        if (!item.contains(e.target)) {
+            item.classList.remove('is-open');
+            item.querySelector('.site-navbar__dropdown-toggle').setAttribute(
+                'aria-expanded',
+                'false',
+            );
+        }
     });
+});

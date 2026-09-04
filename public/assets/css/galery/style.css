@@ -24,7 +24,8 @@
 }
 
 /* Prevent any accidental horizontal overflow bleeding behind the modal backdrop */
-html, body {
+html,
+body {
     overflow-x: hidden;
 }
 

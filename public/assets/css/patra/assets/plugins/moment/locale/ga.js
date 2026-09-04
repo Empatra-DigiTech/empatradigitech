@@ -1,21 +1,53 @@
 //! moment.js locale configuration
 
-;(function (global, factory) {
-   typeof exports === 'object' && typeof module !== 'undefined'
-       && typeof require === 'function' ? factory(require('../moment')) :
-   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
-   factory(global.moment)
-}(this, (function (moment) { 'use strict';
-
-
+(function (global, factory) {
+    typeof exports === 'object' && typeof module !== 'undefined' && typeof require === 'function'
+        ? factory(require('../moment'))
+        : typeof define === 'function' && define.amd
+          ? define(['../moment'], factory)
+          : factory(global.moment);
+})(this, function (moment) {
+    'use strict';
 
     var months = [
-        'Eanáir', 'Feabhra', 'Márta', 'Aibreán', 'Bealtaine', 'Méitheamh', 'Iúil', 'Lúnasa', 'Meán Fómhair', 'Deaireadh Fómhair', 'Samhain', 'Nollaig'
+        'Eanáir',
+        'Feabhra',
+        'Márta',
+        'Aibreán',
+        'Bealtaine',
+        'Méitheamh',
+        'Iúil',
+        'Lúnasa',
+        'Meán Fómhair',
+        'Deaireadh Fómhair',
+        'Samhain',
+        'Nollaig',
     ];
 
-    var monthsShort = ['Eaná', 'Feab', 'Márt', 'Aibr', 'Beal', 'Méit', 'Iúil', 'Lúna', 'Meán', 'Deai', 'Samh', 'Noll'];
+    var monthsShort = [
+        'Eaná',
+        'Feab',
+        'Márt',
+        'Aibr',
+        'Beal',
+        'Méit',
+        'Iúil',
+        'Lúna',
+        'Meán',
+        'Deai',
+        'Samh',
+        'Noll',
+    ];
 
-    var weekdays = ['Dé Domhnaigh', 'Dé Luain', 'Dé Máirt', 'Dé Céadaoin', 'Déardaoin', 'Dé hAoine', 'Dé Satharn'];
+    var weekdays = [
+        'Dé Domhnaigh',
+        'Dé Luain',
+        'Dé Máirt',
+        'Dé Céadaoin',
+        'Déardaoin',
+        'Dé hAoine',
+        'Dé Satharn',
+    ];
 
     var weekdaysShort = ['Dom', 'Lua', 'Mái', 'Céa', 'Déa', 'hAo', 'Sat'];
 
@@ -34,7 +66,7 @@
             L: 'DD/MM/YYYY',
             LL: 'D MMMM YYYY',
             LLL: 'D MMMM YYYY HH:mm',
-            LLLL: 'dddd, D MMMM YYYY HH:mm'
+            LLLL: 'dddd, D MMMM YYYY HH:mm',
         },
         calendar: {
             sameDay: '[Inniu ag] LT',
@@ -42,7 +74,7 @@
             nextWeek: 'dddd [ag] LT',
             lastDay: '[Inné aig] LT',
             lastWeek: 'dddd [seo caite] [ag] LT',
-            sameElse: 'L'
+            sameElse: 'L',
         },
         relativeTime: {
             future: 'i %s',
@@ -58,7 +90,7 @@
             M: 'mí',
             MM: '%d mí',
             y: 'bliain',
-            yy: '%d bliain'
+            yy: '%d bliain',
         },
         dayOfMonthOrdinalParse: /\d{1,2}(d|na|mh)/,
         ordinal: function (number) {
@@ -67,10 +99,9 @@
         },
         week: {
             dow: 1, // Monday is the first day of the week.
-            doy: 4  // The week that contains Jan 4th is the first week of the year.
-        }
+            doy: 4, // The week that contains Jan 4th is the first week of the year.
+        },
     });
 
     return ga;
-
-})));
+});

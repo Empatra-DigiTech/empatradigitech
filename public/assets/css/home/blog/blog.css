@@ -425,7 +425,7 @@
     display: inline-flex;
     align-items: center;
     gap: 0.55rem;
-    background: #25D366;
+    background: #25d366;
     color: #fff;
     padding: 0.9rem 1.85rem;
     border-radius: 0.55rem;
@@ -436,7 +436,7 @@
 }
 
 .blog-cta-button:hover {
-    background: #1DA851;
+    background: #1da851;
     color: #fff;
     text-decoration: none;
     transform: translateY(-2px);

@@ -1,9 +1,7 @@
 body {
-    font-family: "Roboto", sans-serif;
+    font-family: 'Roboto', sans-serif;
     background-color: #fff;
 }
-
-
 
 h1,
 h2,
@@ -17,7 +15,7 @@ h6,
 .h4,
 .h5,
 .h6 {
-    font-family: "Roboto", sans-serif;
+    font-family: 'Roboto', sans-serif;
 }
 
 a {
@@ -203,8 +201,8 @@ strong {
 }
 
 .control__indicator:after {
-    font-family: "icomoon";
-    content: "\e5ca";
+    font-family: 'icomoon';
+    content: '\e5ca';
     position: absolute;
     display: none;
     font-size: 16px;

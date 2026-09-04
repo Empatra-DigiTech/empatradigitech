@@ -4,38 +4,38 @@
 
 :root {
     /* Primary Theme Colors */
-    --primary: #B02E36;
-    --primary-dark: #8B2329;
-    --primary-light: #D63840;
+    --primary: #b02e36;
+    --primary-dark: #8b2329;
+    --primary-light: #d63840;
 
-    --secondary: #0F3C5D;
-    --secondary-dark: #0A2840;
-    --secondary-light: #1A5380;
+    --secondary: #0f3c5d;
+    --secondary-dark: #0a2840;
+    --secondary-light: #1a5380;
 
     /* Complementary Colors */
-    --accent: #E8B923;
-    --accent-light: #F5D366;
+    --accent: #e8b923;
+    --accent-light: #f5d366;
 
     /* Neutral Colors */
-    --white: #FFFFFF;
-    --light: #F8F9FA;
-    --gray-100: #F1F3F5;
-    --gray-200: #E9ECEF;
-    --gray-300: #DEE2E6;
-    --gray-400: #CED4DA;
-    --gray-500: #ADB5BD;
-    --gray-600: #868E96;
+    --white: #ffffff;
+    --light: #f8f9fa;
+    --gray-100: #f1f3f5;
+    --gray-200: #e9ecef;
+    --gray-300: #dee2e6;
+    --gray-400: #ced4da;
+    --gray-500: #adb5bd;
+    --gray-600: #868e96;
     --gray-700: #495057;
-    --gray-800: #343A40;
+    --gray-800: #343a40;
     --gray-900: #212529;
-    --dark: #1A1A1A;
+    --dark: #1a1a1a;
     --black: #000000;
 
     /* Status Colors */
-    --success: #28A745;
-    --warning: #FFC107;
-    --danger: #DC3545;
-    --info: #17A2B8;
+    --success: #28a745;
+    --warning: #ffc107;
+    --danger: #dc3545;
+    --info: #17a2b8;
 
     /* Typography */
     --font-heading: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
@@ -118,7 +118,9 @@
     background-color: transparent;
     box-shadow: none;
     font-family: var(--font-body);
-    transition: background-color var(--transition-slow), box-shadow var(--transition-slow);
+    transition:
+        background-color var(--transition-slow),
+        box-shadow var(--transition-slow);
 }
 .site-navbar.is-scrolled {
     background-color: var(--enav-navy);
@@ -180,7 +182,7 @@
     color: var(--enav-text-scrolled);
 }
 .site-navbar__links a.is-active::after {
-    content: "";
+    content: '';
     position: absolute;
     left: 0;
     right: 0;
@@ -209,7 +211,9 @@
     font-size: var(--font-size-sm);
     font-weight: 600;
     cursor: pointer;
-    transition: color var(--transition-slow), opacity var(--transition-fast);
+    transition:
+        color var(--transition-slow),
+        opacity var(--transition-fast);
 }
 .site-navbar.is-scrolled .site-navbar__dropdown-toggle {
     color: var(--enav-text-scrolled);
@@ -245,7 +249,10 @@
     opacity: 0;
     visibility: hidden;
     transform: translateY(6px);
-    transition: opacity var(--transition-fast), transform var(--transition-fast), visibility var(--transition-fast);
+    transition:
+        opacity var(--transition-fast),
+        transform var(--transition-fast),
+        visibility var(--transition-fast);
 }
 .site-navbar__item--dropdown:hover .site-navbar__dropdown,
 .site-navbar__item--dropdown.is-open .site-navbar__dropdown {
@@ -288,11 +295,13 @@
     font-weight: 600;
     text-decoration: none;
     white-space: nowrap;
-    transition: background-color var(--transition-fast), border-color var(--transition-fast);
+    transition:
+        background-color var(--transition-fast),
+        border-color var(--transition-fast);
 }
 .site-navbar__cta:hover {
     background-color: rgba(255, 255, 255, 0.08);
-    border-color:var(--enav-red);
+    border-color: var(--enav-red);
 }
 .site-navbar__cta-icon {
     display: inline-flex;
@@ -322,7 +331,10 @@
     width: 100%;
     background-color: var(--enav-text-top);
     border-radius: var(--radius-sm);
-    transition: background-color var(--transition-slow), transform var(--transition-base), opacity var(--transition-base);
+    transition:
+        background-color var(--transition-slow),
+        transform var(--transition-base),
+        opacity var(--transition-base);
 }
 .site-navbar.is-scrolled .site-navbar__toggle span {
     background-color: var(--enav-text-scrolled);
@@ -356,7 +368,9 @@
         max-height: 0;
         overflow: hidden;
         opacity: 0;
-        transition: max-height var(--transition-base), opacity var(--transition-base);
+        transition:
+            max-height var(--transition-base),
+            opacity var(--transition-base);
     }
     .site-navbar.is-menu-open .site-navbar__nav {
         max-height: 600px;
@@ -372,7 +386,7 @@
         color: var(--enav-text-scrolled);
     }
 
-    .site-navbar.is-menu-open .site-navbar__brand{
+    .site-navbar.is-menu-open .site-navbar__brand {
         background-color: var(--enav-text-scrolled);
     }
 

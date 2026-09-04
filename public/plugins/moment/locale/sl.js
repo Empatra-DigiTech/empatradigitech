@@ -2,12 +2,14 @@
 //! locale : Slovenian [sl]
 //! author : Robert Sedovšek : https://github.com/sedovsek
 
-;(function (global, factory) {
-   typeof exports === 'object' && typeof module !== 'undefined'
-       && typeof require === 'function' ? factory(require('../moment')) :
-   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
-   factory(global.moment)
-}(this, (function (moment) { 'use strict';
+(function (global, factory) {
+    typeof exports === 'object' && typeof module !== 'undefined' && typeof require === 'function'
+        ? factory(require('../moment'))
+        : typeof define === 'function' && define.amd
+          ? define(['../moment'], factory)
+          : factory(global.moment);
+})(this, function (moment) {
+    'use strict';
 
     //! moment.js locale configuration
 
@@ -15,9 +17,7 @@
         var result = number + ' ';
         switch (key) {
             case 's':
-                return withoutSuffix || isFuture
-                    ? 'nekaj sekund'
-                    : 'nekaj sekundami';
+                return withoutSuffix || isFuture ? 'nekaj sekund' : 'nekaj sekundami';
             case 'ss':
                 if (number === 1) {
                     result += withoutSuffix ? 'sekundo' : 'sekundi';
@@ -97,11 +97,9 @@
 
     var sl = moment.defineLocale('sl', {
         months: 'januar_februar_marec_april_maj_junij_julij_avgust_september_oktober_november_december'.split(
-            '_'
+            '_',
         ),
-        monthsShort: 'jan._feb._mar._apr._maj._jun._jul._avg._sep._okt._nov._dec.'.split(
-            '_'
-        ),
+        monthsShort: 'jan._feb._mar._apr._maj._jun._jul._avg._sep._okt._nov._dec.'.split('_'),
         monthsParseExact: true,
         weekdays: 'nedelja_ponedeljek_torek_sreda_četrtek_petek_sobota'.split('_'),
         weekdaysShort: 'ned._pon._tor._sre._čet._pet._sob.'.split('_'),
@@ -177,5 +175,4 @@
     });
 
     return sl;
-
-})));
+});

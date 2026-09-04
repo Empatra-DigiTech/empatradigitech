@@ -3,29 +3,25 @@
 //! author : Adam Brunner : https://github.com/adambrunner
 //! author : Peter Viszt  : https://github.com/passatgt
 
-;(function (global, factory) {
-   typeof exports === 'object' && typeof module !== 'undefined'
-       && typeof require === 'function' ? factory(require('../moment')) :
-   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
-   factory(global.moment)
-}(this, (function (moment) { 'use strict';
+(function (global, factory) {
+    typeof exports === 'object' && typeof module !== 'undefined' && typeof require === 'function'
+        ? factory(require('../moment'))
+        : typeof define === 'function' && define.amd
+          ? define(['../moment'], factory)
+          : factory(global.moment);
+})(this, function (moment) {
+    'use strict';
 
     //! moment.js locale configuration
 
-    var weekEndings = 'vasárnap hétfőn kedden szerdán csütörtökön pénteken szombaton'.split(
-        ' '
-    );
+    var weekEndings = 'vasárnap hétfőn kedden szerdán csütörtökön pénteken szombaton'.split(' ');
     function translate(number, withoutSuffix, key, isFuture) {
         var num = number;
         switch (key) {
             case 's':
-                return isFuture || withoutSuffix
-                    ? 'néhány másodperc'
-                    : 'néhány másodperce';
+                return isFuture || withoutSuffix ? 'néhány másodperc' : 'néhány másodperce';
             case 'ss':
-                return num + (isFuture || withoutSuffix)
-                    ? ' másodperc'
-                    : ' másodperce';
+                return num + (isFuture || withoutSuffix) ? ' másodperc' : ' másodperce';
             case 'm':
                 return 'egy' + (isFuture || withoutSuffix ? ' perc' : ' perce');
             case 'mm':
@@ -50,21 +46,14 @@
         return '';
     }
     function week(isFuture) {
-        return (
-            (isFuture ? '' : '[múlt] ') +
-            '[' +
-            weekEndings[this.day()] +
-            '] LT[-kor]'
-        );
+        return (isFuture ? '' : '[múlt] ') + '[' + weekEndings[this.day()] + '] LT[-kor]';
     }
 
     var hu = moment.defineLocale('hu', {
         months: 'január_február_március_április_május_június_július_augusztus_szeptember_október_november_december'.split(
-            '_'
+            '_',
         ),
-        monthsShort: 'jan._feb._márc._ápr._máj._jún._júl._aug._szept._okt._nov._dec.'.split(
-            '_'
-        ),
+        monthsShort: 'jan._feb._márc._ápr._máj._jún._júl._aug._szept._okt._nov._dec.'.split('_'),
         monthsParseExact: true,
         weekdays: 'vasárnap_hétfő_kedd_szerda_csütörtök_péntek_szombat'.split('_'),
         weekdaysShort: 'vas_hét_kedd_sze_csüt_pén_szo'.split('_'),
@@ -125,5 +114,4 @@
     });
 
     return hu;
-
-})));
+});

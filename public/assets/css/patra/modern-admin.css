@@ -5,10 +5,10 @@
    ======================================== */
 
 :root {
-    --pa-navy: #0F3C5D;
-    --pa-navy-dark: #09121D;
-    --pa-red: #B02E36;
-    --pa-bg: #F4F6F9;
+    --pa-navy: #0f3c5d;
+    --pa-navy-dark: #09121d;
+    --pa-red: #b02e36;
+    --pa-bg: #f4f6f9;
     --pa-card-radius: 14px;
     --pa-shadow: 0 2px 10px rgba(15, 23, 42, 0.06);
     --pa-shadow-hover: 0 12px 28px rgba(15, 23, 42, 0.12);
@@ -130,7 +130,8 @@ body.hold-transition,
     font-weight: 700;
 }
 
-.table td, .table th {
+.table td,
+.table th {
     vertical-align: middle;
 }
 
@@ -142,7 +143,9 @@ body.hold-transition,
     border-radius: var(--pa-card-radius) !important;
     box-shadow: var(--pa-shadow) !important;
     overflow: hidden;
-    transition: transform 0.25s ease, box-shadow 0.25s ease;
+    transition:
+        transform 0.25s ease,
+        box-shadow 0.25s ease;
     border: none !important;
 }
 
@@ -163,7 +166,9 @@ body.hold-transition,
 
 .small-box .icon {
     opacity: 0.25;
-    transition: opacity 0.25s ease, transform 0.25s ease;
+    transition:
+        opacity 0.25s ease,
+        transform 0.25s ease;
 }
 
 .small-box:hover .icon {
@@ -185,14 +190,29 @@ body.hold-transition,
 
 /* Recolor the flat Bootstrap bg-* classes to a cohesive modern palette
    (kept distinguishable per card, softer than pure primary colors) */
-.small-box.bg-info      { background: linear-gradient(135deg, #2E86AB 0%, #1B5E7A 100%) !important; }
-.small-box.bg-success   { background: linear-gradient(135deg, #2E9E5B 0%, #1F7A44 100%) !important; }
-.small-box.bg-warning   { background: linear-gradient(135deg, #E0A62E 0%, #C4841A 100%) !important; color: #fff !important; }
+.small-box.bg-info {
+    background: linear-gradient(135deg, #2e86ab 0%, #1b5e7a 100%) !important;
+}
+.small-box.bg-success {
+    background: linear-gradient(135deg, #2e9e5b 0%, #1f7a44 100%) !important;
+}
+.small-box.bg-warning {
+    background: linear-gradient(135deg, #e0a62e 0%, #c4841a 100%) !important;
+    color: #fff !important;
+}
 .small-box.bg-warning .inner p,
-.small-box.bg-warning .inner h3 { color: #fff !important; }
-.small-box.bg-danger    { background: linear-gradient(135deg, #C0392B 0%, #922B21 100%) !important; }
-.small-box.bg-secondary { background: linear-gradient(135deg, #5D6D7E 0%, #34495E 100%) !important; }
-.small-box.bg-primary   { background: linear-gradient(135deg, var(--pa-navy) 0%, #082A44 100%) !important; }
+.small-box.bg-warning .inner h3 {
+    color: #fff !important;
+}
+.small-box.bg-danger {
+    background: linear-gradient(135deg, #c0392b 0%, #922b21 100%) !important;
+}
+.small-box.bg-secondary {
+    background: linear-gradient(135deg, #5d6d7e 0%, #34495e 100%) !important;
+}
+.small-box.bg-primary {
+    background: linear-gradient(135deg, var(--pa-navy) 0%, #082a44 100%) !important;
+}
 
 /* ========================================
    WELCOME BANNER (dashboard)

@@ -32,7 +32,7 @@
             this.s = {
                 barWidth: 0,
                 dt: table,
-                rtl: $(table.table().node()).css('direction') === 'rtl'
+                rtl: $(table.table().node()).css('direction') === 'rtl',
             };
             // Set the bar width if vertical scrolling is enabled
             if (this.s.dt.settings()[0].oInit.scrollY === true) {
@@ -41,10 +41,10 @@
             // Common CSS for all blockers
             var blockerCSS = {
                 'background-color': 'white',
-                'bottom': '0px',
-                'display': 'block',
-                'position': 'absolute',
-                'width': this.s.barWidth + 1 + 'px'
+                bottom: '0px',
+                display: 'block',
+                position: 'absolute',
+                width: this.s.barWidth + 1 + 'px',
             };
             this.dom = {
                 leftBottomBlocker: $('<div>')
@@ -54,9 +54,9 @@
                 leftTopBlocker: $('<div>')
                     .css(blockerCSS)
                     .css({
-                    left: 0,
-                    top: 0
-                })
+                        left: 0,
+                        top: 0,
+                    })
                     .addClass(this.classes.leftTopBlocker),
                 rightBottomBlocker: $('<div>')
                     .css(blockerCSS)
@@ -65,17 +65,16 @@
                 rightTopBlocker: $('<div>')
                     .css(blockerCSS)
                     .css({
-                    right: 0,
-                    top: 0
-                })
-                    .addClass(this.classes.rightTopBlocker)
+                        right: 0,
+                        top: 0,
+                    })
+                    .addClass(this.classes.rightTopBlocker),
             };
             if (this.s.dt.settings()[0]._bInitComplete) {
                 // Fixed Columns Initialisation
                 this._addStyles();
                 this._setKeyTableListener();
-            }
-            else {
+            } else {
                 table.one('preInit.dt', function () {
                     // Fixed Columns Initialisation
                     _this._addStyles();
@@ -137,7 +136,10 @@
                 footerHeight = footer.outerHeight();
                 // Only attempt to retrieve the parentDiv if it has not been retrieved already
                 if (parentDiv === null) {
-                    parentDiv = $(footer.closest('div.dataTables_scroll')).css('position', 'relative');
+                    parentDiv = $(footer.closest('div.dataTables_scroll')).css(
+                        'position',
+                        'relative',
+                    );
                 }
             }
             // Get the number of columns in the table - this is used often so better to only make 1 api call
@@ -182,17 +184,16 @@
                     colFooter
                         .css(this._getCellCSS(true, distLeft, 'left'))
                         .addClass(this.classes.fixedLeft);
-                }
-                else {
+                } else {
                     // Iteriate through all of the rows, making sure they aren't currently trying to fix left
                     for (var _a = 0, rows_2 = rows; _a < rows_2.length; _a++) {
                         var row = rows_2[_a];
                         var cell = $($(row).children()[i - invisibles]);
                         // If the cell is trying to fix to the left, remove the class and the css
                         if (cell.hasClass(this.classes.fixedLeft)) {
-                            cell
-                                .css(this._clearCellCSS('left'))
-                                .removeClass(this.classes.fixedLeft);
+                            cell.css(this._clearCellCSS('left')).removeClass(
+                                this.classes.fixedLeft,
+                            );
                         }
                     }
                     // Make sure the header for this column isn't fixed left
@@ -214,8 +215,7 @@
                 if (this.s.rtl) {
                     this.dom.leftTopBlocker.outerHeight(headerHeight);
                     parentDiv.append(this.dom.leftTopBlocker);
-                }
-                else {
+                } else {
                     this.dom.rightTopBlocker.outerHeight(headerHeight);
                     parentDiv.append(this.dom.rightTopBlocker);
                 }
@@ -225,8 +225,7 @@
                 if (this.s.rtl) {
                     this.dom.leftBottomBlocker.outerHeight(footerHeight);
                     parentDiv.append(this.dom.leftBottomBlocker);
-                }
-                else {
+                } else {
                     this.dom.rightBottomBlocker.outerHeight(footerHeight);
                     parentDiv.append(this.dom.rightBottomBlocker);
                 }
@@ -266,17 +265,16 @@
                     colFooter
                         .css(this._getCellCSS(true, distRight, 'right'))
                         .addClass(this.classes.fixedRight);
-                }
-                else {
+                } else {
                     // Iteriate through all of the rows, making sure they aren't currently trying to fix right
                     for (var _c = 0, rows_4 = rows; _c < rows_4.length; _c++) {
                         var row = rows_4[_c];
                         var cell = $($(row).children()[i + invisibles]);
                         // If the cell is trying to fix to the right, remove the class and the css
                         if (cell.hasClass(this.classes.fixedRight)) {
-                            cell
-                                .css(this._clearCellCSS('right'))
-                                .removeClass(this.classes.fixedRight);
+                            cell.css(this._clearCellCSS('right')).removeClass(
+                                this.classes.fixedRight,
+                            );
                         }
                     }
                     // Make sure the header for this column isn't fixed right
@@ -298,8 +296,7 @@
                 if (!this.s.rtl) {
                     this.dom.rightTopBlocker.outerHeight(headerHeight);
                     parentDiv.append(this.dom.rightTopBlocker);
-                }
-                else {
+                } else {
                     this.dom.leftTopBlocker.outerHeight(headerHeight);
                     parentDiv.append(this.dom.leftTopBlocker);
                 }
@@ -309,8 +306,7 @@
                 if (!this.s.rtl) {
                     this.dom.rightBottomBlocker.outerHeight(footerHeight);
                     parentDiv.append(this.dom.rightBottomBlocker);
-                }
-                else {
+                } else {
                     this.dom.leftBottomBlocker.outerHeight(footerHeight);
                     parentDiv.append(this.dom.leftBottomBlocker);
                 }
@@ -326,26 +322,25 @@
          */
         FixedColumns.prototype._getCellCSS = function (header, dist, lr) {
             if (lr === 'left') {
-                return !this.s.rtl ?
-                    {
-                        left: dist + 'px',
-                        position: 'sticky'
-                    } :
-                    {
-                        position: 'sticky',
-                        right: dist + (header ? this.s.barWidth : 0) + 'px'
-                    };
-            }
-            else {
-                return !this.s.rtl ?
-                    {
-                        position: 'sticky',
-                        right: dist + (header ? this.s.barWidth : 0) + 'px'
-                    } :
-                    {
-                        left: dist + 'px',
-                        position: 'sticky'
-                    };
+                return !this.s.rtl
+                    ? {
+                          left: dist + 'px',
+                          position: 'sticky',
+                      }
+                    : {
+                          position: 'sticky',
+                          right: dist + (header ? this.s.barWidth : 0) + 'px',
+                      };
+            } else {
+                return !this.s.rtl
+                    ? {
+                          position: 'sticky',
+                          right: dist + (header ? this.s.barWidth : 0) + 'px',
+                      }
+                    : {
+                          left: dist + 'px',
+                          position: 'sticky',
+                      };
             }
         };
         /**
@@ -356,26 +351,25 @@
          */
         FixedColumns.prototype._clearCellCSS = function (lr) {
             if (lr === 'left') {
-                return !this.s.rtl ?
-                    {
-                        left: '',
-                        position: ''
-                    } :
-                    {
-                        position: '',
-                        right: ''
-                    };
-            }
-            else {
-                return !this.s.rtl ?
-                    {
-                        position: '',
-                        right: ''
-                    } :
-                    {
-                        left: '',
-                        position: ''
-                    };
+                return !this.s.rtl
+                    ? {
+                          left: '',
+                          position: '',
+                      }
+                    : {
+                          position: '',
+                          right: '',
+                      };
+            } else {
+                return !this.s.rtl
+                    ? {
+                          position: '',
+                          right: '',
+                      }
+                    : {
+                          left: '',
+                          position: '',
+                      };
             }
         };
         FixedColumns.prototype._setKeyTableListener = function () {
@@ -393,7 +387,9 @@
                     if (cellPos.left < rightMostPos.left + rightMostWidth) {
                         // Scroll it into view
                         var currScroll = scroll.scrollLeft();
-                        scroll.scrollLeft(currScroll - (rightMostPos.left + rightMostWidth - cellPos.left));
+                        scroll.scrollLeft(
+                            currScroll - (rightMostPos.left + rightMostWidth - cellPos.left),
+                        );
                     }
                 }
                 // If there are fixed columns to the right
@@ -408,7 +404,9 @@
                     if (cellPos.left + cellWidth > leftMostPos.left) {
                         // Scroll it into view
                         var currScroll = scroll.scrollLeft();
-                        scroll.scrollLeft(currScroll - (leftMostPos.left - (cellPos.left + cellWidth)));
+                        scroll.scrollLeft(
+                            currScroll - (leftMostPos.left - (cellPos.left + cellWidth)),
+                        );
                     }
                 }
             });
@@ -433,17 +431,17 @@
             rightBottomBlocker: 'dtfc-right-bottom-blocker',
             rightTopBlocker: 'dtfc-right-top-blocker',
             tableFixedLeft: 'dtfc-has-left',
-            tableFixedRight: 'dtfc-has-right'
+            tableFixedRight: 'dtfc-has-right',
         };
         FixedColumns.defaults = {
             i18n: {
-                button: 'FixedColumns'
+                button: 'FixedColumns',
             },
             left: 1,
-            right: 0
+            right: 0,
         };
         return FixedColumns;
-    }());
+    })();
 
     /*! FixedColumns 4.0.0
      * 2019-2020 SpryMedia Ltd - datatables.net/license
@@ -457,8 +455,7 @@
             define(['jquery', 'datatables.net'], function ($) {
                 return factory($, window, document);
             });
-        }
-        else if (typeof exports === 'object') {
+        } else if (typeof exports === 'object') {
             // CommonJS
             module.exports = function (root, $) {
                 if (!root) {
@@ -470,12 +467,11 @@
                 }
                 return factory($, root, root.document);
             };
-        }
-        else {
+        } else {
             // Browser - assume jQuery has already been loaded
             factory(window.jQuery, window, document);
         }
-    }(function ($, window, document) {
+    })(function ($, window, document) {
         setJQuery($);
         var dataTable = $.fn.dataTable;
         $.fn.dataTable.FixedColumns = FixedColumns;
@@ -489,8 +485,7 @@
             if (newVal !== undefined) {
                 ctx._fixedColumns.left(newVal);
                 return this;
-            }
-            else {
+            } else {
                 return ctx._fixedColumns.left();
             }
         });
@@ -499,8 +494,7 @@
             if (newVal !== undefined) {
                 ctx._fixedColumns.right(newVal);
                 return this;
-            }
-            else {
+            } else {
                 return ctx._fixedColumns.right();
             }
         });
@@ -510,8 +504,7 @@
                     $(node).removeAttr('active').removeClass('active');
                     dt.fixedColumns().left(0);
                     dt.fixedColumns().right(0);
-                }
-                else {
+                } else {
                     $(node).attr('active', true).addClass('active');
                     dt.fixedColumns().left(config.config.left);
                     dt.fixedColumns().right(config.config.right);
@@ -519,19 +512,27 @@
             },
             config: {
                 left: 1,
-                right: 0
+                right: 0,
             },
             init: function (dt, node, config) {
                 if (dt.settings()[0]._fixedColumns === undefined) {
                     _init(dt.settings(), config);
                 }
                 $(node).attr('active', true).addClass('active');
-                dt.button(node).text(config.text || dt.i18n('buttons.fixedColumns', dt.settings()[0]._fixedColumns.c.i18n.button));
+                dt.button(node).text(
+                    config.text ||
+                        dt.i18n(
+                            'buttons.fixedColumns',
+                            dt.settings()[0]._fixedColumns.c.i18n.button,
+                        ),
+                );
             },
-            text: null
+            text: null,
         };
         function _init(settings, options) {
-            if (options === void 0) { options = null; }
+            if (options === void 0) {
+                options = null;
+            }
             var api = new dataTable.Api(settings);
             var opts = options
                 ? options
@@ -545,13 +546,11 @@
             if (e.namespace !== 'dt') {
                 return;
             }
-            if (settings.oInit.fixedColumns ||
-                dataTable.defaults.fixedColumns) {
+            if (settings.oInit.fixedColumns || dataTable.defaults.fixedColumns) {
                 if (!settings._fixedColumns) {
                     _init(settings, null);
                 }
             }
         });
-    }));
-
-}());
+    });
+})();

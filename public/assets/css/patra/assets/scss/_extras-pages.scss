@@ -1,9 +1,7 @@
-
-
 /* ==============
   pricing
 ===================*/
-.pricing-box{
+.pricing-box {
     box-shadow: $shadow;
     .pricing-title {
         clip-path: polygon(100% 0, 100% 75%, 50% 100%, 0% 75%, 0 0);
@@ -22,8 +20,8 @@
         right: 0px;
         top: 140px;
     }
-    .plan-features{
-        p{
+    .plan-features {
+        p {
             font-size: 16px;
         }
     }
@@ -33,13 +31,16 @@
   faq
 ===================*/
 
-.faq-box{
-    .faq-ques{
+.faq-box {
+    .faq-ques {
         background: rgba($primary, 0.2);
     }
-    .faq-icon{  
+    .faq-icon {
         font-size: 30px;
-        text-shadow: rgba($primary, 0.3) 1px 1px, rgba($primary, 0.2) 2px 2px, rgba($primary, 0.3) 3px 3px;
+        text-shadow:
+            rgba($primary, 0.3) 1px 1px,
+            rgba($primary, 0.2) 2px 2px,
+            rgba($primary, 0.3) 3px 3px;
         position: relative;
         bottom: 13px;
         left: 13px;
@@ -50,13 +51,12 @@
   comming soon
 ===================*/
 
-.comming-watch{
+.comming-watch {
     div {
         display: inline-block;
-        .card{
+        .card {
             margin: 0px 15px 15px 15px;
-            .countdown-num
-            {
+            .countdown-num {
                 font-weight: 600;
                 color: $primary;
             }
@@ -74,6 +74,6 @@
                 padding-top: 14px;
                 font-size: 0.9em;
             }
-        }        
+        }
     }
 }

@@ -13,14 +13,13 @@
 //     }
 // });
 
-
-$(window).scroll(function(){
+$(window).scroll(function () {
     var scroll = $(window).scrollTop();
-    var layananOffset = $("#layanan").offset().top;
+    var layananOffset = $('#layanan').offset().top;
 
     if (scroll >= layananOffset) {
-        $("header").css('background-color', '#2a0f60');
+        $('header').css('background-color', '#2a0f60');
     } else {
-        $("header").css('background-color', 'transparent');
+        $('header').css('background-color', 'transparent');
     }
 });

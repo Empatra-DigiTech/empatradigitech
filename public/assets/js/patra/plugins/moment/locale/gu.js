@@ -1,24 +1,25 @@
 //! moment.js locale configuration
 
-;(function (global, factory) {
-   typeof exports === 'object' && typeof module !== 'undefined'
-       && typeof require === 'function' ? factory(require('../moment')) :
-   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
-   factory(global.moment)
-}(this, (function (moment) { 'use strict';
-
+(function (global, factory) {
+    typeof exports === 'object' && typeof module !== 'undefined' && typeof require === 'function'
+        ? factory(require('../moment'))
+        : typeof define === 'function' && define.amd
+          ? define(['../moment'], factory)
+          : factory(global.moment);
+})(this, function (moment) {
+    'use strict';
 
     var symbolMap = {
-            '1': '૧',
-            '2': '૨',
-            '3': '૩',
-            '4': '૪',
-            '5': '૫',
-            '6': '૬',
-            '7': '૭',
-            '8': '૮',
-            '9': '૯',
-            '0': '૦'
+            1: '૧',
+            2: '૨',
+            3: '૩',
+            4: '૪',
+            5: '૫',
+            6: '૬',
+            7: '૭',
+            8: '૮',
+            9: '૯',
+            0: '૦',
         },
         numberMap = {
             '૧': '1',
@@ -30,12 +31,16 @@
             '૭': '7',
             '૮': '8',
             '૯': '9',
-            '૦': '0'
+            '૦': '0',
         };
 
     var gu = moment.defineLocale('gu', {
-        months: 'જાન્યુઆરી_ફેબ્રુઆરી_માર્ચ_એપ્રિલ_મે_જૂન_જુલાઈ_ઑગસ્ટ_સપ્ટેમ્બર_ઑક્ટ્બર_નવેમ્બર_ડિસેમ્બર'.split('_'),
-        monthsShort: 'જાન્યુ._ફેબ્રુ._માર્ચ_એપ્રિ._મે_જૂન_જુલા._ઑગ._સપ્ટે._ઑક્ટ્._નવે._ડિસે.'.split('_'),
+        months: 'જાન્યુઆરી_ફેબ્રુઆરી_માર્ચ_એપ્રિલ_મે_જૂન_જુલાઈ_ઑગસ્ટ_સપ્ટેમ્બર_ઑક્ટ્બર_નવેમ્બર_ડિસેમ્બર'.split(
+            '_',
+        ),
+        monthsShort: 'જાન્યુ._ફેબ્રુ._માર્ચ_એપ્રિ._મે_જૂન_જુલા._ઑગ._સપ્ટે._ઑક્ટ્._નવે._ડિસે.'.split(
+            '_',
+        ),
         monthsParseExact: true,
         weekdays: 'રવિવાર_સોમવાર_મંગળવાર_બુધ્વાર_ગુરુવાર_શુક્રવાર_શનિવાર'.split('_'),
         weekdaysShort: 'રવિ_સોમ_મંગળ_બુધ્_ગુરુ_શુક્ર_શનિ'.split('_'),
@@ -46,7 +51,7 @@
             L: 'DD/MM/YYYY',
             LL: 'D MMMM YYYY',
             LLL: 'D MMMM YYYY, A h:mm વાગ્યે',
-            LLLL: 'dddd, D MMMM YYYY, A h:mm વાગ્યે'
+            LLLL: 'dddd, D MMMM YYYY, A h:mm વાગ્યે',
         },
         calendar: {
             sameDay: '[આજ] LT',
@@ -54,7 +59,7 @@
             nextWeek: 'dddd, LT',
             lastDay: '[ગઇકાલે] LT',
             lastWeek: '[પાછલા] dddd, LT',
-            sameElse: 'L'
+            sameElse: 'L',
         },
         relativeTime: {
             future: '%s મા',
@@ -70,7 +75,7 @@
             M: 'એક મહિનો',
             MM: '%d મહિનો',
             y: 'એક વર્ષ',
-            yy: '%d વર્ષ'
+            yy: '%d વર્ષ',
         },
         preparse: function (string) {
             return string.replace(/[૧૨૩૪૫૬૭૮૯૦]/g, function (match) {
@@ -114,10 +119,9 @@
         },
         week: {
             dow: 0, // Sunday is the first day of the week.
-            doy: 6 // The week that contains Jan 6th is the first week of the year.
-        }
+            doy: 6, // The week that contains Jan 6th is the first week of the year.
+        },
     });
 
     return gu;
-
-})));
+});

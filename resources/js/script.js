@@ -1,4 +1,4 @@
-const banner = document.querySelector(".banner");
+const banner = document.querySelector('.banner');
 const bannerWidth = banner.offsetWidth;
 const screenWidth = window.innerWidth;
 

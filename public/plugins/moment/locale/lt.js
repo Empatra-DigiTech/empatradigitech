@@ -2,12 +2,14 @@
 //! locale : Lithuanian [lt]
 //! author : Mindaugas Mozūras : https://github.com/mmozuras
 
-;(function (global, factory) {
-   typeof exports === 'object' && typeof module !== 'undefined'
-       && typeof require === 'function' ? factory(require('../moment')) :
-   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
-   factory(global.moment)
-}(this, (function (moment) { 'use strict';
+(function (global, factory) {
+    typeof exports === 'object' && typeof module !== 'undefined' && typeof require === 'function'
+        ? factory(require('../moment'))
+        : typeof define === 'function' && define.amd
+          ? define(['../moment'], factory)
+          : factory(global.moment);
+})(this, function (moment) {
+    'use strict';
 
     //! moment.js locale configuration
 
@@ -32,11 +34,7 @@
         }
     }
     function translateSingular(number, withoutSuffix, key, isFuture) {
-        return withoutSuffix
-            ? forms(key)[0]
-            : isFuture
-            ? forms(key)[1]
-            : forms(key)[2];
+        return withoutSuffix ? forms(key)[0] : isFuture ? forms(key)[1] : forms(key)[2];
     }
     function special(number) {
         return number % 10 === 0 || (number > 10 && number < 20);
@@ -47,9 +45,7 @@
     function translate(number, withoutSuffix, key, isFuture) {
         var result = number + ' ';
         if (number === 1) {
-            return (
-                result + translateSingular(number, withoutSuffix, key[0], isFuture)
-            );
+            return result + translateSingular(number, withoutSuffix, key[0], isFuture);
         } else if (withoutSuffix) {
             return result + (special(number) ? forms(key)[1] : forms(key)[0]);
         } else {
@@ -63,21 +59,23 @@
     var lt = moment.defineLocale('lt', {
         months: {
             format: 'sausio_vasario_kovo_balandžio_gegužės_birželio_liepos_rugpjūčio_rugsėjo_spalio_lapkričio_gruodžio'.split(
-                '_'
+                '_',
             ),
-            standalone: 'sausis_vasaris_kovas_balandis_gegužė_birželis_liepa_rugpjūtis_rugsėjis_spalis_lapkritis_gruodis'.split(
-                '_'
-            ),
+            standalone:
+                'sausis_vasaris_kovas_balandis_gegužė_birželis_liepa_rugpjūtis_rugsėjis_spalis_lapkritis_gruodis'.split(
+                    '_',
+                ),
             isFormat: /D[oD]?(\[[^\[\]]*\]|\s)+MMMM?|MMMM?(\[[^\[\]]*\]|\s)+D[oD]?/,
         },
         monthsShort: 'sau_vas_kov_bal_geg_bir_lie_rgp_rgs_spa_lap_grd'.split('_'),
         weekdays: {
             format: 'sekmadienį_pirmadienį_antradienį_trečiadienį_ketvirtadienį_penktadienį_šeštadienį'.split(
-                '_'
+                '_',
             ),
-            standalone: 'sekmadienis_pirmadienis_antradienis_trečiadienis_ketvirtadienis_penktadienis_šeštadienis'.split(
-                '_'
-            ),
+            standalone:
+                'sekmadienis_pirmadienis_antradienis_trečiadienis_ketvirtadienis_penktadienis_šeštadienis'.split(
+                    '_',
+                ),
             isFormat: /dddd HH:mm/,
         },
         weekdaysShort: 'Sek_Pir_Ant_Tre_Ket_Pen_Šeš'.split('_'),
@@ -130,5 +128,4 @@
     });
 
     return lt;
-
-})));
+});

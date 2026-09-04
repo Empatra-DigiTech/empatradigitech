@@ -1,6 +1,6 @@
 .layanan-cta-section {
     padding: 3rem 0 4rem;
-    background: #F4F6F9;
+    background: #f4f6f9;
 }
 
 .layanan-cta-box {
@@ -45,12 +45,12 @@
 }
 
 .layanan-btn-primary {
-    background: #25D366;
+    background: #25d366;
     color: #fff;
 }
 
 .layanan-btn-primary:hover {
-    background: #1DA851;
+    background: #1da851;
     color: #fff;
     text-decoration: none;
     transform: translateY(-2px);

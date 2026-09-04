@@ -32,11 +32,7 @@
     left: 0;
     right: 0;
     bottom: 0;
-    background: linear-gradient(
-        135deg,
-        rgba(15, 60, 93, 0.85) 0%,
-        rgba(176, 46, 54, 0.75) 100%
-    );
+    background: linear-gradient(135deg, rgba(15, 60, 93, 0.85) 0%, rgba(176, 46, 54, 0.75) 100%);
 }
 
 /* Section Title */
@@ -167,7 +163,8 @@
 }
 
 @keyframes pulse {
-    0%, 100% {
+    0%,
+    100% {
         transform: scale(1);
         opacity: 0.2;
     }
@@ -426,11 +423,21 @@
     animation: fadeInUp 0.5s ease-out backwards;
 }
 
-.misi-list li:nth-child(1) { animation-delay: 0.5s; }
-.misi-list li:nth-child(2) { animation-delay: 0.6s; }
-.misi-list li:nth-child(3) { animation-delay: 0.7s; }
-.misi-list li:nth-child(4) { animation-delay: 0.8s; }
-.misi-list li:nth-child(5) { animation-delay: 0.9s; }
+.misi-list li:nth-child(1) {
+    animation-delay: 0.5s;
+}
+.misi-list li:nth-child(2) {
+    animation-delay: 0.6s;
+}
+.misi-list li:nth-child(3) {
+    animation-delay: 0.7s;
+}
+.misi-list li:nth-child(4) {
+    animation-delay: 0.8s;
+}
+.misi-list li:nth-child(5) {
+    animation-delay: 0.9s;
+}
 
 /* ========================================
    ACCESSIBILITY

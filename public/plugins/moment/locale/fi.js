@@ -2,17 +2,19 @@
 //! locale : Finnish [fi]
 //! author : Tarmo Aidantausta : https://github.com/bleadof
 
-;(function (global, factory) {
-   typeof exports === 'object' && typeof module !== 'undefined'
-       && typeof require === 'function' ? factory(require('../moment')) :
-   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
-   factory(global.moment)
-}(this, (function (moment) { 'use strict';
+(function (global, factory) {
+    typeof exports === 'object' && typeof module !== 'undefined' && typeof require === 'function'
+        ? factory(require('../moment'))
+        : typeof define === 'function' && define.amd
+          ? define(['../moment'], factory)
+          : factory(global.moment);
+})(this, function (moment) {
+    'use strict';
 
     //! moment.js locale configuration
 
     var numbersPast = 'nolla yksi kaksi kolme neljä viisi kuusi seitsemän kahdeksan yhdeksän'.split(
-            ' '
+            ' ',
         ),
         numbersFuture = [
             'nolla',
@@ -64,23 +66,17 @@
         return result;
     }
     function verbalNumber(number, isFuture) {
-        return number < 10
-            ? isFuture
-                ? numbersFuture[number]
-                : numbersPast[number]
-            : number;
+        return number < 10 ? (isFuture ? numbersFuture[number] : numbersPast[number]) : number;
     }
 
     var fi = moment.defineLocale('fi', {
         months: 'tammikuu_helmikuu_maaliskuu_huhtikuu_toukokuu_kesäkuu_heinäkuu_elokuu_syyskuu_lokakuu_marraskuu_joulukuu'.split(
-            '_'
+            '_',
         ),
         monthsShort: 'tammi_helmi_maalis_huhti_touko_kesä_heinä_elo_syys_loka_marras_joulu'.split(
-            '_'
+            '_',
         ),
-        weekdays: 'sunnuntai_maanantai_tiistai_keskiviikko_torstai_perjantai_lauantai'.split(
-            '_'
-        ),
+        weekdays: 'sunnuntai_maanantai_tiistai_keskiviikko_torstai_perjantai_lauantai'.split('_'),
         weekdaysShort: 'su_ma_ti_ke_to_pe_la'.split('_'),
         weekdaysMin: 'su_ma_ti_ke_to_pe_la'.split('_'),
         longDateFormat: {
@@ -128,5 +124,4 @@
     });
 
     return fi;
-
-})));
+});

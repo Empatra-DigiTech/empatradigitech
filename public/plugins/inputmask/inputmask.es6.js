@@ -1,4 +1,4 @@
-import "./inputmask.js";
+import './inputmask.js';
 
 const inputmask = window.Inputmask;
 window.Inputmask = undefined;

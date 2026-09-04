@@ -442,11 +442,11 @@
     width: fit-content;
     padding: 0.85rem 1.75rem;
     font-size: 0.9375rem;
-    background: #25D366;
+    background: #25d366;
 }
 
 .detail-cta:hover {
-    background: #1DA851;
+    background: #1da851;
 }
 
 .detail-cta i {
@@ -561,8 +561,12 @@
 }
 
 @keyframes fadeIn {
-    from { opacity: 0; }
-    to { opacity: 1; }
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
 }
 
 .detail-image {
@@ -570,7 +574,9 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-    *, *::before, *::after {
+    *,
+    *::before,
+    *::after {
         animation: none !important;
         transition: none !important;
     }

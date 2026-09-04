@@ -3,12 +3,14 @@
 ===================*/
 
 .mce-panel {
-  border-color: darken($light,5%) !important;
-  background-color: $light !important;
+    border-color: darken($light, 5%) !important;
+    background-color: $light !important;
 }
-.mce-menu-item:hover, .mce-menu-item.mce-selected, .mce-menu-item:focus {
-  background-color: $primary !important;
+.mce-menu-item:hover,
+.mce-menu-item.mce-selected,
+.mce-menu-item:focus {
+    background-color: $primary !important;
 }
 .mce-menu {
-  background-color: $white !important;
+    background-color: $white !important;
 }

@@ -2,13 +2,14 @@
   Pagination
 ===================*/
 .page-link {
-  color: $primary;
+    color: $primary;
 }
 .page-item.active .page-link {
-  background-color: $primary;
-  border-color: $primary;
+    background-color: $primary;
+    border-color: $primary;
 }
-.page-link:focus, .page-link:hover {
-  color: $dark;
-  background-color: $light;
+.page-link:focus,
+.page-link:hover {
+    color: $dark;
+    background-color: $light;
 }

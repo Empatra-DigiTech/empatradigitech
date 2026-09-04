@@ -78,11 +78,7 @@ body {
     left: 0;
     right: 0;
     bottom: 0;
-    background: linear-gradient(
-        135deg,
-        rgba(15, 60, 93, 0.85) 0%,
-        rgba(176, 46, 54, 0.75) 100%
-    );
+    background: linear-gradient(135deg, rgba(15, 60, 93, 0.85) 0%, rgba(176, 46, 54, 0.75) 100%);
     z-index: 1;
 }
 
@@ -93,14 +89,13 @@ body {
     left: 0;
     right: 0;
     bottom: 0;
-    background-image:
-        repeating-linear-gradient(
-            45deg,
-            transparent,
-            transparent 35px,
-            rgba(255, 255, 255, 0.03) 35px,
-            rgba(255, 255, 255, 0.03) 70px
-        );
+    background-image: repeating-linear-gradient(
+        45deg,
+        transparent,
+        transparent 35px,
+        rgba(255, 255, 255, 0.03) 35px,
+        rgba(255, 255, 255, 0.03) 70px
+    );
     z-index: 2;
 }
 
@@ -125,11 +120,7 @@ body {
     right: -50%;
     width: 100%;
     height: 100%;
-    background: radial-gradient(
-        circle,
-        rgba(15, 60, 93, 0.05) 0%,
-        transparent 70%
-    );
+    background: radial-gradient(circle, rgba(15, 60, 93, 0.05) 0%, transparent 70%);
     z-index: 0;
 }
 
@@ -336,12 +327,7 @@ form.user {
     left: -100%;
     width: 100%;
     height: 100%;
-    background: linear-gradient(
-        90deg,
-        transparent,
-        rgba(255, 255, 255, 0.2),
-        transparent
-    );
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
     transition: left 0.5s ease;
 }
 

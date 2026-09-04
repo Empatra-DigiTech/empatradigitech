@@ -3,20 +3,20 @@
 //! author : Kyungwook, Park : https://github.com/kyungw00k
 //! author : Jeeeyul Lee <jeeeyul@gmail.com>
 
-;(function (global, factory) {
-   typeof exports === 'object' && typeof module !== 'undefined'
-       && typeof require === 'function' ? factory(require('../moment')) :
-   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
-   factory(global.moment)
-}(this, (function (moment) { 'use strict';
+(function (global, factory) {
+    typeof exports === 'object' && typeof module !== 'undefined' && typeof require === 'function'
+        ? factory(require('../moment'))
+        : typeof define === 'function' && define.amd
+          ? define(['../moment'], factory)
+          : factory(global.moment);
+})(this, function (moment) {
+    'use strict';
 
     //! moment.js locale configuration
 
     var ko = moment.defineLocale('ko', {
         months: '1월_2월_3월_4월_5월_6월_7월_8월_9월_10월_11월_12월'.split('_'),
-        monthsShort: '1월_2월_3월_4월_5월_6월_7월_8월_9월_10월_11월_12월'.split(
-            '_'
-        ),
+        monthsShort: '1월_2월_3월_4월_5월_6월_7월_8월_9월_10월_11월_12월'.split('_'),
         weekdays: '일요일_월요일_화요일_수요일_목요일_금요일_토요일'.split('_'),
         weekdaysShort: '일_월_화_수_목_금_토'.split('_'),
         weekdaysMin: '일_월_화_수_목_금_토'.split('_'),
@@ -82,5 +82,4 @@
     });
 
     return ko;
-
-})));
+});

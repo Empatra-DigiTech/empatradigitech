@@ -1,11 +1,10 @@
-
 /* global jQuery */
 
-(function($) {
+(function ($) {
     'use strict';
 
     var options = {
-        propagateSupportedGesture: false
+        propagateSupportedGesture: false,
     };
 
     function init(plot) {
@@ -23,7 +22,7 @@
                 isUnsupportedGesture: false,
                 prevTapTime: null,
                 tapStartTime: null,
-                longTapTriggerId: null
+                longTapTriggerId: null,
             },
             maxDistanceBetweenTaps = 20,
             maxIntervalBetweenTaps = 500,
@@ -94,7 +93,7 @@
         }
 
         var pan = {
-            touchstart: function(e) {
+            touchstart: function (e) {
                 updatePrevForDoubleTap();
                 updateCurrentForDoubleTap(e);
                 updateStateForLongTapStart(e);
@@ -102,7 +101,7 @@
                 mainEventHolder.dispatchEvent(new CustomEvent('panstart', { detail: e }));
             },
 
-            touchmove: function(e) {
+            touchmove: function (e) {
                 preventEventBehaviors(e);
 
                 updateCurrentForDoubleTap(e);
@@ -113,7 +112,7 @@
                 }
             },
 
-            touchend: function(e) {
+            touchend: function (e) {
                 preventEventBehaviors(e);
 
                 if (wasPinchEvent(e)) {
@@ -122,15 +121,15 @@
                 } else if (noTouchActive(e)) {
                     mainEventHolder.dispatchEvent(new CustomEvent('panend', { detail: e }));
                 }
-            }
+            },
         };
 
         var pinch = {
-            touchstart: function(e) {
+            touchstart: function (e) {
                 mainEventHolder.dispatchEvent(new CustomEvent('pinchstart', { detail: e }));
             },
 
-            touchmove: function(e) {
+            touchmove: function (e) {
                 preventEventBehaviors(e);
                 gestureState.twoTouches = isPinchEvent(e);
                 if (!gestureState.isUnsupportedGesture) {
@@ -138,38 +137,44 @@
                 }
             },
 
-            touchend: function(e) {
+            touchend: function (e) {
                 preventEventBehaviors(e);
-            }
+            },
         };
 
         var doubleTap = {
-            onDoubleTap: function(e) {
+            onDoubleTap: function (e) {
                 preventEventBehaviors(e);
                 mainEventHolder.dispatchEvent(new CustomEvent('doubletap', { detail: e }));
-            }
+            },
         };
 
         var longTap = {
-            touchstart: function(e) {
+            touchstart: function (e) {
                 longTap.waitForLongTap(e);
             },
 
-            touchmove: function(e) {
-            },
+            touchmove: function (e) {},
 
-            touchend: function(e) {
+            touchend: function (e) {
                 if (gestureState.longTapTriggerId) {
                     clearTimeout(gestureState.longTapTriggerId);
                     gestureState.longTapTriggerId = null;
                 }
             },
 
-            isLongTap: function(e) {
+            isLongTap: function (e) {
                 var currentTime = new Date().getTime(),
                     tapDuration = currentTime - gestureState.tapStartTime;
                 if (tapDuration >= minLongTapDuration && !gestureState.interceptedLongTap) {
-                    if (distance(gestureState.currentTapStart.x, gestureState.currentTapStart.y, gestureState.currentTapEnd.x, gestureState.currentTapEnd.y) < maxLongTapDistance) {
+                    if (
+                        distance(
+                            gestureState.currentTapStart.x,
+                            gestureState.currentTapStart.y,
+                            gestureState.currentTapEnd.x,
+                            gestureState.currentTapEnd.y,
+                        ) < maxLongTapDistance
+                    ) {
                         gestureState.interceptedLongTap = true;
                         return true;
                     }
@@ -177,8 +182,8 @@
                 return false;
             },
 
-            waitForLongTap: function(e) {
-                var longTapTrigger = function() {
+            waitForLongTap: function (e) {
+                var longTapTrigger = function () {
                     if (longTap.isLongTap(e)) {
                         mainEventHolder.dispatchEvent(new CustomEvent('longtap', { detail: e }));
                     }
@@ -187,52 +192,58 @@
                 if (!gestureState.longTapTriggerId) {
                     gestureState.longTapTriggerId = setTimeout(longTapTrigger, minLongTapDuration);
                 }
-            }
+            },
         };
 
         var tap = {
-            touchstart: function(e) {
+            touchstart: function (e) {
                 gestureState.tapStartTime = new Date().getTime();
             },
 
-            touchmove: function(e) {
-            },
+            touchmove: function (e) {},
 
-            touchend: function(e) {
+            touchend: function (e) {
                 if (tap.isTap(e)) {
                     mainEventHolder.dispatchEvent(new CustomEvent('tap', { detail: e }));
                     preventEventBehaviors(e);
                 }
             },
 
-            isTap: function(e) {
+            isTap: function (e) {
                 var currentTime = new Date().getTime(),
                     tapDuration = currentTime - gestureState.tapStartTime;
                 if (tapDuration <= pressedTapDuration) {
-                    if (distance(gestureState.currentTapStart.x, gestureState.currentTapStart.y, gestureState.currentTapEnd.x, gestureState.currentTapEnd.y) < maxLongTapDistance) {
+                    if (
+                        distance(
+                            gestureState.currentTapStart.x,
+                            gestureState.currentTapStart.y,
+                            gestureState.currentTapEnd.x,
+                            gestureState.currentTapEnd.y,
+                        ) < maxLongTapDistance
+                    ) {
                         return true;
                     }
                 }
                 return false;
-            }
+            },
         };
 
         if (options.pan.enableTouch === true || options.zoom.enableTouch) {
             plot.hooks.bindEvents.push(bindEvents);
             plot.hooks.shutdown.push(shutdown);
-        };
+        }
 
         function updatePrevForDoubleTap() {
             gestureState.prevTap = {
                 x: gestureState.currentTap.x,
-                y: gestureState.currentTap.y
+                y: gestureState.currentTap.y,
             };
-        };
+        }
 
         function updateCurrentForDoubleTap(e) {
             gestureState.currentTap = {
                 x: e.touches[0].pageX,
-                y: e.touches[0].pageY
+                y: e.touches[0].pageY,
             };
         }
 
@@ -241,27 +252,34 @@
             gestureState.interceptedLongTap = false;
             gestureState.currentTapStart = {
                 x: e.touches[0].pageX,
-                y: e.touches[0].pageY
+                y: e.touches[0].pageY,
             };
             gestureState.currentTapEnd = {
                 x: e.touches[0].pageX,
-                y: e.touches[0].pageY
+                y: e.touches[0].pageY,
             };
-        };
+        }
 
         function updateStateForLongTapEnd(e) {
             gestureState.currentTapEnd = {
                 x: e.touches[0].pageX,
-                y: e.touches[0].pageY
+                y: e.touches[0].pageY,
             };
-        };
+        }
 
         function isDoubleTap(e) {
             var currentTime = new Date().getTime(),
                 intervalBetweenTaps = currentTime - gestureState.prevTapTime;
 
             if (intervalBetweenTaps >= 0 && intervalBetweenTaps < maxIntervalBetweenTaps) {
-                if (distance(gestureState.prevTap.x, gestureState.prevTap.y, gestureState.currentTap.x, gestureState.currentTap.y) < maxDistanceBetweenTaps) {
+                if (
+                    distance(
+                        gestureState.prevTap.x,
+                        gestureState.prevTap.y,
+                        gestureState.currentTap.x,
+                        gestureState.currentTap.y,
+                    ) < maxDistanceBetweenTaps
+                ) {
                     e.firstTouch = gestureState.prevTap;
                     e.secondTouch = gestureState.currentTap;
                     return true;
@@ -285,11 +303,11 @@
         }
 
         function noTouchActive(e) {
-            return (e.touches && e.touches.length === 0);
+            return e.touches && e.touches.length === 0;
         }
 
         function wasPinchEvent(e) {
-            return (gestureState.twoTouches && e.touches.length === 1);
+            return gestureState.twoTouches && e.touches.length === 1;
         }
 
         function updateOnMultipleTouches(e) {
@@ -302,8 +320,10 @@
 
         function isPinchEvent(e) {
             if (e.touches && e.touches.length >= 2) {
-                if (e.touches[0].target === plot.getEventHolder() &&
-                    e.touches[1].target === plot.getEventHolder()) {
+                if (
+                    e.touches[0].target === plot.getEventHolder() &&
+                    e.touches[1].target === plot.getEventHolder()
+                ) {
                     return true;
                 }
             }
@@ -315,6 +335,6 @@
         init: init,
         options: options,
         name: 'navigateTouch',
-        version: '0.3'
+        version: '0.3',
     });
 })(jQuery);
