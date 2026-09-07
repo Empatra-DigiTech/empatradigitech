@@ -41,8 +41,8 @@
                 </h2>
 
                 <p class="kontak-info-desc">
-                    Silakan hubungi kami langsung, atau isi form di
-                    samping dan kami akan segera membalas pesan Anda.
+                    Silakan hubungi kami langsung, atau isi kebutuhan Anda di
+                    samping agar pesan WhatsApp otomatis tersusun rapi.
                 </p>
 
                 <div class="kontak-info-list">
@@ -97,77 +97,74 @@
 
 
             {{-- =========================================
-                 CONTACT FORM
+                 WHATSAPP LEAD SYSTEM
+                 (menggantikan form konvensional — pengunjung
+                 memilih layanan, budget, dan kebutuhan, lalu
+                 sistem merangkai pesan WhatsApp otomatis)
             ========================================== --}}
             <div class="kontak-form-wrapper">
 
-                <form action="{{ route('home.kontak.store') }}" method="post" enctype="multipart/form-data" class="kontak-form">
-                    @csrf
-
-                    <div class="kontak-form-row">
-
-                        <div class="kontak-form-group">
-                            <label for="kontak_name">Nama <span>*</span></label>
-                            <input type="text" id="kontak_name" name="name" value="{{ old('name') }}"
-                                   class="kontak-input @error('name') is-invalid @enderror"
-                                   placeholder="Nama lengkap Anda" required>
-                            @error('name')
-                                <small class="kontak-error">{{ $message }}</small>
-                            @enderror
-                        </div>
-
-                        <div class="kontak-form-group">
-                            <label for="kontak_email">Email <span>*</span></label>
-                            <input type="email" id="kontak_email" name="email" value="{{ old('email') }}"
-                                   class="kontak-input @error('email') is-invalid @enderror"
-                                   placeholder="nama@email.com" required>
-                            @error('email')
-                                <small class="kontak-error">{{ $message }}</small>
-                            @enderror
-                        </div>
-
-                    </div>
-
-                    <div class="kontak-form-group">
-                        <label for="kontak_subject">Subjek <span>*</span></label>
-                        <input type="text" id="kontak_subject" name="subject" value="{{ old('subject') }}"
-                               class="kontak-input @error('subject') is-invalid @enderror"
-                               maxlength="100" placeholder="Contoh: Penawaran Website Company Profile" required>
-                        @error('subject')
-                            <small class="kontak-error">{{ $message }}</small>
-                        @enderror
-                    </div>
-
-                    <div class="kontak-form-group">
-                        <label for="kontak_message">Pesan <span>*</span></label>
-                        <textarea id="kontak_message" name="message" rows="5"
-                                  class="kontak-input kontak-textarea @error('message') is-invalid @enderror"
-                                  placeholder="Ceritakan kebutuhan project Anda..." required>{{ old('message') }}</textarea>
-                        @error('message')
-                            <small class="kontak-error">{{ $message }}</small>
-                        @enderror
-                    </div>
-
-                    <div class="kontak-form-group">
-                        <label for="kontak_image">Lampiran (opsional)</label>
-                        <input type="file" id="kontak_image" name="image"
-                               class="kontak-input kontak-file @error('image') is-invalid @enderror"
-                               accept="image/jpeg,image/png,image/gif,image/bmp,image/svg+xml">
-                        <small class="kontak-hint">Format JPG, PNG, GIF, BMP, SVG. Maks 5MB.</small>
-                        @error('image')
-                            <small class="kontak-error">{{ $message }}</small>
-                        @enderror
-                    </div>
-
-                    <button type="submit" class="kontak-submit">
-                        Kirim Pesan
+                <div class="kontak-wa-header">
+                    <span class="kontak-wa-header-icon">
                         <svg viewBox="0 0 24 24" fill="none">
-                            <path d="M5 12h13"/>
-                            <path d="m13 6 6 6-6 6"/>
+                            <path d="M20 11.5a8 8 0 0 1-11.8 7L4 20l1.5-4A8 8 0 1 1 20 11.5Z"/>
+                            <path d="M8.5 8.5c.3-.4.7-.4 1-.1l1.2 1.2c.3.3.3.6.1.9l-.5.7c.7 1.2 1.6 2.1 2.8 2.8l.7-.5c.3-.2.6-.2.9.1l1.2 1.2c.3.3.3.7-.1 1-1 .8-2.4.6-4.1-.5-1.6-1-2.9-2.3-3.9-3.9-1.1-1.7-1.3-3.1-.5-4.1Z"/>
                         </svg>
-                    </button>
+                    </span>
+                    <div>
+                        <h2 class="kontak-info-title" style="color:#123567;">Konsultasi via WhatsApp</h2>
+                        <p class="kontak-wa-header-desc">Isi kebutuhan Anda, pesan otomatis tersusun rapi — tinggal kirim</p>
+                    </div>
+                </div>
 
-                </form>
+                <div class="kontak-form-row">
+                    <div class="kontak-form-group">
+                        <label for="leadName">Nama Anda</label>
+                        <input type="text" id="leadName" class="kontak-input" placeholder="cth. Budi Santoso">
+                    </div>
+                    <div class="kontak-form-group">
+                        <label for="leadLayanan">Layanan yang Diminati</label>
+                        <select id="leadLayanan" class="kontak-input">
+                            <option value="">-- Pilih Layanan --</option>
+                            @foreach($table_layanan as $layananItem)
+                                <option value="{{ $layananItem->title }}">{{ $layananItem->title }}</option>
+                            @endforeach
+                            <option value="Lainnya / Belum yakin">Lainnya / Belum yakin</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="kontak-form-group">
+                    <label for="leadBudget">Estimasi Anggaran</label>
+                    <select id="leadBudget" class="kontak-input">
+                        <option value="">-- Pilih Estimasi Anggaran (opsional) --</option>
+                        <option value="< Rp 5 juta">&lt; Rp 5 juta</option>
+                        <option value="Rp 5 - 15 juta">Rp 5 - 15 juta</option>
+                        <option value="Rp 15 - 50 juta">Rp 15 - 50 juta</option>
+                        <option value="> Rp 50 juta">&gt; Rp 50 juta</option>
+                        <option value="Belum tahu, perlu diskusi">Belum tahu, perlu diskusi</option>
+                    </select>
+                </div>
+
+                <div class="kontak-form-group">
+                    <label for="leadDesc">Deskripsi Kebutuhan</label>
+                    <textarea id="leadDesc" rows="4" class="kontak-input kontak-textarea"
+                        placeholder="Ceritakan singkat kebutuhan proyek Anda..."></textarea>
+                </div>
+
+                <div class="kontak-wa-preview">
+                    <div class="kontak-wa-preview-label">Preview Pesan WhatsApp</div>
+                    <div class="kontak-wa-preview-bubble" id="waPreviewText"></div>
+                </div>
+
+                <button type="button" id="waSendLeadBtn" class="kontak-submit kontak-submit-wa" disabled>
+                    Kirim ke WhatsApp
+                    <svg viewBox="0 0 24 24" fill="none">
+                        <path d="M5 12h13"/>
+                        <path d="m13 6 6 6-6 6"/>
+                    </svg>
+                </button>
+                <small class="kontak-hint">Lengkapi Nama, Layanan, dan Deskripsi — Anda akan diarahkan ke WhatsApp dengan pesan yang sudah otomatis terisi.</small>
 
             </div>
 
@@ -176,6 +173,61 @@
     </div>
 
 </section>
+
+
+<script>
+    (function() {
+        const WA_NUMBER = '6285151811055';
+
+        function buildMessage() {
+            const name = document.getElementById('leadName').value.trim() || '[Nama Anda]';
+            const layanan = document.getElementById('leadLayanan').value || '[Belum dipilih]';
+            const budget = document.getElementById('leadBudget').value || 'Belum ditentukan';
+            const desc = document.getElementById('leadDesc').value.trim() || '[Belum diisi]';
+
+            return 'Halo Empatra DigiTech! \n\n' +
+                'Saya ' + name + ', tertarik untuk berkonsultasi.\n\n' +
+                'Layanan: ' + layanan + '\n' +
+                'Estimasi Budget: ' + budget + '\n' +
+                'Kebutuhan: ' + desc + '\n\n' +
+                'Mohon info lebih lanjut. Terima kasih!';
+        }
+
+        function isValid() {
+            const name = document.getElementById('leadName').value.trim();
+            const layanan = document.getElementById('leadLayanan').value;
+            const desc = document.getElementById('leadDesc').value.trim();
+            return !!(name && layanan && desc);
+        }
+
+        function updatePreview() {
+            const preview = document.getElementById('waPreviewText');
+            const btn = document.getElementById('waSendLeadBtn');
+            if (preview) preview.innerText = buildMessage();
+            if (btn) btn.disabled = !isValid();
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            ['leadName', 'leadLayanan', 'leadBudget', 'leadDesc'].forEach(function(id) {
+                const el = document.getElementById(id);
+                if (!el) return;
+                el.addEventListener('input', updatePreview);
+                el.addEventListener('change', updatePreview);
+            });
+
+            const btn = document.getElementById('waSendLeadBtn');
+            if (btn) {
+                btn.addEventListener('click', function() {
+                    if (!isValid()) return;
+                    const link = 'https://wa.me/' + WA_NUMBER + '?text=' + encodeURIComponent(buildMessage());
+                    window.open(link, '_blank', 'noopener');
+                });
+            }
+
+            updatePreview();
+        });
+    })();
+</script>
 
 
 <style>
@@ -359,7 +411,7 @@
 
 
     /* =========================================
-       FORM PANEL
+       WHATSAPP LEAD FORM PANEL
     ========================================= */
 
     .kontak-form-wrapper {
@@ -369,6 +421,56 @@
 
         border: 1px solid #e2e6eb;
         border-radius: 14px;
+    }
+
+    .kontak-wa-header {
+        display: flex;
+        align-items: flex-start;
+
+        gap: 14px;
+
+        margin-bottom: 22px;
+
+        padding-bottom: 20px;
+
+        border-bottom: 1px solid #eef1f5;
+    }
+
+    .kontak-wa-header-icon {
+        flex: 0 0 42px;
+
+        width: 42px;
+        height: 42px;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        color: #ffffff;
+
+        background: #25D366;
+
+        border-radius: 50%;
+    }
+
+    .kontak-wa-header-icon svg {
+        width: 22px;
+        height: 22px;
+
+        stroke: currentColor;
+        stroke-width: 1.8;
+
+        stroke-linecap: round;
+        stroke-linejoin: round;
+    }
+
+    .kontak-wa-header-desc {
+        margin: 2px 0 0;
+
+        color: #7c8798;
+
+        font-size: 12px;
+        line-height: 1.5;
     }
 
     .kontak-form-row {
@@ -432,18 +534,15 @@
         min-height: 110px;
     }
 
-    .kontak-file {
-        padding: 8px 13px;
-    }
-
     .kontak-hint {
         display: block;
 
-        margin-top: 5px;
+        margin-top: 10px;
 
         color: #7c8798;
 
         font-size: 10.5px;
+        line-height: 1.5;
     }
 
     .kontak-error {
@@ -457,12 +556,65 @@
         font-weight: 600;
     }
 
+
+    /* =========================================
+       WA PREVIEW BUBBLE
+    ========================================= */
+
+    .kontak-wa-preview {
+        margin: 4px 0 18px;
+
+        padding: 14px 15px;
+
+        background: #ECE5DD;
+
+        border-radius: 10px;
+    }
+
+    .kontak-wa-preview-label {
+        margin-bottom: 8px;
+
+        color: #128C7E;
+
+        font-size: 10.5px;
+        font-weight: 800;
+
+        text-transform: uppercase;
+        letter-spacing: .5px;
+    }
+
+    .kontak-wa-preview-bubble {
+        min-height: 52px;
+
+        padding: 12px 13px;
+
+        background: #ffffff;
+
+        border-radius: 8px;
+
+        color: #22283a;
+
+        font-size: 12.5px;
+        line-height: 1.6;
+
+        white-space: pre-line;
+
+        box-shadow: 0 1px 2px rgba(0, 0, 0, .08);
+    }
+
+
+    /* =========================================
+       SUBMIT BUTTON
+    ========================================= */
+
     .kontak-submit {
         display: inline-flex;
         align-items: center;
         justify-content: center;
 
         gap: 8px;
+
+        width: 100%;
 
         min-height: 44px;
 
@@ -482,10 +634,26 @@
         transition: background .2s ease, transform .2s ease;
     }
 
-    .kontak-submit:hover {
+    .kontak-submit:hover:not(:disabled) {
         background: #092d59;
 
         transform: translateY(-1px);
+    }
+
+    .kontak-submit-wa {
+        background: #25D366;
+    }
+
+    .kontak-submit-wa:hover:not(:disabled) {
+        background: #1DA851;
+    }
+
+    .kontak-submit:disabled {
+        background: #cbd5e1;
+
+        cursor: not-allowed;
+
+        transform: none;
     }
 
     .kontak-submit svg {

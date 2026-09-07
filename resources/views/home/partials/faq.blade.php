@@ -1,3 +1,24 @@
+@if($table_faq->count())
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+        @foreach($table_faq as $index => $faqItem)
+        {
+            "@type": "Question",
+            "name": @json(strip_tags($faqItem->question)),
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": @json(strip_tags($faqItem->answer))
+            }
+        }@if(!$loop->last),@endif
+        @endforeach
+    ]
+}
+</script>
+@endif
+
 <section class="faq-section" id="faq">
 
     <div class="faq-container">

@@ -117,6 +117,186 @@
 
 </section>
 
+{{-- =========================================
+     POST-PORTFOLIO CTA BANNER
+     Mendorong pengunjung yang baru selesai lihat
+     portofolio untuk langsung diskusi proyek via WA.
+========================================== --}}
+<section class="portfolio-cta-banner-section">
+
+    <div class="portfolio-cta-banner-container">
+
+        <div class="portfolio-cta-banner-box">
+
+            <div class="portfolio-cta-banner-text">
+                <h3 class="portfolio-cta-banner-title">Suka dengan hasil kerja kami?</h3>
+                <p class="portfolio-cta-banner-subtitle">Ceritakan proyek Anda, kami bantu wujudkan dalam 24 jam respons.</p>
+            </div>
+
+            <div class="portfolio-cta-banner-buttons">
+                <a href="https://wa.me/6285151811055?text={{ urlencode('Halo Empatra DigiTech, saya ingin mendiskusikan sebuah proyek.') }}"
+                   target="_blank" rel="noopener" class="portfolio-cta-banner-btn-primary">
+                    <svg viewBox="0 0 24 24" fill="none">
+                        <path d="M20 11.5a8 8 0 0 1-11.8 7L4 20l1.5-4A8 8 0 1 1 20 11.5Z"/>
+                        <path d="M8.5 8.5c.3-.4.7-.4 1-.1l1.2 1.2c.3.3.3.6.1.9l-.5.7c.7 1.2 1.6 2.1 2.8 2.8l.7-.5c.3-.2.6-.2.9.1l1.2 1.2c.3.3.3.7-.1 1-1 .8-2.4.6-4.1-.5-1.6-1-2.9-2.3-3.9-3.9-1.1-1.7-1.3-3.1-.5-4.1Z"/>
+                    </svg>
+                    Diskusikan Proyek Anda via WhatsApp
+                </a>
+                <a href="{{ route('home.home.index') }}#layanan" class="portfolio-cta-banner-btn-secondary">
+                    Lihat Semua Layanan
+                </a>
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+<style>
+    /* =========================================
+       POST-PORTFOLIO CTA BANNER
+    ========================================= */
+
+    .portfolio-cta-banner-section {
+        padding: 0 20px 70px;
+
+        background: #f6f8fb;
+    }
+
+    .portfolio-cta-banner-container {
+        width: min(1100px, 100%);
+
+        margin: 0 auto;
+    }
+
+    .portfolio-cta-banner-box {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: space-between;
+
+        gap: 22px;
+
+        padding: 34px 36px;
+
+        background: linear-gradient(135deg, #123567 0%, #a91e2a 100%);
+
+        border-radius: 14px;
+
+        box-shadow: 0 12px 28px rgba(18, 53, 103, .18);
+    }
+
+    .portfolio-cta-banner-title {
+        margin: 0 0 4px;
+
+        color: #ffffff;
+
+        font-size: 20px;
+        font-weight: 800;
+    }
+
+    .portfolio-cta-banner-subtitle {
+        margin: 0;
+
+        color: rgba(255, 255, 255, .85);
+
+        font-size: 13px;
+        line-height: 1.5;
+    }
+
+    .portfolio-cta-banner-buttons {
+        display: flex;
+        flex-wrap: wrap;
+
+        gap: 12px;
+
+        flex-shrink: 0;
+    }
+
+    .portfolio-cta-banner-btn-primary,
+    .portfolio-cta-banner-btn-secondary {
+        display: inline-flex;
+        align-items: center;
+
+        gap: 8px;
+
+        min-height: 42px;
+
+        padding: 0 20px;
+
+        border-radius: 8px;
+
+        font-size: 12.5px;
+        font-weight: 700;
+
+        text-decoration: none;
+
+        transition: transform .2s ease, background .2s ease, box-shadow .2s ease;
+    }
+
+    .portfolio-cta-banner-btn-primary {
+        color: #ffffff;
+
+        background: #25D366;
+    }
+
+    .portfolio-cta-banner-btn-primary svg {
+        width: 16px;
+        height: 16px;
+
+        stroke: currentColor;
+        stroke-width: 1.8;
+
+        stroke-linecap: round;
+        stroke-linejoin: round;
+    }
+
+    .portfolio-cta-banner-btn-primary:hover {
+        background: #1DA851;
+
+        transform: translateY(-2px);
+
+        box-shadow: 0 8px 18px rgba(37, 211, 102, .4);
+    }
+
+    .portfolio-cta-banner-btn-secondary {
+        color: #ffffff;
+
+        background: rgba(255, 255, 255, .12);
+
+        border: 1px solid rgba(255, 255, 255, .35);
+    }
+
+    .portfolio-cta-banner-btn-secondary:hover {
+        background: rgba(255, 255, 255, .2);
+
+        transform: translateY(-2px);
+    }
+
+    @media (max-width: 700px) {
+
+        .portfolio-cta-banner-box {
+            flex-direction: column;
+
+            align-items: flex-start;
+
+            text-align: left;
+        }
+
+        .portfolio-cta-banner-buttons {
+            width: 100%;
+        }
+
+        .portfolio-cta-banner-btn-primary,
+        .portfolio-cta-banner-btn-secondary {
+            width: 100%;
+
+            justify-content: center;
+        }
+    }
+</style>
+
 
 <style>
     /* =========================================

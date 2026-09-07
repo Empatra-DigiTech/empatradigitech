@@ -109,6 +109,11 @@
                      "Website" default) — sekarang bawa query ?tab=calculator supaya
                      partials/price.blade.php tahu harus membuka tab Kalkulator. --}}
                 <li><a href="{{ route('home.home.index') }}?tab=calculator#pricing" class="nav-open-calculator-tab">Kalkulator</a></li>
+
+                {{-- FIXED: halaman /kontak sudah berfungsi (lihat KontakController)
+                     tapi sebelumnya tidak ada link ke sini dari navbar manapun,
+                     sehingga pengunjung tidak bisa menemukan halaman ini. --}}
+                <li><a href="{{ route('home.kontak.index') }}" class="{{ request()->routeIs('home.kontak.*') ? 'is-active' : '' }}">Kontak</a></li>
             </ul>
         </nav>
 

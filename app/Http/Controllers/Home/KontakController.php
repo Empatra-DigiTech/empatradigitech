@@ -9,6 +9,7 @@ use App\Helpers\UploadHelper;
 use App\Models\Kontak;
 use App\Models\Pengaturan;
 use App\Models\Menu;
+use App\Models\Layanan;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Log;
 
@@ -27,10 +28,12 @@ class KontakController extends Controller
         // tidak pernah dikirim ke view ini sekarang disertakan juga.
         $table_pengaturan = Cache::remember('pengaturan_first', 3600, fn () => Pengaturan::first());
         $table_menu = Cache::remember('menu_all', 3600, fn () => Menu::all());
+        $table_layanan = Layanan::orderBy('title', 'ASC')->get();
 
         $data = [
             'table_pengaturan' => $table_pengaturan,
             'table_menu' => $table_menu,
+            'table_layanan' => $table_layanan,
         ];
 
         return view($this->view."index", $data);
