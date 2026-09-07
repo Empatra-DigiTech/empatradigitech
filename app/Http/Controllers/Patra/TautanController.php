@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use App\Http\Requests\Tautan\StoreRequest;
 use App\Http\Requests\Tautan\UpdateRequest;
 use Illuminate\Pagination\Paginator;
+use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Log;
 
 class TautanController extends Controller
 {
@@ -60,6 +62,10 @@ class TautanController extends Controller
                 'url' => $url,
 
             ]);
+
+            // FIXED: tanpa ini, tautan baru tidak langsung muncul di footer
+            // karena footer membaca cache 'tautan_all' (lihat AppServiceProvider).
+            Cache::forget('tautan_all');
 
             alert()->html('Berhasil', 'Data berhasil ditambahkan', 'success');
             return redirect()->route($this->route . "index");
@@ -130,6 +136,8 @@ class TautanController extends Controller
 
             ]);
 
+            Cache::forget('tautan_all');
+
             alert()->html('Berhasil', 'Data berhasil diubah', 'success');
             return redirect()->route($this->route . "index");
         } catch (\Throwable $e) {
@@ -149,6 +157,8 @@ class TautanController extends Controller
             $result = $result->first();
 
             $result->delete();
+
+            Cache::forget('tautan_all');
 
             alert()->html('Berhasil', 'Data berhasil dihapus', 'success');
             return redirect()->route($this->route . "index");

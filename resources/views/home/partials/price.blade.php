@@ -35,6 +35,20 @@
                     Aplikasi
                 </button>
 
+                {{-- FIXED: menu navbar "Kalkulator" sudah ada dan mengarah ke sini
+                     lewat class nav-open-calculator-tab, tapi sebelumnya tidak ada
+                     satupun markup kalkulator yang dirender di halaman ini. Tab ini
+                     hanya muncul kalau admin sudah mengisi minimal satu layanan di
+                     panel Kalkulator. --}}
+                @if($calculator_services->count())
+                <button
+                    type="button"
+                    class="pricing-switch-btn"
+                    data-pricing-type="calculator">
+                    Kalkulator
+                </button>
+                @endif
+
             </div>
 
         </div>
@@ -149,6 +163,83 @@
             @endforelse
 
         </div>
+
+
+        {{-- ================================
+             CUSTOM PROJECT CALCULATOR
+        ================================= --}}
+        @if($calculator_services->count())
+        <div
+            class="pricing-grid calc-wrapper"
+            data-pricing-content="calculator"
+            data-pricing-display="block"
+            style="display: none;">
+
+            <div class="calc-box">
+
+                <div class="calc-form">
+
+                    <div class="calc-group">
+                        <label class="calc-label">1. Pilih Jenis Layanan</label>
+                        <div class="calc-service-options">
+                            @foreach($calculator_services as $index => $service)
+                                <label class="calc-service-card">
+                                    <input type="radio" name="calc_service" value="{{ $service->id }}"
+                                        data-base="{{ $service->harga_dasar }}"
+                                        data-perpage="{{ $service->harga_per_halaman }}"
+                                        data-name="{{ $service->nama_layanan }}"
+                                        {{ $index === 0 ? 'checked' : '' }}>
+                                    <span class="calc-service-card-inner">
+                                        <span class="calc-service-name">{{ $service->nama_layanan }}</span>
+                                        <span class="calc-service-price">mulai Rp {{ number_format($service->harga_dasar,0,',','.') }}</span>
+                                    </span>
+                                </label>
+                            @endforeach
+                        </div>
+                    </div>
+
+                    <div class="calc-group">
+                        <label class="calc-label" for="calc_pages">2. Jumlah Halaman / Fitur Inti</label>
+                        <input type="number" id="calc_pages" class="calc-input-number" value="5" min="1" max="100">
+                        <small class="calc-hint">Perkiraan jumlah halaman utama (Home, Tentang, Layanan, dsb).</small>
+                    </div>
+
+                    @if($calculator_features->count())
+                    <div class="calc-group">
+                        <label class="calc-label">3. Fitur Tambahan (opsional)</label>
+                        <div class="calc-feature-options">
+                            @foreach($calculator_features as $feature)
+                                <label class="calc-feature-item">
+                                    <input type="checkbox" name="calc_feature" value="{{ $feature->id }}"
+                                        data-price="{{ $feature->harga_tambahan }}"
+                                        data-name="{{ $feature->nama_fitur }}">
+                                    <span class="calc-feature-inner">
+                                        <span class="calc-feature-name">{{ $feature->nama_fitur }}</span>
+                                        <span class="calc-feature-price">+Rp {{ number_format($feature->harga_tambahan,0,',','.') }}</span>
+                                    </span>
+                                </label>
+                            @endforeach
+                        </div>
+                    </div>
+                    @endif
+
+                </div>
+
+                <div class="calc-result">
+                    <span class="calc-result-label">Estimasi Biaya Proyek Anda</span>
+                    <div class="calc-result-range" id="calcResultRange">Rp 0 &ndash; Rp 0</div>
+                    <p class="calc-result-note">*Estimasi awal, harga final ditentukan setelah konsultasi kebutuhan detail.</p>
+
+                    <a href="#" id="calcConsultButton" target="_blank" rel="noopener" class="calc-consult-button">
+                        <i class='bx bxl-whatsapp'></i>
+                        Konsultasikan Project
+                    </a>
+                </div>
+
+            </div>
+
+        </div>
+        @endif
 
 
         {{-- VIEW ALL --}}
@@ -549,6 +640,222 @@
 
 
     /* =========================================
+       CALCULATOR
+    ========================================= */
+
+    .calc-wrapper {
+        display: block;
+    }
+
+    .calc-box {
+        display: grid;
+
+        grid-template-columns: 1.4fr 1fr;
+
+        gap: 26px;
+
+        padding: 26px;
+
+        background: #f6f8fb;
+
+        border: 1px solid #e2e6eb;
+        border-radius: 14px;
+    }
+
+    .calc-group {
+        margin-bottom: 22px;
+    }
+
+    .calc-group:last-child {
+        margin-bottom: 0;
+    }
+
+    .calc-label {
+        display: block;
+
+        margin-bottom: 10px;
+
+        color: #142f54;
+
+        font-size: 13px;
+        font-weight: 700;
+    }
+
+    .calc-service-options,
+    .calc-feature-options {
+        display: flex;
+        flex-direction: column;
+
+        gap: 8px;
+    }
+
+    .calc-service-card,
+    .calc-feature-item {
+        display: block;
+
+        cursor: pointer;
+    }
+
+    .calc-service-card input,
+    .calc-feature-item input {
+        position: absolute;
+
+        opacity: 0;
+
+        pointer-events: none;
+    }
+
+    .calc-service-card-inner,
+    .calc-feature-inner {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+        gap: 12px;
+
+        padding: 11px 14px;
+
+        background: #ffffff;
+
+        border: 1.5px solid #dde2e8;
+        border-radius: 9px;
+
+        font-size: 12.5px;
+
+        transition: border-color .2s ease, background .2s ease;
+    }
+
+    .calc-service-card input:checked + .calc-service-card-inner,
+    .calc-feature-item input:checked + .calc-feature-inner {
+        background: #eef2f8;
+        border-color: #123b70;
+    }
+
+    .calc-service-name,
+    .calc-feature-name {
+        color: #22283a;
+        font-weight: 700;
+    }
+
+    .calc-service-price,
+    .calc-feature-price {
+        flex: 0 0 auto;
+
+        color: #123b70;
+        font-weight: 700;
+
+        white-space: nowrap;
+    }
+
+    .calc-input-number {
+        width: 120px;
+
+        padding: 9px 12px;
+
+        color: #22283a;
+        background: #ffffff;
+
+        border: 1.5px solid #dde2e8;
+        border-radius: 9px;
+
+        font-family: inherit;
+        font-size: 13px;
+    }
+
+    .calc-input-number:focus {
+        outline: none;
+        border-color: #123b70;
+    }
+
+    .calc-hint {
+        display: block;
+
+        margin-top: 6px;
+
+        color: #7c8798;
+
+        font-size: 10.5px;
+    }
+
+    .calc-result {
+        display: flex;
+        flex-direction: column;
+
+        justify-content: center;
+
+        padding: 26px 22px;
+
+        text-align: center;
+
+        color: #ffffff;
+        background: #123567;
+
+        border-radius: 12px;
+    }
+
+    .calc-result-label {
+        color: rgba(255, 255, 255, .72);
+
+        font-size: 11.5px;
+        font-weight: 700;
+
+        letter-spacing: .3px;
+
+        text-transform: uppercase;
+    }
+
+    .calc-result-range {
+        margin: 10px 0 8px;
+
+        color: #ffffff;
+
+        font-size: 22px;
+        font-weight: 800;
+
+        line-height: 1.2;
+    }
+
+    .calc-result-note {
+        margin: 0 0 20px;
+
+        color: rgba(255, 255, 255, .64);
+
+        font-size: 10.5px;
+        line-height: 1.5;
+    }
+
+    .calc-consult-button {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+
+        gap: 8px;
+
+        min-height: 42px;
+
+        padding: 0 18px;
+
+        color: #ffffff;
+        background: #25b358;
+
+        border-radius: 8px;
+
+        font-size: 12.5px;
+        font-weight: 700;
+
+        text-decoration: none;
+
+        transition: background .2s ease, transform .2s ease;
+    }
+
+    .calc-consult-button:hover {
+        background: #1e9648;
+
+        transform: translateY(-1px);
+    }
+
+
+    /* =========================================
        TABLET
     ========================================= */
 
@@ -562,6 +869,14 @@
 
             margin-left: auto;
             margin-right: auto;
+        }
+
+        .calc-wrapper {
+            max-width: none;
+        }
+
+        .calc-box {
+            grid-template-columns: 1fr;
         }
     }
 
@@ -638,7 +953,9 @@
                         content.dataset.pricingContent === type
                     ) {
 
-                        content.style.display = 'grid';
+                        // FIXED: sebelumnya selalu 'grid', padahal panel
+                        // kalkulator butuh 'block' (bukan grid card).
+                        content.style.display = content.dataset.pricingDisplay || 'grid';
 
                         content.animate(
                             [
@@ -669,5 +986,106 @@
 
         });
 
+
+        // FIXED: link "Kalkulator" di navbar (class nav-open-calculator-tab)
+        // mengarah ke #pricing?tab=calculator, tapi sebelumnya tidak ada JS
+        // yang membaca parameter itu dan membuka tab kalkulator secara
+        // otomatis. Dicek lewat query string supaya link "Harga" biasa
+        // (yang cuma pakai #pricing) tetap membuka tab Website seperti biasa.
+        var calcTabButton = document.querySelector('.pricing-switch-btn[data-pricing-type="calculator"]');
+        if (calcTabButton) {
+            var params = new URLSearchParams(window.location.search);
+            if (params.get('tab') === 'calculator') {
+                calcTabButton.click();
+            }
+        }
+
+    });
+</script>
+
+
+<script>
+    // ========================================
+    // PROJECT COST CALCULATOR
+    // ========================================
+    document.addEventListener('DOMContentLoaded', function () {
+
+        const serviceInputs = document.querySelectorAll('input[name="calc_service"]');
+        const featureInputs = document.querySelectorAll('input[name="calc_feature"]');
+        const pagesInput = document.getElementById('calc_pages');
+        const resultRange = document.getElementById('calcResultRange');
+        const consultButton = document.getElementById('calcConsultButton');
+
+        if (!serviceInputs.length || !pagesInput || !resultRange) return;
+
+        const CALC_WA_NUMBER = '6285151811055';
+        const RANGE_LOW = 0.9;
+        const RANGE_HIGH = 1.25;
+
+        function formatRupiah(num) {
+            return 'Rp ' + Math.round(num).toLocaleString('id-ID');
+        }
+
+        function getSelectedService() {
+            let selected = null;
+            serviceInputs.forEach(function (input) {
+                if (input.checked) selected = input;
+            });
+            return selected;
+        }
+
+        function getSelectedFeatures() {
+            const selected = [];
+            featureInputs.forEach(function (input) {
+                if (input.checked) {
+                    selected.push({
+                        name: input.dataset.name,
+                        price: parseFloat(input.dataset.price) || 0
+                    });
+                }
+            });
+            return selected;
+        }
+
+        function calculateAndRender() {
+            const service = getSelectedService();
+            if (!service) return;
+
+            const base = parseFloat(service.dataset.base) || 0;
+            const perPage = parseFloat(service.dataset.perpage) || 0;
+            const pages = Math.max(1, parseInt(pagesInput.value, 10) || 1);
+            const features = getSelectedFeatures();
+            const featureTotal = features.reduce(function (sum, f) { return sum + f.price; }, 0);
+
+            const subtotal = base + (perPage * pages) + featureTotal;
+            const low = subtotal * RANGE_LOW;
+            const high = subtotal * RANGE_HIGH;
+
+            resultRange.textContent = formatRupiah(low) + ' \u2013 ' + formatRupiah(high);
+
+            let message = 'Halo Empatra DigiTech, saya sudah coba kalkulator estimasi biaya di website dengan rincian:\n\n';
+            message += '\uD83D\uDCCC Layanan: ' + service.dataset.name + '\n';
+            message += '\uD83D\uDCC4 Jumlah Halaman: ' + pages + '\n';
+            if (features.length) {
+                message += '\u2795 Fitur Tambahan: ' + features.map(function (f) { return f.name; }).join(', ') + '\n';
+            }
+            message += '\uD83D\uDCB0 Estimasi: ' + formatRupiah(low) + ' - ' + formatRupiah(high) + '\n\n';
+            message += 'Boleh dibantu konsultasikan lebih lanjut untuk project ini?';
+
+            if (consultButton) {
+                consultButton.href = 'https://wa.me/' + CALC_WA_NUMBER + '?text=' + encodeURIComponent(message);
+            }
+        }
+
+        serviceInputs.forEach(function (input) {
+            input.addEventListener('change', calculateAndRender);
+        });
+        featureInputs.forEach(function (input) {
+            input.addEventListener('change', calculateAndRender);
+        });
+        pagesInput.addEventListener('input', calculateAndRender);
+
+        // Initial calculation on load
+        calculateAndRender();
     });
 </script>

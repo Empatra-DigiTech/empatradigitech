@@ -20,40 +20,54 @@
                     yang profesional, modern, dan terpercaya.
                 </p>
 
+                {{--
+                    FIXED: sebelumnya semua ikon di bawah ini hardcode href="#" —
+                    admin bisa isi link Instagram/Facebook/dst lewat panel Tautan,
+                    tapi tidak pernah muncul di sini. Sekarang di-loop dari
+                    $table_tautan (dikirim otomatis oleh View Composer di
+                    AppServiceProvider). Ikon dipilih berdasar kata kunci di
+                    judul tautan; kalau tidak cocok salah satu platform yang
+                    dikenal, dipakai ikon link generik supaya link tetap tampil.
+                --}}
+                @php
+                    $footerIconMap = [
+                        'instagram' => '<rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1"/>',
+                        'facebook' => '<path d="M14 8h3V4h-3c-3.3 0-5 2-5 5v3H6v4h3v4h4v-4h3l1-4h-4V9c0-.7.3-1 1-1Z"/>',
+                        'linkedin' => '<rect x="4" y="4" width="16" height="16" rx="2"/><path d="M8 10v6"/><path d="M8 7.5v.01"/><path d="M12 16v-3.5a2.5 2.5 0 0 1 5 0V16"/><path d="M12 10v6"/>',
+                        'whatsapp' => '<path d="M20 11.5a8 8 0 0 1-11.8 7L4 20l1.5-4A8 8 0 1 1 20 11.5Z"/><path d="M8.5 8.5c.3-.4.7-.4 1-.1l1.2 1.2c.3.3.3.6.1.9l-.5.7c.7 1.2 1.6 2.1 2.8 2.8l.7-.5c.3-.2.6-.2.9.1l1.2 1.2c.3.3.3.7-.1 1-1 .8-2.4.6-4.1-.5-1.6-1-2.9-2.3-3.9-3.9-1.1-1.7-1.3-3.1-.5-4.1Z"/>',
+                        'tiktok' => '<path d="M14 3v10.5a2.8 2.8 0 1 1-2-2.68"/><path d="M14 3c.3 2.4 1.8 4 4.5 4.2"/>',
+                        'youtube' => '<rect x="3" y="6" width="18" height="12" rx="3"/><path d="m10.5 9.5 5 2.5-5 2.5Z"/>',
+                        'twitter' => '<path d="M4 4l7.5 9.6L4.3 20H7l5.7-5.4L17 20h3l-8-10.2L19 4h-2.7l-5 4.8L7 4Z"/>',
+                        'x.com' => '<path d="M4 4l7.5 9.6L4.3 20H7l5.7-5.4L17 20h3l-8-10.2L19 4h-2.7l-5 4.8L7 4Z"/>',
+                    ];
+                    $footerIconDefault = '<circle cx="12" cy="12" r="9"/><path d="M9 12h6"/><path d="M12 9v6"/>';
+
+                    $footerLinks = collect($table_tautan ?? [])->filter(fn ($tautan) => !empty($tautan->url));
+                @endphp
+
+                @if($footerLinks->count())
                 <div class="footer-socials">
 
-                    <a href="#" aria-label="Instagram" class="footer-social">
-                        <svg viewBox="0 0 24 24" fill="none">
-                            <rect x="3" y="3" width="18" height="18" rx="5"/>
-                            <circle cx="12" cy="12" r="4"/>
-                            <circle cx="17.5" cy="6.5" r="1"/>
-                        </svg>
-                    </a>
-
-                    <a href="#" aria-label="Facebook" class="footer-social">
-                        <svg viewBox="0 0 24 24" fill="none">
-                            <path d="M14 8h3V4h-3c-3.3 0-5 2-5 5v3H6v4h3v4h4v-4h3l1-4h-4V9c0-.7.3-1 1-1Z"/>
-                        </svg>
-                    </a>
-
-                    <a href="#" aria-label="LinkedIn" class="footer-social">
-                        <svg viewBox="0 0 24 24" fill="none">
-                            <rect x="4" y="4" width="16" height="16" rx="2"/>
-                            <path d="M8 10v6"/>
-                            <path d="M8 7.5v.01"/>
-                            <path d="M12 16v-3.5a2.5 2.5 0 0 1 5 0V16"/>
-                            <path d="M12 10v6"/>
-                        </svg>
-                    </a>
-
-                    <a href="#" aria-label="WhatsApp" class="footer-social">
-                        <svg viewBox="0 0 24 24" fill="none">
-                            <path d="M20 11.5a8 8 0 0 1-11.8 7L4 20l1.5-4A8 8 0 1 1 20 11.5Z"/>
-                            <path d="M8.5 8.5c.3-.4.7-.4 1-.1l1.2 1.2c.3.3.3.6.1.9l-.5.7c.7 1.2 1.6 2.1 2.8 2.8l.7-.5c.3-.2.6-.2.9.1l1.2 1.2c.3.3.3.7-.1 1-1 .8-2.4.6-4.1-.5-1.6-1-2.9-2.3-3.9-3.9-1.1-1.7-1.3-3.1-.5-4.1Z"/>
-                        </svg>
-                    </a>
+                    @foreach($footerLinks as $tautan)
+                        @php
+                            $tautanTitle = strtolower($tautan->title ?? '');
+                            $tautanIcon = $footerIconDefault;
+                            foreach ($footerIconMap as $keyword => $iconMarkup) {
+                                if (str_contains($tautanTitle, $keyword)) {
+                                    $tautanIcon = $iconMarkup;
+                                    break;
+                                }
+                            }
+                        @endphp
+                        <a href="{{ $tautan->url }}" target="_blank" rel="noopener" aria-label="{{ $tautan->title }}" class="footer-social">
+                            <svg viewBox="0 0 24 24" fill="none">
+                                {!! $tautanIcon !!}
+                            </svg>
+                        </a>
+                    @endforeach
 
                 </div>
+                @endif
 
             </div>
 

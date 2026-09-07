@@ -4,6 +4,7 @@
 
 @section('content')
     @include('home.partials.hero')
+    @include('home.partials.clients')
     @include('home.partials.carousel')
     
     @include('home.partials.about')

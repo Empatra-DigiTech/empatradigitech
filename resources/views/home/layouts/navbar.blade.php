@@ -105,7 +105,10 @@
                         <li><a href="{{ route('home.team.index') }}" class="{{ request()->routeIs('home.team.*') ? 'is-active' : '' }}">Team</a></li>
                     </ul>
                 </li>
-                <li><a href="{{ route('home.home.index') }}#pricing" class="nav-open-calculator-tab">Kalkulator</a></li>
+                {{-- FIXED: sebelumnya cuma anchor ke #pricing (yang membuka tab
+                     "Website" default) — sekarang bawa query ?tab=calculator supaya
+                     partials/price.blade.php tahu harus membuka tab Kalkulator. --}}
+                <li><a href="{{ route('home.home.index') }}?tab=calculator#pricing" class="nav-open-calculator-tab">Kalkulator</a></li>
             </ul>
         </nav>
 

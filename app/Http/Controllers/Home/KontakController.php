@@ -7,18 +7,33 @@ use Illuminate\Http\Request;
 use App\Http\Requests\Kontak\StoreRequest;
 use App\Helpers\UploadHelper;
 use App\Models\Kontak;
+use App\Models\Pengaturan;
+use App\Models\Menu;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Log;
 
 class KontakController extends Controller
 {
     public function __construct(){
         $this->view = "home.pages.kontak.";
-        $this->route = "home.home.";
+        $this->route = "home.kontak.";
         $this->kontak = new Kontak();
     }
 
     public function index(){
-        return view($this->view."index");
+        // FIXED: view "home.pages.kontak.index" tidak pernah dibuat sebelumnya
+        // (route home.kontak.index selalu fatal error). View sudah dibuat,
+        // dan data navbar/footer (table_pengaturan, table_menu) yang sebelumnya
+        // tidak pernah dikirim ke view ini sekarang disertakan juga.
+        $table_pengaturan = Cache::remember('pengaturan_first', 3600, fn () => Pengaturan::first());
+        $table_menu = Cache::remember('menu_all', 3600, fn () => Menu::all());
+
+        $data = [
+            'table_pengaturan' => $table_pengaturan,
+            'table_menu' => $table_menu,
+        ];
+
+        return view($this->view."index", $data);
     }
 
     public function store(StoreRequest $request){
@@ -60,7 +75,12 @@ class KontakController extends Controller
 
             alert()->error('Gagal',$e->getMessage());
 
-            return redirect()->route($this->route."create")->withInput();
+            // FIXED: sebelumnya redirect ke route "home.home.create" yang tidak
+            // pernah didaftarkan (hanya home.kontak.index & home.kontak.store yang
+            // ada) -> setiap kali terjadi error di sini (mis. email duplikat karena
+            // kolom "email" unique), controller ini akan melempar
+            // RouteNotFoundException baru di dalam blok catch-nya sendiri.
+            return redirect()->route($this->route."index")->withInput();
         }
     }
 }

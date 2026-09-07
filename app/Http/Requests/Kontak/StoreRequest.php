@@ -60,7 +60,11 @@ class StoreRequest extends FormRequest
         if (! $this->wantsJson()) {
             $errors = implode('<br>', $validator->errors()->all());
             alert()->html('Gagal',$errors,'error');
-            $this->redirect = route('home.home.index');
+            // FIXED: sebelumnya selalu redirect ke homepage saat validasi gagal
+            // (kemungkinan karena halaman home.kontak.index dulu belum ada).
+            // Sekarang halamannya sudah ada, jadi user dikembalikan ke form
+            // kontak (dengan input lama tetap terisi) alih-alih dilempar ke home.
+            $this->redirect = route('home.kontak.index');
         }
 
         parent::failedValidation($validator);
