@@ -96,8 +96,16 @@
                     @endforeach
                 </ul>
 
+                @php
+                    $waFeaturesWebsite = collect($row->fitur_list)->map(fn($f) => "✓ {$f}")->implode("\n");
+                    $waMessagePaketWebsite = "Halo Empatra DigiTech, saya tertarik dengan paket *{$row->nama_paket}* ({$row->formatted_harga}" . ($row->periode ? '/' . $row->periode : '') . ").\n\n";
+                    if ($waFeaturesWebsite) {
+                        $waMessagePaketWebsite .= "Fitur yang didapat:\n{$waFeaturesWebsite}\n\n";
+                    }
+                    $waMessagePaketWebsite .= "Bisa dibantu informasi lebih lanjut?";
+                @endphp
 
-                <a href="#contact" class="pricing-button">
+                <a href="https://wa.me/6285151811055?text={{ urlencode($waMessagePaketWebsite) }}" target="_blank" rel="noopener" class="pricing-button">
                     Pilih Paket
                 </a>
 
@@ -152,8 +160,16 @@
                     @endforeach
                 </ul>
 
+                @php
+                    $waFeaturesApp = collect($row->fitur_list)->map(fn($f) => "✓ {$f}")->implode("\n");
+                    $waMessagePaketApp = "Halo Empatra DigiTech, saya tertarik dengan paket *{$row->nama_paket}* ({$row->formatted_harga}" . ($row->periode ? '/' . $row->periode : '') . ").\n\n";
+                    if ($waFeaturesApp) {
+                        $waMessagePaketApp .= "Fitur yang didapat:\n{$waFeaturesApp}\n\n";
+                    }
+                    $waMessagePaketApp .= "Bisa dibantu informasi lebih lanjut?";
+                @endphp
 
-                <a href="#contact" class="pricing-button">
+                <a href="https://wa.me/6285151811055?text={{ urlencode($waMessagePaketApp) }}" target="_blank" rel="noopener" class="pricing-button">
                     Pilih Paket
                 </a>
 
@@ -245,7 +261,7 @@
         {{-- VIEW ALL --}}
         <div class="pricing-footer">
 
-            <a href="#all-packages" class="pricing-all-button">
+            <a href="#pricing" class="pricing-all-button">
                 Lihat Semua Paket
 
                 <svg viewBox="0 0 24 24" fill="none">

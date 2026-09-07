@@ -228,7 +228,7 @@
 
 
                 {{-- BUTTON --}}
-                <a href="#contact" class="about-button">
+                <a href="https://wa.me/6285151811055?text={{ urlencode('Halo Empatra DigiTech, saya ingin konsultasi untuk kebutuhan digital bisnis saya.') }}" target="_blank" rel="noopener" class="about-button">
 
                     Konsultasi dengan Kami
 

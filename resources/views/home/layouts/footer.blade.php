@@ -247,7 +247,7 @@
 
             </div>
 
-            <a href="#contact" class="footer-cta-button">
+            <a href="https://wa.me/6285151811055?text={{ urlencode('Halo Empatra DigiTech, saya ingin konsultasi gratis untuk kebutuhan digital saya.') }}" target="_blank" rel="noopener" class="footer-cta-button">
 
                 Konsultasi Gratis
 
