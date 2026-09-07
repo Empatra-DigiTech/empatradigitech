@@ -1,5 +1,6 @@
 @extends('home.layouts.master')
 @section("title","Inovasi | EMPATRA DIGITECH")
+@section('meta_description', 'Jelajahi produk dan inovasi digital terbaru dari Empatra Digitech untuk berbagai kebutuhan bisnis.')
 @section('css')
     <link href="{{ asset('assets/css/home/inovasi/inovasi.css') }}" rel="stylesheet">
 @endsection

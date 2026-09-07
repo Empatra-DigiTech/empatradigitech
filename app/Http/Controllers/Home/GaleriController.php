@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\Home;
 
+use Illuminate\Support\Facades\Cache;
+
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Galeri;
@@ -20,8 +22,8 @@ class GaleriController extends Controller
     }
 
     public function index(){
-        $table_pengaturan = Pengaturan::first(); //for footer handler
-        $table_menu = Menu::all();
+        $table_pengaturan = Cache::remember('pengaturan_first', 3600, fn () => Pengaturan::first()); //for footer handler
+        $table_menu = Cache::remember('menu_all', 3600, fn () => Menu::all());
         
         $table = $this->galeri;  //declaration of model databases
         

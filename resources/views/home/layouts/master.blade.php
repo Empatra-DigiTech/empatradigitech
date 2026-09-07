@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
     @include('home.layouts.head')
-    @vite(['resources/css/home.css', 'resources/js/home.js'])
 <body>
     <div class="wrapper">
         @include('home.layouts.navbar')

@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\Home;
 
+use Illuminate\Support\Facades\Cache;
+
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Informasi;
@@ -19,8 +21,8 @@ class InformasiController extends Controller
     }
 
     public function index(Request $request) {
-        $table_pengaturan = Pengaturan::first(); // for footer handler
-        $table_menu = Menu::all();
+        $table_pengaturan = Cache::remember('pengaturan_first', 3600, fn () => Pengaturan::first()); // for footer handler
+        $table_menu = Cache::remember('menu_all', 3600, fn () => Menu::all());
     
         $table = $this->informasi;
     

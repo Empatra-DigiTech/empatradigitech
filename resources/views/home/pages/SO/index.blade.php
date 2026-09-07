@@ -1,5 +1,6 @@
 @extends('home.layouts.master')
 @section("title","Struktur Organisasi | EMPATRA DIGITECH")
+@section('meta_description', 'Struktur organisasi Empatra Digitech.')
 @section("content")
 <section id="so" class="so section" style="margin-top: 2cm;">
   <div class="so-bg">

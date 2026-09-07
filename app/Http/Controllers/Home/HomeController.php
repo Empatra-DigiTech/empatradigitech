@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\Home;
 
+use Illuminate\Support\Facades\Cache;
+
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -38,8 +40,8 @@ class HomeController extends Controller
 
         $table_banner = Banner::all();
         $table_layanan = Layanan::all();
-        $table_pengaturan = Pengaturan::first();
-        $table_menu = Menu::all();
+        $table_pengaturan = Cache::remember('pengaturan_first', 3600, fn () => Pengaturan::first());
+        $table_menu = Cache::remember('menu_all', 3600, fn () => Menu::all());
 
 
         // Tambahkan data paket website dan app

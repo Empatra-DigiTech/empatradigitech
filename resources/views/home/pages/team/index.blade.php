@@ -1,5 +1,6 @@
 @extends('home.layouts.master')
 @section("title","Team | EMPATRA DIGITECH")
+@section('meta_description', 'Kenali tim profesional di balik Empatra Digitech.')
 
 @section('css')
     <link href="{{ asset('assets/css/home/team/team.css') }}" rel="stylesheet">

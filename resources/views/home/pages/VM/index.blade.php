@@ -1,5 +1,6 @@
 @extends('home.layouts.master')
 @section("title","Visi & Misi | EMPATRA DIGITECH")
+@section('meta_description', 'Visi dan misi Empatra Digitech dalam menghadirkan solusi digital terbaik.')
 
 @section('css')
     <link href="{{ asset('assets/css/home/vm/vm.css') }}" rel="stylesheet">

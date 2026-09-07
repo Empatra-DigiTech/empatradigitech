@@ -1,5 +1,6 @@
 @extends('home.layouts.master')
 @section("title","Portofolio | EMPATRA DIGITECH")
+@section('meta_description', 'Lihat portofolio proyek website dan aplikasi yang telah dikerjakan Empatra Digitech untuk berbagai klien.')
 
 @section('css')
     <link href="{{ asset('assets/css/portfolio/card.css') }}" rel="stylesheet">

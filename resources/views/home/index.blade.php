@@ -1,5 +1,6 @@
 @extends('home.layouts.master')
 @section("title","Home | EMPATRA DIGITECH")
+@section('meta_description', 'Empatra Digitech menyediakan jasa pembuatan website, aplikasi, dan konsultasi digital untuk membantu bisnis Anda berkembang secara online.')
 
 @section('content')
     @include('home.partials.hero')

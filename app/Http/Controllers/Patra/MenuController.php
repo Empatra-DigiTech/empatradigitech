@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Menu;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Cache;
 use App\Http\Requests\Menu\StoreRequest;
 use App\Http\Requests\Menu\UpdateRequest;
 use App\Helpers\UploadHelper;
@@ -79,6 +80,8 @@ class MenuController extends Controller
                 'parent' => $request->parent ?? null,
                 'menu-trixFields' => $request->input('menu-trixFields'),
             ]);
+
+            Cache::forget('menu_all');
 
             alert()->html('Berhasil', 'Data berhasil ditambahkan', 'success');
             return redirect()->route($this->route . "index");
@@ -162,6 +165,8 @@ class MenuController extends Controller
             'menu-trixFields' => $request->input('menu-trixFields'),
         ]);
 
+        Cache::forget('menu_all');
+
         alert()->html('Berhasil', 'Data berhasil diubah', 'success');
         return redirect()->route($this->route . "index");
     } catch (\Throwable $e) {
@@ -216,6 +221,8 @@ class MenuController extends Controller
             $result = $result->first();
 
             $result->delete();
+
+            Cache::forget('menu_all');
 
             alert()->html('Berhasil', 'Data berhasil dihapus', 'success');
             return redirect()->route($this->route . "index");

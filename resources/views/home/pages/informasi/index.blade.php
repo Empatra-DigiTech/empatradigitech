@@ -1,7 +1,7 @@
 @extends('home.layouts.master')
 @section("title","Informasi | EMPATRA DIGITECH")
+@section('meta_description', 'Informasi publik dan produk hukum resmi dari Empatra Digitech.')
 @section("css")
-    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
     <style>
         #filtering .btn{
             background-color: #2a0f60 !important;

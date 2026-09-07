@@ -110,6 +110,9 @@
                     src="{{ asset('images/hero-reference.png') }}"
                     alt="Empatra Digitech Digital Solutions"
                     class="hero-reference-image"
+                    width="1360"
+                    height="483"
+                    fetchpriority="high"
                 >
             </div>
 

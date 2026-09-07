@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\Home;
 
+use Illuminate\Support\Facades\Cache;
+
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Team;
@@ -22,8 +24,8 @@ class TeamController extends Controller
 
     public function index(Request $request)
     {
-        $table_pengaturan = Pengaturan::first();
-        $table_menu = Menu::all();
+        $table_pengaturan = Cache::remember('pengaturan_first', 3600, fn () => Pengaturan::first());
+        $table_menu = Cache::remember('menu_all', 3600, fn () => Menu::all());
         $search = $request->search;
 
         $table = $this->team;
@@ -45,8 +47,8 @@ class TeamController extends Controller
         return view($this->view."index",$data);
     }
     public function show($id){
-        $table_pengaturan = Pengaturan::first();
-        $table_menu = Menu::all();
+        $table_pengaturan = Cache::remember('pengaturan_first', 3600, fn () => Pengaturan::first());
+        $table_menu = Cache::remember('menu_all', 3600, fn () => Menu::all());
 
         $result = $this->team;
         $result = $result->where('id',$id);

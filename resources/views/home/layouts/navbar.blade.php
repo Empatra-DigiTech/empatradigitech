@@ -39,7 +39,9 @@
 
                 @foreach ($customMenuItems as $row)
                     @php
-                        $children = Menu::where('parent', $row->id)->orderBy('created_at')->get();
+                        // Filter dari $table_menu yang sudah di-fetch di controller,
+                        // jangan query DB lagi per item (sebelumnya N+1 query di sini).
+                        $children = $table_menu->where('parent', $row->id)->sortBy('created_at')->values();
                     @endphp
 
                     @if ($children->count() == 0)

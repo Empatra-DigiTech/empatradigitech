@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Patra;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Cache;
 use App\Models\Pengaturan;
 use Illuminate\Http\Request;
 use App\Http\Requests\Pengaturan\UpdateRequest;
@@ -75,6 +76,8 @@ class PengaturanController extends Controller
                 'stat_industries' => $stat_industries,
                 'stat_years_experience' => $stat_years_experience,
             ]);
+
+            Cache::forget('pengaturan_first');
 
             alert()->html('Berhasil','Pengaturan website berhasil diperbarui','success');
 

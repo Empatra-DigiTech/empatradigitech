@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\Home;
 
+use Illuminate\Support\Facades\Cache;
+
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Menu;
@@ -22,7 +24,7 @@ class menuController extends Controller
 
     public function show($title)
     {
-        $table_pengaturan = Pengaturan::first();
+        $table_pengaturan = Cache::remember('pengaturan_first', 3600, fn () => Pengaturan::first());
         $table_menu = Menu::whereNull('parent')->orderBy('created_at')->get();
 
         $result = $this->menu;

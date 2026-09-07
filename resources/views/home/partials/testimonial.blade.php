@@ -48,7 +48,7 @@
 
                     <div class="testimonial-avatar">
                         @if($t->foto)
-                            <img src="{{ asset('storage/' . $t->foto) }}" alt="{{ $t->nama_client }}" style="width:100%;height:100%;object-fit:cover;border-radius:50%;">
+                            <img src="{{ asset('storage/' . $t->foto) }}" alt="{{ $t->nama_client }}" loading="lazy" style="width:100%;height:100%;object-fit:cover;border-radius:50%;">
                         @else
                             {{ collect(explode(' ', $t->nama_client))->map(fn($w) => Str::substr($w, 0, 1))->take(2)->implode('') }}
                         @endif
