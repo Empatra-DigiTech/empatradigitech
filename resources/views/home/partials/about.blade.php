@@ -372,7 +372,7 @@
 
         margin-bottom: 5px;
 
-        color: #a91e2a;
+        color: var(--primary-light);
 
         font-size: 12px;
         line-height: 1.2;
@@ -384,7 +384,7 @@
     .about-title {
         margin: 0;
 
-        color: #123567;
+        color: var(--secondary-light);
 
         font-size: clamp(28px, 3vw, 36px);
         line-height: 1.2;
@@ -394,7 +394,7 @@
     }
 
     .about-title span {
-        color: #a91e2a;
+        color: var(--primary-light);
     }
 
     .about-subtitle {
@@ -485,7 +485,7 @@
 
         border-radius: 50%;
 
-        background: #123b70;
+        background: var(--secondary);
 
         opacity: .09;
     }
@@ -503,7 +503,7 @@
 
         border-radius: 50%;
 
-        background: #c3202d;
+        background: var(--primary-light);
 
         opacity: .08;
     }
@@ -531,7 +531,7 @@
 
         margin-bottom: 18px;
 
-        background: #123b70;
+        background: var(--secondary);
 
         border-radius: 14px;
 
@@ -820,7 +820,7 @@
 
         color: #ffffff;
 
-        background: #123b70;
+        background: var(--secondary);
 
         border-radius: 6px;
 

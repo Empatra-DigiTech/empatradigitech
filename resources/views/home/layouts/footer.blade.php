@@ -568,7 +568,7 @@
 
         color: #ffffff;
 
-        background: #082f5d;
+        background: var(--secondary);
 
         overflow: hidden;
     }
@@ -751,9 +751,9 @@
     .footer-social:hover {
         color: #ffffff;
 
-        background: #c3202d;
+        background: var(--primary);
 
-        border-color: #c3202d;
+        border-color: var(--primary);
 
         transform: translateY(-2px);
     }
@@ -1029,7 +1029,7 @@
 
         color: #ffffff;
 
-        background: #c3202d;
+        background: var(--primary);
 
         border-radius: 6px;
 
@@ -1060,7 +1060,7 @@
     }
 
     .footer-cta-button:hover {
-        background: #a91e2a;
+        background: var(--primary-dark);
 
         transform: translateY(-2px);
 
