@@ -5,32 +5,51 @@ namespace App\Providers;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\Facades\Cache;
+
 use App\Models\Tautan;
+use App\Models\Pengaturan;
+use App\Models\Menu;
+use App\Models\Layanan;
 
 class AppServiceProvider extends ServiceProvider
 {
-    /**
-     * Register any application services.
-     */
     public function register(): void
     {
         //
     }
 
-    /**
-     * Bootstrap any application services.
-     */
     public function boot(): void
     {
-        // FIXED: footer.blade.php di-include di master layout (jadi tampil di
-        // SEMUA halaman publik), tapi hanya HomeController@index yang pernah
-        // mengirim $table_tautan. View composer di sini memastikan data Tautan
-        // selalu tersedia untuk footer di halaman manapun, tanpa perlu
-        // menambahkan fetch manual ke belasan controller lain satu-satu.
-        // Cache 1 jam, konsisten dengan pola Cache::remember yang sudah
-        // dipakai untuk table_pengaturan & table_menu.
         View::composer('home.layouts.footer', function ($view) {
-            $view->with('table_tautan', Cache::remember('tautan_all', 3600, fn () => Tautan::all()));
+
+            $view->with([
+
+                'table_pengaturan' => Cache::remember(
+                    'pengaturan_first',
+                    3600,
+                    fn () => Pengaturan::first()
+                ),
+
+                'table_menu' => Cache::remember(
+                    'menu_all',
+                    3600,
+                    fn () => Menu::orderBy('created_at')->get()
+                ),
+
+                'table_tautan' => Cache::remember(
+                    'tautan_all',
+                    3600,
+                    fn () => Tautan::all()
+                ),
+
+                'table_layanan' => Cache::remember(
+                    'layanan_all',
+                    3600,
+                    fn () => Layanan::orderBy('title')->get()
+                ),
+
+            ]);
+
         });
     }
 }

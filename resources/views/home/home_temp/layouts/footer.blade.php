@@ -17,7 +17,7 @@
                 <div class="footer-map-wrapper mt-3">
                     <iframe
                         id="maps_mini"
-                        src="{{ $table_pengaturan->website_map ?? '' }}"
+                        src="{{ $table_pengaturan->website_maps ?? '' }}"
                         frameborder="0"
                         loading="lazy"
                         allowfullscreen>

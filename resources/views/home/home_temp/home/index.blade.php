@@ -967,7 +967,7 @@
 
         <!-- Map -->
         <div class="contact-map">
-            <iframe src="{{ $table_pengaturan->website_map ?? '' }}"
+            <iframe src="{{ $table_pengaturan->website_maps ?? '' }}"
                     width="100%"
                     height="400"
                     style="border:0;"
