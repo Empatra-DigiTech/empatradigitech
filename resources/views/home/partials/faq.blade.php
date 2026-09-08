@@ -364,7 +364,7 @@
 
         padding: 20px 24px;
 
-        background: #123b70;
+        background: var(--secondary);
 
         border-radius: 9px;
     }

@@ -163,7 +163,7 @@
 
         padding: 24px 20px 25px;
 
-        background: #07386f;
+        background: var(--secondary);
 
         overflow: hidden;
     }

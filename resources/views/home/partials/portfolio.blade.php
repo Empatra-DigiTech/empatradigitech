@@ -180,7 +180,7 @@
 
         padding: 34px 36px;
 
-        background: linear-gradient(135deg, #123567 0%, #a91e2a 100%);
+        background: linear-gradient(135deg, var(--secondary-dark) 0%, var(--secondary-light) 100%);
 
         border-radius: 14px;
 
