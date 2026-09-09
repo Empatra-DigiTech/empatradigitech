@@ -218,7 +218,7 @@
 
         margin-bottom: 2px;
 
-        color: #d82735;
+        color: var(--primary-light);
 
         font-size: 10px;
         line-height: 1.2;
@@ -230,7 +230,7 @@
     .progress-title {
         margin: 0;
 
-        color: #ffffff;
+        color: var(--white);
 
         font-size: 20px;
         line-height: 1.15;
@@ -313,7 +313,7 @@
 
         margin-bottom: 5px;
 
-        background: #ffffff;
+        background: var(--white);
 
         border: 2px solid rgba(255, 255, 255, .25);
 
@@ -327,7 +327,7 @@
         width: 29px;
         height: 29px;
 
-        stroke: #c31f2b;
+        stroke: var(--primary);
 
         stroke-width: 1.7;
 
@@ -343,7 +343,7 @@
     .progress-step h3 {
         margin: 0 0 3px;
 
-        color: #ffffff;
+        color: var(--white);
 
         font-size: 12px;
         line-height: 1.3;

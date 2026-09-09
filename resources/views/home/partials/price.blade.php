@@ -111,7 +111,7 @@
 
             </article>
             @empty
-            <p style="text-align:center;color:#667080;font-size:13px;grid-column:1/-1;">Belum ada paket website yang ditambahkan.</p>
+            <p style="text-align:center;color:var(--gray-600);font-size:13px;grid-column:1/-1;">Belum ada paket website yang ditambahkan.</p>
             @endforelse
 
         </div>
@@ -175,7 +175,7 @@
 
             </article>
             @empty
-            <p style="text-align:center;color:#667080;font-size:13px;grid-column:1/-1;">Belum ada paket aplikasi yang ditambahkan.</p>
+            <p style="text-align:center;color:var(--gray-600);font-size:13px;grid-column:1/-1;">Belum ada paket aplikasi yang ditambahkan.</p>
             @endforelse
 
         </div>
@@ -289,7 +289,7 @@
 
         padding: 55px 20px 60px;
 
-        background: #ffffff;
+        background: var(--white);
 
         overflow: hidden;
     }
@@ -316,7 +316,7 @@
 
         margin-bottom: 3px;
 
-        color: #a91e2a;
+        color: var(--primary);
 
         font-size: 12px;
         line-height: 1.2;
@@ -328,7 +328,7 @@
     .pricing-title {
         margin: 0;
 
-        color: #123567;
+        color: var(--secondary);
 
         font-size: clamp(28px, 3vw, 36px);
         line-height: 1.15;
@@ -340,7 +340,7 @@
     .pricing-description {
         margin: 5px 0 9px;
 
-        color: #596474;
+        color: var(--gray-700);
 
         font-size: 13px;
         line-height: 1.4;
@@ -358,9 +358,9 @@
 
         overflow: hidden;
 
-        background: #ffffff;
+        background: var(--white);
 
-        border: 1px solid #d8dde3;
+        border: 1px solid var(--gray-300);
         border-radius: 14px;
     }
 
@@ -370,8 +370,8 @@
 
         padding: 0 22px;
 
-        color: #123567;
-        background: #ffffff;
+        color: var(--secondary);
+        background: var(--white);
 
         border: 0;
         border-radius: 13px;
@@ -388,9 +388,9 @@
     }
 
     .pricing-switch-btn.active {
-        color: #ffffff;
+        color: var(--white);
 
-        background: #123b70;
+        background: var(--secondary);
     }
 
 
@@ -424,9 +424,9 @@
 
         padding: 14px 28px 14px;
 
-        background: #ffffff;
+        background: var(--white);
 
-        border: 1px solid #dfe3e8;
+        border: 1px solid var(--gray-300);
         border-radius: 10px;
 
         box-shadow:
@@ -441,14 +441,14 @@
     .pricing-card:hover {
         transform: translateY(-4px);
 
-        border-color: #b9c4d0;
+        border-color: var(--gray-400);
 
         box-shadow:
             0 12px 28px rgba(18, 53, 103, .10);
     }
 
     .pricing-card-popular {
-        border-color: #7d8998;
+        border-color: var(--gray-600);
 
         box-shadow:
             0 2px 10px rgba(18, 53, 103, .08);
@@ -467,8 +467,8 @@
 
         padding: 5px 12px;
 
-        color: #ffffff;
-        background: #c3202d;
+        color: var(--white);
+        background: var(--primary);
 
         border-radius: 14px;
 
@@ -489,7 +489,7 @@
     .pricing-card-header h3 {
         margin: 0 0 4px;
 
-        color: #142f54;
+        color: var(--secondary);
 
         font-size: 18px;
         line-height: 1.25;
@@ -499,7 +499,7 @@
     .pricing-start {
         display: block;
 
-        color: #343d48;
+        color: var(--gray-800);
 
         font-size: 11px;
         line-height: 1.2;
@@ -508,7 +508,7 @@
     .pricing-price {
         margin-top: 3px;
 
-        color: #b21e29;
+        color: var(--primary);
 
         font-size: 25px;
         line-height: 1.1;
@@ -538,7 +538,7 @@
 
         gap: 10px;
 
-        color: #303943;
+        color: var(--gray-800);
 
         font-size: 12px;
         line-height: 1.3;
@@ -547,7 +547,7 @@
     .pricing-check {
         flex: 0 0 15px;
 
-        color: #123b70;
+        color: var(--secondary);
 
         font-size: 18px;
         line-height: 12px;
@@ -569,8 +569,8 @@
 
         margin-top: auto;
 
-        color: #ffffff;
-        background: #123b70;
+        color: var(--white);
+        background: var(--secondary);
 
         border-radius: 7px;
 
@@ -586,7 +586,7 @@
     }
 
     .pricing-button:hover {
-        background: #092d59;
+        background: var(--secondary-dark);
 
         transform: translateY(-1px);
     }
@@ -614,10 +614,10 @@
 
         gap: 8px;
 
-        color: #123567;
-        background: #ffffff;
+        color: var(--secondary);
+        background: var(--white);
 
-        border: 1px solid #d6dce2;
+        border: 1px solid var(--gray-300);
         border-radius: 8px;
 
         font-size: 11px;
@@ -643,9 +643,9 @@
     }
 
     .pricing-all-button:hover {
-        color: #ffffff;
-        background: #123b70;
-        border-color: #123b70;
+        color: var(--white);
+        background: var(--secondary);
+        border-color: var(--secondary);
 
         transform: translateY(-2px);
     }
@@ -672,9 +672,9 @@
 
         padding: 26px;
 
-        background: #f6f8fb;
+        background: var(--light);
 
-        border: 1px solid #e2e6eb;
+        border: 1px solid var(--gray-300);
         border-radius: 14px;
     }
 
@@ -691,7 +691,7 @@
 
         margin-bottom: 10px;
 
-        color: #142f54;
+        color: var(--secondary);
 
         font-size: 13px;
         font-weight: 700;
@@ -731,9 +731,9 @@
 
         padding: 11px 14px;
 
-        background: #ffffff;
+        background: var(--white);
 
-        border: 1.5px solid #dde2e8;
+        border: 1.5px solid var(--gray-300);
         border-radius: 9px;
 
         font-size: 12.5px;
@@ -743,13 +743,13 @@
 
     .calc-service-card input:checked + .calc-service-card-inner,
     .calc-feature-item input:checked + .calc-feature-inner {
-        background: #eef2f8;
-        border-color: #123b70;
+        background: var(--gray-100);
+        border-color: var(--secondary);
     }
 
     .calc-service-name,
     .calc-feature-name {
-        color: #22283a;
+        color: var(--gray-900);
         font-weight: 700;
     }
 
@@ -757,7 +757,7 @@
     .calc-feature-price {
         flex: 0 0 auto;
 
-        color: #123b70;
+        color: var(--secondary);
         font-weight: 700;
 
         white-space: nowrap;
@@ -768,10 +768,10 @@
 
         padding: 9px 12px;
 
-        color: #22283a;
-        background: #ffffff;
+        color: var(--gray-900);
+        background: var(--white);
 
-        border: 1.5px solid #dde2e8;
+        border: 1.5px solid var(--gray-300);
         border-radius: 9px;
 
         font-family: inherit;
@@ -780,7 +780,7 @@
 
     .calc-input-number:focus {
         outline: none;
-        border-color: #123b70;
+        border-color: var(--secondary);
     }
 
     .calc-hint {
@@ -788,7 +788,7 @@
 
         margin-top: 6px;
 
-        color: #7c8798;
+        color: var(--gray-600);
 
         font-size: 10.5px;
     }
@@ -803,8 +803,8 @@
 
         text-align: center;
 
-        color: #ffffff;
-        background: #123567;
+        color: var(--white);
+        background: var(--secondary);
 
         border-radius: 12px;
     }
@@ -823,7 +823,7 @@
     .calc-result-range {
         margin: 10px 0 8px;
 
-        color: #ffffff;
+        color: var(--white);
 
         font-size: 22px;
         font-weight: 800;
@@ -851,7 +851,7 @@
 
         padding: 0 18px;
 
-        color: #ffffff;
+        color: var(--white);
         background: #25b358;
 
         border-radius: 8px;

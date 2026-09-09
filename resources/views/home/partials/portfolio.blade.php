@@ -95,7 +95,7 @@
 
         </div>
         @else
-        <p style="text-align:center;color:#667080;font-size:13px;">Belum ada portfolio yang ditambahkan.</p>
+        <p style="text-align:center;color:var(--gray-600);font-size:13px;">Belum ada portfolio yang ditambahkan.</p>
         @endif
 
 
@@ -161,7 +161,7 @@
     .portfolio-cta-banner-section {
         padding: 0 20px 70px;
 
-        background: #f6f8fb;
+        background: var(--light);
     }
 
     .portfolio-cta-banner-container {
@@ -190,7 +190,7 @@
     .portfolio-cta-banner-title {
         margin: 0 0 4px;
 
-        color: #ffffff;
+        color: var(--white);
 
         font-size: 20px;
         font-weight: 800;
@@ -236,7 +236,7 @@
     }
 
     .portfolio-cta-banner-btn-primary {
-        color: #ffffff;
+        color: var(--white);
 
         background: #25D366;
     }
@@ -261,7 +261,7 @@
     }
 
     .portfolio-cta-banner-btn-secondary {
-        color: #ffffff;
+        color: var(--white);
 
         background: rgba(255, 255, 255, .12);
 
@@ -308,7 +308,7 @@
         width: 100%;
         padding: 65px 20px 70px;
 
-        background: #ffffff;
+        background: var(--white);
 
         overflow: hidden;
     }
@@ -333,7 +333,7 @@
 
         margin-bottom: 4px;
 
-        color: #a91e2a;
+        color: var(--primary);
 
         font-size: 12px;
         line-height: 1.2;
@@ -345,7 +345,7 @@
     .portfolio-title {
         margin: 0;
 
-        color: #123567;
+        color: var(--secondary);
 
         font-size: clamp(28px, 3vw, 36px);
         line-height: 1.2;
@@ -382,10 +382,10 @@
         align-items: center;
         justify-content: center;
 
-        color: #123567;
-        background: #ffffff;
+        color: var(--secondary);
+        background: var(--white);
 
-        border: 1px solid #d7dce2;
+        border: 1px solid var(--gray-300);
         border-radius: 18px;
 
         font-family: inherit;
@@ -402,14 +402,14 @@
     }
 
     .portfolio-filter-btn:hover {
-        border-color: #123b70;
+        border-color: var(--secondary);
         transform: translateY(-1px);
     }
 
     .portfolio-filter-btn.active {
-        color: #ffffff;
-        background: #123b70;
-        border-color: #123b70;
+        color: var(--white);
+        background: var(--secondary);
+        border-color: var(--secondary);
     }
 
 
@@ -440,9 +440,9 @@
 
         overflow: hidden;
 
-        background: #ffffff;
+        background: var(--white);
 
-        border: 1px solid #dfe3e8;
+        border: 1px solid var(--gray-300);
         border-radius: 10px;
 
         box-shadow: 0 2px 8px rgba(18, 53, 103, .025);
@@ -456,7 +456,7 @@
     .portfolio-card:hover {
         transform: translateY(-4px);
 
-        border-color: #cbd3dd;
+        border-color: var(--gray-400);
 
         box-shadow: 0 12px 25px rgba(18, 53, 103, .10);
     }
@@ -474,7 +474,7 @@
 
         overflow: hidden;
 
-        background: #eef2f5;
+        background: var(--gray-100);
     }
 
     .portfolio-image img {
@@ -509,7 +509,7 @@
     .portfolio-card-content h3 {
         margin: 0 0 3px;
 
-        color: #142f54;
+        color: var(--secondary);
 
         font-size: 15px;
         line-height: 1.3;
@@ -521,7 +521,7 @@
 
         margin-bottom: 6px;
 
-        color: #b21e29;
+        color: var(--primary);
 
         font-size: 10px;
         line-height: 1.2;
@@ -533,7 +533,7 @@
 
         margin: 0 0 8px;
 
-        color: #596474;
+        color: var(--gray-700);
 
         font-size: 11px;
         line-height: 1.55;
@@ -553,7 +553,7 @@
 
         margin-top: auto;
 
-        color: #123b70;
+        color: var(--secondary);
 
         font-size: 11px;
         font-weight: 700;
@@ -574,7 +574,7 @@
     }
 
     .portfolio-detail:hover {
-        color: #a91e2a;
+        color: var(--primary);
     }
 
     .portfolio-detail:hover svg {
@@ -603,10 +603,10 @@
         justify-content: center;
         gap: 8px;
 
-        color: #123567;
-        background: #ffffff;
+        color: var(--secondary);
+        background: var(--white);
 
-        border: 1px solid #d5dbe2;
+        border: 1px solid var(--gray-300);
         border-radius: 8px;
 
         font-size: 11px;
@@ -632,9 +632,9 @@
     }
 
     .portfolio-all-btn:hover {
-        color: #ffffff;
-        background: #123b70;
-        border-color: #123b70;
+        color: var(--white);
+        background: var(--secondary);
+        border-color: var(--secondary);
 
         transform: translateY(-2px);
 

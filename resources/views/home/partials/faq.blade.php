@@ -78,7 +78,7 @@
 
         </div>
         @else
-        <p style="text-align:center;color:#667080;font-size:13px;">Belum ada pertanyaan yang ditambahkan.</p>
+        <p style="text-align:center;color:var(--gray-600);font-size:13px;">Belum ada pertanyaan yang ditambahkan.</p>
         @endif
 
 
@@ -125,7 +125,7 @@
 
         padding: 70px 20px 75px;
 
-        background: #ffffff;
+        background: var(--white);
 
         overflow: hidden;
     }
@@ -152,7 +152,7 @@
 
         margin-bottom: 4px;
 
-        color: #a91e2a;
+        color: var(--primary);
 
         font-size: 12px;
         line-height: 1.2;
@@ -164,7 +164,7 @@
     .faq-title {
         margin: 0;
 
-        color: #123567;
+        color: var(--secondary);
 
         font-size: clamp(28px, 3vw, 36px);
         line-height: 1.2;
@@ -178,7 +178,7 @@
 
         margin: 7px auto 0;
 
-        color: #667080;
+        color: var(--gray-600);
 
         font-size: 13px;
         line-height: 1.55;
@@ -202,9 +202,9 @@
     ========================================= */
 
     .faq-item {
-        background: #ffffff;
+        background: var(--white);
 
-        border: 1px solid #dfe4ea;
+        border: 1px solid var(--gray-300);
         border-radius: 8px;
 
         overflow: hidden;
@@ -215,11 +215,11 @@
     }
 
     .faq-item:hover {
-        border-color: #bdc8d5;
+        border-color: var(--gray-400);
     }
 
     .faq-item.active {
-        border-color: #123b70;
+        border-color: var(--secondary);
 
         box-shadow:
             0 4px 14px rgba(18, 59, 112, .07);
@@ -243,8 +243,8 @@
 
         padding: 16px 20px;
 
-        color: #123567;
-        background: #ffffff;
+        color: var(--secondary);
+        background: var(--white);
 
         border: 0;
 
@@ -277,7 +277,7 @@
         align-items: center;
         justify-content: center;
 
-        background: #f3f6f9;
+        background: var(--gray-100);
 
         border-radius: 50%;
 
@@ -290,7 +290,7 @@
         width: 16px;
         height: 16px;
 
-        stroke: #123b70;
+        stroke: var(--secondary);
 
         stroke-width: 2;
 
@@ -299,13 +299,13 @@
     }
 
     .faq-item.active .faq-icon {
-        background: #123b70;
+        background: var(--secondary);
 
         transform: rotate(180deg);
     }
 
     .faq-item.active .faq-icon svg {
-        stroke: #ffffff;
+        stroke: var(--white);
     }
 
 
@@ -331,7 +331,7 @@
 
         padding: 0 20px;
 
-        color: #657181;
+        color: var(--gray-600);
 
         font-size: 12px;
         line-height: 1.7;
@@ -372,7 +372,7 @@
     .faq-cta-content h3 {
         margin: 0 0 4px;
 
-        color: #ffffff;
+        color: var(--white);
 
         font-size: 15px;
         line-height: 1.3;
@@ -401,8 +401,8 @@
 
         padding: 0 18px;
 
-        color: #123567;
-        background: #ffffff;
+        color: var(--secondary);
+        background: var(--white);
 
         border-radius: 6px;
 
