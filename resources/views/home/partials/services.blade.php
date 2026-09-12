@@ -87,7 +87,7 @@
             </div>
 
         @else
-            <p style="text-align:center;color:#667080;font-size:13px;">Belum ada layanan yang ditambahkan.</p>
+            <p style="text-align:center;color:var(--gray-600);font-size:13px;">Belum ada layanan yang ditambahkan.</p>
         @endif
 
     </div>
@@ -104,7 +104,7 @@
         position: relative;
         width: 100%;
         padding: 70px 20px 80px;
-        background: #ffffff;
+        background: var(--white);
         overflow: hidden;
     }
 
@@ -128,7 +128,7 @@
 
         margin-bottom: 5px;
 
-        color: #a91e2a;
+        color: var(--primary);
 
         font-size: 12px;
         line-height: 1.2;
@@ -139,7 +139,7 @@
     .services-title {
         margin: 0;
 
-        color: #123567;
+        color: var(--secondary);
 
         font-size: clamp(28px, 3vw, 36px);
         line-height: 1.2;
@@ -152,7 +152,7 @@
 
         margin: 6px auto 0;
 
-        color: #667080;
+        color: var(--gray-600);
 
         font-size: 13px;
         line-height: 1.5;
@@ -185,10 +185,10 @@
         align-items: center;
         justify-content: center;
 
-        color: #123567;
-        background: #ffffff;
+        color: var(--secondary);
+        background: var(--white);
 
-        border: 1px solid #d7dce2;
+        border: 1px solid var(--gray-300);
         border-radius: 18px;
 
         font-family: inherit;
@@ -205,14 +205,14 @@
     }
 
     .services-filter-btn:hover {
-        border-color: #123b70;
+        border-color: var(--secondary);
         transform: translateY(-1px);
     }
 
     .services-filter-btn.active {
-        color: #ffffff;
-        background: #123b70;
-        border-color: #123b70;
+        color: var(--white);
+        background: var(--secondary);
+        border-color: var(--secondary);
     }
 
 
@@ -244,9 +244,9 @@
 
         padding: 17px 25px 18px;
 
-        background: #ffffff;
+        background: var(--white);
 
-        border: 1px solid #e0e4e9;
+        border: 1px solid var(--gray-300);
         border-radius: 9px;
 
         text-align: center;
@@ -262,7 +262,7 @@
     .service-card:hover {
         transform: translateY(-5px);
 
-        border-color: #c5cfdb;
+        border-color: var(--gray-400);
 
         box-shadow: 0 12px 28px rgba(18, 53, 103, 0.09);
     }
@@ -287,7 +287,7 @@
         width: 47px;
         height: 47px;
 
-        stroke: #123b70;
+        stroke: var(--secondary);
         stroke-width: 1.6;
         stroke-linecap: round;
         stroke-linejoin: round;
@@ -301,7 +301,7 @@
     .service-card h3 {
         margin: 0 0 7px;
 
-        color: #123567;
+        color: var(--secondary);
 
         font-size: 14px;
         line-height: 1.3;
@@ -318,7 +318,7 @@
 
         margin: 0;
 
-        color: #596474;
+        color: var(--gray-700);
 
         font-size: 12px;
         line-height: 1.65;
@@ -336,7 +336,7 @@
         align-items: center;
         gap: 7px;
 
-        color: #123b70;
+        color: var(--secondary);
 
         font-size: 11px;
         line-height: 1;
@@ -356,7 +356,7 @@
     }
 
     .service-link:hover {
-        color: #a91e2a;
+        color: var(--primary);
     }
 
     .service-link:hover svg {

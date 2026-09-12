@@ -363,7 +363,7 @@
 
         padding: 55px 20px 65px;
 
-        background: #f7f9fb;
+        background: var(--light);
 
         overflow: hidden;
     }
@@ -390,7 +390,7 @@
 
         margin-bottom: 5px;
 
-        color: #a91e2a;
+        color: var(--primary);
 
         font-size: 11px;
         line-height: 1.2;
@@ -402,7 +402,7 @@
     .carousel-heading h2 {
         margin: 0;
 
-        color: #123567;
+        color: var(--secondary);
 
         font-size: clamp(26px, 3vw, 34px);
         line-height: 1.2;
@@ -412,7 +412,7 @@
     }
 
     .carousel-heading h2 span {
-        color: #a91e2a;
+        color: var(--primary);
     }
 
 
@@ -456,9 +456,9 @@
 
         min-width: 0;
 
-        background: #ffffff;
+        background: var(--white);
 
-        border: 1px solid #dfe4ea;
+        border: 1px solid var(--gray-300);
 
         border-radius: 9px;
 
@@ -491,7 +491,7 @@
 
         overflow: hidden;
 
-        background: #e8edf2;
+        background: var(--gray-200);
     }
 
     .carousel-card-image img {
@@ -538,7 +538,7 @@
         width: 38px;
         height: 28px;
 
-        color: #ffffff;
+        color: var(--white);
 
         background: rgba(8, 47, 93, .82);
 
@@ -569,7 +569,7 @@
 
         margin-bottom: 6px;
 
-        color: #a91e2a;
+        color: var(--primary);
 
         font-size: 9px;
         line-height: 1.2;
@@ -581,7 +581,7 @@
     .carousel-card-content h3 {
         margin: 0 0 7px;
 
-        color: #123567;
+        color: var(--secondary);
 
         font-size: 17px;
         line-height: 1.3;
@@ -593,7 +593,7 @@
 
         margin: 0 0 14px;
 
-        color: #687484;
+        color: var(--gray-600);
 
         font-size: 10px;
         line-height: 1.65;
@@ -610,7 +610,7 @@
 
         gap: 6px;
 
-        color: #123b70;
+        color: var(--secondary);
 
         font-size: 10px;
         line-height: 1;
@@ -638,7 +638,7 @@
     }
 
     .carousel-link:hover {
-        color: #a91e2a;
+        color: var(--primary);
     }
 
     .carousel-link:hover svg {
@@ -660,11 +660,11 @@
         align-items: center;
         justify-content: center;
 
-        color: #123b70;
+        color: var(--secondary);
 
-        background: #ffffff;
+        background: var(--white);
 
-        border: 1px solid #d8e0e8;
+        border: 1px solid var(--gray-300);
 
         border-radius: 50%;
 
@@ -693,11 +693,11 @@
     }
 
     .carousel-arrow:hover:not(:disabled) {
-        color: #ffffff;
+        color: var(--white);
 
-        background: #123b70;
+        background: var(--secondary);
 
-        border-color: #123b70;
+        border-color: var(--secondary);
 
         transform: translateY(-1px);
     }
@@ -729,7 +729,7 @@
 
         gap: 9px;
 
-        color: #123567;
+        color: var(--secondary);
 
         font-size: 9px;
         line-height: 1;
@@ -742,7 +742,7 @@
 
         overflow: hidden;
 
-        background: #d8dee5;
+        background: var(--gray-300);
 
         border-radius: 2px;
     }
@@ -753,7 +753,7 @@
         width: 20%;
         height: 100%;
 
-        background: #a91e2a;
+        background: var(--primary);
 
         border-radius: inherit;
 
@@ -762,7 +762,7 @@
     }
 
     .carousel-progress-total {
-        color: #8a939f;
+        color: var(--gray-600);
     }
 
 
@@ -783,7 +783,7 @@
 
         padding: 0;
 
-        background: #cdd4dc;
+        background: var(--gray-400);
 
         border: 0;
 
@@ -800,7 +800,7 @@
     .carousel-dot.active {
         width: 22px;
 
-        background: #123b70;
+        background: var(--secondary);
 
         border-radius: 5px;
     }

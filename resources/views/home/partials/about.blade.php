@@ -305,7 +305,7 @@
 
         padding: 75px 20px;
 
-        background: #ffffff;
+        background: var(--white);
 
         overflow: hidden;
     }
@@ -402,7 +402,7 @@
 
         margin: 8px auto 0;
 
-        color: #667080;
+        color: var(--gray-600);
 
         font-size: 13px;
         line-height: 1.55;
@@ -459,12 +459,12 @@
         background:
             linear-gradient(
                 135deg,
-                #eef3f8 0%,
-                #f8fafc 55%,
-                #e9eff5 100%
+                var(--gray-100) 0%,
+                var(--light) 55%,
+                var(--gray-200) 100%
             );
 
-        border: 1px solid #d9e0e7;
+        border: 1px solid var(--gray-300);
 
         border-radius: 12px;
 
@@ -543,7 +543,7 @@
         width: 42px;
         height: 42px;
 
-        stroke: #ffffff;
+        stroke: var(--white);
 
         stroke-width: 1.5;
 
@@ -552,7 +552,7 @@
     }
 
     .about-placeholder-content strong {
-        color: #123567;
+        color: var(--secondary);
 
         font-size: 21px;
         line-height: 1.3;
@@ -562,7 +562,7 @@
     .about-placeholder-content > span {
         margin-top: 5px;
 
-        color: #758191;
+        color: var(--gray-600);
 
         font-size: 11px;
     }
@@ -588,7 +588,7 @@
 
         padding: 14px;
 
-        background: #123b70;
+        background: var(--secondary);
 
         border-radius: 9px;
 
@@ -597,7 +597,7 @@
     }
 
     .about-experience strong {
-        color: #ffffff;
+        color: var(--white);
 
         font-size: 28px;
         line-height: 1;
@@ -629,9 +629,9 @@
 
         padding: 13px 17px;
 
-        background: #ffffff;
+        background: var(--white);
 
-        border: 1px solid #dfe4ea;
+        border: 1px solid var(--gray-300);
 
         border-radius: 9px;
 
@@ -647,7 +647,7 @@
         align-items: center;
         justify-content: center;
 
-        background: #eef3f8;
+        background: var(--gray-100);
 
         border-radius: 7px;
     }
@@ -656,7 +656,7 @@
         width: 18px;
         height: 18px;
 
-        stroke: #123b70;
+        stroke: var(--secondary);
 
         stroke-width: 1.7;
 
@@ -672,7 +672,7 @@
     }
 
     .about-project strong {
-        color: #123567;
+        color: var(--secondary);
 
         font-size: 15px;
         line-height: 1;
@@ -680,7 +680,7 @@
     }
 
     .about-project div span {
-        color: #7a8491;
+        color: var(--gray-600);
 
         font-size: 9px;
     }
@@ -699,7 +699,7 @@
 
         margin-bottom: 8px;
 
-        color: #a91e2a;
+        color: var(--primary);
 
         font-size: 11px;
         line-height: 1.2;
@@ -711,7 +711,7 @@
     .about-text h3 {
         margin: 0 0 15px;
 
-        color: #123567;
+        color: var(--secondary);
 
         font-size: clamp(24px, 2.5vw, 31px);
         line-height: 1.25;
@@ -723,7 +723,7 @@
     .about-text > p {
         margin: 0 0 11px;
 
-        color: #657181;
+        color: var(--gray-600);
 
         font-size: 12px;
         line-height: 1.75;
@@ -763,7 +763,7 @@
         align-items: center;
         justify-content: center;
 
-        background: #eef3f8;
+        background: var(--gray-100);
 
         border-radius: 6px;
     }
@@ -772,7 +772,7 @@
         width: 16px;
         height: 16px;
 
-        stroke: #123b70;
+        stroke: var(--secondary);
 
         stroke-width: 1.7;
 
@@ -788,7 +788,7 @@
     }
 
     .about-value strong {
-        color: #123567;
+        color: var(--secondary);
 
         font-size: 11px;
         line-height: 1.25;
@@ -796,7 +796,7 @@
     }
 
     .about-value div span {
-        color: #7a8491;
+        color: var(--gray-600);
 
         font-size: 9px;
         line-height: 1.4;
@@ -818,7 +818,7 @@
 
         padding: 0 18px;
 
-        color: #ffffff;
+        color: var(--white);
 
         background: var(--secondary);
 
@@ -851,7 +851,7 @@
     }
 
     .about-button:hover {
-        background: #0d2d57;
+        background: var(--secondary-dark);
 
         transform: translateY(-2px);
 
@@ -877,9 +877,9 @@
 
         padding: 22px 25px;
 
-        background: #f7f9fb;
+        background: var(--light);
 
-        border: 1px solid #e0e5ea;
+        border: 1px solid var(--gray-300);
 
         border-radius: 9px;
     }
@@ -903,9 +903,9 @@
         align-items: center;
         justify-content: center;
 
-        background: #ffffff;
+        background: var(--white);
 
-        border: 1px solid #dce2e8;
+        border: 1px solid var(--gray-300);
 
         border-radius: 7px;
     }
@@ -914,7 +914,7 @@
         width: 19px;
         height: 19px;
 
-        stroke: #123b70;
+        stroke: var(--secondary);
 
         stroke-width: 1.6;
 
@@ -930,7 +930,7 @@
     }
 
     .about-stat strong {
-        color: #123567;
+        color: var(--secondary);
 
         font-size: 18px;
         line-height: 1;
@@ -938,7 +938,7 @@
     }
 
     .about-stat div span {
-        color: #788391;
+        color: var(--gray-600);
 
         font-size: 9px;
         line-height: 1.2;
@@ -950,7 +950,7 @@
 
         margin: 0 20px;
 
-        background: #dce2e8;
+        background: var(--gray-300);
     }
 
 
