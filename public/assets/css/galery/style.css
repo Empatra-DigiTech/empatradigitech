@@ -40,6 +40,14 @@ body {
     overflow: hidden;
 }
 
+/* Navbar duduk fixed di atas header ini sejak scroll = 0. Warna teks navbar
+   default (--enav-text-top) diasumsikan untuk hero terang, jadi di atas
+   gradient gelap ini teksnya nyaris tidak terbaca sebelum navbar discroll
+   (class is-scrolled). Timpa jadi putih selama belum discroll. */
+.site-navbar:has(~ .content-wrapper .galeri-page-header):not(.is-scrolled) {
+    --enav-text-top: #ffffff;
+}
+
 .galeri-page-header-content {
     text-align: center;
     color: var(--gl-white);
