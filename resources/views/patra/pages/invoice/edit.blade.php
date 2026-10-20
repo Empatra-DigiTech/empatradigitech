@@ -284,7 +284,6 @@
                                         <textarea name="ship_to_address" class="form-control" rows="3"
                                                 placeholder="Alamat Pengiriman">{{ old('ship_to_address', $invoice->ship_to_address) }}</textarea>
                                     </div>
-                                    @endif
                                 </div>
 
                                 <div>
