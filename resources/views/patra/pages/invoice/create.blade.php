@@ -300,20 +300,7 @@
                         @csrf
 
                         <div class="invoice-preview">
-                            <!-- Header dengan Logo -->
                             <div class="invoice-header">
-                                <div class="company-info">
-                                    <div class="logo-container">
-                                        <img src="{{ asset('images/logo.png') }}" alt="Company Logo">
-                                    </div>
-                                    <div class="company-details">
-                                        <input type="text" name="from_name" class="form-control mb-2"
-                                               placeholder="Nama Perusahaan" required
-                                               style="font-size: 18px; font-weight: bold;">
-                                        <textarea name="from_address" class="form-control" rows="3"
-                                                  placeholder="Alamat Lengkap&#10;Kota, Provinsi&#10;Telepon"></textarea>
-                                    </div>
-                                </div>
                                 <div class="invoice-title">
                                     <h1>INVOICE</h1>
                                     <div class="invoice-number">
