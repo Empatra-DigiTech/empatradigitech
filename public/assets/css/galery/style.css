@@ -36,7 +36,7 @@ body {
 .galeri-page-header {
     position: relative;
     padding: 150px 0 70px;
-    background: linear-gradient(135deg, var(--gl-primary) 0%, var(--gl-secondary) 100%);
+    background: linear-gradient(135deg, var(--gl-secondary) 0%, var(--gl-primary) 100%);
     overflow: hidden;
 }
 
