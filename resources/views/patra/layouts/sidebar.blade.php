@@ -37,6 +37,9 @@
 
           <li class="nav-header">MENU ADMIN</li>
 
+          <!-- ===================== KONTEN WEBSITE ===================== -->
+          <li class="nav-header">KONTEN WEBSITE</li>
+
             @if(Auth::user()->hasRole([
                   \App\Enums\RoleEnum::SuperAdmin,
                   \App\Enums\RoleEnum::Admin,
@@ -90,19 +93,58 @@
             </li>
 
             <li class="nav-item">
-              <a href="{{route('patra.layanan.index')}}" class="nav-link @if(Str::startsWith(request()->route()->getName(), 'patra.layanan')) active @endif">
-                <i class="bx bx-wrench col-3 bx-tada-hover"></i>
+              <a href="{{route('patra.informasi.index')}}" class="nav-link @if(Str::startsWith(request()->route()->getName(), 'patra.informasi')) active @endif">
+                <i class="bx bx-download col-3 bx-tada-hover"></i>
                 <p>
-                  Layanan
+                  Informasi
                 </p>
               </a>
             </li>
 
             <li class="nav-item">
-              <a href="{{route('patra.tautan.index')}}" class="nav-link @if(Str::startsWith(request()->route()->getName(), 'patra.tautan')) active @endif">
-                <i class="bx bx-link col-3 bx-tada-hover"></i>
+              <a href="{{route('patra.blog.index')}}" class="nav-link @if(Str::startsWith(request()->route()->getName(), 'patra.blog')) active @endif">
+                <i class="bx bx-news col-3 bx-tada-hover"></i>
                 <p>
-                  Tautan
+                  Blog / Insight
+                </p>
+              </a>
+            </li>
+
+            <li class="nav-item">
+              <a href="{{route('patra.faq.index')}}" class="nav-link @if(Str::startsWith(request()->route()->getName(), 'patra.faq')) active @endif">
+                <i class="bx bx-help-circle col-3 bx-tada-hover"></i>
+                <p>
+                  FAQ
+                </p>
+              </a>
+            </li>
+
+            <li class="nav-item">
+              <a href="{{route('patra.testimoni.index')}}" class="nav-link @if(Str::startsWith(request()->route()->getName(), 'patra.testimoni')) active @endif">
+                <i class="bx bx-comment-detail col-3 bx-tada-hover"></i>
+                <p>
+                  Testimoni
+                </p>
+              </a>
+            </li>
+
+            <li class="nav-item">
+              <a href="{{route('patra.client-logo.index')}}" class="nav-link @if(Str::startsWith(request()->route()->getName(), 'patra.client-logo')) active @endif">
+                <i class="bx bx-buildings col-3 bx-tada-hover"></i>
+                <p>
+                  Client / Partner
+                </p>
+              </a>
+            </li>
+
+          <!-- ===================== LAYANAN & PRODUK ===================== -->
+          <li class="nav-header">LAYANAN &amp; PRODUK</li>
+
+            <li class="nav-item">
+              <a href="{{route('patra.layanan.index')}}" class="nav-link @if(Str::startsWith(request()->route()->getName(), 'patra.layanan')) active @endif">
+                <i class="bx bx-wrench col-3 bx-tada-hover"></i>
+                <p>
+                  Layanan
                 </p>
               </a>
             </li>
@@ -118,72 +160,27 @@
             </li>
             <!-- END TAMBAHAN -->
 
-            {{-- <li class="nav-item">
-              <a href="{{route('patra.kalender.index')}}" class="nav-link @if(Str::startsWith(request()->route()->getName(), 'patra.kalender')) active @endif">
-                <i class="bx bx-calendar col-3 bx-tada-hover"></i>
-                <p>
-                  Kalender
-                </p>
-              </a>
-            </li> --}}
-
-            <li class="nav-item">
-              <a href="{{route('patra.kontak.index')}}" class="nav-link @if(Str::startsWith(request()->route()->getName(), 'patra.kontak')) active @endif">
-                <i class="bx bxs-contact col-3 bx-tada-hover"></i>
-                <p>
-                  Pesan
-                </p>
-              </a>
-            </li>
-
-            <li class="nav-item">
-              <a href="{{route('patra.informasi.index')}}" class="nav-link @if(Str::startsWith(request()->route()->getName(), 'patra.informasi')) active @endif">
-                <i class="bx bx-download col-3 bx-tada-hover"></i>
-                <p>
-                  Informasi
-                </p>
-              </a>
-            </li>
-
             <li class="nav-item">
               <a href="{{route('patra.inovasi.index')}}" class="nav-link @if(Str::startsWith(request()->route()->getName(), 'patra.inovasi')) active @endif">
                 <i class="bx bxs-been-here col-3 bx-tada-hover"></i>
+                <p>
                   Inovasi
                 </p>
               </a>
             </li>
+
             <li class="nav-item">
-              <a href="{{route('patra.blog.index')}}" class="nav-link @if(Str::startsWith(request()->route()->getName(), 'patra.blog')) active @endif">
-                <i class="bx bx-news col-3 bx-tada-hover"></i>
+              <a href="{{route('patra.tautan.index')}}" class="nav-link @if(Str::startsWith(request()->route()->getName(), 'patra.tautan')) active @endif">
+                <i class="bx bx-link col-3 bx-tada-hover"></i>
                 <p>
-                  Blog / Insight
+                  Tautan
                 </p>
               </a>
             </li>
-            <li class="nav-item">
-              <a href="{{route('patra.faq.index')}}" class="nav-link @if(Str::startsWith(request()->route()->getName(), 'patra.faq')) active @endif">
-                <i class="bx bx-help-circle col-3 bx-tada-hover"></i>
-                <p>
-                  FAQ
-                </p>
-              </a>
-            </li>
-            <li class="nav-item">
-              <a href="{{route('patra.testimoni.index')}}" class="nav-link @if(Str::startsWith(request()->route()->getName(), 'patra.testimoni')) active @endif">
-                <i class="bx bx-comment-detail col-3 bx-tada-hover"></i>
-                <p>
-                  Testimoni
-                </p>
-              </a>
-            </li>
-            <li class="nav-item">
-              <a href="{{route('patra.client-logo.index')}}" class="nav-link @if(Str::startsWith(request()->route()->getName(), 'patra.client-logo')) active @endif">
-                <i class="bx bx-buildings col-3 bx-tada-hover"></i>
-                <p>
-                  Client / Partner
-                </p>
-              </a>
-            </li>
+
+          <!-- ===================== KALKULATOR ===================== -->
+          <li class="nav-header">KALKULATOR</li>
+
             <li class="nav-item">
               <a href="{{route('patra.calculator-service.index')}}" class="nav-link @if(Str::startsWith(request()->route()->getName(), 'patra.calculator-service')) active @endif">
                 <i class="bx bx-calculator col-3 bx-tada-hover"></i>
@@ -200,13 +197,25 @@
                 </p>
               </a>
             </li>
-<li class="nav-item">
-    <a href="{{route('patra.invoice.index')}}" class="nav-link @if(Str::startsWith(request()->route()->getName(), 'patra.invoice')) active @endif">
-        <i class='bx bx-file col-3 bx-tada-hover'></i>
-        <p>Invoice</p>
-    </a>
-</li>
+
+          <!-- ===================== TRANSAKSI ===================== -->
+          <li class="nav-header">TRANSAKSI</li>
+
             <li class="nav-item">
+              <a href="{{route('patra.kontak.index')}}" class="nav-link @if(Str::startsWith(request()->route()->getName(), 'patra.kontak')) active @endif">
+                <i class="bx bxs-contact col-3 bx-tada-hover"></i>
+                <p>
+                  Pesan
+                </p>
+              </a>
+            </li>
+
+            <li class="nav-item">
+                <a href="{{route('patra.invoice.index')}}" class="nav-link @if(Str::startsWith(request()->route()->getName(), 'patra.invoice')) active @endif">
+                    <i class='bx bx-file col-3 bx-tada-hover'></i>
+                    <p>Invoice</p>
+                </a>
+            </li>
 
             {{-- <li class="nav-item">
               <a href="{{route('patra.so.index')}}" class="nav-link @if(Str::startsWith(request()->route()->getName(), 'patra.so')) active @endif">
@@ -216,6 +225,9 @@
                 </p>
               </a>
             </li> --}}
+
+          <!-- ===================== PROFIL PERUSAHAAN ===================== -->
+          <li class="nav-header">PROFIL PERUSAHAAN</li>
 
             <li class="nav-item">
               <a href="{{route('patra.vm.index')}}" class="nav-link @if(Str::startsWith(request()->route()->getName(), 'patra.vm')) active @endif">
@@ -239,6 +251,9 @@
             @if(Auth::user()->hasRole([
                 \App\Enums\RoleEnum::SuperAdmin,
             ]))
+          <!-- ===================== ADMINISTRASI ===================== -->
+          <li class="nav-header">ADMINISTRASI</li>
+
             <li class="nav-item">
               <a href="{{route('patra.users.index')}}" class="nav-link @if(Str::startsWith(request()->route()->getName(), 'patra.user')) active @endif">
                 <i class='bx bx-user col-3 bx-tada-hover'></i>
