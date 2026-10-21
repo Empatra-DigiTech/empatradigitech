@@ -230,6 +230,25 @@ Route::group(["as" => "invoice.", "prefix" => "invoice"], function () {
     Route::delete('/{id}', 'InvoiceController@destroy')->name("destroy")->middleware('role:' . implode('|', [RoleEnum::SuperAdmin, RoleEnum::Admin]));
     Route::get('/{id}/download', 'InvoiceController@download')->name("download")->middleware('role:' . implode('|', [RoleEnum::SuperAdmin, RoleEnum::Admin]));
 });
+
+    Route::group(["as" => "finance.", "prefix" => "finance"], function () {
+        Route::get('/', 'FinanceTransactionController@index')->name("index")->middleware('role:' . implode('|', [RoleEnum::SuperAdmin]));
+        Route::get('/create', 'FinanceTransactionController@create')->name("create")->middleware('role:' . implode('|', [RoleEnum::SuperAdmin]));
+        Route::post('/', 'FinanceTransactionController@store')->name("store")->middleware('role:' . implode('|', [RoleEnum::SuperAdmin]));
+        Route::get('/{id}/edit', 'FinanceTransactionController@edit')->name("edit")->middleware('role:' . implode('|', [RoleEnum::SuperAdmin]));
+        Route::put('/{id}', 'FinanceTransactionController@update')->name("update")->middleware('role:' . implode('|', [RoleEnum::SuperAdmin]));
+        Route::delete('/{id}', 'FinanceTransactionController@destroy')->name("destroy")->middleware('role:' . implode('|', [RoleEnum::SuperAdmin]));
+    });
+
+    Route::group(["as" => "finance-category.", "prefix" => "finance-category"], function () {
+        Route::get('/', 'FinanceCategoryController@index')->name("index")->middleware('role:' . implode('|', [RoleEnum::SuperAdmin]));
+        Route::get('/create', 'FinanceCategoryController@create')->name("create")->middleware('role:' . implode('|', [RoleEnum::SuperAdmin]));
+        Route::post('/', 'FinanceCategoryController@store')->name("store")->middleware('role:' . implode('|', [RoleEnum::SuperAdmin]));
+        Route::get('/{id}/edit', 'FinanceCategoryController@edit')->name("edit")->middleware('role:' . implode('|', [RoleEnum::SuperAdmin]));
+        Route::put('/{id}', 'FinanceCategoryController@update')->name("update")->middleware('role:' . implode('|', [RoleEnum::SuperAdmin]));
+        Route::delete('/{id}', 'FinanceCategoryController@destroy')->name("destroy")->middleware('role:' . implode('|', [RoleEnum::SuperAdmin]));
+    });
+
     Route::group(["as" => "users.", "prefix" => "users"], function () {
         Route::get("/", "UserController@index")->name("index")->middleware('role:' . implode('|', [RoleEnum::SuperAdmin]));
         Route::get('/create', 'UserController@create')->name("create")->middleware('role:' . implode('|', [RoleEnum::SuperAdmin]));

@@ -251,6 +251,27 @@
             @if(Auth::user()->hasRole([
                 \App\Enums\RoleEnum::SuperAdmin,
             ]))
+          <!-- ===================== KEUANGAN ===================== -->
+          <li class="nav-header">KEUANGAN</li>
+
+            <li class="nav-item">
+              <a href="{{route('patra.finance.index')}}" class="nav-link @if(Str::startsWith(request()->route()->getName(), 'patra.finance.')) active @endif">
+                <i class='bx bx-wallet col-3 bx-tada-hover'></i>
+                <p>
+                  Buku Kas
+                </p>
+              </a>
+            </li>
+
+            <li class="nav-item">
+              <a href="{{route('patra.finance-category.index')}}" class="nav-link @if(Str::startsWith(request()->route()->getName(), 'patra.finance-category')) active @endif">
+                <i class='bx bx-purchase-tag col-3 bx-tada-hover'></i>
+                <p>
+                  Kategori Keuangan
+                </p>
+              </a>
+            </li>
+
           <!-- ===================== ADMINISTRASI ===================== -->
           <li class="nav-header">ADMINISTRASI</li>
 
