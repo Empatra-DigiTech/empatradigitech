@@ -76,31 +76,6 @@
               </a>
             </li>
 
-            @if(Auth::user()->hasRole([
-                \App\Enums\RoleEnum::SuperAdmin,
-                \App\Enums\RoleEnum::Admin,
-            ]))
-
-            <li class="nav-item">
-              <a href="{{route('patra.galeri.index')}}" class="nav-link @if(Str::startsWith(request()->route()->getName(), 'patra.galeri')) active @endif">
-                <col class="row">
-                <i class="bx bx-camera col-3 bx-tada-hover"></i>
-                <p>
-                  Galeri
-                </p>
-                </col>
-              </a>
-            </li>
-
-            <li class="nav-item">
-              <a href="{{route('patra.informasi.index')}}" class="nav-link @if(Str::startsWith(request()->route()->getName(), 'patra.informasi')) active @endif">
-                <i class="bx bx-download col-3 bx-tada-hover"></i>
-                <p>
-                  Informasi
-                </p>
-              </a>
-            </li>
-
             <li class="nav-item">
               <a href="{{route('patra.blog.index')}}" class="nav-link @if(Str::startsWith(request()->route()->getName(), 'patra.blog')) active @endif">
                 <i class="bx bx-news col-3 bx-tada-hover"></i>
@@ -124,6 +99,31 @@
                 <i class="bx bx-comment-detail col-3 bx-tada-hover"></i>
                 <p>
                   Testimoni
+                </p>
+              </a>
+            </li>
+
+            @if(Auth::user()->hasRole([
+                \App\Enums\RoleEnum::SuperAdmin,
+                \App\Enums\RoleEnum::Admin,
+            ]))
+
+            <li class="nav-item">
+              <a href="{{route('patra.galeri.index')}}" class="nav-link @if(Str::startsWith(request()->route()->getName(), 'patra.galeri')) active @endif">
+                <col class="row">
+                <i class="bx bx-camera col-3 bx-tada-hover"></i>
+                <p>
+                  Galeri
+                </p>
+                </col>
+              </a>
+            </li>
+
+            <li class="nav-item">
+              <a href="{{route('patra.informasi.index')}}" class="nav-link @if(Str::startsWith(request()->route()->getName(), 'patra.informasi')) active @endif">
+                <i class="bx bx-download col-3 bx-tada-hover"></i>
+                <p>
+                  Informasi
                 </p>
               </a>
             </li>

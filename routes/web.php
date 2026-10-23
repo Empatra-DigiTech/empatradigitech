@@ -24,31 +24,31 @@ Route::group(["middleware" => ["patra.access"], "namespace" => "App\Http\Control
     Route::get("/", "PatraController@index")->name('patra.index');
 
     //PROFILE PAGE
-    Route::group(["as" => "profile.", "prefix" => "profile"], function () {
+    Route::group(["middleware" => ['role:' . implode('|', [RoleEnum::SuperAdmin, RoleEnum::Admin, RoleEnum::Moderator])], "as" => "profile.", "prefix" => "profile"], function () {
         Route::get('/', 'ProfileController@index')->name("index");
         Route::put('/', 'ProfileController@update')->name("update");
     });
 
-    Route::group(["as" => "menu.", "prefix" => "menu"], function () {
-        Route::get('/', 'MenuController@index')->name("index")->middleware('role:' . implode('|', [RoleEnum::SuperAdmin, RoleEnum::Admin]));
-        Route::get('/create', 'MenuController@create')->name("create")->middleware('role:' . implode('|', [RoleEnum::SuperAdmin, RoleEnum::Admin]));
-        Route::post('/', 'MenuController@store')->name("store")->middleware('role:' . implode('|', [RoleEnum::SuperAdmin, RoleEnum::Admin]));
-        Route::get('/{id}', 'MenuController@show')->name("show")->middleware('role:' . implode('|', [RoleEnum::SuperAdmin, RoleEnum::Admin]));
-        Route::get('/{id}/edit', 'MenuController@edit')->name("edit")->middleware('role:' . implode('|', [RoleEnum::SuperAdmin, RoleEnum::Admin]));
-        Route::put('/{id}', 'MenuController@update')->name("update")->middleware('role:' . implode('|', [RoleEnum::SuperAdmin, RoleEnum::Admin]));
-        Route::delete('/{id}', 'MenuController@destroy')->name("destroy")->middleware('role:' . implode('|', [RoleEnum::SuperAdmin, RoleEnum::Admin]));
+    Route::group(["middleware" => ['role:' . implode('|', [RoleEnum::SuperAdmin, RoleEnum::Admin])], "as" => "menu.", "prefix" => "menu"], function () {
+        Route::get('/', 'MenuController@index')->name("index");
+        Route::get('/create', 'MenuController@create')->name("create");
+        Route::post('/', 'MenuController@store')->name("store");
+        Route::get('/{id}', 'MenuController@show')->name("show");
+        Route::get('/{id}/edit', 'MenuController@edit')->name("edit");
+        Route::put('/{id}', 'MenuController@update')->name("update");
+        Route::delete('/{id}', 'MenuController@destroy')->name("destroy");
     });
 
-    Route::group(["as" => "informasi.", "prefix" => "informasi"], function () {
-        Route::get("/", "InformasiController@index")->name("index")->middleware('role:' . implode('|', [RoleEnum::SuperAdmin, RoleEnum::Admin]));
-        Route::get("/create", "InformasiController@create")->name("create")->middleware('role:' . implode('|', [RoleEnum::SuperAdmin, RoleEnum::Admin]));
-        Route::post("/", "InformasiController@store")->name("store")->middleware('role:' . implode('|', [RoleEnum::SuperAdmin, RoleEnum::Admin]));
-        Route::get('/{id}/edit', 'InformasiController@edit')->name("edit")->middleware('role:' . implode('|', [RoleEnum::SuperAdmin, RoleEnum::Admin]));
-        Route::put('/{id}', 'InformasiController@update')->name("update")->middleware('role:' . implode('|', [RoleEnum::SuperAdmin, RoleEnum::Admin]));
-        Route::delete('/{id}', 'InformasiController@destroy')->name("destroy")->middleware('role:' . implode('|', [RoleEnum::SuperAdmin, RoleEnum::Admin]));
+    Route::group(["middleware" => ['role:' . implode('|', [RoleEnum::SuperAdmin, RoleEnum::Admin])], "as" => "informasi.", "prefix" => "informasi"], function () {
+        Route::get("/", "InformasiController@index")->name("index");
+        Route::get("/create", "InformasiController@create")->name("create");
+        Route::post("/", "InformasiController@store")->name("store");
+        Route::get('/{id}/edit', 'InformasiController@edit')->name("edit");
+        Route::put('/{id}', 'InformasiController@update')->name("update");
+        Route::delete('/{id}', 'InformasiController@destroy')->name("destroy");
     });
 
-    Route::group(["as" => "portofolio.", "prefix" => "portofolio"], function () {
+    Route::group(["middleware" => ['role:' . implode('|', [RoleEnum::SuperAdmin, RoleEnum::Admin, RoleEnum::Moderator])], "as" => "portofolio.", "prefix" => "portofolio"], function () {
         Route::get('/', 'PortofolioController@index')->name("index");
         Route::get('/create', 'PortofolioController@create')->name("create");
         Route::post('/', 'PortofolioController@store')->name("store");
@@ -58,7 +58,7 @@ Route::group(["middleware" => ["patra.access"], "namespace" => "App\Http\Control
         Route::delete('/{id}', 'PortofolioController@destroy')->name("destroy");
     });
 
-    Route::group(["as" => "inovasi.", "prefix" => "inovasi"], function () {
+    Route::group(["middleware" => ['role:' . implode('|', [RoleEnum::SuperAdmin, RoleEnum::Admin])], "as" => "inovasi.", "prefix" => "inovasi"], function () {
         Route::get('/', 'InovasiController@index')->name("index");
         Route::get('/create', 'InovasiController@create')->name("create");
         Route::post('/', 'InovasiController@store')->name("store");
@@ -68,7 +68,7 @@ Route::group(["middleware" => ["patra.access"], "namespace" => "App\Http\Control
         Route::delete('/{id}', 'InovasiController@destroy')->name("destroy");
     });
 
-    Route::group(["as" => "blog.", "prefix" => "blog"], function () {
+    Route::group(["middleware" => ['role:' . implode('|', [RoleEnum::SuperAdmin, RoleEnum::Admin, RoleEnum::Moderator])], "as" => "blog.", "prefix" => "blog"], function () {
         Route::get('/', 'BlogController@index')->name("index");
         Route::get('/create', 'BlogController@create')->name("create");
         Route::post('/', 'BlogController@store')->name("store");
@@ -78,7 +78,7 @@ Route::group(["middleware" => ["patra.access"], "namespace" => "App\Http\Control
         Route::delete('/{id}', 'BlogController@destroy')->name("destroy");
     });
 
-    Route::group(["as" => "faq.", "prefix" => "faq"], function () {
+    Route::group(["middleware" => ['role:' . implode('|', [RoleEnum::SuperAdmin, RoleEnum::Admin, RoleEnum::Moderator])], "as" => "faq.", "prefix" => "faq"], function () {
         Route::get('/', 'FaqController@index')->name("index");
         Route::get('/create', 'FaqController@create')->name("create");
         Route::post('/', 'FaqController@store')->name("store");
@@ -88,7 +88,7 @@ Route::group(["middleware" => ["patra.access"], "namespace" => "App\Http\Control
         Route::delete('/{id}', 'FaqController@destroy')->name("destroy");
     });
 
-    Route::group(["as" => "testimoni.", "prefix" => "testimoni"], function () {
+    Route::group(["middleware" => ['role:' . implode('|', [RoleEnum::SuperAdmin, RoleEnum::Admin, RoleEnum::Moderator])], "as" => "testimoni.", "prefix" => "testimoni"], function () {
         Route::get('/', 'TestimoniController@index')->name("index");
         Route::get('/create', 'TestimoniController@create')->name("create");
         Route::post('/', 'TestimoniController@store')->name("store");
@@ -98,7 +98,7 @@ Route::group(["middleware" => ["patra.access"], "namespace" => "App\Http\Control
         Route::delete('/{id}', 'TestimoniController@destroy')->name("destroy");
     });
 
-    Route::group(["as" => "client-logo.", "prefix" => "client-logo"], function () {
+    Route::group(["middleware" => ['role:' . implode('|', [RoleEnum::SuperAdmin, RoleEnum::Admin])], "as" => "client-logo.", "prefix" => "client-logo"], function () {
         Route::get('/', 'ClientLogoController@index')->name("index");
         Route::get('/create', 'ClientLogoController@create')->name("create");
         Route::post('/', 'ClientLogoController@store')->name("store");
@@ -108,7 +108,7 @@ Route::group(["middleware" => ["patra.access"], "namespace" => "App\Http\Control
         Route::delete('/{id}', 'ClientLogoController@destroy')->name("destroy");
     });
 
-    Route::group(["as" => "calculator-service.", "prefix" => "calculator-service"], function () {
+    Route::group(["middleware" => ['role:' . implode('|', [RoleEnum::SuperAdmin, RoleEnum::Admin])], "as" => "calculator-service.", "prefix" => "calculator-service"], function () {
         Route::get('/', 'CalculatorServiceController@index')->name("index");
         Route::get('/create', 'CalculatorServiceController@create')->name("create");
         Route::post('/', 'CalculatorServiceController@store')->name("store");
@@ -117,7 +117,7 @@ Route::group(["middleware" => ["patra.access"], "namespace" => "App\Http\Control
         Route::delete('/{id}', 'CalculatorServiceController@destroy')->name("destroy");
     });
 
-    Route::group(["as" => "calculator-feature.", "prefix" => "calculator-feature"], function () {
+    Route::group(["middleware" => ['role:' . implode('|', [RoleEnum::SuperAdmin, RoleEnum::Admin])], "as" => "calculator-feature.", "prefix" => "calculator-feature"], function () {
         Route::get('/', 'CalculatorFeatureController@index')->name("index");
         Route::get('/create', 'CalculatorFeatureController@create')->name("create");
         Route::post('/', 'CalculatorFeatureController@store')->name("store");
@@ -126,139 +126,144 @@ Route::group(["middleware" => ["patra.access"], "namespace" => "App\Http\Control
         Route::delete('/{id}', 'CalculatorFeatureController@destroy')->name("destroy");
     });
 
-    Route::group(["as" => "banner.", "prefix" => "banner"], function () {
-        Route::get('/', 'BannerController@index')->name("index")->middleware('role:' . implode('|', [RoleEnum::SuperAdmin, RoleEnum::Admin]));
-        Route::get('/create', 'BannerController@create')->name("create")->middleware('role:' . implode('|', [RoleEnum::SuperAdmin, RoleEnum::Admin]));
-        Route::post('/', 'BannerController@store')->name("store")->middleware('role:' . implode('|', [RoleEnum::SuperAdmin, RoleEnum::Admin]));
-        Route::get('/{id}', 'BannerController@show')->name("show")->middleware('role:' . implode('|', [RoleEnum::SuperAdmin, RoleEnum::Admin]));
-        Route::get('/{id}/edit', 'BannerController@edit')->name("edit")->middleware('role:' . implode('|', [RoleEnum::SuperAdmin, RoleEnum::Admin]));
-        Route::put('/{id}', 'BannerController@update')->name("update")->middleware('role:' . implode('|', [RoleEnum::SuperAdmin, RoleEnum::Admin]));
-        Route::delete('/{id}', 'BannerController@destroy')->name("destroy")->middleware('role:' . implode('|', [RoleEnum::SuperAdmin, RoleEnum::Admin]));
+    Route::group(["middleware" => ['role:' . implode('|', [RoleEnum::SuperAdmin, RoleEnum::Admin])], "as" => "banner.", "prefix" => "banner"], function () {
+        Route::get('/', 'BannerController@index')->name("index");
+        Route::get('/create', 'BannerController@create')->name("create");
+        Route::post('/', 'BannerController@store')->name("store");
+        Route::get('/{id}', 'BannerController@show')->name("show");
+        Route::get('/{id}/edit', 'BannerController@edit')->name("edit");
+        Route::put('/{id}', 'BannerController@update')->name("update");
+        Route::delete('/{id}', 'BannerController@destroy')->name("destroy");
     });
 
-    Route::group(["as" => "galeri.", "prefix" => "galeri"], function () {
-        Route::get("/", "GaleriController@index")->name("index")->middleware('role:' . implode('|', [RoleEnum::SuperAdmin, RoleEnum::Admin]));
-        Route::get("/create", "GaleriController@create")->name("create")->middleware('role:' . implode('|', [RoleEnum::SuperAdmin, RoleEnum::Admin]));
-        Route::post("/", "GaleriController@store")->name("store")->middleware('role:' . implode('|', [RoleEnum::SuperAdmin, RoleEnum::Admin]));
-        Route::get('/{id}', 'GaleriController@show')->name("show")->middleware('role:' . implode('|', [RoleEnum::SuperAdmin, RoleEnum::Admin]));
-        Route::get('/{id}/edit', 'GaleriController@edit')->name("edit")->middleware('role:' . implode('|', [RoleEnum::SuperAdmin, RoleEnum::Admin]));
-        Route::put('/{id}', 'GaleriController@update')->name("update")->middleware('role:' . implode('|', [RoleEnum::SuperAdmin, RoleEnum::Admin]));
-        Route::delete('/{id}', 'GaleriController@destroy')->name("destroy")->middleware('role:' . implode('|', [RoleEnum::SuperAdmin, RoleEnum::Admin]));
+    Route::group(["middleware" => ['role:' . implode('|', [RoleEnum::SuperAdmin, RoleEnum::Admin])], "as" => "galeri.", "prefix" => "galeri"], function () {
+        Route::get("/", "GaleriController@index")->name("index");
+        Route::get("/create", "GaleriController@create")->name("create");
+        Route::post("/", "GaleriController@store")->name("store");
+        Route::get('/{id}', 'GaleriController@show')->name("show");
+        Route::get('/{id}/edit', 'GaleriController@edit')->name("edit");
+        Route::put('/{id}', 'GaleriController@update')->name("update");
+        Route::delete('/{id}', 'GaleriController@destroy')->name("destroy");
     });
 
-    Route::group(["as" => "kalender.", "prefix" => "kalender"], function () {
-        Route::get("/", "KalenderController@index")->name("index")->middleware('role:' . implode('|', [RoleEnum::SuperAdmin, RoleEnum::Admin]));
-        Route::get("/create", "KalenderController@create")->name("create")->middleware('role:' . implode('|', [RoleEnum::SuperAdmin, RoleEnum::Admin]));
-        Route::post("/", "KalenderController@store")->name("store")->middleware('role:' . implode('|', [RoleEnum::SuperAdmin, RoleEnum::Admin]));
-        Route::get('/{id}', 'KalenderController@show')->name("show")->middleware('role:' . implode('|', [RoleEnum::SuperAdmin, RoleEnum::Admin]));
-        Route::get('/{id}/edit', 'KalenderController@edit')->name("edit")->middleware('role:' . implode('|', [RoleEnum::SuperAdmin, RoleEnum::Admin]));
-        Route::put('/{id}', 'KalenderController@update')->name("update")->middleware('role:' . implode('|', [RoleEnum::SuperAdmin, RoleEnum::Admin]));
-        Route::delete('/{id}', 'KalenderController@destroy')->name("destroy")->middleware('role:' . implode('|', [RoleEnum::SuperAdmin, RoleEnum::Admin]));
+    Route::group(["middleware" => ['role:' . implode('|', [RoleEnum::SuperAdmin, RoleEnum::Admin])], "as" => "kalender.", "prefix" => "kalender"], function () {
+        Route::get("/", "KalenderController@index")->name("index");
+        Route::get("/create", "KalenderController@create")->name("create");
+        Route::post("/", "KalenderController@store")->name("store");
+        Route::get('/{id}', 'KalenderController@show')->name("show");
+        Route::get('/{id}/edit', 'KalenderController@edit')->name("edit");
+        Route::put('/{id}', 'KalenderController@update')->name("update");
+        Route::delete('/{id}', 'KalenderController@destroy')->name("destroy");
     });
 
-    Route::group(["as" => "kontak.", "prefix" => "kontak"], function () {
-        Route::get("/", "KontakController@index")->name("index")->middleware('role:' . implode('|', [RoleEnum::SuperAdmin, RoleEnum::Admin]));
-        Route::get('/{id}', 'KontakController@show')->name("show")->middleware('role:' . implode('|', [RoleEnum::SuperAdmin, RoleEnum::Admin]));
-        Route::delete('/{id}', 'KontakController@destroy')->name("destroy")->middleware('role:' . implode('|', [RoleEnum::SuperAdmin, RoleEnum::Admin]));
+    Route::group(["middleware" => ['role:' . implode('|', [RoleEnum::SuperAdmin, RoleEnum::Admin])], "as" => "kontak.", "prefix" => "kontak"], function () {
+        Route::get("/", "KontakController@index")->name("index");
+        Route::get('/{id}', 'KontakController@show')->name("show");
+        Route::delete('/{id}', 'KontakController@destroy')->name("destroy");
     });
 
-    Route::group(["as" => "layanan.", "prefix" => "layanan"], function () {
-        Route::get('/', 'LayananController@index')->name("index")->middleware('role:' . implode('|', [RoleEnum::SuperAdmin, RoleEnum::Admin]));
-        Route::get('/create', 'LayananController@create')->name("create")->middleware('role:' . implode('|', [RoleEnum::SuperAdmin, RoleEnum::Admin]));
-        Route::post('/', 'LayananController@store')->name("store")->middleware('role:' . implode('|', [RoleEnum::SuperAdmin, RoleEnum::Admin]));
-        Route::get('/{id}', 'LayananController@show')->name("show")->middleware('role:' . implode('|', [RoleEnum::SuperAdmin, RoleEnum::Admin]));
-        Route::get('/{id}/edit', 'LayananController@edit')->name("edit")->middleware('role:' . implode('|', [RoleEnum::SuperAdmin, RoleEnum::Admin]));
-        Route::put('/{id}', 'LayananController@update')->name("update")->middleware('role:' . implode('|', [RoleEnum::SuperAdmin, RoleEnum::Admin]));
-        Route::delete('/{id}', 'LayananController@destroy')->name("destroy")->middleware('role:' . implode('|', [RoleEnum::SuperAdmin, RoleEnum::Admin]));
+    Route::group(["middleware" => ['role:' . implode('|', [RoleEnum::SuperAdmin, RoleEnum::Admin])], "as" => "layanan.", "prefix" => "layanan"], function () {
+        Route::get('/', 'LayananController@index')->name("index");
+        Route::get('/create', 'LayananController@create')->name("create");
+        Route::post('/', 'LayananController@store')->name("store");
+        Route::get('/{id}', 'LayananController@show')->name("show");
+        Route::get('/{id}/edit', 'LayananController@edit')->name("edit");
+        Route::put('/{id}', 'LayananController@update')->name("update");
+        Route::delete('/{id}', 'LayananController@destroy')->name("destroy");
     });
 
-    Route::group(["as" => "paket.", "prefix" => "paket"], function () {
-        Route::get('/', 'PaketController@index')->name("index")->middleware('role:' . implode('|', [RoleEnum::SuperAdmin, RoleEnum::Admin]));
-        Route::get('/create', 'PaketController@create')->name("create")->middleware('role:' . implode('|', [RoleEnum::SuperAdmin, RoleEnum::Admin]));
-        Route::post('/', 'PaketController@store')->name("store")->middleware('role:' . implode('|', [RoleEnum::SuperAdmin, RoleEnum::Admin]));
-        Route::get('/{id}', 'PaketController@show')->name("show")->middleware('role:' . implode('|', [RoleEnum::SuperAdmin, RoleEnum::Admin]));
-        Route::get('/{id}/edit', 'PaketController@edit')->name("edit")->middleware('role:' . implode('|', [RoleEnum::SuperAdmin, RoleEnum::Admin]));
-        Route::put('/{id}', 'PaketController@update')->name("update")->middleware('role:' . implode('|', [RoleEnum::SuperAdmin, RoleEnum::Admin]));
-        Route::delete('/{id}', 'PaketController@destroy')->name("destroy")->middleware('role:' . implode('|', [RoleEnum::SuperAdmin, RoleEnum::Admin]));
+    Route::group(["middleware" => ['role:' . implode('|', [RoleEnum::SuperAdmin, RoleEnum::Admin])], "as" => "paket.", "prefix" => "paket"], function () {
+        Route::get('/', 'PaketController@index')->name("index");
+        Route::get('/create', 'PaketController@create')->name("create");
+        Route::post('/', 'PaketController@store')->name("store");
+        Route::get('/{id}', 'PaketController@show')->name("show");
+        Route::get('/{id}/edit', 'PaketController@edit')->name("edit");
+        Route::put('/{id}', 'PaketController@update')->name("update");
+        Route::delete('/{id}', 'PaketController@destroy')->name("destroy");
     });
 
-    Route::group(["as" => "tautan.", "prefix" => "tautan"], function () {
-        Route::get("/", "TautanController@index")->name("index")->middleware('role:' . implode('|', [RoleEnum::SuperAdmin, RoleEnum::Admin]));
-        Route::get("/create", "TautanController@create")->name("create")->middleware('role:' . implode('|', [RoleEnum::SuperAdmin, RoleEnum::Admin]));
-        Route::post("/", "TautanController@store")->name("store")->middleware('role:' . implode('|', [RoleEnum::SuperAdmin, RoleEnum::Admin]));
-        Route::get('/{id}', 'TautanController@show')->name("show")->middleware('role:' . implode('|', [RoleEnum::SuperAdmin, RoleEnum::Admin]));
-        Route::get('/{id}/edit', 'TautanController@edit')->name("edit")->middleware('role:' . implode('|', [RoleEnum::SuperAdmin, RoleEnum::Admin]));
-        Route::put('/{id}', 'TautanController@update')->name("update")->middleware('role:' . implode('|', [RoleEnum::SuperAdmin, RoleEnum::Admin]));
-        Route::delete('/{id}', 'TautanController@destroy')->name("destroy")->middleware('role:' . implode('|', [RoleEnum::SuperAdmin, RoleEnum::Admin]));
+    Route::group(["middleware" => ['role:' . implode('|', [RoleEnum::SuperAdmin, RoleEnum::Admin])], "as" => "tautan.", "prefix" => "tautan"], function () {
+        Route::get("/", "TautanController@index")->name("index");
+        Route::get("/create", "TautanController@create")->name("create");
+        Route::post("/", "TautanController@store")->name("store");
+        Route::get('/{id}', 'TautanController@show')->name("show");
+        Route::get('/{id}/edit', 'TautanController@edit')->name("edit");
+        Route::put('/{id}', 'TautanController@update')->name("update");
+        Route::delete('/{id}', 'TautanController@destroy')->name("destroy");
     });
 
-    Route::group(["as" => "so.", "prefix" => "so"], function () {
-        Route::get('/', 'SOController@index')->name("index")->middleware('role:' . implode('|', [RoleEnum::SuperAdmin, RoleEnum::Admin]));
-        Route::put('/', 'SOController@update')->name("update")->middleware('role:' . implode('|', [RoleEnum::SuperAdmin, RoleEnum::Admin]));
+    Route::group(["middleware" => ['role:' . implode('|', [RoleEnum::SuperAdmin, RoleEnum::Admin])], "as" => "so.", "prefix" => "so"], function () {
+        Route::get('/', 'SOController@index')->name("index");
+        Route::put('/', 'SOController@update')->name("update");
     });
 
-    Route::group(["as" => "vm.", "prefix" => "vm"], function () {
-        Route::get('/', 'VMController@index')->name("index")->middleware('role:' . implode('|', [RoleEnum::SuperAdmin, RoleEnum::Admin]));
-        Route::put('/', 'VMController@update')->name("update")->middleware('role:' . implode('|', [RoleEnum::SuperAdmin, RoleEnum::Admin]));
+    Route::group(["middleware" => ['role:' . implode('|', [RoleEnum::SuperAdmin, RoleEnum::Admin])], "as" => "vm.", "prefix" => "vm"], function () {
+        Route::get('/', 'VMController@index')->name("index");
+        Route::put('/', 'VMController@update')->name("update");
     });
 
-    Route::group(["as" => "team.", "prefix" => "team"], function () {
-        Route::get('/', 'TeamController@index')->name("index")->middleware('role:' . implode('|', [RoleEnum::SuperAdmin, RoleEnum::Admin]));
-        Route::get('/create', 'TeamController@create')->name("create")->middleware('role:' . implode('|', [RoleEnum::SuperAdmin, RoleEnum::Admin]));
-        Route::post('/', 'TeamController@store')->name("store")->middleware('role:' . implode('|', [RoleEnum::SuperAdmin, RoleEnum::Admin]));
-        Route::get('/{id}', 'TeamController@show')->name("show")->middleware('role:' . implode('|', [RoleEnum::SuperAdmin, RoleEnum::Admin]));
-        Route::get('/{id}/edit', 'TeamController@edit')->name("edit")->middleware('role:' . implode('|', [RoleEnum::SuperAdmin, RoleEnum::Admin]));
-        Route::put('/{id}', 'TeamController@update')->name("update")->middleware('role:' . implode('|', [RoleEnum::SuperAdmin, RoleEnum::Admin]));
-        Route::delete('/{id}', 'TeamController@destroy')->name("destroy")->middleware('role:' . implode('|', [RoleEnum::SuperAdmin, RoleEnum::Admin]));
+    Route::group(["middleware" => ['role:' . implode('|', [RoleEnum::SuperAdmin, RoleEnum::Admin])], "as" => "team.", "prefix" => "team"], function () {
+        Route::get('/', 'TeamController@index')->name("index");
+        Route::get('/create', 'TeamController@create')->name("create");
+        Route::post('/', 'TeamController@store')->name("store");
+        Route::get('/{id}', 'TeamController@show')->name("show");
+        Route::get('/{id}/edit', 'TeamController@edit')->name("edit");
+        Route::put('/{id}', 'TeamController@update')->name("update");
+        Route::delete('/{id}', 'TeamController@destroy')->name("destroy");
     });
 
-    Route::group(["as" => "pengaturan.", "prefix" => "pengaturan"], function () {
-        Route::get("/", "PengaturanController@index")->name("index")->middleware('role:' . implode('|', [RoleEnum::SuperAdmin]));
-        Route::put('/', 'PengaturanController@update')->name("update")->middleware('role:' . implode('|', [RoleEnum::SuperAdmin]));
+    Route::group(["middleware" => ['role:' . implode('|', [RoleEnum::SuperAdmin])], "as" => "pengaturan.", "prefix" => "pengaturan"], function () {
+        Route::get("/", "PengaturanController@index")->name("index");
+        Route::put('/', 'PengaturanController@update')->name("update");
     });
 
-    Route::group(["as" => "log.", "prefix" => "log"], function () {
-        Route::get("/", "LogController@index")->name("index")->middleware('role:' . implode('|', [RoleEnum::SuperAdmin]));
+    Route::group(["middleware" => ['role:' . implode('|', [RoleEnum::SuperAdmin])], "as" => "log.", "prefix" => "log"], function () {
+        Route::get("/", "LogController@index")->name("index");
     });
-Route::group(["as" => "invoice.", "prefix" => "invoice"], function () {
-    Route::get('/', 'InvoiceController@index')->name("index")->middleware('role:' . implode('|', [RoleEnum::SuperAdmin, RoleEnum::Admin]));
-    Route::get('/create', 'InvoiceController@create')->name("create")->middleware('role:' . implode('|', [RoleEnum::SuperAdmin, RoleEnum::Admin]));
-    Route::post('/', 'InvoiceController@store')->name("store")->middleware('role:' . implode('|', [RoleEnum::SuperAdmin, RoleEnum::Admin]));
-    Route::get('/{id}', 'InvoiceController@show')->name("show")->middleware('role:' . implode('|', [RoleEnum::SuperAdmin, RoleEnum::Admin]));
-    Route::get('/{id}/edit', 'InvoiceController@edit')->name("edit")->middleware('role:' . implode('|', [RoleEnum::SuperAdmin, RoleEnum::Admin]));
-    Route::put('/{id}', 'InvoiceController@update')->name("update")->middleware('role:' . implode('|', [RoleEnum::SuperAdmin, RoleEnum::Admin]));
-    Route::delete('/{id}', 'InvoiceController@destroy')->name("destroy")->middleware('role:' . implode('|', [RoleEnum::SuperAdmin, RoleEnum::Admin]));
-    Route::get('/{id}/download', 'InvoiceController@download')->name("download")->middleware('role:' . implode('|', [RoleEnum::SuperAdmin, RoleEnum::Admin]));
+Route::group(["middleware" => ['role:' . implode('|', [RoleEnum::SuperAdmin, RoleEnum::Admin])], "as" => "invoice.", "prefix" => "invoice"], function () {
+    Route::get('/', 'InvoiceController@index')->name("index");
+    Route::get('/create', 'InvoiceController@create')->name("create");
+    Route::post('/', 'InvoiceController@store')->name("store");
+    Route::get('/{id}', 'InvoiceController@show')->name("show");
+    Route::get('/{id}/edit', 'InvoiceController@edit')->name("edit");
+    Route::put('/{id}', 'InvoiceController@update')->name("update");
+    Route::delete('/{id}', 'InvoiceController@destroy')->name("destroy");
+    Route::get('/{id}/download', 'InvoiceController@download')->name("download");
 });
 
-    Route::group(["as" => "finance.", "prefix" => "finance"], function () {
-        Route::get('/', 'FinanceTransactionController@index')->name("index")->middleware('role:' . implode('|', [RoleEnum::SuperAdmin]));
-        Route::get('/create', 'FinanceTransactionController@create')->name("create")->middleware('role:' . implode('|', [RoleEnum::SuperAdmin]));
-        Route::post('/', 'FinanceTransactionController@store')->name("store")->middleware('role:' . implode('|', [RoleEnum::SuperAdmin]));
-        Route::get('/{id}/edit', 'FinanceTransactionController@edit')->name("edit")->middleware('role:' . implode('|', [RoleEnum::SuperAdmin]));
-        Route::put('/{id}', 'FinanceTransactionController@update')->name("update")->middleware('role:' . implode('|', [RoleEnum::SuperAdmin]));
-        Route::delete('/{id}', 'FinanceTransactionController@destroy')->name("destroy")->middleware('role:' . implode('|', [RoleEnum::SuperAdmin]));
+    Route::group(["middleware" => ['role:' . implode('|', [RoleEnum::SuperAdmin])], "as" => "finance.", "prefix" => "finance"], function () {
+        Route::get('/', 'FinanceTransactionController@index')->name("index");
+        Route::get('/trash', 'FinanceTransactionController@trash')->name("trash");
+        Route::post('/{id}/restore', 'FinanceTransactionController@restore')->name("restore");
+        Route::get('/period', 'FinancePeriodController@index')->name("period.index");
+        Route::post('/period/close', 'FinancePeriodController@close')->name("period.close");
+        Route::post('/period/reopen', 'FinancePeriodController@reopen')->name("period.reopen");
+        Route::get('/create', 'FinanceTransactionController@create')->name("create");
+        Route::post('/', 'FinanceTransactionController@store')->name("store");
+        Route::get('/{id}/edit', 'FinanceTransactionController@edit')->name("edit");
+        Route::put('/{id}', 'FinanceTransactionController@update')->name("update");
+        Route::delete('/{id}', 'FinanceTransactionController@destroy')->name("destroy");
     });
 
-    Route::group(["as" => "finance-category.", "prefix" => "finance-category"], function () {
-        Route::get('/', 'FinanceCategoryController@index')->name("index")->middleware('role:' . implode('|', [RoleEnum::SuperAdmin]));
-        Route::get('/create', 'FinanceCategoryController@create')->name("create")->middleware('role:' . implode('|', [RoleEnum::SuperAdmin]));
-        Route::post('/', 'FinanceCategoryController@store')->name("store")->middleware('role:' . implode('|', [RoleEnum::SuperAdmin]));
-        Route::get('/{id}/edit', 'FinanceCategoryController@edit')->name("edit")->middleware('role:' . implode('|', [RoleEnum::SuperAdmin]));
-        Route::put('/{id}', 'FinanceCategoryController@update')->name("update")->middleware('role:' . implode('|', [RoleEnum::SuperAdmin]));
-        Route::delete('/{id}', 'FinanceCategoryController@destroy')->name("destroy")->middleware('role:' . implode('|', [RoleEnum::SuperAdmin]));
+    Route::group(["middleware" => ['role:' . implode('|', [RoleEnum::SuperAdmin])], "as" => "finance-category.", "prefix" => "finance-category"], function () {
+        Route::get('/', 'FinanceCategoryController@index')->name("index");
+        Route::get('/create', 'FinanceCategoryController@create')->name("create");
+        Route::post('/', 'FinanceCategoryController@store')->name("store");
+        Route::get('/{id}/edit', 'FinanceCategoryController@edit')->name("edit");
+        Route::put('/{id}', 'FinanceCategoryController@update')->name("update");
+        Route::delete('/{id}', 'FinanceCategoryController@destroy')->name("destroy");
     });
 
-    Route::group(["as" => "users.", "prefix" => "users"], function () {
-        Route::get("/", "UserController@index")->name("index")->middleware('role:' . implode('|', [RoleEnum::SuperAdmin]));
-        Route::get('/create', 'UserController@create')->name("create")->middleware('role:' . implode('|', [RoleEnum::SuperAdmin]));
-        Route::post('/', 'UserController@store')->name("store")->middleware('role:' . implode('|', [RoleEnum::SuperAdmin]));
-        Route::get('/{id}', 'UserController@show')->name("show")->middleware('role:' . implode('|', [RoleEnum::SuperAdmin]));
-        Route::get('/{id}/edit', 'UserController@edit')->name("edit")->middleware('role:' . implode('|', [RoleEnum::SuperAdmin]));
-        Route::put('/{id}', 'UserController@update')->name("update")->middleware('role:' . implode('|', [RoleEnum::SuperAdmin]));
-        Route::delete('/{id}', 'UserController@destroy')->name("destroy")->middleware('role:' . implode('|', [RoleEnum::SuperAdmin]));
-        Route::patch('/{id}', 'UserController@restore')->name("restore")->middleware('role:' . implode('|', [RoleEnum::SuperAdmin]));
-        Route::get('/{id}/impersonate', 'UserController@impersonate')->name("impersonate")->middleware('role:' . implode('|', [RoleEnum::SuperAdmin]));
+    Route::group(["middleware" => ['role:' . implode('|', [RoleEnum::SuperAdmin])], "as" => "users.", "prefix" => "users"], function () {
+        Route::get("/", "UserController@index")->name("index");
+        Route::get('/create', 'UserController@create')->name("create");
+        Route::post('/', 'UserController@store')->name("store");
+        Route::get('/{id}', 'UserController@show')->name("show");
+        Route::get('/{id}/edit', 'UserController@edit')->name("edit");
+        Route::put('/{id}', 'UserController@update')->name("update");
+        Route::delete('/{id}', 'UserController@destroy')->name("destroy");
+        Route::patch('/{id}', 'UserController@restore')->name("restore");
+        Route::get('/{id}/impersonate', 'UserController@impersonate')->name("impersonate");
     });
 });
 

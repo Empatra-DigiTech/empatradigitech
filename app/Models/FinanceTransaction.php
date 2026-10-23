@@ -4,11 +4,12 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Haruncpi\LaravelUserActivity\Traits\Loggable;
 
 class FinanceTransaction extends Model
 {
-    use HasFactory, Loggable;
+    use HasFactory, Loggable, SoftDeletes;
 
     protected $fillable = [
         'transaction_number',
@@ -20,6 +21,7 @@ class FinanceTransaction extends Model
         'payment_method',
         'notes',
         'created_by',
+        'deleted_by',
     ];
 
     protected $casts = [
@@ -45,7 +47,8 @@ class FinanceTransaction extends Model
     {
         $prefix = 'ED-';
 
-        $max = self::where('transaction_number', 'like', $prefix . '%')
+        // withTrashed: nomor transaksi yang sudah dihapus tidak boleh dipakai ulang (kolom UNIQUE).
+        $max = self::withTrashed()->where('transaction_number', 'like', $prefix . '%')
             ->pluck('transaction_number')
             ->map(fn ($n) => (int) substr($n, strlen($prefix)))
             ->max() ?? 0;

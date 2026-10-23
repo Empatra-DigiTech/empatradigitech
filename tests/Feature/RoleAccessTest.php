@@ -12,6 +12,7 @@ class RoleAccessTest extends TestCase
 {
     /** URL index => peran yang BOLEH (SuperAdmin selalu boleh). */
     private const GATED_ADMIN_UP = [
+        '/patra/inovasi', '/patra/client-logo', '/patra/calculator-service', '/patra/calculator-feature',
         '/patra/menu', '/patra/banner', '/patra/galeri', '/patra/informasi',
         '/patra/layanan', '/patra/paket', '/patra/tautan', '/patra/kontak',
         '/patra/invoice', '/patra/vm', '/patra/team',
@@ -21,10 +22,9 @@ class RoleAccessTest extends TestCase
         '/patra/finance', '/patra/finance-category', '/patra/users', '/patra/pengaturan',
     ];
 
-    /** Modul yang saat ini bisa dibuka Moderator (target pembatasan Fase 3). */
-    private const UNGATED_FOR_MODERATOR = [
-        '/patra/profile', '/patra/portofolio', '/patra/inovasi', '/patra/blog', '/patra/faq',
-        '/patra/testimoni', '/patra/client-logo', '/patra/calculator-service', '/patra/calculator-feature',
+    /** Modul konten yang memang boleh dikelola Moderator (keputusan Fase 3). */
+    private const MODERATOR_ALLOWED = [
+        '/patra/profile', '/patra/portofolio', '/patra/blog', '/patra/faq', '/patra/testimoni',
     ];
 
     public function test_tamu_diarahkan_ke_login(): void
@@ -61,23 +61,32 @@ class RoleAccessTest extends TestCase
         }
     }
 
-    public function test_moderator_bisa_membuka_modul_tanpa_pembatasan_saat_ini(): void
+    public function test_moderator_boleh_membuka_modul_konten_miliknya(): void
     {
-        // Mengunci kondisi BASELINE (temuan Fase 0). Hapus test ini saat Fase 3 selesai.
         $mod = $this->moderator();
-        foreach (self::UNGATED_FOR_MODERATOR as $url) {
-            $this->assertNotSame(403, $this->actingAs($mod)->get($url)->getStatusCode(), $url);
+        foreach (self::MODERATOR_ALLOWED as $url) {
+            $this->actingAs($mod)->get($url)->assertOk();
         }
     }
 
-    public function test_moderator_dibatasi_ke_modul_konten_yang_ditetapkan(): void
+    public function test_moderator_sidebar_menampilkan_menu_yang_boleh_diakses(): void
     {
-        $this->pendingFix('Fase 3 (keputusan hak Moderator)');
+        $html = $this->actingAs($this->moderator())->get('/patra')->getContent();
 
-        $mod = $this->moderator();
-        foreach (['/patra/inovasi', '/patra/client-logo', '/patra/calculator-service'] as $url) {
-            $this->actingAs($mod)->get($url)->assertForbidden();
+        foreach (['patra/portofolio', 'patra/blog', 'patra/faq', 'patra/testimoni'] as $path) {
+            $this->assertStringContainsString($path, $html, "Menu {$path} harus tampil untuk Moderator");
         }
+        foreach (['patra/inovasi', 'patra/client-logo', 'patra/calculator-service', 'patra/finance', 'patra/invoice'] as $path) {
+            $this->assertStringNotContainsString($path, $html, "Menu {$path} tidak boleh tampil untuk Moderator");
+        }
+    }
+
+    public function test_aksi_ubah_data_modul_admin_dilarang_untuk_moderator(): void
+    {
+        $mod = $this->moderator();
+        $this->actingAs($mod)->post('/patra/inovasi', [])->assertForbidden();
+        $this->actingAs($mod)->post('/patra/client-logo', [])->assertForbidden();
+        $this->actingAs($mod)->delete('/patra/calculator-service/1')->assertForbidden();
     }
 
     public function test_aksi_ubah_data_dilarang_untuk_moderator(): void

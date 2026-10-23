@@ -43,6 +43,8 @@
                     <div class="col-lg-12">
                         <a href="{{route('patra.finance.create')}}" class="btn btn-primary"><i class="fa fa-plus"></i> Tambah Transaksi</a>
                         <a href="{{route('patra.finance-category.index')}}" class="btn btn-secondary"><i class="fa fa-tags"></i> Kelola Kategori</a>
+                        <a href="{{route('patra.finance.period.index')}}" class="btn btn-info"><i class="fa fa-lock"></i> Periode</a>
+                        <a href="{{route('patra.finance.trash')}}" class="btn btn-outline-secondary"><i class="fa fa-trash"></i> Sampah @if($trashedCount > 0)<span class="badge badge-secondary">{{ $trashedCount }}</span>@endif</a>
                         <a href="{{route('patra.finance.index')}}" class="btn btn-warning"><i class="fa fa-refresh"></i> Reset Filter</a>
                     </div>
                 </div>
@@ -121,10 +123,14 @@
                                         <td>{{ $row->payment_method }}</td>
                                         <td class="text-right font-weight-bold">{{ $formatRp($row->saldo_berjalan) }}</td>
                                         <td>
+                                            @if(in_array($row->date->format('Y-m'), $closedPeriods, true))
+                                                <span class="badge badge-danger" title="Periode {{ $row->date->format('Y-m') }} sudah ditutup"><i class="fa fa-lock"></i> Tertutup</span>
+                                            @else
                                             <div class="d-flex mb-1">
                                                 <a href="{{route('patra.finance.edit',$row->id)}}" class="btn btn-primary btn-sm mr-1"><i class="fa fa-edit"></i></a>
                                                 <a href="#" class="btn btn-danger btn-sm mr-1 btn-delete" data-id="{{$row->id}}"><i class="fa fa-trash"></i></a>
                                             </div>
+                                            @endif
                                         </td>
                                     </tr>
                                     @empty
@@ -156,7 +162,7 @@
     $(function(){
         $(document).on("click",".btn-delete",function(){
             let id = $(this).data("id");
-            if(confirm("Apakah anda yakin ingin menghapus transaksi ini? Saldo berjalan akan otomatis dihitung ulang.")){
+            if(confirm("Hapus transaksi ini? Transaksi dipindahkan ke Sampah (bisa dipulihkan) dan saldo berjalan dihitung ulang.")){
                 $("#frmDelete").attr("action", "{{ route('patra.finance.destroy', '_id_') }}".replace("_id_", id));
                 $("#frmDelete").find('input[name="id"]').val(id);
                 $("#frmDelete").submit();
