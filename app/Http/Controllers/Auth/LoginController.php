@@ -45,7 +45,7 @@ class LoginController extends Controller
 
                 ])){
                     Auth::logout();
-                    throw new Error("Anda tidak diperbolehkan mengakses menu ini");
+                    throw new \App\Exceptions\UserFacingException("Anda tidak diperbolehkan mengakses menu ini");
                 }
 
                 if(Auth::user()->hasRole([
@@ -58,14 +58,14 @@ class LoginController extends Controller
                 }
             }
             else{
-                //throw new Error("Email / password tidak sesuai");
+                //throw new \App\Exceptions\UserFacingException("Email / password tidak sesuai");
                 alert()->html('Gagal','Email/Password Salah','error');
                 return redirect()->intended(route('auth.login.index'));
             }
 
         }catch(\Throwable $e){
-            Log::emergency($e->getMessage());
-            alert()->html('Gagal',$e->getMessage(),'error');
+            Log::error($e->getMessage(), ['exception' => $e]);
+            alert()->html('Gagal',\App\Helpers\ErrorHelper::userMessage($e),'error');
             return redirect()->back()->withInput();
         }
     }

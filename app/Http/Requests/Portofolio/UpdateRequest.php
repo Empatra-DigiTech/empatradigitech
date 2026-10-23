@@ -19,7 +19,7 @@ class UpdateRequest extends FormRequest
             'image' => [
                 'image',
                 'max:2048',
-                'mimes:jpeg,bmp,png,gif,svg,jpg',
+                'mimes:jpeg,png,gif,jpg',
             ],
         ];
     }
@@ -30,7 +30,7 @@ class UpdateRequest extends FormRequest
             'title.required' => 'Judul harus diisi',
             'slug.required' => 'Deksripsi harus diisi',
             'image.image' => 'Foto harus berupa gambar',
-            'image.mimes' => 'Foto harus berupa jpeg, bmp, png, gif, svg , jpg',
+            'image.mimes' => 'Foto harus berupa jpeg, png, gif, jpg',
             'image.max' => 'Foto tidak boleh lebih dari 2MB',
         ];
     }

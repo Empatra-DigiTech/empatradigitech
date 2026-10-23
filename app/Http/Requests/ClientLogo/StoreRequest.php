@@ -12,7 +12,7 @@ class StoreRequest extends FormRequest
         return [
             'nama_client' => ['required'],
             'website_url' => ['nullable', 'url'],
-            'logo' => ['required', 'image', 'mimes:jpeg,bmp,png,gif,svg,jpg', 'max:2048'],
+            'logo' => ['required', 'image', 'mimes:jpeg,png,gif,jpg', 'max:2048'],
         ];
     }
 
@@ -23,7 +23,7 @@ class StoreRequest extends FormRequest
             'website_url.url' => 'Format URL tidak valid (contoh: https://namaperusahaan.com)',
             'logo.required' => 'Logo harus diunggah',
             'logo.image' => 'Logo harus berupa gambar',
-            'logo.mimes' => 'Logo harus berupa jpeg, bmp, png, gif, svg, jpg',
+            'logo.mimes' => 'Logo harus berupa jpeg, png, gif, jpg',
             'logo.max' => 'Logo tidak boleh lebih dari 2MB',
         ];
     }

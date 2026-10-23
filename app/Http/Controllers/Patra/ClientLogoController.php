@@ -52,10 +52,10 @@ class ClientLogoController extends Controller
     {
         try {
             $logo = $request->file("logo");
-            $upload = UploadHelper::upload_file($logo, 'client-logo', ['jpeg', 'jpg', 'png', 'gif', 'svg']);
+            $upload = UploadHelper::upload_file($logo, 'client-logo', ['jpeg', 'jpg', 'png', 'gif']);
 
             if ($upload["IsError"] == TRUE) {
-                throw new Error($upload["Message"]);
+                throw new \App\Exceptions\UserFacingException($upload["Message"]);
             }
 
             $this->clientLogo->create([
@@ -69,8 +69,8 @@ class ClientLogoController extends Controller
             alert()->html('Berhasil', 'Data berhasil ditambahkan', 'success');
             return redirect()->route($this->route . "index");
         } catch (\Throwable $e) {
-            Log::emergency($e->getMessage());
-            alert()->error('Gagal', $e->getMessage());
+            Log::error($e->getMessage(), ['exception' => $e]);
+            alert()->error('Gagal', \App\Helpers\ErrorHelper::userMessage($e));
             return redirect()->route($this->route . "create")->withInput();
         }
     }
@@ -105,16 +105,16 @@ class ClientLogoController extends Controller
             $result = $this->clientLogo->where('id', $id)->first();
 
             if (!$result) {
-                throw new \Error("Data tidak ditemukan");
+                throw new \App\Exceptions\UserFacingException("Data tidak ditemukan");
             }
 
             $logo = $request->file("logo");
 
             if ($logo) {
-                $upload = UploadHelper::upload_file($logo, 'client-logo', ['jpeg', 'jpg', 'png', 'gif', 'svg']);
+                $upload = UploadHelper::upload_file($logo, 'client-logo', ['jpeg', 'jpg', 'png', 'gif']);
 
                 if ($upload["IsError"] == TRUE) {
-                    throw new Error($upload["Message"]);
+                    throw new \App\Exceptions\UserFacingException($upload["Message"]);
                 }
 
                 $logo = $upload["Path"];
@@ -133,8 +133,8 @@ class ClientLogoController extends Controller
             alert()->html('Berhasil', 'Data berhasil diubah', 'success');
             return redirect()->route($this->route . "index");
         } catch (\Throwable $e) {
-            Log::emergency($e->getMessage());
-            alert()->error('Gagal', $e->getMessage());
+            Log::error($e->getMessage(), ['exception' => $e]);
+            alert()->error('Gagal', \App\Helpers\ErrorHelper::userMessage($e));
             return redirect()->route($this->route . "edit", $id)->withInput();
         }
     }
@@ -148,8 +148,8 @@ class ClientLogoController extends Controller
             alert()->html('Berhasil', 'Data berhasil dihapus', 'success');
             return redirect()->route($this->route . "index");
         } catch (\Throwable $e) {
-            Log::emergency($e->getMessage());
-            alert()->error('Gagal', $e->getMessage());
+            Log::error($e->getMessage(), ['exception' => $e]);
+            alert()->error('Gagal', \App\Helpers\ErrorHelper::userMessage($e));
             return redirect()->route($this->route . "index");
         }
     }

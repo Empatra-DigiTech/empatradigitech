@@ -55,7 +55,7 @@ class PengaturanController extends Controller
                 $upload = UploadHelper::upload_file($website_logo,'settings',['jpeg','jpg','png','gif']);
 
                 if($upload["IsError"] == TRUE){
-                    throw new Error($upload["Message"]);
+                    throw new \App\Exceptions\UserFacingException($upload["Message"]);
                 }
 
                 $website_logo = $upload["Path"];
@@ -83,9 +83,9 @@ class PengaturanController extends Controller
 
             return redirect()->route($this->route.'index');
         } catch (\Throwable $e) {
-            Log::emergency($e->getMessage());
+            Log::error($e->getMessage(), ['exception' => $e]);
 
-            alert()->error('Gagal',$e->getMessage());
+            alert()->error('Gagal',\App\Helpers\ErrorHelper::userMessage($e));
             return redirect()->route($this->route."index")->withInput();
         }
     }

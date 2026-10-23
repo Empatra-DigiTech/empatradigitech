@@ -20,7 +20,7 @@ class StoreRequest extends FormRequest
             'image' => [
                 'image',
                 'max:5048',
-                'mimes:jpeg,bmp,png,gif,svg,jpg',
+                'mimes:jpeg,png,gif,jpg',
             ],
             'email' => [
                 'email',
@@ -42,7 +42,7 @@ class StoreRequest extends FormRequest
             'name.required' => 'Nama harus diisi',
             // 'description.required' => 'Deksripsi harus diisi',
             'email.required' => 'Email harus diisi',
-            'image.mimes' => 'Foto harus berupa jpeg, bmp, png, gif, svg , jpg',
+            'image.mimes' => 'Foto harus berupa jpeg, png, gif, jpg',
             'image.max' => 'Foto tidak boleh lebih dari 5MB',
             'subject.required' => 'Subject harus diisi',
             'subject.max' => 'Subject tidak lebih dari 100 karakter',

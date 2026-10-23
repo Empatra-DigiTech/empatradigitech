@@ -70,19 +70,8 @@ class ContactFormTest extends TestCase
         $this->assertNotNull(Kontak::first()->image);
     }
 
-    public function test_pesan_dengan_email_sama_dua_kali_tidak_error(): void
-    {
-        // kolom email di tabel kontaks UNIQUE -> pengunjung yang sama tidak bisa kirim 2x.
-        $this->post('/kontak', $this->payload());
-        $res = $this->post('/kontak', $this->payload(['subject' => 'Kedua']));
-
-        $res->assertRedirect();
-        $this->assertSame(1, Kontak::count());
-    }
-
     public function test_pengunjung_yang_sama_boleh_kirim_lebih_dari_sekali(): void
     {
-        $this->pendingFix('Fase 2 (hapus unique email kontak)');
 
         $this->post('/kontak', $this->payload());
         $this->post('/kontak', $this->payload(['subject' => 'Kedua']));
@@ -92,7 +81,6 @@ class ContactFormTest extends TestCase
 
     public function test_form_kontak_dibatasi_rate_limit(): void
     {
-        $this->pendingFix('Fase 2.1 (rate limit kontak)');
 
         for ($i = 0; $i < 15; $i++) {
             $res = $this->post('/kontak', $this->payload(['email' => "u{$i}@example.com"]));

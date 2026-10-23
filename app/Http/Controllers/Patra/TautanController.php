@@ -70,8 +70,8 @@ class TautanController extends Controller
             alert()->html('Berhasil', 'Data berhasil ditambahkan', 'success');
             return redirect()->route($this->route . "index");
         } catch (\Throwable $e) {
-            Log::emergency($e->getMessage());
-            alert()->error('Gagal', $e->getMessage());
+            Log::error($e->getMessage(), ['exception' => $e]);
+            alert()->error('Gagal', \App\Helpers\ErrorHelper::userMessage($e));
             return redirect()->route($this->route . "create")->withInput();
         }
     }
@@ -121,7 +121,7 @@ class TautanController extends Controller
             $result = $result->first();
 
             if (!$result) {
-                throw new Error("Data tidak ditemukan");
+                throw new \App\Exceptions\UserFacingException("Data tidak ditemukan");
             }
 
             $title = $request->title;
@@ -141,9 +141,9 @@ class TautanController extends Controller
             alert()->html('Berhasil', 'Data berhasil diubah', 'success');
             return redirect()->route($this->route . "index");
         } catch (\Throwable $e) {
-            Log::emergency($e->getMessage());
+            Log::error($e->getMessage(), ['exception' => $e]);
 
-            alert()->error('Gagal', $e->getMessage());
+            alert()->error('Gagal', \App\Helpers\ErrorHelper::userMessage($e));
             return redirect()->route($this->route . "edit", $id)->withInput();
         }
     }
@@ -163,9 +163,9 @@ class TautanController extends Controller
             alert()->html('Berhasil', 'Data berhasil dihapus', 'success');
             return redirect()->route($this->route . "index");
         } catch (\Throwable $e) {
-            Log::emergency($e->getMessage());
+            Log::error($e->getMessage(), ['exception' => $e]);
 
-            alert()->error('Gagal', $e->getMessage());
+            alert()->error('Gagal', \App\Helpers\ErrorHelper::userMessage($e));
             return redirect()->route($this->route . "index");
         }
     }

@@ -14,7 +14,7 @@ class UpdateRequest extends FormRequest
                 'nullable',
                 'image',
                 'max:2048',
-                'mimes:jpeg,bmp,png,gif,svg,jpg',
+                'mimes:jpeg,png,gif,jpg',
             ],
             'website_name' => [
                 'required',
@@ -48,7 +48,7 @@ class UpdateRequest extends FormRequest
     {
         return [
             'website_logo.image' => 'Logo website harus berupa gambar',
-            'website_logo.mimes' => 'Logo website harus berupa jpeg, bmp, png, gif, svg , jpg',
+            'website_logo.mimes' => 'Logo website harus berupa jpeg, png, gif, jpg',
             'website_logo.max' => 'Logo website tidak boleh lebih dari 2MB',
             'website_name.required' => 'Nama website harus diisi.',
             'website_name.max' => 'Nama website maksimal 255 karakter.',

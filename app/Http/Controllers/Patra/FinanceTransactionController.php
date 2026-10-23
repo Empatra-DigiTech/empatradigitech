@@ -134,8 +134,8 @@ class FinanceTransactionController extends Controller
             alert()->html('Berhasil', 'Transaksi berhasil dicatat', 'success');
             return redirect()->route($this->route . "index");
         } catch (\Throwable $e) {
-            Log::emergency($e->getMessage());
-            alert()->error('Gagal', $e->getMessage());
+            Log::error($e->getMessage(), ['exception' => $e]);
+            alert()->error('Gagal', \App\Helpers\ErrorHelper::userMessage($e));
             return redirect()->route($this->route . "create")->withInput();
         }
     }
@@ -166,7 +166,7 @@ class FinanceTransactionController extends Controller
             $result = $this->transaction->find($id);
 
             if (!$result) {
-                throw new \Exception("Transaksi tidak ditemukan");
+                throw new \App\Exceptions\UserFacingException("Transaksi tidak ditemukan");
             }
 
             $result->update([
@@ -182,8 +182,8 @@ class FinanceTransactionController extends Controller
             alert()->html('Berhasil', 'Transaksi berhasil diubah', 'success');
             return redirect()->route($this->route . "index");
         } catch (\Throwable $e) {
-            Log::emergency($e->getMessage());
-            alert()->error('Gagal', $e->getMessage());
+            Log::error($e->getMessage(), ['exception' => $e]);
+            alert()->error('Gagal', \App\Helpers\ErrorHelper::userMessage($e));
             return redirect()->route($this->route . "edit", $id)->withInput();
         }
     }
@@ -194,7 +194,7 @@ class FinanceTransactionController extends Controller
             $result = $this->transaction->find($id);
 
             if (!$result) {
-                throw new \Exception("Transaksi tidak ditemukan");
+                throw new \App\Exceptions\UserFacingException("Transaksi tidak ditemukan");
             }
 
             $result->delete();
@@ -202,8 +202,8 @@ class FinanceTransactionController extends Controller
             alert()->html('Berhasil', 'Transaksi berhasil dihapus', 'success');
             return redirect()->route($this->route . "index");
         } catch (\Throwable $e) {
-            Log::emergency($e->getMessage());
-            alert()->error('Gagal', $e->getMessage());
+            Log::error($e->getMessage(), ['exception' => $e]);
+            alert()->error('Gagal', \App\Helpers\ErrorHelper::userMessage($e));
             return redirect()->route($this->route . "index");
         }
     }

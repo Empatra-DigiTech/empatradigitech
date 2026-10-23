@@ -14,12 +14,12 @@ class UpdateRequest extends FormRequest
             'title' => [
                 'required',
             ],
-            // 'file_path' => [
-            //     'required',
-            // ],
-            // 'file_link' => [
-            //     'required',
-            // ],
+            'file_path' => [
+                'nullable',
+                'file',
+                'mimes:pdf,doc,docx,xls,xlsx,ppt,pptx,zip,jpg,jpeg,png',
+                'max:102400',
+            ],
         ];
     }
 
@@ -27,6 +27,8 @@ class UpdateRequest extends FormRequest
     {
         return [
             'title.required' => 'Judul harus diisi',
+            'file_path.max' => 'File tidak boleh lebih dari 100MB',
+            'file_path.mimes' => 'File harus berupa pdf, doc, docx, xls, xlsx, ppt, pptx, zip, jpg, jpeg, png',
             // 'file_path.required' => 'File harus diisi',
             // 'file_link.required' => 'Link harus diisi',
         ];

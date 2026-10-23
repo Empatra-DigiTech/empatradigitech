@@ -60,7 +60,7 @@ class TestimoniController extends Controller
                 $upload = UploadHelper::upload_file($foto, 'testimoni', ['jpeg', 'jpg', 'png', 'gif']);
 
                 if ($upload["IsError"] == TRUE) {
-                    throw new Error($upload["Message"]);
+                    throw new \App\Exceptions\UserFacingException($upload["Message"]);
                 }
 
                 $foto = $upload["Path"];
@@ -82,8 +82,8 @@ class TestimoniController extends Controller
             alert()->html('Berhasil', 'Data berhasil ditambahkan', 'success');
             return redirect()->route($this->route . "index");
         } catch (\Throwable $e) {
-            Log::emergency($e->getMessage());
-            alert()->error('Gagal', $e->getMessage());
+            Log::error($e->getMessage(), ['exception' => $e]);
+            alert()->error('Gagal', \App\Helpers\ErrorHelper::userMessage($e));
             return redirect()->route($this->route . "create")->withInput();
         }
     }
@@ -118,7 +118,7 @@ class TestimoniController extends Controller
             $result = $this->testimoni->where('id', $id)->first();
 
             if (!$result) {
-                throw new \Error("Data tidak ditemukan");
+                throw new \App\Exceptions\UserFacingException("Data tidak ditemukan");
             }
 
             $foto = $request->file("foto");
@@ -127,7 +127,7 @@ class TestimoniController extends Controller
                 $upload = UploadHelper::upload_file($foto, 'testimoni', ['jpeg', 'jpg', 'png', 'gif']);
 
                 if ($upload["IsError"] == TRUE) {
-                    throw new Error($upload["Message"]);
+                    throw new \App\Exceptions\UserFacingException($upload["Message"]);
                 }
 
                 $foto = $upload["Path"];
@@ -149,8 +149,8 @@ class TestimoniController extends Controller
             alert()->html('Berhasil', 'Data berhasil diubah', 'success');
             return redirect()->route($this->route . "index");
         } catch (\Throwable $e) {
-            Log::emergency($e->getMessage());
-            alert()->error('Gagal', $e->getMessage());
+            Log::error($e->getMessage(), ['exception' => $e]);
+            alert()->error('Gagal', \App\Helpers\ErrorHelper::userMessage($e));
             return redirect()->route($this->route . "edit", $id)->withInput();
         }
     }
@@ -164,8 +164,8 @@ class TestimoniController extends Controller
             alert()->html('Berhasil', 'Data berhasil dihapus', 'success');
             return redirect()->route($this->route . "index");
         } catch (\Throwable $e) {
-            Log::emergency($e->getMessage());
-            alert()->error('Gagal', $e->getMessage());
+            Log::error($e->getMessage(), ['exception' => $e]);
+            alert()->error('Gagal', \App\Helpers\ErrorHelper::userMessage($e));
             return redirect()->route($this->route . "index");
         }
     }

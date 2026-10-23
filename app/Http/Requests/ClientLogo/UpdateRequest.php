@@ -12,7 +12,7 @@ class UpdateRequest extends FormRequest
         return [
             'nama_client' => ['required'],
             'website_url' => ['nullable', 'url'],
-            'logo' => ['nullable', 'image', 'mimes:jpeg,bmp,png,gif,svg,jpg', 'max:2048'],
+            'logo' => ['nullable', 'image', 'mimes:jpeg,png,gif,jpg', 'max:2048'],
         ];
     }
 
@@ -22,7 +22,7 @@ class UpdateRequest extends FormRequest
             'nama_client.required' => 'Nama client harus diisi',
             'website_url.url' => 'Format URL tidak valid (contoh: https://namaperusahaan.com)',
             'logo.image' => 'Logo harus berupa gambar',
-            'logo.mimes' => 'Logo harus berupa jpeg, bmp, png, gif, svg, jpg',
+            'logo.mimes' => 'Logo harus berupa jpeg, png, gif, jpg',
             'logo.max' => 'Logo tidak boleh lebih dari 2MB',
         ];
     }

@@ -26,7 +26,7 @@ class UpdateRequest extends FormRequest
                 'nullable',
                 'image',
                 'max:2048',
-                'mimes:jpeg,bmp,png,gif,svg,jpg',
+                'mimes:jpeg,png,gif,jpg',
             ],
         ];
     }
@@ -45,7 +45,7 @@ class UpdateRequest extends FormRequest
             'misi.max' => 'Misi maksimal 5000 karakter',
 
             'image.image' => 'File harus berupa gambar',
-            'image.mimes' => 'Gambar harus berupa jpeg, bmp, png, gif, svg, jpg',
+            'image.mimes' => 'Gambar harus berupa jpeg, png, gif, jpg',
             'image.max' => 'Gambar tidak boleh lebih dari 2MB',
         ];
     }

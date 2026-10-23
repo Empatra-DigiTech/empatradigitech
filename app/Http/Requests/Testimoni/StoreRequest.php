@@ -15,7 +15,7 @@ class StoreRequest extends FormRequest
             'perusahaan' => ['nullable'],
             'rating' => ['required', 'integer', 'min:1', 'max:5'],
             'testimoni' => ['required'],
-            'foto' => ['nullable', 'image', 'mimes:jpeg,bmp,png,gif,svg,jpg', 'max:2048'],
+            'foto' => ['nullable', 'image', 'mimes:jpeg,png,gif,jpg', 'max:2048'],
         ];
     }
 
@@ -29,7 +29,7 @@ class StoreRequest extends FormRequest
             'rating.max' => 'Rating maksimal 5',
             'testimoni.required' => 'Isi testimoni harus diisi',
             'foto.image' => 'Foto harus berupa gambar',
-            'foto.mimes' => 'Foto harus berupa jpeg, bmp, png, gif, svg, jpg',
+            'foto.mimes' => 'Foto harus berupa jpeg, png, gif, jpg',
             'foto.max' => 'Foto tidak boleh lebih dari 2MB',
         ];
     }

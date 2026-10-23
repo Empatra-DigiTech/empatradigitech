@@ -92,7 +92,7 @@ class UserController extends Controller
                 $upload = UploadHelper::upload_file($avatar,'user-avatar',UserEnum::AVATAR_EXT);
 
                 if($upload["IsError"] == TRUE){
-                    throw new Error($upload["Message"]);
+                    throw new \App\Exceptions\UserFacingException($upload["Message"]);
                 }
 
                 $avatar = $upload["Path"];
@@ -113,9 +113,9 @@ class UserController extends Controller
             return redirect()->route($this->route."index");
 
         } catch (\Throwable $e) {
-            Log::emergency($e->getMessage());
+            Log::error($e->getMessage(), ['exception' => $e]);
 
-            alert()->error('Gagal',$e->getMessage());
+            alert()->error('Gagal',\App\Helpers\ErrorHelper::userMessage($e));
             return redirect()->route($this->route."create")->withInput();
         }
     }
@@ -176,7 +176,7 @@ class UserController extends Controller
             $result = $result->first();
 
             if(!$result){
-                throw new Error("Data tidak ditemukan");
+                throw new \App\Exceptions\UserFacingException("Data tidak ditemukan");
             }
 
             $name = $request->name;
@@ -191,7 +191,7 @@ class UserController extends Controller
                 $upload = UploadHelper::upload_file($avatar,'user-avatar',UserEnum::AVATAR_EXT);
 
                 if($upload["IsError"] == TRUE){
-                    throw new Error($upload["Message"]);
+                    throw new \App\Exceptions\UserFacingException($upload["Message"]);
                 }
 
                 $avatar = $upload["Path"];
@@ -222,9 +222,9 @@ class UserController extends Controller
             return redirect()->route($this->route."index");
 
         } catch (\Throwable $e) {
-            Log::emergency($e->getMessage());
+            Log::error($e->getMessage(), ['exception' => $e]);
 
-            alert()->error('Gagal',$e->getMessage());
+            alert()->error('Gagal',\App\Helpers\ErrorHelper::userMessage($e));
             return redirect()->route($this->route."edit",$id)->withInput();
         }
     }
@@ -247,9 +247,9 @@ class UserController extends Controller
             return redirect()->route($this->route."index");
 
         } catch (\Throwable $e) {
-            Log::emergency($e->getMessage());
+            Log::error($e->getMessage(), ['exception' => $e]);
 
-            alert()->error('Gagal',$e->getMessage());
+            alert()->error('Gagal',\App\Helpers\ErrorHelper::userMessage($e));
             return redirect()->route($this->route."index");
         }
     }
@@ -273,9 +273,9 @@ class UserController extends Controller
             return redirect()->route($this->route."index");
 
         } catch (\Throwable $e) {
-            Log::emergency($e->getMessage());
+            Log::error($e->getMessage(), ['exception' => $e]);
 
-            alert()->error('Gagal',$e->getMessage());
+            alert()->error('Gagal',\App\Helpers\ErrorHelper::userMessage($e));
             return redirect()->route($this->route."index");
         }
     }
@@ -299,7 +299,7 @@ class UserController extends Controller
             return redirect()->route("patra.patra.index");
         } catch (\Throwable $th) {
 
-            return redirect()->back()->withError($th->getMessage());
+            return redirect()->back()->withError(\App\Helpers\ErrorHelper::userMessage($th));
         }
     }
 }

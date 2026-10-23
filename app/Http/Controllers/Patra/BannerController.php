@@ -62,7 +62,7 @@ class BannerController extends Controller
                 $upload = UploadHelper::upload_file($image,'image',['jpeg','jpg','png','gif']);
 
                 if($upload["IsError"] == TRUE){
-                    throw new Error($upload["Message"]);
+                    throw new \App\Exceptions\UserFacingException($upload["Message"]);
                 }
 
                 $image = $upload["Path"];
@@ -76,9 +76,9 @@ class BannerController extends Controller
             return redirect()->route($this->route."index");
 
         } catch (\Throwable $e) {
-            Log::emergency($e->getMessage());
+            Log::error($e->getMessage(), ['exception' => $e]);
 
-            alert()->error('Gagal',$e->getMessage());
+            alert()->error('Gagal',\App\Helpers\ErrorHelper::userMessage($e));
 
             return redirect()->route($this->route."create")->withInput();
         }
@@ -129,7 +129,7 @@ class BannerController extends Controller
             $result = $result->first();
 
             if(!$result){
-                throw new Error("Data tidak ditemukan");
+                throw new \App\Exceptions\UserFacingException("Data tidak ditemukan");
             }
 
             $title = $request->title;
@@ -139,7 +139,7 @@ class BannerController extends Controller
                 $upload = UploadHelper::upload_file($image,'banner',['jpeg','jpg','png','gif']);
 
                 if($upload["IsError"] == TRUE){
-                    throw new Error($upload["Message"]);
+                    throw new \App\Exceptions\UserFacingException($upload["Message"]);
                 }
 
                 $image = $upload["Path"];
@@ -157,9 +157,9 @@ class BannerController extends Controller
             return redirect()->route($this->route."index");
 
         } catch (\Throwable $e) {
-            Log::emergency($e->getMessage());
+            Log::error($e->getMessage(), ['exception' => $e]);
 
-            alert()->error('Gagal',$e->getMessage());
+            alert()->error('Gagal',\App\Helpers\ErrorHelper::userMessage($e));
             return redirect()->route($this->route."edit",$id)->withInput();
         }
     }
@@ -183,9 +183,9 @@ class BannerController extends Controller
             return redirect()->route($this->route."index");
 
         } catch (\Throwable $e) {
-            Log::emergency($e->getMessage());
+            Log::error($e->getMessage(), ['exception' => $e]);
 
-            alert()->error('Gagal',$e->getMessage());
+            alert()->error('Gagal',\App\Helpers\ErrorHelper::userMessage($e));
             return redirect()->route($this->route."index");
         }
     }

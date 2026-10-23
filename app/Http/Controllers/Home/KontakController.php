@@ -51,7 +51,7 @@ class KontakController extends Controller
                 $upload = UploadHelper::upload_file($image,'images-kontak',['jpeg','jpg','png','gif']);
 
                 if($upload["IsError"] == TRUE){
-                    throw new Error($upload["Message"]);
+                    throw new \App\Exceptions\UserFacingException($upload["Message"]);
                 }
 
                 $image = $upload["Path"];
@@ -74,9 +74,9 @@ class KontakController extends Controller
             return redirect()->route($this->route."index");
 
         } catch (\Throwable $e) {
-            Log::emergency($e->getMessage());
+            Log::error($e->getMessage(), ['exception' => $e]);
 
-            alert()->error('Gagal',$e->getMessage());
+            alert()->error('Gagal',\App\Helpers\ErrorHelper::userMessage($e));
 
             // FIXED: sebelumnya redirect ke route "home.home.create" yang tidak
             // pernah didaftarkan (hanya home.kontak.index & home.kontak.store yang

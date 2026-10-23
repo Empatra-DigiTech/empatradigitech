@@ -77,14 +77,11 @@ class InvoiceTest extends TestCase
         $this->actingAs($this->moderator())->get('/patra/invoice')->assertForbidden();
     }
 
-    // ---- Perbaikan Fase 2.3 (belum dikerjakan) ----
+    // ---- Perbaikan Fase 2.3 ----
 
     public function test_item_tanpa_kolom_amount_tetap_bisa_ditampilkan(): void
     {
-        // Saat ini view show/pdf membaca $item['amount'] kiriman browser -> 500 bila tidak ada
-        // dan nilainya bisa dipalsukan. Server harus menghitung amount = quantity * rate sendiri.
-        $this->pendingFix('Fase 2.3 (hitung amount di server)');
-
+        // Server menghitung amount = quantity * rate sendiri (tidak percaya kiriman browser).
         $admin = $this->admin();
         $this->actingAs($admin)->post('/patra/invoice', $this->payload([
             'items' => json_encode([['description' => 'A', 'quantity' => 2, 'rate' => 1000]]),
@@ -97,7 +94,6 @@ class InvoiceTest extends TestCase
 
     public function test_json_item_rusak_ditolak_dengan_validasi(): void
     {
-        $this->pendingFix('Fase 2.3 (validasi invoice)');
 
         $this->actingAs($this->admin())
             ->post('/patra/invoice', $this->payload(['items' => '{rusak']))
@@ -108,7 +104,6 @@ class InvoiceTest extends TestCase
 
     public function test_item_tanpa_nama_atau_angka_negatif_ditolak(): void
     {
-        $this->pendingFix('Fase 2.3 (validasi invoice)');
 
         $this->actingAs($this->admin())->post('/patra/invoice', $this->payload([
             'items' => json_encode([['description' => '', 'quantity' => -1, 'rate' => 'abc']]),
@@ -119,10 +114,49 @@ class InvoiceTest extends TestCase
 
     public function test_field_wajib_invoice_divalidasi(): void
     {
-        $this->pendingFix('Fase 2.3 (validasi invoice)');
 
         $this->actingAs($this->admin())->post('/patra/invoice', ['items' => '[]']);
 
         $this->assertSame(0, Invoice::count());
+    }
+
+    public function test_amount_palsu_dari_browser_diabaikan(): void
+    {
+        $admin = $this->admin();
+        $this->actingAs($admin)->post('/patra/invoice', $this->payload([
+            'items' => json_encode([['description' => 'A', 'quantity' => 2, 'rate' => 1000, 'amount' => 1]]),
+            'tax_percentage' => 0, 'discount_amount' => 0, 'amount_paid' => 0,
+        ]));
+
+        $inv = Invoice::firstOrFail();
+        $this->assertEquals(2000, $inv->items[0]['amount']);
+        $this->assertEquals(2000, $inv->total);
+    }
+
+    public function test_nomor_invoice_ganda_ditolak(): void
+    {
+        $admin = $this->admin();
+        $this->actingAs($admin)->post('/patra/invoice', $this->payload());
+        $this->actingAs($admin)->post('/patra/invoice', $this->payload());
+
+        $this->assertSame(1, Invoice::count());
+    }
+
+    public function test_pajak_di_atas_100_persen_ditolak(): void
+    {
+        $this->actingAs($this->admin())->post('/patra/invoice', $this->payload(['tax_percentage' => 150]));
+
+        $this->assertSame(0, Invoice::count());
+    }
+
+    public function test_update_boleh_mempertahankan_nomor_sendiri(): void
+    {
+        $admin = $this->admin();
+        $this->actingAs($admin)->post('/patra/invoice', $this->payload());
+        $inv = Invoice::firstOrFail();
+
+        $this->actingAs($admin)->put("/patra/invoice/{$inv->id}", $this->payload(['bill_to_name' => 'Baru']));
+
+        $this->assertSame('Baru', $inv->fresh()->bill_to_name);
     }
 }

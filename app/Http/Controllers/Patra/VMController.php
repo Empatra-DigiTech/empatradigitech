@@ -52,7 +52,7 @@ class VMController extends Controller
                 $upload = UploadHelper::upload_file($image, 'visimisi', ['jpeg', 'jpg', 'png', 'gif']);
 
                 if ($upload["IsError"] == TRUE) {
-                    throw new \Error($upload["Message"]);
+                    throw new \App\Exceptions\UserFacingException($upload["Message"]);
                 }
 
                 $imagePath = $upload["Path"];
@@ -71,9 +71,9 @@ class VMController extends Controller
             return redirect()->route($this->route.'index');
 
         } catch (\Throwable $e) {
-            Log::emergency($e->getMessage());
+            Log::error($e->getMessage(), ['exception' => $e]);
 
-            alert()->error('Gagal', $e->getMessage());
+            alert()->error('Gagal', \App\Helpers\ErrorHelper::userMessage($e));
             return redirect()->route($this->route."index")->withInput();
         }
     }

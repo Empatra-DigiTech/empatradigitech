@@ -78,8 +78,8 @@ class PaketController extends Controller
             return redirect()->route($this->route . "index");
 
         } catch (\Throwable $e) {
-            Log::emergency($e->getMessage());
-            alert()->error('Gagal', $e->getMessage());
+            Log::error($e->getMessage(), ['exception' => $e]);
+            alert()->error('Gagal', \App\Helpers\ErrorHelper::userMessage($e));
             return redirect()->route($this->route . "create")->withInput();
         }
     }
@@ -122,7 +122,7 @@ class PaketController extends Controller
             $result = $this->paket->find($id);
 
             if (!$result) {
-                throw new \Exception("Data tidak ditemukan");
+                throw new \App\Exceptions\UserFacingException("Data tidak ditemukan");
             }
 
             $data = $request->validated();
@@ -142,8 +142,8 @@ class PaketController extends Controller
             return redirect()->route($this->route . "index");
 
         } catch (\Throwable $e) {
-            Log::emergency($e->getMessage());
-            alert()->error('Gagal', $e->getMessage());
+            Log::error($e->getMessage(), ['exception' => $e]);
+            alert()->error('Gagal', \App\Helpers\ErrorHelper::userMessage($e));
             return redirect()->route($this->route . "edit", $id)->withInput();
         }
     }
@@ -154,7 +154,7 @@ class PaketController extends Controller
             $result = $this->paket->find($id);
 
             if (!$result) {
-                throw new \Exception("Data tidak ditemukan");
+                throw new \App\Exceptions\UserFacingException("Data tidak ditemukan");
             }
 
             $result->delete();
@@ -163,8 +163,8 @@ class PaketController extends Controller
             return redirect()->route($this->route . "index");
 
         } catch (\Throwable $e) {
-            Log::emergency($e->getMessage());
-            alert()->error('Gagal', $e->getMessage());
+            Log::error($e->getMessage(), ['exception' => $e]);
+            alert()->error('Gagal', \App\Helpers\ErrorHelper::userMessage($e));
             return redirect()->route($this->route . "index");
         }
     }

@@ -18,7 +18,7 @@ class StoreRequest extends FormRequest
                 'required',
                 'image',
                 'max:2048',
-                'mimes:jpeg,bmp,png,gif,svg,jpg',
+                'mimes:jpeg,png,gif,jpg',
             ],
         ];
     }
@@ -30,7 +30,7 @@ class StoreRequest extends FormRequest
 
             'image.required' => 'File harus diisi',
             'image.image' => 'Foto harus berupa gambar',
-            'image.mimes' => 'Foto harus berupa jpeg, bmp, png, gif, svg , jpg',
+            'image.mimes' => 'Foto harus berupa jpeg, png, gif, jpg',
             'image.max' => 'Foto tidak boleh lebih dari 2MB',
         ];
     }

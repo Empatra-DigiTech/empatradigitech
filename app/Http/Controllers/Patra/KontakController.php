@@ -72,9 +72,9 @@ class KontakController extends Controller
             return redirect()->route($this->route."index");
 
         } catch (\Throwable $e) {
-            Log::emergency($e->getMessage());
+            Log::error($e->getMessage(), ['exception' => $e]);
 
-            alert()->error('Gagal',$e->getMessage());
+            alert()->error('Gagal',\App\Helpers\ErrorHelper::userMessage($e));
             return redirect()->route($this->route."index");
         }
     }

@@ -266,7 +266,7 @@ Route::group(["as" => "invoice.", "prefix" => "invoice"], function () {
 Route::group(["namespace" => "App\Http\Controllers\Auth", "as" => "auth.", "prefix" => "auth"], function () {
     Route::group(["as" => "login.", "prefix" => "login"], function () {
         Route::get("/", "LoginController@index")->name("index");
-        Route::post("/", "LoginController@post")->name("post");
+        Route::post("/", "LoginController@post")->name("post")->middleware('throttle:6,1');
     });
 
     Route::get("/logout", "LogoutController@logout")->name('logout');
@@ -294,7 +294,7 @@ Route::group(["namespace" => "App\Http\Controllers\Home", "as" => "home."], func
 
 
     Route::group(["as" => "kontak.", "prefix" => "kontak"], function () {
-        Route::post("/", "KontakController@store")->name("store");
+        Route::post("/", "KontakController@store")->name("store")->middleware('throttle:10,1');
     });
 
 

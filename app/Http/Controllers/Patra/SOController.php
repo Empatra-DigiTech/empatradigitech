@@ -48,7 +48,7 @@ class SOController extends Controller
                 $upload = UploadHelper::upload_file($image, 'galeri', ['jpeg', 'jpg', 'png', 'gif']);
 
                 if ($upload["IsError"] == TRUE) {
-                    throw new Error($upload["Message"]);
+                    throw new \App\Exceptions\UserFacingException($upload["Message"]);
                 }
 
                 $image = $upload["Path"];
@@ -64,9 +64,9 @@ class SOController extends Controller
 
             return redirect()->route($this->route.'index');
         } catch (\Throwable $e) {
-            Log::emergency($e->getMessage());
+            Log::error($e->getMessage(), ['exception' => $e]);
 
-            alert()->error('Gagal',$e->getMessage());
+            alert()->error('Gagal',\App\Helpers\ErrorHelper::userMessage($e));
             return redirect()->route($this->route."index")->withInput();
         }
     }

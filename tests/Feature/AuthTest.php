@@ -54,7 +54,6 @@ class AuthTest extends TestCase
 
     public function test_login_dibatasi_setelah_banyak_percobaan(): void
     {
-        $this->pendingFix('Fase 2.1 (throttle login)');
 
         $this->superAdmin();
         for ($i = 0; $i < 10; $i++) {

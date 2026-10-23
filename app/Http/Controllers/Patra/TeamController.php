@@ -62,7 +62,7 @@ class TeamController extends Controller
                 $upload = UploadHelper::upload_file($image,'images',['jpeg','jpg','png','gif']);
 
                 if($upload["IsError"] == TRUE){
-                    throw new \Error($upload["Message"]);
+                    throw new \App\Exceptions\UserFacingException($upload["Message"]);
                 }
 
                 $image = $upload["Path"];
@@ -80,8 +80,8 @@ class TeamController extends Controller
             return redirect()->route($this->route."index");
 
         } catch (\Throwable $e) {
-            Log::emergency($e->getMessage());
-            alert()->error('Gagal',$e->getMessage());
+            Log::error($e->getMessage(), ['exception' => $e]);
+            alert()->error('Gagal',\App\Helpers\ErrorHelper::userMessage($e));
             return redirect()->route($this->route."create")->withInput();
         }
     }
@@ -130,7 +130,7 @@ class TeamController extends Controller
             $result = $result->first();
 
             if(!$result){
-                throw new \Error("Data tidak ditemukan");
+                throw new \App\Exceptions\UserFacingException("Data tidak ditemukan");
             }
 
             $nama = $request->nama;
@@ -143,7 +143,7 @@ class TeamController extends Controller
                 $upload = UploadHelper::upload_file($image,'team',['jpeg','jpg','png','gif']);
 
                 if($upload["IsError"] == TRUE){
-                    throw new \Error($upload["Message"]);
+                    throw new \App\Exceptions\UserFacingException($upload["Message"]);
                 }
 
                 $image = $upload["Path"];
@@ -164,8 +164,8 @@ class TeamController extends Controller
             return redirect()->route($this->route."index");
 
         } catch (\Throwable $e) {
-            Log::emergency($e->getMessage());
-            alert()->error('Gagal',$e->getMessage());
+            Log::error($e->getMessage(), ['exception' => $e]);
+            alert()->error('Gagal',\App\Helpers\ErrorHelper::userMessage($e));
             return redirect()->route($this->route."edit",$id)->withInput();
         }
     }
@@ -183,8 +183,8 @@ class TeamController extends Controller
             return redirect()->route($this->route."index");
 
         } catch (\Throwable $e) {
-            Log::emergency($e->getMessage());
-            alert()->error('Gagal',$e->getMessage());
+            Log::error($e->getMessage(), ['exception' => $e]);
+            alert()->error('Gagal',\App\Helpers\ErrorHelper::userMessage($e));
             return redirect()->route($this->route."index");
         }
     }

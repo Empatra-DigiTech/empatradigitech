@@ -58,10 +58,10 @@ class GaleriController extends Controller
             $date = $request->date;
 
             if ($image) {
-                $upload = UploadHelper::upload_file($image, 'galeri', ['jpg', 'img', 'png', 'svg','mkv','mp4','wmv','avi']);
+                $upload = UploadHelper::upload_file($image, 'galeri', ['jpg', 'jpeg', 'png', 'gif', 'mkv', 'mp4', 'wmv', 'avi'], 50 * 1024 * 1024);
 
                 if ($upload["IsError"] == TRUE) {
-                    throw new Error($upload["Message"]);
+                    throw new \App\Exceptions\UserFacingException($upload["Message"]);
                 }
 
                 $image = $upload["Path"];
@@ -77,8 +77,8 @@ class GaleriController extends Controller
             alert()->html('Berhasil', 'Data berhasil ditambahkan', 'success');
             return redirect()->route($this->route . "index");
         } catch (\Throwable $e) {
-            Log::emergency($e->getMessage());
-            alert()->error('Gagal', $e->getMessage());
+            Log::error($e->getMessage(), ['exception' => $e]);
+            alert()->error('Gagal', \App\Helpers\ErrorHelper::userMessage($e));
             return redirect()->route($this->route . "create")->withInput();
         }
     }
@@ -128,7 +128,7 @@ class GaleriController extends Controller
             $result = $result->first();
 
             if (!$result) {
-                throw new Error("Data tidak ditemukan");
+                throw new \App\Exceptions\UserFacingException("Data tidak ditemukan");
             }
 
             $title = $request->title;
@@ -141,7 +141,7 @@ class GaleriController extends Controller
                 $upload = UploadHelper::upload_file($image, 'galeri', ['jpeg', 'jpg', 'png', 'gif']);
 
                 if ($upload["IsError"] == TRUE) {
-                    throw new Error($upload["Message"]);
+                    throw new \App\Exceptions\UserFacingException($upload["Message"]);
                 }
 
                 $image = $upload["Path"];
@@ -159,9 +159,9 @@ class GaleriController extends Controller
             alert()->html('Berhasil', 'Data berhasil diubah', 'success');
             return redirect()->route($this->route . "index");
         } catch (\Throwable $e) {
-            Log::emergency($e->getMessage());
+            Log::error($e->getMessage(), ['exception' => $e]);
 
-            alert()->error('Gagal', $e->getMessage());
+            alert()->error('Gagal', \App\Helpers\ErrorHelper::userMessage($e));
             return redirect()->route($this->route . "edit", $id)->withInput();
         }
     }
@@ -184,9 +184,9 @@ class GaleriController extends Controller
             alert()->html('Berhasil', 'Data berhasil dihapus', 'success');
             return redirect()->route($this->route . "index");
         } catch (\Throwable $e) {
-            Log::emergency($e->getMessage());
+            Log::error($e->getMessage(), ['exception' => $e]);
 
-            alert()->error('Gagal', $e->getMessage());
+            alert()->error('Gagal', \App\Helpers\ErrorHelper::userMessage($e));
             return redirect()->route($this->route . "index");
         }
     }

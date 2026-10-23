@@ -68,8 +68,8 @@ class FinanceCategoryController extends Controller
             alert()->html('Berhasil', 'Kategori berhasil ditambahkan', 'success');
             return redirect()->route($this->route . "index");
         } catch (\Throwable $e) {
-            Log::emergency($e->getMessage());
-            alert()->error('Gagal', $e->getMessage());
+            Log::error($e->getMessage(), ['exception' => $e]);
+            alert()->error('Gagal', \App\Helpers\ErrorHelper::userMessage($e));
             return redirect()->route($this->route . "create")->withInput();
         }
     }
@@ -99,7 +99,7 @@ class FinanceCategoryController extends Controller
             $result = $this->category->find($id);
 
             if (!$result) {
-                throw new \Exception("Kategori tidak ditemukan");
+                throw new \App\Exceptions\UserFacingException("Kategori tidak ditemukan");
             }
 
             // Kategori tidak boleh jadi induk untuk dirinya sendiri.
@@ -119,8 +119,8 @@ class FinanceCategoryController extends Controller
             alert()->html('Berhasil', 'Kategori berhasil diubah', 'success');
             return redirect()->route($this->route . "index");
         } catch (\Throwable $e) {
-            Log::emergency($e->getMessage());
-            alert()->error('Gagal', $e->getMessage());
+            Log::error($e->getMessage(), ['exception' => $e]);
+            alert()->error('Gagal', \App\Helpers\ErrorHelper::userMessage($e));
             return redirect()->route($this->route . "edit", $id)->withInput();
         }
     }
@@ -131,15 +131,15 @@ class FinanceCategoryController extends Controller
             $result = $this->category->find($id);
 
             if (!$result) {
-                throw new \Exception("Kategori tidak ditemukan");
+                throw new \App\Exceptions\UserFacingException("Kategori tidak ditemukan");
             }
 
             if ($result->transactions()->exists()) {
-                throw new \Exception("Kategori tidak bisa dihapus karena masih dipakai di transaksi. Nonaktifkan saja kategorinya.");
+                throw new \App\Exceptions\UserFacingException("Kategori tidak bisa dihapus karena masih dipakai di transaksi. Nonaktifkan saja kategorinya.");
             }
 
             if ($result->children()->exists()) {
-                throw new \Exception("Kategori tidak bisa dihapus karena masih punya sub kategori. Hapus/pindahkan sub kategorinya dulu.");
+                throw new \App\Exceptions\UserFacingException("Kategori tidak bisa dihapus karena masih punya sub kategori. Hapus/pindahkan sub kategorinya dulu.");
             }
 
             $result->delete();
@@ -147,8 +147,8 @@ class FinanceCategoryController extends Controller
             alert()->html('Berhasil', 'Kategori berhasil dihapus', 'success');
             return redirect()->route($this->route . "index");
         } catch (\Throwable $e) {
-            Log::emergency($e->getMessage());
-            alert()->error('Gagal', $e->getMessage());
+            Log::error($e->getMessage(), ['exception' => $e]);
+            alert()->error('Gagal', \App\Helpers\ErrorHelper::userMessage($e));
             return redirect()->route($this->route . "index");
         }
     }

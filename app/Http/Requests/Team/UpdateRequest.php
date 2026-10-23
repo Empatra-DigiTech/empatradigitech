@@ -34,7 +34,7 @@ class UpdateRequest extends FormRequest
                 'nullable',
                 'image',
                 'max:2048',
-                'mimes:jpeg,bmp,png,gif,svg,jpg',
+                'mimes:jpeg,png,gif,jpg',
             ],
         ];
     }
@@ -57,7 +57,7 @@ class UpdateRequest extends FormRequest
             'instagram.max' => 'Instagram URL tidak boleh lebih dari 500 karakter',
 
             'image.image' => 'File harus berupa gambar',
-            'image.mimes' => 'Foto harus berupa jpeg, bmp, png, gif, svg, jpg',
+            'image.mimes' => 'Foto harus berupa jpeg, png, gif, jpg',
             'image.max' => 'Foto tidak boleh lebih dari 2MB',
         ];
     }

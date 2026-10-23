@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Patra;
 use App\Http\Controllers\Controller;
 use App\Models\Invoice;
 use Illuminate\Http\Request;
+use App\Http\Requests\Invoice\StoreRequest;
+use App\Http\Requests\Invoice\UpdateRequest;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Pagination\Paginator;
 use Barryvdh\DomPDF\Facade\Pdf;
@@ -56,31 +58,10 @@ class InvoiceController extends Controller
         return view($this->view . "create", $data);
     }
 
-    public function store(Request $request)
+    public function store(StoreRequest $request)
     {
         try {
-            $data = [
-                'invoice_number' => $request->invoice_number,
-                'from_name' => $request->from_name,
-                'from_address' => $request->from_address,
-                'bill_to_name' => $request->bill_to_name,
-                'bill_to_address' => $request->bill_to_address,
-                'ship_to_name' => $request->ship_to_name,
-                'ship_to_address' => $request->ship_to_address,
-                'invoice_date' => $request->invoice_date,
-                'payment_terms' => $request->payment_terms,
-                'due_date' => $request->due_date,
-                'po_number' => $request->po_number,
-                'items' => json_decode($request->items, true),
-                'tax_percentage' => $request->tax_percentage ?? 0,
-                'discount_amount' => $request->discount_amount ?? 0,
-                'shipping_amount' => $request->shipping_amount ?? 0,
-                'amount_paid' => $request->amount_paid ?? 0,
-                'notes' => $request->notes,
-                'terms' => $request->terms,
-                'currency' => $request->currency ?? 'IDR',
-                'theme' => $request->theme ?? 'classic',
-            ];
+            $data = $request->invoiceData();
 
             $invoice = $this->invoice->create($data);
             $invoice->calculateTotals();
@@ -89,8 +70,8 @@ class InvoiceController extends Controller
             alert()->html('Berhasil', 'Invoice berhasil dibuat', 'success');
             return redirect()->route($this->route . "index");
         } catch (\Throwable $e) {
-            Log::emergency($e->getMessage());
-            alert()->error('Gagal', $e->getMessage());
+            Log::error($e->getMessage(), ['exception' => $e]);
+            alert()->error('Gagal', \App\Helpers\ErrorHelper::userMessage($e));
             return redirect()->route($this->route . "create")->withInput();
         }
     }
@@ -127,37 +108,16 @@ class InvoiceController extends Controller
         return view($this->view . "edit", $data);
     }
 
-    public function update(Request $request, $id)
+    public function update(UpdateRequest $request, $id)
     {
         try {
             $invoice = $this->invoice->find($id); // Ubah dari $result ke $invoice
 
             if (!$invoice) {
-                throw new \Exception("Invoice tidak ditemukan");
+                throw new \App\Exceptions\UserFacingException("Invoice tidak ditemukan");
             }
 
-            $data = [
-                'invoice_number' => $request->invoice_number,
-                'from_name' => $request->from_name,
-                'from_address' => $request->from_address,
-                'bill_to_name' => $request->bill_to_name,
-                'bill_to_address' => $request->bill_to_address,
-                'ship_to_name' => $request->ship_to_name,
-                'ship_to_address' => $request->ship_to_address,
-                'invoice_date' => $request->invoice_date,
-                'payment_terms' => $request->payment_terms,
-                'due_date' => $request->due_date,
-                'po_number' => $request->po_number,
-                'items' => json_decode($request->items, true),
-                'tax_percentage' => $request->tax_percentage ?? 0,
-                'discount_amount' => $request->discount_amount ?? 0,
-                'shipping_amount' => $request->shipping_amount ?? 0,
-                'amount_paid' => $request->amount_paid ?? 0,
-                'notes' => $request->notes,
-                'terms' => $request->terms,
-                'currency' => $request->currency ?? 'IDR',
-                'theme' => $request->theme ?? 'classic',
-            ];
+            $data = $request->invoiceData();
 
             $invoice->update($data);
             $invoice->calculateTotals();
@@ -166,8 +126,8 @@ class InvoiceController extends Controller
             alert()->html('Berhasil', 'Invoice berhasil diupdate', 'success');
             return redirect()->route($this->route . "index");
         } catch (\Throwable $e) {
-            Log::emergency($e->getMessage());
-            alert()->error('Gagal', $e->getMessage());
+            Log::error($e->getMessage(), ['exception' => $e]);
+            alert()->error('Gagal', \App\Helpers\ErrorHelper::userMessage($e));
             return redirect()->route($this->route . "edit", $id)->withInput();
         }
     }
@@ -178,7 +138,7 @@ class InvoiceController extends Controller
             $result = $this->invoice->find($id);
 
             if (!$result) {
-                throw new \Exception("Invoice tidak ditemukan");
+                throw new \App\Exceptions\UserFacingException("Invoice tidak ditemukan");
             }
 
             $result->delete();
@@ -186,8 +146,8 @@ class InvoiceController extends Controller
             alert()->html('Berhasil', 'Invoice berhasil dihapus', 'success');
             return redirect()->route($this->route . "index");
         } catch (\Throwable $e) {
-            Log::emergency($e->getMessage());
-            alert()->error('Gagal', $e->getMessage());
+            Log::error($e->getMessage(), ['exception' => $e]);
+            alert()->error('Gagal', \App\Helpers\ErrorHelper::userMessage($e));
             return redirect()->route($this->route . "index");
         }
     }
