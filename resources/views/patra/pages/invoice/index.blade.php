@@ -62,20 +62,20 @@
                                         <td>
                                             <div class="btn-group">
                                                 <a href="{{route('patra.invoice.show',$row->id)}}"
-                                                   class="btn btn-sm btn-info" title="Lihat">
-                                                    <i class="fa fa-eye"></i>
+                                                   class="btn btn-sm btn-info" title="Lihat" aria-label="Lihat detail invoice">
+                                                    <i class="fa fa-eye" aria-hidden="true"></i>
                                                 </a>
                                                 <a href="{{route('patra.invoice.edit',$row->id)}}"
-                                                   class="btn btn-sm btn-primary" title="Edit">
-                                                    <i class="fa fa-edit"></i>
+                                                   class="btn btn-sm btn-primary" title="Edit" aria-label="Ubah invoice">
+                                                    <i class="fa fa-edit" aria-hidden="true"></i>
                                                 </a>
                                                 <a href="{{route('patra.invoice.download',$row->id)}}"
-                                                   class="btn btn-sm btn-success" title="Download PDF">
-                                                    <i class="fa fa-download"></i>
+                                                   class="btn btn-sm btn-success" title="Download PDF" aria-label="Unduh PDF invoice">
+                                                    <i class="fa fa-download" aria-hidden="true"></i>
                                                 </a>
                                                 <a href="#" class="btn btn-sm btn-danger btn-delete"
-                                                   data-id="{{$row->id}}" title="Hapus">
-                                                    <i class="fa fa-trash"></i>
+                                                   data-id="{{$row->id}}" title="Hapus" aria-label="Hapus invoice" role="button">
+                                                    <i class="fa fa-trash" aria-hidden="true"></i>
                                                 </a>
                                             </div>
                                         </td>

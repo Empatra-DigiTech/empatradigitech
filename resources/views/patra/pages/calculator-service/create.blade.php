@@ -9,7 +9,7 @@
             <div class="col-xl-12">
                 <div class="card m-b-30">
                     <div class="card-body">
-                        <form action="{{ route('patra.calculator-service.store') }}" method="POST" autocomplete="off">
+                        <form action="{{ route('patra.calculator-service.store') }}" method="POST" autocomplete="off" onsubmit="return confirm('Apakah anda yakin ingin mengirim data ini?')">
                             @csrf
                             <div class="form-group row">
                                 <label class="col-md-2 col-form-label">Nama Layanan <span class="text-danger">*</span></label>

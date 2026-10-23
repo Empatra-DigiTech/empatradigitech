@@ -10,7 +10,7 @@
                 <div class="card m-b-30">
                     <div class="card-body">
                         <form action="{{ route('patra.finance.update', $result->id) }}" method="POST" autocomplete="off"
-                            onsubmit="confirm('Apakah anda yakin ingin menyimpan perubahan ini?')">
+                            onsubmit="return confirm('Apakah anda yakin ingin menyimpan perubahan ini?')">
                             @csrf
                             @method('PUT')
 

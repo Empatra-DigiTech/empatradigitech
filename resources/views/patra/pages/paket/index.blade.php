@@ -121,12 +121,12 @@
                                             <td>
                                                 <div class="btn-group" role="group">
                                                     <a href="{{ route('patra.paket.show', $row->id) }}"
-                                                       class="btn btn-sm btn-info" title="Detail">
-                                                        <i class="fas fa-eye"></i>
+                                                       class="btn btn-sm btn-info" title="Detail" aria-label="Lihat detail paket">
+                                                        <i class="fas fa-eye" aria-hidden="true"></i>
                                                     </a>
                                                     <a href="{{ route('patra.paket.edit', $row->id) }}"
-                                                       class="btn btn-sm btn-warning" title="Edit">
-                                                        <i class="fas fa-edit"></i>
+                                                       class="btn btn-sm btn-warning" title="Edit" aria-label="Ubah paket">
+                                                        <i class="fas fa-edit" aria-hidden="true"></i>
                                                     </a>
                                                     <form action="{{ route('patra.paket.destroy', $row->id) }}"
                                                           method="POST"
@@ -134,8 +134,8 @@
                                                           style="display: inline;">
                                                         @csrf
                                                         @method('DELETE')
-                                                        <button type="submit" class="btn btn-sm btn-danger" title="Hapus">
-                                                            <i class="fas fa-trash"></i>
+                                                        <button type="submit" class="btn btn-sm btn-danger" title="Hapus" aria-label="Hapus paket">
+                                                            <i class="fas fa-trash" aria-hidden="true"></i>
                                                         </button>
                                                     </form>
                                                 </div>

@@ -10,7 +10,7 @@
                 <div class="card m-b-30">
                     <div class="card-body">
                         <form action="{{ route('patra.finance.store') }}" method="POST" autocomplete="off"
-                            onsubmit="confirm('Apakah anda yakin ingin mengirim data ini?')">
+                            onsubmit="return confirm('Apakah anda yakin ingin mengirim data ini?')">
                             @csrf
 
                             <div class="form-group row">

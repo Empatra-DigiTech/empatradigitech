@@ -19,7 +19,7 @@
                             <div class="input-group">
                                 <input type="text" name="search" class="form-control" placeholder="Cari kategori..." value="{{ request('search') }}">
                                 <div class="input-group-append">
-                                    <button class="btn btn-primary" type="submit"><i class="fa fa-search"></i></button>
+                                    <button class="btn btn-primary" type="submit" aria-label="Terapkan filter pencarian" title="Terapkan filter pencarian"><i class="fa fa-search" aria-hidden="true"></i></button>
                                 </div>
                             </div>
                         </form>
@@ -58,8 +58,8 @@
                                 </td>
                                 <td>
                                     <div class="d-flex mb-1">
-                                        <a href="{{route('patra.finance-category.edit',$row->id)}}" class="btn btn-primary btn-sm mr-1"><i class="fa fa-edit"></i></a>
-                                        <a href="#" class="btn btn-danger btn-sm mr-1 btn-delete" data-id="{{$row->id}}"><i class="fa fa-trash"></i></a>
+                                        <a href="{{route('patra.finance-category.edit',$row->id)}}" class="btn btn-primary btn-sm mr-1" aria-label="Ubah kategori" title="Ubah kategori"><i class="fa fa-edit" aria-hidden="true"></i></a>
+                                        <a href="#" class="btn btn-danger btn-sm mr-1 btn-delete" data-id="{{$row->id}}" aria-label="Hapus kategori" title="Hapus kategori" role="button"><i class="fa fa-trash" aria-hidden="true"></i></a>
                                     </div>
                                 </td>
                             </tr>

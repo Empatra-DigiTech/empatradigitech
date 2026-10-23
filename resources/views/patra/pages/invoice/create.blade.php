@@ -588,6 +588,11 @@
     document.getElementById('invoiceForm').addEventListener('submit', function(e) {
         e.preventDefault();
 
+        // Batal -> berhenti di sini; form hanya dikirim bila pengguna menyetujui.
+        if (!confirm('Apakah anda yakin ingin mengirim data ini?')) {
+            return;
+        }
+
         const rows = document.querySelectorAll('.item-row');
         const items = [];
 

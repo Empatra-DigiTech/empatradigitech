@@ -9,7 +9,7 @@
             <div class="col-xl-12">
                 <div class="card m-b-30">
                     <div class="card-body">
-                        <form action="{{ route('patra.calculator-service.update', $result->id) }}" method="post" autocomplete="off">
+                        <form action="{{ route('patra.calculator-service.update', $result->id) }}" method="post" autocomplete="off" onsubmit="return confirm('Apakah anda yakin ingin menyimpan perubahan ini?')">
                             @csrf
                             @method('PUT')
                             <div class="form-group row">

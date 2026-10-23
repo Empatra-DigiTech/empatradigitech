@@ -14,7 +14,7 @@
                             Gunakan hanya testimoni asli dari client yang benar-benar pernah menggunakan jasa Anda. Jangan gunakan data rekaan/dummy.
                         </div>
                         <form action="{{ route('patra.testimoni.store') }}" method="POST" autocomplete="off"
-                            onsubmit="confirm('Apakah anda yakin ingin mengirim data ini?')" enctype="multipart/form-data">
+                            onsubmit="return confirm('Apakah anda yakin ingin mengirim data ini?')" enctype="multipart/form-data">
                             @csrf
                             <div class="row mb-3">
                                 <div class="col-lg-12">

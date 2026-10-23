@@ -331,4 +331,15 @@ class FinanceTest extends TestCase
         $this->assertSame(45, $rows->total());
         $this->assertCount(20, $rows->items());
     }
+
+    public function test_tombol_aksi_di_daftar_punya_nama_aksesibel(): void
+    {
+        $this->trx('masuk', 1000, '2026-10-01');
+
+        $html = $this->actingAs($this->superAdmin())->get('/patra/finance')->getContent();
+
+        $this->assertStringContainsString('aria-label="Ubah transaksi"', $html);
+        $this->assertStringContainsString('aria-label="Hapus transaksi"', $html);
+        $this->assertStringContainsString('aria-label="Terapkan filter pencarian"', $html);
+    }
 }

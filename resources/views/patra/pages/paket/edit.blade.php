@@ -26,7 +26,7 @@
             <div class="row">
                 <div class="col-md-12">
                     <div class="card">
-                        <form action="{{ route('patra.paket.update', $result->id) }}" method="POST" autocomplete="off">
+                        <form action="{{ route('patra.paket.update', $result->id) }}" method="POST" autocomplete="off" onsubmit="return confirm('Apakah anda yakin ingin menyimpan perubahan ini?')">
                             @csrf
                             @method('PUT')
                             <div class="card-body">
@@ -115,7 +115,7 @@
                                                            placeholder="Contoh: Student & Teacher Dashboard"
                                                            value="{{ $fitur }}">
                                                     <div class="input-group-append">
-                                                        <button type="button" class="btn btn-danger btn-remove-fitur">
+                                                        <button type="button" class="btn btn-danger btn-remove-fitur" aria-label="Hapus fitur" title="Hapus fitur">
                                                             <i class="fas fa-times"></i>
                                                         </button>
                                                     </div>
@@ -196,7 +196,7 @@ $(document).ready(function() {
             <div class="input-group mb-2 fitur-item">
                 <input type="text" name="fitur[]" class="form-control" placeholder="Contoh: Custom Domain">
                 <div class="input-group-append">
-                    <button type="button" class="btn btn-danger btn-remove-fitur">
+                    <button type="button" class="btn btn-danger btn-remove-fitur" aria-label="Hapus fitur" title="Hapus fitur">
                         <i class="fas fa-times"></i>
                     </button>
                 </div>

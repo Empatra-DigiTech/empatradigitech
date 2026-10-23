@@ -11,7 +11,7 @@
     <div class="col-xl-12">
         <div class="card m-b-30">
             <div class="card-body">
-                <form id="myForm" action="{{ route('patra.tautan.store') }}" method="post" autocomplete="off" onsubmit="confirm('Apakah anda yakin ingin mengirim data ini?')" enctype="multipart/form-data">
+                <form id="myForm" action="{{ route('patra.tautan.store') }}" method="post" autocomplete="off" onsubmit="return confirm('Apakah anda yakin ingin mengirim data ini?')" enctype="multipart/form-data">
                     @csrf
                     <div class="row mb-3">
                         <div class="col-lg-12">

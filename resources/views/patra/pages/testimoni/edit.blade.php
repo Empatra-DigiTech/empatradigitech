@@ -10,7 +10,7 @@
                 <div class="card m-b-30">
                     <div class="card-body">
                         <form action="{{ route('patra.testimoni.update', $result->id) }}" method="post" autocomplete="off"
-                            onsubmit="confirm('Apakah anda yakin ingin mengirim data ini?')" enctype="multipart/form-data">
+                            onsubmit="return confirm('Apakah anda yakin ingin mengirim data ini?')" enctype="multipart/form-data">
                             @csrf
                             @method('PUT')
                             <div class="row mb-3">

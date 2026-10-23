@@ -10,7 +10,7 @@
             <div class="col-xl-12">
                 <div class="card m-b-30">
                     <div class="card-body">
-                        <form action="{{ route('patra.finance-category.update', $result->id) }}" method="POST" autocomplete="off">
+                        <form action="{{ route('patra.finance-category.update', $result->id) }}" method="POST" autocomplete="off" onsubmit="return confirm('Apakah anda yakin ingin menyimpan perubahan ini?')">
                             @csrf
                             @method('PUT')
 

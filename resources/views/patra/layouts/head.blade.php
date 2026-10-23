@@ -34,6 +34,8 @@
     <link href="{{URL::to('/')}}/assets/css/patra/css/bootstrap.min.css" rel="stylesheet" type="text/css">
     <link href="{{URL::to('/')}}/assets/css/patra/assets/css/icons.css" rel="stylesheet" type="text/css">
     <link href="{{URL::to('/')}}/assets/css/patra/assets/css/style.css" rel="stylesheet" type="text/css">
+    <!-- Indikator fokus keyboard (style.css menghilangkan outline) -->
+    <link href="{{URL::to('/')}}/assets/css/patra/a11y.css" rel="stylesheet" type="text/css">
 
     <!-- Select2 -->
     <link rel="stylesheet" href="{{URL::to('/')}}/plugins/select2/css/select2.min.css" />

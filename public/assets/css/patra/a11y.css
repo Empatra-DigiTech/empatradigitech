@@ -1,0 +1,23 @@
+/*
+ * Aksesibilitas admin.
+ * style.css bawaan template memuat `* { outline: none !important; }` sehingga pengguna
+ * keyboard tidak melihat elemen mana yang sedang fokus. File ini dimuat SETELAH style.css
+ * dan mengembalikan indikator fokus hanya untuk navigasi keyboard (:focus-visible), jadi klik
+ * mouse tidak menampilkan outline.
+ */
+:focus-visible {
+    outline: 3px solid #0f3c5d !important;
+    outline-offset: 2px !important;
+}
+
+.main-sidebar :focus-visible,
+.btn-primary:focus-visible,
+.btn-danger:focus-visible,
+.btn-success:focus-visible {
+    outline: 3px solid #ffbf47 !important;
+}
+
+.form-control:focus-visible,
+.custom-select:focus-visible {
+    outline-offset: 0 !important;
+}

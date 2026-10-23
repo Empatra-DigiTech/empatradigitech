@@ -4,31 +4,40 @@
 @section("breadcumb","Buku Kas")
 @section("content")
 
+{{-- Warna dipilih agar kontras teks >= 4.5:1 (WCAG AA); bawaan bg-success/text-success hanya ~3.1:1. --}}
+<style>
+    .fin-card-in { background: #146c43; }
+    .fin-card-out { background: #b02e36; }
+    .fin-card-saldo { background: #0f3c5d; }
+    .fin-in { color: #146c43; }
+    .fin-out { color: #b02e36; }
+</style>
+
 @php
     $formatRp = fn ($n) => 'Rp ' . number_format((float) $n, 0, ',', '.');
 @endphp
 
 <div class="row">
     <div class="col-lg-4">
-        <div class="card bg-success text-white">
+        <div class="card text-white fin-card-in">
             <div class="card-body">
-                <h6 class="text-white-50 mb-1">Total Masuk (hasil filter)</h6>
+                <h6 class="text-white mb-1">Total Masuk (hasil filter)</h6>
                 <h4 class="mb-0">{{ $formatRp($totalMasuk) }}</h4>
             </div>
         </div>
     </div>
     <div class="col-lg-4">
-        <div class="card bg-danger text-white">
+        <div class="card text-white fin-card-out">
             <div class="card-body">
-                <h6 class="text-white-50 mb-1">Total Keluar (hasil filter)</h6>
+                <h6 class="text-white mb-1">Total Keluar (hasil filter)</h6>
                 <h4 class="mb-0">{{ $formatRp($totalKeluar) }}</h4>
             </div>
         </div>
     </div>
     <div class="col-lg-4">
-        <div class="card bg-primary text-white">
+        <div class="card text-white fin-card-saldo">
             <div class="card-body">
-                <h6 class="text-white-50 mb-1">Saldo Kas Saat Ini</h6>
+                <h6 class="text-white mb-1">Saldo Kas Saat Ini</h6>
                 <h4 class="mb-0">{{ $formatRp($saldoSaatIni) }}</h4>
             </div>
         </div>
@@ -83,7 +92,7 @@
                         </select>
                     </div>
                     <div class="col-lg-1 mb-2">
-                        <button type="submit" class="btn btn-primary w-100"><i class="fa fa-search"></i></button>
+                        <button type="submit" class="btn btn-primary w-100" aria-label="Terapkan filter pencarian" title="Terapkan filter pencarian"><i class="fa fa-search" aria-hidden="true"></i></button>
                     </div>
                 </form>
 
@@ -114,10 +123,10 @@
                                             @endif
                                         </td>
                                         <td>{{ $row->category->name ?? '-' }}</td>
-                                        <td class="text-right text-success">
+                                        <td class="text-right fin-in">
                                             @if($row->type === 'masuk') {{ $formatRp($row->amount) }} @else - @endif
                                         </td>
-                                        <td class="text-right text-danger">
+                                        <td class="text-right fin-out">
                                             @if($row->type === 'keluar') {{ $formatRp($row->amount) }} @else - @endif
                                         </td>
                                         <td>{{ $row->payment_method }}</td>
@@ -127,8 +136,8 @@
                                                 <span class="badge badge-danger" title="Periode {{ $row->date->format('Y-m') }} sudah ditutup"><i class="fa fa-lock"></i> Tertutup</span>
                                             @else
                                             <div class="d-flex mb-1">
-                                                <a href="{{route('patra.finance.edit',$row->id)}}" class="btn btn-primary btn-sm mr-1"><i class="fa fa-edit"></i></a>
-                                                <a href="#" class="btn btn-danger btn-sm mr-1 btn-delete" data-id="{{$row->id}}"><i class="fa fa-trash"></i></a>
+                                                <a href="{{route('patra.finance.edit',$row->id)}}" class="btn btn-primary btn-sm mr-1" aria-label="Ubah transaksi" title="Ubah transaksi"><i class="fa fa-edit" aria-hidden="true"></i></a>
+                                                <a href="#" class="btn btn-danger btn-sm mr-1 btn-delete" data-id="{{$row->id}}" aria-label="Hapus transaksi" title="Hapus transaksi" role="button"><i class="fa fa-trash" aria-hidden="true"></i></a>
                                             </div>
                                             @endif
                                         </td>
