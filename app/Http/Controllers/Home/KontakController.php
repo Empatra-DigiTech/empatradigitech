@@ -26,8 +26,8 @@ class KontakController extends Controller
         // (route home.kontak.index selalu fatal error). View sudah dibuat,
         // dan data navbar/footer (table_pengaturan, table_menu) yang sebelumnya
         // tidak pernah dikirim ke view ini sekarang disertakan juga.
-        $table_pengaturan = Cache::remember('pengaturan_first', 3600, fn () => Pengaturan::first());
-        $table_menu = Cache::remember('menu_all', 3600, fn () => Menu::all());
+        $table_pengaturan = \App\Support\PublicCache::pengaturan();
+        $table_menu = \App\Support\PublicCache::menu();
         $table_layanan = Layanan::orderBy('title', 'ASC')->get();
 
         $data = [

@@ -24,8 +24,8 @@ class InovasiController extends Controller
 
     public function index(Request $request)
     {
-        $table_pengaturan = Cache::remember('pengaturan_first', 3600, fn () => Pengaturan::first());
-        $table_menu = Cache::remember('menu_all', 3600, fn () => Menu::all());
+        $table_pengaturan = \App\Support\PublicCache::pengaturan();
+        $table_menu = \App\Support\PublicCache::menu();
 
         $search = $request->search;
         $kategori = $request->kategori;
@@ -56,8 +56,8 @@ class InovasiController extends Controller
         return view($this->view."index",$data);
     }
     public function show($id){
-        $table_pengaturan = Cache::remember('pengaturan_first', 3600, fn () => Pengaturan::first());
-        $table_menu = Cache::remember('menu_all', 3600, fn () => Menu::all());
+        $table_pengaturan = \App\Support\PublicCache::pengaturan();
+        $table_menu = \App\Support\PublicCache::menu();
 
         $result = $this->inovasi;
         $result = $result->where('id',$id);

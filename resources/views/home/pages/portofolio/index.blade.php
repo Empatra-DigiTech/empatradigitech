@@ -32,7 +32,7 @@
                     <article class="news-card">
                         <div class="news-card-image">
                             <a href="{{ route('home.portofolio.show', $row->id) }}">
-                                <img src="{{ asset('storage/' . $row->image) }}" alt="{{ $row->title }}" class="img-fluid">
+                                <img loading="lazy" decoding="async" src="{{ asset('storage/' . $row->image) }}" alt="{{ $row->title }}" class="img-fluid">
                                 <div class="image-overlay">
                                     <span class="read-more-badge">Lihat Studi Kasus</span>
                                 </div>

@@ -21,8 +21,8 @@ class InformasiController extends Controller
     }
 
     public function index(Request $request) {
-        $table_pengaturan = Cache::remember('pengaturan_first', 3600, fn () => Pengaturan::first()); // for footer handler
-        $table_menu = Cache::remember('menu_all', 3600, fn () => Menu::all());
+        $table_pengaturan = \App\Support\PublicCache::pengaturan(); // for footer handler
+        $table_menu = \App\Support\PublicCache::menu();
     
         $table = $this->informasi;
     

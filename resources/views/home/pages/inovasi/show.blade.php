@@ -66,7 +66,7 @@
                     <div class="showcase-grid-item">
                         <article class="showcase-card">
                             <a href="{{ route('home.inovasi.show', $row->id) }}" class="showcase-card-image">
-                                <img src="{{ asset('storage/' . $row->image) }}" alt="{{ $row->title }}" class="img-fluid">
+                                <img loading="lazy" decoding="async" src="{{ asset('storage/' . $row->image) }}" alt="{{ $row->title }}" class="img-fluid">
                                 @if($row->kategori)
                                     <span class="showcase-badge">{{ $row->kategori }}</span>
                                 @endif

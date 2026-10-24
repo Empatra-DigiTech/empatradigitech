@@ -163,7 +163,7 @@
                             <div class="gallery-grid">
                                 @foreach($result->gallery as $index => $image)
                                 <div class="gallery-item" data-index="{{ $index }}">
-                                    <img src="{{ asset('storage/' . $image) }}"
+                                    <img loading="lazy" decoding="async" src="{{ asset('storage/' . $image) }}"
                                          alt="Gallery Image {{ $index + 1 }}">
                                     <div class="gallery-overlay">
                                         <div class="gallery-zoom-icon">
@@ -206,7 +206,7 @@
                         <article class="sidebar-news-card">
                             <a href="{{ route('home.portofolio.show', $row->id) }}" class="sidebar-news-link">
                                 <div class="sidebar-news-image">
-                                    <img src="{{ asset('storage/' . $row->image) }}"
+                                    <img loading="lazy" decoding="async" src="{{ asset('storage/' . $row->image) }}"
                                          alt="{{ $row->title }}">
                                 </div>
                                 <div class="sidebar-news-content">

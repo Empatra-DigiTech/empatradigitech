@@ -31,7 +31,6 @@
   <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
 
   <!-- css yudo-->
-    <link href="{{URL::to('/')}}/assets/css/patra/css/bootstrap.min.css" rel="stylesheet" type="text/css">
     <link href="{{URL::to('/')}}/assets/css/patra/assets/css/icons.css" rel="stylesheet" type="text/css">
     <link href="{{URL::to('/')}}/assets/css/patra/assets/css/style.css" rel="stylesheet" type="text/css">
     <!-- Indikator fokus keyboard (style.css menghilangkan outline) -->

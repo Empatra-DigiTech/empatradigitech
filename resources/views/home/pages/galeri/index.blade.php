@@ -44,7 +44,7 @@
 
                     <div class="gallery-card-image">
                         @if (in_array($extension, ['jpg', 'jpeg', 'png', 'gif']))
-                            <img src="{{ asset('storage/' . $row->image) }}" alt="{{ $row->title }}">
+                            <img loading="lazy" decoding="async" src="{{ asset('storage/' . $row->image) }}" alt="{{ $row->title }}">
                         @elseif ($isVideo)
                             <video muted>
                                 <source src="{{ asset('storage/' . $row->image) }}" type="video/{{ $extension }}">

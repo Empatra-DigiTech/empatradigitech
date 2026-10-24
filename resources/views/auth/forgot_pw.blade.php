@@ -10,7 +10,7 @@
 
         <!-- Favicons -->
         <link href="{{URL::to('/')}}/assets/img/favicon.png" rel="icon">
-        <link href="{{URL::to('/')}}/assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+        <link href="{{URL::to('/')}}/assets/img/favicon.png" rel="apple-touch-icon">
 
         <!-- Fonts -->
         <link href="https://fonts.googleapis.com" rel="preconnect">
@@ -18,7 +18,7 @@
         <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
 
         <!-- Vendor CSS Files -->
-        <link href="{{URL::to('/')}}/assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+        {{-- Bootstrap 4 (login/bootstrap.min.css di bawah) adalah satu-satunya Bootstrap halaman ini; markup memakai kelas BS4 (ml-auto, btn-block, form-group). --}}
         <link href="{{URL::to('/')}}/assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
         <link href="{{URL::to('/')}}/assets/vendor/aos/aos.css" rel="stylesheet">
         <link href="{{URL::to('/')}}/assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
@@ -41,14 +41,12 @@
         {{-- KAIADMIN CSS --}}
         <link rel="stylesheet" href="{{URL::to('/')}}/assets/css/home/plugins.min.css" />
         <link rel="stylesheet" href="{{URL::to('/')}}/assets/css/home/kaiadmin.min.css" />
-        <!-- CSS Just for demo purpose, don't include it in your project -->
-        <link rel="stylesheet" href="{{URL::to('/')}}/assets/css/home/demo.css" />
 
     </head>
 <body>
     @include('sweetalert::alert')
     <div class="d-lg-flex half">
-        <div class="bg order-1 order-md-2" style="background-image: url('{{ asset("assets/img/login/login.jpg") }}');"></div>
+        <div class="bg order-1 order-md-2" style="background-image: url('{{ asset("assets/img/login/login.png") }}');"></div>
         <div class="contents order-2 order-md-1">
 
         <div class="container">
@@ -73,10 +71,10 @@
         </div>
     </div>
         {{-- login script --}}
-        <script src="assets/js/login/jquery-3.3.1.min.js"></script>
-        <script src="assets/js/login/popper.min.js"></script>
-        <script src="assets/js/login/bootstrap.min.js"></script>
-        <script src="assets/js/login/main.js"></script>
+        <script src="{{URL::to('/')}}/assets/js/login/jquery-3.3.1.min.js"></script>
+        <script src="{{URL::to('/')}}/assets/js/login/popper.min.js"></script>
+        <script src="{{URL::to('/')}}/assets/js/login/bootstrap.min.js"></script>
+        <script src="{{URL::to('/')}}/assets/js/login/main.js"></script>
 </body>
 </html>
 

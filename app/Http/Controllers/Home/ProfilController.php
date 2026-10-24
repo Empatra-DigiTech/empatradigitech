@@ -23,8 +23,8 @@ class ProfilController extends Controller
 
     public function index(Request $request)
     {
-        $table_pengaturan = Cache::remember('pengaturan_first', 3600, fn () => Pengaturan::first());
-        $table_menu = Cache::remember('menu_all', 3600, fn () => Menu::all());
+        $table_pengaturan = \App\Support\PublicCache::pengaturan();
+        $table_menu = \App\Support\PublicCache::menu();
 
         $data = [
             'table_pengaturan' => $table_pengaturan,

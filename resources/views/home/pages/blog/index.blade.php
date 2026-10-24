@@ -40,7 +40,7 @@
                 <div class="col-lg-4 col-md-6 mb-4" data-aos="fade-up" data-aos-delay="{{ ($index % 3) * 100 }}">
                     <article class="blog-card">
                         <a href="{{ route('home.blog.show', $row->slug) }}" class="blog-card-image">
-                            <img src="{{ asset('storage/' . $row->image) }}" alt="{{ $row->title }}" class="img-fluid">
+                            <img loading="lazy" decoding="async" src="{{ asset('storage/' . $row->image) }}" alt="{{ $row->title }}" class="img-fluid">
                             @if($row->kategori)
                                 <span class="blog-badge">{{ $row->kategori }}</span>
                             @endif

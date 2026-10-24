@@ -116,4 +116,43 @@ class FrontendAssetsTest extends TestCase
         $this->assertNotEmpty($m);
         $this->assertFileExists($this->root('public/' . $m[1]));
     }
+
+    /** Fase 6.0: layout/halaman auth tidak boleh menunjuk ke aset lokal yang tidak ada (404 di tiap muat). */
+    public function test_aset_lokal_di_layout_dan_halaman_auth_ada(): void
+    {
+        $views = [
+            'patra/layouts/head', 'patra/layouts/script',
+            'auth/login', 'auth/forgot_pw', 'auth/reset_pw', 'auth/message',
+            'home/layouts/head', 'home/layouts/footer', 'home/layouts/master', 'home/home_temp/layouts/head',
+        ];
+        $pattern = '#(?:\{\{\s*URL::to\(\'/\'\)\s*\}\}/|\{\{\s*asset\([\'"])([A-Za-z0-9_\-./]+\.(?:css|js|png|jpe?g|svg|ico|webp))#';
+
+        $missing = [];
+        foreach ($views as $v) {
+            $src = $this->read("resources/views/{$v}.blade.php");
+            $src = preg_replace(['/\{\{--.*?--\}\}/s', '/<!--.*?-->/s'], '', $src);
+            preg_match_all($pattern, $src, $m);
+            foreach ($m[1] as $path) {
+                if (!file_exists($this->root('public/' . $path))) {
+                    $missing[] = "{$v}: {$path}";
+                }
+            }
+        }
+
+        $this->assertSame([], $missing, "Aset tidak ditemukan:\n" . implode("\n", $missing));
+    }
+
+    /** Fase 6.0: halaman lupa/reset password hanya memuat satu Bootstrap (BS4, sesuai markup). */
+    public function test_halaman_lupa_dan_reset_password_memuat_satu_bootstrap(): void
+    {
+        foreach (['auth/forgot_pw', 'auth/reset_pw'] as $v) {
+            $src = $this->read("resources/views/{$v}.blade.php");
+            $src = preg_replace(['/\{\{--.*?--\}\}/s', '/<!--.*?-->/s'], '', $src);
+            preg_match_all('#<link[^>]+bootstrap(?:\.min)?\.css#i', $src, $m);
+            $this->assertCount(1, $m[0], "{$v} harus memuat tepat satu stylesheet Bootstrap");
+            $this->assertStringContainsString('css/login/bootstrap.min.css', $m[0][0]);
+            $this->assertStringNotContainsString('login.jpg', $src, 'background harus memakai login.png yang ada');
+            $this->assertDoesNotMatchRegularExpression('#<script src="assets/#', $src, 'path script tidak boleh relatif');
+        }
+    }
 }

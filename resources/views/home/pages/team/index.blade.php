@@ -41,7 +41,7 @@
                 @foreach ($table as $index => $row)
                 <li>
                     <div class="card">
-                        <img src="{{ asset('storage/' . $row->image) }}" class="card__image" alt="{{ $row->nama }}" />
+                        <img loading="lazy" decoding="async" src="{{ asset('storage/' . $row->image) }}" class="card__image" alt="{{ $row->nama }}" />
                         <div class="card__overlay">
                             <div class="card__header">
                                 <div class="card__header-text">

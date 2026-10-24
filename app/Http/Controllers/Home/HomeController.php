@@ -33,15 +33,15 @@ class HomeController extends Controller
 
     public function index(Request $request)
     {
-        $table_tautan = Tautan::all();
+        $table_tautan = \App\Support\PublicCache::tautan();
 
         // FIXED: Changed from orderBy('date') to orderBy('created_at')
         $table_portofolio = Portofolio::orderBy('created_at', 'DESC')->take(6)->get();
 
-        $table_banner = Banner::all();
-        $table_layanan = Layanan::all();
-        $table_pengaturan = Cache::remember('pengaturan_first', 3600, fn () => Pengaturan::first());
-        $table_menu = Cache::remember('menu_all', 3600, fn () => Menu::all());
+        $table_banner = \App\Support\PublicCache::banner();
+        $table_layanan = \App\Support\PublicCache::layanan();
+        $table_pengaturan = \App\Support\PublicCache::pengaturan();
+        $table_menu = \App\Support\PublicCache::menu();
 
 
         // Tambahkan data paket website dan app
@@ -139,7 +139,7 @@ class HomeController extends Controller
     //function for calendar handler in json
     public function events()
     {
-        $events = Kalender::all();
+        $events = \App\Support\PublicCache::kalender();
         return response()->json($events);
     }
 }

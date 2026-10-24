@@ -23,14 +23,14 @@
 
                     @if(!empty($table_pengaturan?->website_logo))
 
-                        <img
+                        <img loading="lazy" decoding="async"
                             src="{{ asset('storage/' . $table_pengaturan->website_logo) }}"
                             alt="{{ $table_pengaturan->website_name ?? 'Empatra DigiTech' }}"
                         >
 
                     @else
 
-                        <img
+                        <img loading="lazy" decoding="async"
                             src="{{ asset('assets/img/favicon.png') }}"
                             alt="{{ $table_pengaturan->website_name ?? 'Empatra DigiTech' }}"
                         >

@@ -24,7 +24,7 @@ class menuController extends Controller
 
     public function show($title)
     {
-        $table_pengaturan = Cache::remember('pengaturan_first', 3600, fn () => Pengaturan::first());
+        $table_pengaturan = \App\Support\PublicCache::pengaturan();
         $table_menu = Menu::whereNull('parent')->orderBy('created_at')->get();
 
         $result = $this->menu;
