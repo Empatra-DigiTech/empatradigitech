@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
     @include('home.layouts.head')
-<body>
+<body class="@yield('body_class')">
     <div class="wrapper">
         @include('home.layouts.navbar')
         

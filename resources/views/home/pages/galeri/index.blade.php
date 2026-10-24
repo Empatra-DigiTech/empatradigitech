@@ -1,5 +1,6 @@
 @extends('home.layouts.master')
 @section("title","Galeri | EMPATRA DIGITECH")
+@section('body_class', 'page-dark-hero')
 @section('css')
     <link href="{{ URL::to('/') }}/assets/css/galery/style.css" rel="stylesheet">
 @endsection

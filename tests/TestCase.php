@@ -27,6 +27,9 @@ abstract class TestCase extends BaseTestCase
     {
         parent::setUp();
 
+        // Test tidak boleh bergantung pada hasil `npm run build` (public/build tidak ada di git/CI).
+        $this->withoutVite();
+
         // Jaga-jaga: tolak menjalankan test ke selain SQLite in-memory.
         if (config('database.default') !== 'sqlite') {
             $this->fail('Test harus memakai SQLite. Periksa phpunit.xml.');

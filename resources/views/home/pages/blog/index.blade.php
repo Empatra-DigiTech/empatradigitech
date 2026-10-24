@@ -1,6 +1,7 @@
 @extends('home.layouts.master')
 @section("title","Blog & Insight | EMPATRA DIGITECH")
 @section("meta_description","Artikel seputar estimasi biaya pembuatan website & aplikasi, perbandingan sistem digital, dan kebutuhan teknologi untuk UMKM — dari tim Empatra DigiTech.")
+@section('body_class', 'page-dark-hero')
 @section('css')
     <link href="{{ URL::to('/') }}/assets/css/home/blog/blog.css" rel="stylesheet">
 @endsection

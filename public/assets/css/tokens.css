@@ -1,0 +1,51 @@
+/*
+ * TOKEN MEREK (SATU SUMBER)
+ *
+ * Warna merek & keluarga font situs publik didefinisikan HANYA di sini.
+ * Dimuat di <head> layout publik sebelum main.css dan CSS Vite.
+ * Jangan mendefinisikan ulang --primary / --secondary di file CSS halaman:
+ *   --primary   = merah merek
+ *   --secondary = navy merek
+ * Halaman yang butuh nama sendiri (blog, galeri, login) cukup membuat alias, mis.
+ *   --blog-primary: var(--secondary);
+ */
+
+:root {
+    /* Primary Theme Colors */
+    --primary: #b02e36;
+    --primary-dark: #8b2329;
+    --primary-light: #d63840;
+
+    --secondary: #0f3c5d;
+    --secondary-dark: #0a2840;
+    --secondary-light: #1a5380;
+
+    /* Complementary Colors */
+    --accent: #e8b923;
+    --accent-light: #f5d366;
+
+    /* Neutral Colors */
+    --white: #ffffff;
+    --light: #f8f9fa;
+    --gray-100: #f1f3f5;
+    --gray-200: #e9ecef;
+    --gray-300: #dee2e6;
+    --gray-400: #ced4da;
+    --gray-500: #adb5bd;
+    --gray-600: #868e96;
+    --gray-700: #495057;
+    --gray-800: #343a40;
+    --gray-900: #212529;
+    --dark: #1a1a1a;
+    --black: #000000;
+
+    /* Status Colors */
+    --success: #28a745;
+    --warning: #ffc107;
+    --danger: #dc3545;
+    --info: #17a2b8;
+
+    /* Typography */
+    --font-heading: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    --font-body: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+}

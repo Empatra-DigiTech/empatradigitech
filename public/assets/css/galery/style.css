@@ -3,8 +3,8 @@
    ======================================== */
 
 :root {
-    --gl-primary: rgb(15, 60, 93);
-    --gl-secondary: rgb(176, 46, 54);
+    --gl-primary: var(--secondary, #0f3c5d); /* navy merek (token global --secondary) */
+    --gl-secondary: var(--primary, #b02e36); /* merah merek (token global --primary) */
     --gl-gray-900: #1a1a1a;
     --gl-gray-700: #4a4a4a;
     --gl-gray-600: #5a5a5a;
@@ -38,14 +38,6 @@ body {
     padding: 150px 0 70px;
     background: linear-gradient(135deg, var(--gl-secondary) 0%, var(--gl-primary) 100%);
     overflow: hidden;
-}
-
-/* Navbar duduk fixed di atas header ini sejak scroll = 0. Warna teks navbar
-   default (--enav-text-top) diasumsikan untuk hero terang, jadi di atas
-   gradient gelap ini teksnya nyaris tidak terbaca sebelum navbar discroll
-   (class is-scrolled). Timpa jadi putih selama belum discroll. */
-.site-navbar:has(~ .content-wrapper .galeri-page-header):not(.is-scrolled) {
-    --enav-text-top: #ffffff;
 }
 
 .galeri-page-header-content {

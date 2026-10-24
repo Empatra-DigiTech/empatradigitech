@@ -3,16 +3,8 @@
    ======================================== */
 
 :root {
-    --primary: rgb(15, 60, 93);
-    --secondary: rgb(176, 46, 54);
-    --gray-900: #1a1a1a;
-    --gray-700: #4a4a4a;
-    --gray-600: #5a5a5a;
-    --gray-500: #6b7280;
-    --gray-300: #d1d5db;
-    --gray-200: #e5e7eb;
-    --gray-100: #f3f4f6;
-    --white: #ffffff;
+    /* Warna (--primary, --secondary, --gray-*, --white) berasal dari assets/css/tokens.css.
+       Definisi lama di sini terbalik (primary=navy) dan selama ini hanya 'kalah' karena urutan muat. */
     --spacing-xs: 0.5rem;
     --spacing-sm: 0.75rem;
     --spacing-md: 1rem;

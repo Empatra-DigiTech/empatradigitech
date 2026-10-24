@@ -3,15 +3,15 @@
    ======================================== */
 
 :root {
-    --primary: rgb(15, 60, 93);
-    --secondary: rgb(176, 46, 54);
-    --gray-900: #1a1a1a;
-    --gray-700: #4a4a4a;
-    --gray-500: #6b7280;
-    --gray-300: #d1d5db;
-    --gray-200: #e5e7eb;
-    --gray-100: #f3f4f6;
-    --white: #ffffff;
+    --login-primary: rgb(15, 60, 93);
+    --login-secondary: rgb(176, 46, 54);
+    --login-gray-900: #1a1a1a;
+    --login-gray-700: #4a4a4a;
+    --login-gray-500: #6b7280;
+    --login-gray-300: #d1d5db;
+    --login-gray-200: #e5e7eb;
+    --login-gray-100: #f3f4f6;
+    --login-white: #ffffff;
     --spacing-xs: 0.5rem;
     --spacing-sm: 0.75rem;
     --spacing-md: 1rem;
@@ -40,8 +40,8 @@ body {
     font-family: 'Inter', 'Roboto', sans-serif;
     font-size: 16px;
     line-height: 1.6;
-    color: var(--gray-700);
-    background: var(--gray-100);
+    color: var(--login-gray-700);
+    background: var(--login-gray-100);
     overflow-x: hidden;
 }
 
@@ -137,7 +137,7 @@ body {
 .contents h3 {
     font-size: 1.125rem;
     font-weight: 400;
-    color: var(--gray-500);
+    color: var(--login-gray-500);
     margin-bottom: var(--spacing-xs);
     letter-spacing: 0.5px;
 }
@@ -146,7 +146,7 @@ body {
     display: block;
     font-size: 2.5rem;
     font-weight: 700;
-    background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+    background: linear-gradient(135deg, var(--login-primary) 0%, var(--login-secondary) 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
@@ -171,7 +171,7 @@ form.user {
     display: block;
     font-size: 0.9375rem;
     font-weight: 600;
-    color: var(--gray-700);
+    color: var(--login-gray-700);
     margin-bottom: var(--spacing-sm);
     transition: var(--transition-base);
 }
@@ -180,9 +180,9 @@ form.user {
     width: 100%;
     padding: 0.875rem 1.125rem;
     font-size: 1rem;
-    color: var(--gray-900);
-    background-color: var(--white);
-    border: 2px solid var(--gray-200);
+    color: var(--login-gray-900);
+    background-color: var(--login-white);
+    border: 2px solid var(--login-gray-200);
     border-radius: var(--radius-lg);
     transition: var(--transition-base);
     outline: none;
@@ -194,13 +194,13 @@ form.user {
 }
 
 .form-control:focus {
-    border-color: var(--primary);
+    border-color: var(--login-primary);
     box-shadow: 0 0 0 4px rgba(15, 60, 93, 0.1);
-    background-color: var(--white);
+    background-color: var(--login-white);
 }
 
 .form-control:hover:not(:focus) {
-    border-color: var(--gray-300);
+    border-color: var(--login-gray-300);
 }
 
 /* ========================================
@@ -233,21 +233,21 @@ form.user {
     position: relative;
     width: 22px;
     height: 22px;
-    background: var(--white);
-    border: 2px solid var(--gray-300);
+    background: var(--login-white);
+    border: 2px solid var(--login-gray-300);
     border-radius: var(--radius-sm);
     margin-right: var(--spacing-sm);
     transition: var(--transition-base);
 }
 
 .control:hover input ~ .control__indicator {
-    border-color: var(--primary);
+    border-color: var(--login-primary);
     background: rgba(15, 60, 93, 0.05);
 }
 
 .control input:checked ~ .control__indicator {
-    background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
-    border-color: var(--primary);
+    background: linear-gradient(135deg, var(--login-primary) 0%, var(--login-secondary) 100%);
+    border-color: var(--login-primary);
 }
 
 .control input:checked ~ .control__indicator::after {
@@ -265,14 +265,14 @@ form.user {
 
 .control .caption {
     font-size: 0.9375rem;
-    color: var(--gray-700);
+    color: var(--login-gray-700);
     font-weight: 500;
 }
 
 /* Forgot Password Link */
 .forgot-pass {
     font-size: 0.9375rem;
-    color: var(--primary);
+    color: var(--login-primary);
     font-weight: 600;
     text-decoration: none;
     transition: var(--transition-base);
@@ -286,12 +286,12 @@ form.user {
     left: 0;
     width: 0;
     height: 2px;
-    background: linear-gradient(90deg, var(--primary) 0%, var(--secondary) 100%);
+    background: linear-gradient(90deg, var(--login-primary) 0%, var(--login-secondary) 100%);
     transition: var(--transition-base);
 }
 
 .forgot-pass:hover {
-    color: var(--secondary);
+    color: var(--login-secondary);
 }
 
 .forgot-pass:hover::after {
@@ -307,8 +307,8 @@ form.user {
     padding: 1rem;
     font-size: 1.0625rem;
     font-weight: 700;
-    color: var(--white);
-    background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+    color: var(--login-white);
+    background: linear-gradient(135deg, var(--login-primary) 0%, var(--login-secondary) 100%);
     border: none;
     border-radius: var(--radius-lg);
     cursor: pointer;
@@ -486,7 +486,7 @@ form.user {
 .form-control:focus-visible,
 .btn-primary:focus-visible,
 .forgot-pass:focus-visible {
-    outline: 2px solid var(--primary);
+    outline: 2px solid var(--login-primary);
     outline-offset: 2px;
 }
 

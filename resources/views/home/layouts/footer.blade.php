@@ -393,6 +393,16 @@
                 @php
                     $mapsUrl = $table_pengaturan->website_maps ?? null;
 
+                    // Admin sering menempel SELURUH tag <iframe ...> dari Google Maps.
+                    // Ambil nilai src-nya saja; hanya tautan https yang dipakai.
+                    if ($mapsUrl && stripos($mapsUrl, '<iframe') !== false
+                        && preg_match('/src\s*=\s*["\']([^"\']+)["\']/i', $mapsUrl, $mapsMatch)) {
+                        $mapsUrl = html_entity_decode($mapsMatch[1]);
+                    }
+                    if ($mapsUrl && !str_starts_with($mapsUrl, 'https://')) {
+                        $mapsUrl = null;
+                    }
+
                     $mapsEmbeddable = !empty($mapsUrl) && (
                         str_contains($mapsUrl, '/maps/embed')
                         || str_contains($mapsUrl, 'output=embed')
