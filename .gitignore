@@ -17,3 +17,6 @@ yarn-error.log
 /.fleet
 /.idea
 /.vscode
+
+# Arsip/backup ad-hoc di root repo (mis. raw.zip) tidak boleh ikut ter-commit
+/*.zip

@@ -10,7 +10,7 @@ use App\Models\Menu;
 use App\Models\Pengaturan;
 use Illuminate\Pagination\Paginator;
 
-class menuController extends Controller
+class MenuController extends Controller
 {
     protected $menu;
 

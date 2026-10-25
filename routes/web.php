@@ -217,9 +217,6 @@ Route::group(["middleware" => ["patra.access"], "namespace" => "App\Http\Control
         Route::put('/', 'PengaturanController@update')->name("update");
     });
 
-    Route::group(["middleware" => ['role:' . implode('|', [RoleEnum::SuperAdmin])], "as" => "log.", "prefix" => "log"], function () {
-        Route::get("/", "LogController@index")->name("index");
-    });
 Route::group(["middleware" => ['role:' . implode('|', [RoleEnum::SuperAdmin, RoleEnum::Admin])], "as" => "invoice.", "prefix" => "invoice"], function () {
     Route::get('/', 'InvoiceController@index')->name("index");
     Route::get('/create', 'InvoiceController@create')->name("create");

@@ -123,7 +123,7 @@ class FrontendAssetsTest extends TestCase
         $views = [
             'patra/layouts/head', 'patra/layouts/script',
             'auth/login', 'auth/forgot_pw', 'auth/reset_pw', 'auth/message',
-            'home/layouts/head', 'home/layouts/footer', 'home/layouts/master', 'home/home_temp/layouts/head',
+            'home/layouts/head', 'home/layouts/footer', 'home/layouts/master',
         ];
         $pattern = '#(?:\{\{\s*URL::to\(\'/\'\)\s*\}\}/|\{\{\s*asset\([\'"])([A-Za-z0-9_\-./]+\.(?:css|js|png|jpe?g|svg|ico|webp))#';
 

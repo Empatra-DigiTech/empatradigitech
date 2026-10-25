@@ -101,7 +101,6 @@
   "patra.layanan.show": "role:SuperAdmin|Admin",
   "patra.layanan.store": "role:SuperAdmin|Admin",
   "patra.layanan.update": "role:SuperAdmin|Admin",
-  "patra.log.index": "role:SuperAdmin",
   "patra.menu.create": "role:SuperAdmin|Admin",
   "patra.menu.destroy": "role:SuperAdmin|Admin",
   "patra.menu.edit": "role:SuperAdmin|Admin",

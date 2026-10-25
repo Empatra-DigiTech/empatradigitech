@@ -15,7 +15,7 @@ class KontakController extends Controller
     public function __construct(){
         $this->view = "patra.pages.kontak.";
         $this->route = "patra.kontak.";
-        $this->kontak = new kontak();
+        $this->kontak = new Kontak();
         Paginator::useBootstrap();
     }
 

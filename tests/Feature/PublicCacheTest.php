@@ -123,11 +123,12 @@ class PublicCacheTest extends TestCase
         $it = new \RecursiveIteratorIterator(new \RecursiveDirectoryIterator($root));
         $offenders = [];
         foreach ($it as $f) {
-            if ($f->getExtension() !== 'php' || str_ends_with($f->getPathname(), 'Support/PublicCache.php')) {
+            $path = str_replace('\\', '/', $f->getPathname()); // Windows memakai backslash
+            if ($f->getExtension() !== 'php' || str_ends_with($path, 'Support/PublicCache.php')) {
                 continue;
             }
             if (preg_match("/Cache::remember\\(\\s*['\"](pengaturan_first|menu_all|tautan_all|layanan_all|layanan_home|banner_all|kalender_all)['\"]/", file_get_contents($f->getPathname()))) {
-                $offenders[] = str_replace($root, 'app', $f->getPathname());
+                $offenders[] = $path;
             }
         }
         $this->assertSame([], $offenders, 'Gunakan App\\Support\\PublicCache: ' . implode(', ', $offenders));

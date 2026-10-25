@@ -15,10 +15,10 @@ use App\Models\Menu;
 class VMController extends Controller
 {
     protected $vm;
-    protected $route = 'home.pages.vm.';
+    protected $route = 'home.pages.VM.';
     public function __construct(){
         $this->route = "home.vm.";
-        $this->view = "home.pages.vm.";
+        $this->view = "home.pages.VM.";
         $this->vm = new VM();
         Paginator::useBootstrap();
     }

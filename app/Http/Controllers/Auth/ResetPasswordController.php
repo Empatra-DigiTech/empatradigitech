@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Password;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
@@ -17,25 +18,40 @@ class ResetPasswordController extends Controller
 {
     public function __construct(){
         $this->view = "auth.";
-        $this->target = collect(DB::select('select * from password_reset_tokens'));  //colect method to avoid array error handle
         $this->user = new User();
     }
 
-    public function index(Request $request){
+    /**
+     * Ambil token yang MASIH berlaku (satu query, bukan seluruh tabel).
+     * Masa berlaku mengikuti config auth.passwords.users.expire (menit, bawaan 60).
+     */
+    private function validToken(?string $token)
+    {
+        if (empty($token)) {
+            return null;
+        }
 
-        // $target = DB::select('select * from password_reset_tokens where token = :token', ['token' => $request->token]);
-        $target = $this->target;
-        $target = $target->where('token',$request->token);
-        $target = $target->first();
+        $target = DB::table('password_reset_tokens')->where('token', $token)->first();
+        if (! $target) {
+            return null;
+        }
+
+        $expire = (int) config('auth.passwords.users.expire', 60);
+        if ($target->created_at && Carbon::parse($target->created_at)->addMinutes($expire)->isPast()) {
+            return null;
+        }
+
+        return $target;
+    }
+
+    public function index(Request $request){
+        $target = $this->validToken($request->token);
+
         if ($target) {
-            $data = [
-                'target' => $target,
-            ];
-    
-            return view($this->view."reset_pw",$data);
-        } else {
-            return "null data";
-        } 
+            return view($this->view."reset_pw", ['target' => $target]);
+        }
+
+        return "null data";
     }
 
     public function post(Request $request){
@@ -44,30 +60,31 @@ class ResetPasswordController extends Controller
             'token' => 'required',
             'email' => 'required|email',
             'password' => 'required|min:8|confirmed',
-            'token' => 'required',
         ]);
 
-        $target = $this->target;
-        $target = $target->where('token',$request->token);
-        $target = $target->first();
-
-        $result = $this->user;
-        $result = $result->where('email',$target->email);
-        $result = $result->first();
-
-        $remember_token = Str::random(60);
-
-        if($request->email == $result->email){  //if input password passed then change update password
-            $result->update([
-                'password' => bcrypt($request->password),
-                'remember_token' => $remember_token,
-            ]);
-            alert()->html('Berhasil','Password berhasil diubah','success'); 
-            return view($this->view."login");
-        }else{
-            alert()->html('Gagal','Terjadi Kesalahan Saat Update Password!','danger'); 
-            return redirect()->back();
+        $target = $this->validToken($request->token);
+        if (! $target) {
+            alert()->html('Gagal','Link reset password tidak valid atau sudah kedaluwarsa. Silakan minta link baru.','error');
+            return redirect()->route('auth.forgot_pw.index');
         }
 
+        $result = $this->user->where('email', $target->email)->first();
+
+        // Email di form harus milik token ini.
+        if ($result && $request->email == $result->email) {
+            $result->update([
+                'password' => bcrypt($request->password),
+                'remember_token' => Str::random(60),
+            ]);
+
+            // Token hanya berlaku sekali.
+            DB::table('password_reset_tokens')->where('email', $target->email)->delete();
+
+            alert()->html('Berhasil','Password berhasil diubah','success');
+            return view($this->view."login");
+        }
+
+        alert()->html('Gagal','Terjadi Kesalahan Saat Update Password!','danger');
+        return redirect()->back();
     }
 }

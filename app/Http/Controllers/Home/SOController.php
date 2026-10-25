@@ -15,10 +15,10 @@ use App\Models\Menu;
 class SOController extends Controller
 {
     protected $so;
-    protected $route = 'home.pages.so.';
+    protected $route = 'home.pages.SO.';
     public function __construct(){
         $this->route = "home.so.";
-        $this->view = "home.pages.so.";
+        $this->view = "home.pages.SO.";
         $this->so = new SO();
         Paginator::useBootstrap();
     }
