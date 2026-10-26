@@ -52,6 +52,7 @@
                     <div class="col-lg-12">
                         <a href="{{route('patra.finance.create')}}" class="btn btn-primary"><i class="fa fa-plus"></i> Tambah Transaksi</a>
                         <a href="{{route('patra.finance-category.index')}}" class="btn btn-secondary"><i class="fa fa-tags"></i> Kelola Kategori</a>
+                        <a href="{{route('patra.finance.import.create')}}" class="btn btn-success"><i class="fa fa-file-excel-o"></i> Import Excel</a>
                         <a href="{{route('patra.finance.period.index')}}" class="btn btn-info"><i class="fa fa-lock"></i> Periode</a>
                         <a href="{{route('patra.finance.trash')}}" class="btn btn-outline-secondary"><i class="fa fa-trash"></i> Sampah @if($trashedCount > 0)<span class="badge badge-secondary">{{ $trashedCount }}</span>@endif</a>
                         <a href="{{route('patra.finance.index')}}" class="btn btn-warning"><i class="fa fa-refresh"></i> Reset Filter</a>

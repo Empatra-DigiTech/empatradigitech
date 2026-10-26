@@ -235,6 +235,9 @@ Route::group(["middleware" => ['role:' . implode('|', [RoleEnum::SuperAdmin, Rol
         Route::get('/period', 'FinancePeriodController@index')->name("period.index");
         Route::post('/period/close', 'FinancePeriodController@close')->name("period.close");
         Route::post('/period/reopen', 'FinancePeriodController@reopen')->name("period.reopen");
+        Route::get('/import', 'FinanceImportController@create')->name("import.create");
+        Route::post('/import/preview', 'FinanceImportController@preview')->name("import.preview");
+        Route::post('/import', 'FinanceImportController@store')->name("import.store");
         Route::get('/create', 'FinanceTransactionController@create')->name("create");
         Route::post('/', 'FinanceTransactionController@store')->name("store");
         Route::get('/{id}/edit', 'FinanceTransactionController@edit')->name("edit");

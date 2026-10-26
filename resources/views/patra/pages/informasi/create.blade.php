@@ -45,7 +45,7 @@
                     </div>
                     <div class="row">
                         <div class="col-lg-12">
-                            <a href="" class="btn btn-warning"><i class="fa fa-arrow-left"></i> Kembali</a>
+                            <a href="{{ route('patra.informasi.index') }}" class="btn btn-warning"><i class="fa fa-arrow-left"></i> Kembali</a>
                             <button type="submit" class="btn btn-primary"><i class="fa fa-save"></i> Simpan</button>
                         </div>
                     </div>

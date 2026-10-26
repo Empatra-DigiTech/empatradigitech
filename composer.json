@@ -20,6 +20,7 @@
         "laravel/sanctum": "^3.3",
         "laravel/tinker": "^2.8",
         "open-admin-org/open-admin": "^1.0",
+        "phpoffice/phpspreadsheet": "^5.10",
         "realrashid/sweet-alert": "^7.2",
         "spatie/laravel-permission": "^6.9",
         "te7a-houdini/laravel-trix": "^3.0"
