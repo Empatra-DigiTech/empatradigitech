@@ -1,5 +1,13 @@
 @php
     $company = App\Models\Pengaturan::first();
+
+    // Logo dari Pengaturan; bila kosong / file hilang, pakai logo Empatra bawaan (sama dengan situs publik).
+    $logoPath = null;
+    if ($company && $company->website_logo && is_file(public_path('storage/' . $company->website_logo))) {
+        $logoPath = public_path('storage/' . $company->website_logo);
+    } elseif (is_file(public_path('assets/img/favicon.png'))) {
+        $logoPath = public_path('assets/img/favicon.png');
+    }
 @endphp
 
 <!DOCTYPE html>
@@ -227,6 +235,7 @@
             margin-top: 25px;
             padding-top: 12px;
             border-top: 1px solid #e0e0e0;
+            page-break-inside: avoid;
         }
 
         .notes-section h4 {
@@ -276,13 +285,6 @@
             background-color: #f44336;
             color: white;
         }
-
-        /* Membatasi tinggi notes agar tidak overflow */
-        .notes-compact p {
-            max-height: 60px;
-            overflow: hidden;
-            text-overflow: ellipsis;
-        }
     </style>
 </head>
 <body>
@@ -292,9 +294,8 @@
             <table>
                 <tr>
                     <td class="company-info" style="width: 50%;">
-                        @if($company && $company->website_logo)
-                            <img src="{{ public_path('storage/' . $company->website_logo) }}"
-                                 alt="Logo" style="max-width: 130px; max-height: 65px; margin-bottom: 10px;">
+                        @if($logoPath)
+                            <img src="{{ $logoPath }}" alt="Logo" style="height: 55px; margin-bottom: 10px;">
                         @endif
                         @if($company)
                             <h2>{{ $company->website_name }}</h2>
@@ -445,16 +446,16 @@
             </table>
         </div>
 
-        <!-- Notes & Terms - Hanya tampilkan jika singkat -->
+        <!-- Notes & Terms -->
         <div style="clear: both;">
-            @if($invoice->notes && strlen($invoice->notes) < 250)
+            @if(filled($invoice->notes))
             <div class="notes-section">
                 <h4>Catatan:</h4>
                 <p>{{ $invoice->notes }}</p>
             </div>
             @endif
 
-            @if($invoice->terms && strlen($invoice->terms) < 250)
+            @if(filled($invoice->terms))
             <div class="notes-section">
                 <h4>Syarat & Ketentuan:</h4>
                 <p>{{ $invoice->terms }}</p>
