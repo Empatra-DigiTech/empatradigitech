@@ -36,9 +36,13 @@
         </a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="{{ route('auth.logout') }}" role="button" aria-label="Keluar" title="Keluar">
-        <i class="fa fa-sign-out-alt" aria-hidden="true"></i>
-        </a>
+        {{-- Logout lewat POST + CSRF supaya tidak bisa dipicu dari situs/gambar lain. --}}
+        <form action="{{ route('auth.logout') }}" method="POST" class="d-inline">
+          @csrf
+          <button type="submit" class="nav-link btn btn-link" aria-label="Keluar" title="Keluar" style="border:0;background:none;">
+            <i class="fa fa-sign-out-alt" aria-hidden="true"></i>
+          </button>
+        </form>
       </li>
     </ul>
 </nav>

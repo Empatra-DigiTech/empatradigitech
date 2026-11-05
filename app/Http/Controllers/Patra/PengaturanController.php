@@ -39,6 +39,11 @@ class PengaturanController extends Controller
             $update  = $this->pengaturan;
             $update = $update->first();
 
+            // Tabel pengaturan bisa kosong (mis. instalasi baru): buat barisnya alih-alih error.
+            if (! $update) {
+                $update = $this->pengaturan->newInstance();
+            }
+
             $website_name = $request->website_name;
             $website_maps = $request->website_maps;
             $website_motto = $request->website_motto;
@@ -63,7 +68,12 @@ class PengaturanController extends Controller
                 $website_logo = $update->website_logo;
             }
 
-            $update->update([
+            // Kolom website_logo wajib terisi di database: saat baris pertama dibuat, logo harus diunggah.
+            if (empty($website_logo)) {
+                throw new \App\Exceptions\UserFacingException("Logo website wajib diunggah saat pertama kali menyimpan pengaturan");
+            }
+
+            $update->fill([
                 'website_name' => $website_name,
                 'website_maps' => $website_maps,
                 'website_motto' => $website_motto,
@@ -75,7 +85,7 @@ class PengaturanController extends Controller
                 'stat_clients' => $stat_clients,
                 'stat_industries' => $stat_industries,
                 'stat_years_experience' => $stat_years_experience,
-            ]);
+            ])->save();
 
             Cache::forget('pengaturan_first');
 

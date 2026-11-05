@@ -1,6 +1,5 @@
 <?php
 
-use App\Http\Controllers\GambarController;
 use Illuminate\Support\Facades\Route;
 use App\Enums\RoleEnum;
 
@@ -16,7 +15,7 @@ use App\Enums\RoleEnum;
 */
 //PAGE NOT FOUND
 Route::fallback(function () {
-    return view("home.pages.error.index");
+    return response()->view("home.pages.error.index", [], 404);
 });
 
 //MIDDLEWARE
@@ -274,16 +273,16 @@ Route::group(["namespace" => "App\Http\Controllers\Auth", "as" => "auth.", "pref
         Route::post("/", "LoginController@post")->name("post")->middleware('throttle:6,1');
     });
 
-    Route::get("/logout", "LogoutController@logout")->name('logout');
+    Route::post("/logout", "LogoutController@logout")->name('logout');
 
     Route::group(["as" => "forgot_pw.", "prefix" => "forgot_pw"], function () {
         Route::get("/", "ForgotPasswordController@index")->name("index");
-        Route::post("/", "ForgotPasswordController@store")->name("store");
+        Route::post("/", "ForgotPasswordController@store")->name("store")->middleware('throttle:5,1');
     });
 
     Route::group(["as" => "reset_pw.", "prefix" => "reset_pw"], function () {
         Route::get('/{token}', 'ResetPasswordController@index')->name('index');
-        Route::post('/', 'ResetPasswordController@post')->name('post');
+        Route::post('/', 'ResetPasswordController@post')->name('post')->middleware('throttle:10,1');
     });
 });
 
@@ -354,8 +353,6 @@ Route::group(["namespace" => "App\Http\Controllers\Home", "as" => "home."], func
     });
 });
 
-// IMAGE SHOW
-Route::get('/inovasi/image/{id}/{jenis}', [GambarController::class, 'show'])->name('image.show');
 
 
 

@@ -73,7 +73,7 @@
                                         height: auto;
                                     }
                                 </style>
-                                {!! $result->trixRichText->first()->content !!}
+                                {!! $result->renderTrix('content') !!}
                             </div>
                         </div>
 

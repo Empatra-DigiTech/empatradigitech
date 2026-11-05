@@ -50,7 +50,7 @@
                             </a>
 
                             <p class="showcase-excerpt">
-                                {!! Str::limit(strip_tags($row->renderTrix('content')), 110) !!}
+                                {{ Str::limit(html_entity_decode(strip_tags($row->renderTrix('content'))), 110) }}
                             </p>
 
                             @if($row->harga !== null)

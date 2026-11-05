@@ -6,6 +6,7 @@ use App\Models\Kontak;
 use Illuminate\Http\Request;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Storage;
 
 class KontakController extends Controller
 {
@@ -65,6 +66,16 @@ class KontakController extends Controller
             $result = $this->kontak;
             $result = $result->where('id',$id);
             $result = $result->first();
+
+            if(!$result){
+                alert()->error('Gagal',"Data tidak ditemukan");
+                return redirect()->route($this->route."index");
+            }
+
+            // Hapus juga lampiran gambar dari storage agar tidak menumpuk.
+            if(!empty($result->image)){
+                Storage::disk('public')->delete($result->image);
+            }
 
             $result->delete();
 

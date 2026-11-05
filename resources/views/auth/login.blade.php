@@ -52,13 +52,19 @@
                         <div class="d-flex mb-5 align-items-center">
                             <label class="control control--checkbox mb-0">
                                 <span class="caption">Remember me</span>
-                                <input type="checkbox" checked="checked"/>
+                                <input type="checkbox" name="rememberme" value="1" checked="checked"/>
                                 <div class="control__indicator"></div>
                             </label>
                             <span class="ml-auto">
                                 <a href="{{ route('auth.forgot_pw.index') }}" class="forgot-pass">Forgot Password</a>
                             </span>
                         </div>
+
+                        @if (\App\Support\Captcha::enabled())
+                            <div class="form-group mb-4">
+                                @include('home.partials.captcha')
+                            </div>
+                        @endif
 
                         <input type="submit" value="Log In" class="btn btn-block btn-primary">
                     </form>

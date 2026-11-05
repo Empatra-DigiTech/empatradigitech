@@ -78,16 +78,22 @@ class Invoice extends Model
 
     public static function generateInvoiceNumber()
     {
-        $lastInvoice = self::orderBy('id', 'desc')->first();
-
-        if (!$lastInvoice) {
-            return 'INV-' . date('Ym') . '-0001';
+        // Urutan terbesar dari semua nomor berformat INV-YYYYMM-NNNN. Tidak bergantung pada
+        // baris terakhir (id), jadi nomor yang diedit manual / format lain tidak mengacaukan urutan.
+        $max = 0;
+        foreach (self::query()->where('invoice_number', 'like', 'INV-%')->pluck('invoice_number') as $number) {
+            if (preg_match('/^INV-\d{6}-(\d+)$/', (string) $number, $m)) {
+                $max = max($max, (int) $m[1]);
+            }
         }
 
-        $lastNumber = (int) substr($lastInvoice->invoice_number, -4);
-        $newNumber = $lastNumber + 1;
+        $prefix = 'INV-' . date('Ym') . '-';
+        do {
+            $max++;
+            $candidate = $prefix . str_pad((string) $max, 4, '0', STR_PAD_LEFT);
+        } while (self::where('invoice_number', $candidate)->exists());
 
-        return 'INV-' . date('Ym') . '-' . str_pad($newNumber, 4, '0', STR_PAD_LEFT);
+        return $candidate;
     }
 
     public function formatCurrency($amount)

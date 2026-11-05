@@ -69,7 +69,7 @@
                                     <input type="password" class="form-control" placeholder="Masukan Password" id="password" name="password_confirmation">
                                 </div>
                                 <div class="form-group last mb-3">
-                                    <input type="hidden" name="token" value="{{$target->token}}">
+                                    <input type="hidden" name="token" value="{{ $token }}">
                                 </div>
                                 <input type="submit" value="Reset" class="btn btn-block btn-primary" style="background-color: #2a0f60 !important; border:none !important;">
                             </form>

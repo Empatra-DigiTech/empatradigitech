@@ -86,6 +86,7 @@ class UserController extends Controller
             $password = $request->password;
             $email_verified_at = $request->email_verified_at;
             $roles = $request->roles;
+            $status = (int) $request->status;
             $avatar = $request->file("avatar");
 
             if($avatar){
@@ -104,6 +105,7 @@ class UserController extends Controller
                 'phone' => $phone,
                 'password' => bcrypt($password),
                 'avatar' => $avatar,
+                'status' => $status,
                 'email_verified_at' => $email_verified_at,
             ]);
 
@@ -173,6 +175,8 @@ class UserController extends Controller
         try {
             $result = $this->user;
             $result = $result->where('id',$id);
+            // edit() menampilkan juga user yang di-soft-delete, jadi update harus bisa menyimpannya.
+            $result = $result->withTrashed();
             $result = $result->first();
 
             if(!$result){
@@ -185,7 +189,13 @@ class UserController extends Controller
             $password = $request->password;
             $email_verified_at = $request->email_verified_at;
             $roles = $request->roles;
+            $status = (int) $request->status;
             $avatar = $request->file("avatar");
+
+            // Cegah admin mengunci dirinya sendiri.
+            if ((int) $result->id === (int) Auth::id() && $status !== UserEnum::STATUS_ACTIVE) {
+                throw new \App\Exceptions\UserFacingException("Anda tidak dapat menonaktifkan akun Anda sendiri");
+            }
 
             if($avatar){
                 $upload = UploadHelper::upload_file($avatar,'user-avatar',UserEnum::AVATAR_EXT);
@@ -213,6 +223,7 @@ class UserController extends Controller
                 'phone' => $phone,
                 'password' => $password,
                 'avatar' => $avatar,
+                'status' => $status,
                 'email_verified_at' => $email_verified_at,
             ]);
 
@@ -238,6 +249,11 @@ class UserController extends Controller
 
             if(!$result){
                 alert()->error('Gagal',"Data tidak ditemukan");
+                return redirect()->route($this->route."index");
+            }
+
+            if((int) $result->id === (int) Auth::id()){
+                alert()->error('Gagal',"Anda tidak dapat menghapus akun Anda sendiri");
                 return redirect()->route($this->route."index");
             }
 
@@ -289,6 +305,11 @@ class UserController extends Controller
 
             if(!$user){
                 alert()->error('Gagal',"Data tidak ditemukan");
+                return redirect()->route($this->route."index");
+            }
+
+            if ((int) $user->status !== UserEnum::STATUS_ACTIVE) {
+                alert()->error('Gagal',"Akun tidak aktif, tidak dapat di-impersonate");
                 return redirect()->route($this->route."index");
             }
 

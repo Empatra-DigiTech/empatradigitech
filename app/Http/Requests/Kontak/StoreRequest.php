@@ -7,11 +7,23 @@ use Illuminate\Foundation\Http\FormRequest;
 
 class StoreRequest extends FormRequest
 {
+    /** Captcha hanya diwajibkan bila kunci reCAPTCHA terisi di .env (NOCAPTCHA_SECRET & NOCAPTCHA_SITEKEY). */
+    public static function captchaEnabled(): bool
+    {
+        return \App\Support\Captcha::enabled();
+    }
+
     public function rules(): array
     {
-        return [
+        $captcha = self::captchaEnabled()
+            ? ['g-recaptcha-response' => ['required', 'captcha']]
+            : [];
+
+        return $captcha + [
             'name' => [
                 'required',
+                'string',
+                'max:100',
             ],
             // 'description'=> [
             //     'required',
@@ -25,6 +37,7 @@ class StoreRequest extends FormRequest
             'email' => [
                 'email',
                 'required',
+                'max:255',
             ],
             'subject' => [
                 'required',
@@ -32,6 +45,8 @@ class StoreRequest extends FormRequest
             ],
             'message' => [
                 'required',
+                'string',
+                'max:2000',
             ]
         ];
     }
@@ -40,6 +55,11 @@ class StoreRequest extends FormRequest
     {
         return [
             'name.required' => 'Nama harus diisi',
+            'name.max' => 'Nama tidak lebih dari 100 karakter',
+            'g-recaptcha-response.required' => 'Captcha harus diisi',
+            'g-recaptcha-response.captcha' => 'Verifikasi captcha gagal, silakan coba lagi',
+            'email.max' => 'Email tidak lebih dari 255 karakter',
+            'message.max' => 'Pesan tidak lebih dari 2000 karakter',
             // 'description.required' => 'Deksripsi harus diisi',
             'email.required' => 'Email harus diisi',
             'image.mimes' => 'Foto harus berupa jpeg, png, gif, jpg',

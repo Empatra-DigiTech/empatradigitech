@@ -76,7 +76,7 @@
                                     <h3 class="showcase-title">{{ $row->title }}</h3>
                                 </a>
                                 <p class="showcase-excerpt">
-                                    {!! Str::limit(strip_tags($row->renderTrix('content')), 90) !!}
+                                    {{ Str::limit(html_entity_decode(strip_tags($row->renderTrix('content'))), 90) }}
                                 </p>
                                 <a href="{{ route('home.inovasi.show', $row->id) }}" class="btn-showcase">
                                     Lihat Detail

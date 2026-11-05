@@ -23,19 +23,21 @@ class LoginRequest extends FormRequest
      */
     public function rules(): array
     {
-        return [
+        // Captcha hanya diwajibkan bila kunci reCAPTCHA terisi di .env (lihat App\Support\Captcha).
+        $captcha = \App\Support\Captcha::enabled()
+            ? ['g-recaptcha-response' => ['required', 'captcha']]
+            : [];
+
+        return $captcha + [
             'email' => [
             'required',
             'email',
             ],
+            // Tanpa min:8 di sini: aturan panjang hanya untuk membuat/ganti password,
+            // supaya akun lama dengan password lebih pendek tetap bisa masuk.
             'password' => [
             'required',
-            'min:8',
             ]
-            // 'g-recaptcha-response' => [
-            // 'required',
-            // 'captcha',
-            // ]
         ]; 
     }
 
@@ -45,8 +47,8 @@ class LoginRequest extends FormRequest
             'email.required' => 'Email harus diisi',
             'email.email' => 'Field harus berupa email',
             'password.required' => 'Password harus diisi',
-            'password.min' => 'Password minimal 8 karakter',
-            'g-recaptcha-response' => 'Captcha harus diisi'
+            'g-recaptcha-response.required' => 'Captcha harus diisi',
+            'g-recaptcha-response.captcha' => 'Verifikasi captcha gagal, silakan coba lagi'
         ];
     }
 

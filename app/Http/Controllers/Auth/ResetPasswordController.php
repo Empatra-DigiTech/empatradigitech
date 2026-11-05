@@ -31,7 +31,8 @@ class ResetPasswordController extends Controller
             return null;
         }
 
-        $target = DB::table('password_reset_tokens')->where('token', $token)->first();
+        // Di database hanya tersimpan hash token (lihat ForgotPasswordController).
+        $target = DB::table('password_reset_tokens')->where('token', hash('sha256', $token))->first();
         if (! $target) {
             return null;
         }
@@ -48,10 +49,11 @@ class ResetPasswordController extends Controller
         $target = $this->validToken($request->token);
 
         if ($target) {
-            return view($this->view."reset_pw", ['target' => $target]);
+            return view($this->view."reset_pw", ['target' => $target, 'token' => $request->token]);
         }
 
-        return "null data";
+        alert()->html('Gagal','Link reset password tidak valid atau sudah kedaluwarsa. Silakan minta link baru.','error');
+        return redirect()->route('auth.forgot_pw.index');
     }
 
     public function post(Request $request){
@@ -84,7 +86,7 @@ class ResetPasswordController extends Controller
             return view($this->view."login");
         }
 
-        alert()->html('Gagal','Terjadi Kesalahan Saat Update Password!','danger');
+        alert()->html('Gagal','Terjadi Kesalahan Saat Update Password!','error');
         return redirect()->back();
     }
 }

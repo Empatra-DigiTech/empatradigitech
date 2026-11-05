@@ -80,60 +80,26 @@ class HomeController extends Controller
             ->orderBy('urutan', 'ASC')
             ->get();
 
-        // Fetch the most viewed portofolio id
-        $count_view = DB::table('views')
-            ->select('viewable_id', DB::raw('COUNT(*) as total'))
-            ->groupBy('viewable_id')
-            ->orderBy('total', 'DESC')
-            ->first();
+        // Catatan: query "konten terpopuler" (tabel views) dulu dijalankan di sini pada setiap
+        // kunjungan beranda, tetapi hasilnya (table_view / count_view) tidak dipakai view mana pun.
+        // Statistik tampilan konten kini ditangani DashboardService di panel admin.
+        $data = [
+            'table_tautan' => $table_tautan,
+            'table_portofolio' => $table_portofolio,
+            'table_banner' => $table_banner,
+            'table_pengaturan' => $table_pengaturan,
+            'table_layanan' => $table_layanan,
+            'table_menu' => $table_menu,
+            'paket_website' => $paket_website,
+            'paket_app' => $paket_app,
+            'table_faq' => $table_faq,
+            'table_testimoni' => $table_testimoni,
+            'table_client_logo' => $table_client_logo,
+            'calculator_services' => $calculator_services,
+            'calculator_features' => $calculator_features,
+        ];
 
-
-        if ($count_view == null) {
-            $data = [
-                'table_tautan' => $table_tautan,
-                'table_portofolio' => $table_portofolio,
-                'table_banner' => $table_banner,
-                'table_pengaturan' => $table_pengaturan,
-                'table_layanan' => $table_layanan,
-                'table_view' => null,
-                'table_menu' => $table_menu,
-                'paket_website' => $paket_website,
-                'paket_app' => $paket_app,
-                'table_faq' => $table_faq,
-                'table_testimoni' => $table_testimoni,
-                'table_client_logo' => $table_client_logo,
-                'calculator_services' => $calculator_services,
-                'calculator_features' => $calculator_features,
-            ];
-
-            return view($this->view . "index", $data);
-        } else {
-            // Get the id of the most viewed portofolio
-            $id_count = $count_view->viewable_id;
-            // Fetch the portofolio record with the most views
-            $table_view = $table_portofolio->where('id', $id_count)->first();
-
-
-            $data = [
-                'table_tautan' => $table_tautan,
-                'table_portofolio' => $table_portofolio,
-                'table_banner' => $table_banner,
-                'table_layanan' => $table_layanan,
-                'table_pengaturan' => $table_pengaturan,
-                'table_view' => $table_view,
-                'count_view' => $count_view,
-                'table_menu' => $table_menu,
-                'paket_website' => $paket_website,
-                'paket_app' => $paket_app,
-                'table_faq' => $table_faq,
-                'table_testimoni' => $table_testimoni,
-                'table_client_logo' => $table_client_logo,
-                'calculator_services' => $calculator_services,
-                'calculator_features' => $calculator_features,
-            ];
-
-            return view($this->view . "index", $data);
-        }
+        return view($this->view . "index", $data);
     }
 
     //function for calendar handler in json

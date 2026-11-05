@@ -5,6 +5,7 @@ namespace App\Http\Requests\User;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
+use App\Enums\UserEnum;
 
 class UpdateRequest extends FormRequest
 {
@@ -28,6 +29,7 @@ class UpdateRequest extends FormRequest
             ],
             'status' => [
                 'required',
+                Rule::in(array_keys(UserEnum::status())),
             ],
             'avatar' => [
                 'nullable',
@@ -64,6 +66,8 @@ class UpdateRequest extends FormRequest
             'password.min' => 'Password minimal 8 karakter',
             'password.confirmed' => 'Password tidak sama',
             'roles.required' => 'Role tidak boleh kosong',
+            'status.required' => 'Status tidak boleh kosong',
+            'status.in' => 'Status tidak valid',
             'phone.required' => 'Phone tidak boleh kosong',
             'phone.unique' => 'Phone sudah terdaftar',
             'email_verified_at.date_format' => 'Format verifikasi email at tidak sesuai',

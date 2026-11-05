@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Auth as FacadesAuth;
 
 class LogoutController extends Controller
 {
-    public function logout(){
+    public function logout(Request $request){
 
         $manager = app('impersonate');
 
@@ -24,6 +24,10 @@ class LogoutController extends Controller
             }
 
             Auth::logout();
+            // Akhiri sesi sepenuhnya supaya sesi lama tidak bisa dipakai ulang.
+            $request->session()->invalidate();
+            $request->session()->regenerateToken();
+
             alert()->html('Berhasil', 'Berhasil Logout', 'success');
             return redirect()->route("auth.login.index");
         }

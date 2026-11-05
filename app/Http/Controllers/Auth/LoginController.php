@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use RealRashid\SweetAlert\Facades\Alert;
 use App\Enums\RoleEnum;
+use App\Enums\UserEnum;
 use App\Http\Requests\LoginRequest;
 use Auth;
 use Error;
@@ -46,6 +47,12 @@ class LoginController extends Controller
                 ])){
                     Auth::logout();
                     throw new \App\Exceptions\UserFacingException("Anda tidak diperbolehkan mengakses menu ini");
+                }
+
+                // Password benar, tetapi akun dinonaktifkan oleh admin.
+                if ((int) Auth::user()->status !== UserEnum::STATUS_ACTIVE) {
+                    Auth::logout();
+                    throw new \App\Exceptions\UserFacingException("Akun Anda tidak aktif. Silakan hubungi administrator.");
                 }
 
                 if(Auth::user()->hasRole([

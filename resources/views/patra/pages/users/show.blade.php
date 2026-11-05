@@ -10,7 +10,7 @@
             <div class="card-body">
                 <div class="text-center d-flex flex-column h-100">
                     <div>
-                        <img src="{{ $result->avatar ? asset('storage/' . $result->avatar) : 'https://avatars.dicebear.com/api/initials/'. $result->name .'.png?background=blue' }}" alt="" class="avatar-lg mx-auto img-thumbnail rounded-circle">
+                        <img src="{{ $result->avatarUrl() }}" alt="Foto {{ $result->name }}" class="avatar-lg mx-auto img-thumbnail rounded-circle">
                     </div>
 
                     <div class="mt-3 d-flex justify-content-between flex-column flex-1">

@@ -53,7 +53,7 @@
                                     <strong>Client:</strong> {{ $row->klien }}
                                     @if($row->industry) &middot; {{ $row->industry }} @endif
                                 @else
-                                    {!! Str::limit(strip_tags($row->renderTrix('content')), 120) !!}
+                                    {{ Str::limit(html_entity_decode(strip_tags($row->renderTrix('content'))), 120) }}
                                 @endif
                             </p>
 

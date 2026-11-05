@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
     @include('patra.layouts.head')
     @trixassets
 <body class="hold-transition sidebar-mini layout-fixed">

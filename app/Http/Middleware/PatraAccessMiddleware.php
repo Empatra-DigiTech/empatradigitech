@@ -5,6 +5,7 @@ namespace App\Http\Middleware;
 use Closure;
 use Illuminate\Http\Request;
 use App\Enums\RoleEnum;
+use App\Enums\UserEnum;
 use Auth;
 
 class PatraAccessMiddleware
@@ -25,6 +26,14 @@ class PatraAccessMiddleware
             }
             return redirect()->route('auth.login.index');
         }
+
+        if ((int) $user->status !== UserEnum::STATUS_ACTIVE) {
+            alert()->html('Gagal',"Akun Anda tidak aktif. Silakan hubungi administrator.",'error');
+            Auth::logout();
+
+            return redirect()->route('auth.login.index');
+        }
+
         return $next($request);
     }
 }

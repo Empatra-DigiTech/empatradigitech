@@ -2,6 +2,8 @@
 
 namespace App\Traits;
 
+use App\Support\HtmlSanitizer;
+
 trait TrixRender
 {
     public function renderTrix($field)
@@ -9,6 +11,7 @@ trait TrixRender
         $content = $this->trixRichText->where('field', $field)->first()?->content;
         unset($this->trixRichText);
 
-        return $content;
+        // Konten Trix disanitasi di sini karena hampir semua view memakai {!! !!}.
+        return HtmlSanitizer::clean($content);
     }
 }

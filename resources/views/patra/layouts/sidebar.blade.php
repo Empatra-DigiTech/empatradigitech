@@ -10,7 +10,7 @@
       <!-- Sidebar user panel (optional) -->
       <div class="user-panel mt-3 pb-3 mb-3 d-flex">
         <div class="image">
-          <img src="@if(!empty(Auth::user()->avatar)) {{asset('storage/'.Auth::user()->avatar)}} @else https://avatars.dicebear.com/api/initials/{{ Auth::user()->name  ?? null}}.svg?margin=10 @endif" class="img-circle elevation-2" alt="User Image">
+          <img src="{{ Auth::user()->avatarUrl() }}" class="img-circle elevation-2" alt="Foto {{ Auth::user()->name }}">
         </div>
         <div class="info">
           <a href="{{ route('patra.profile.index') }}" class="d-block">{{ Auth::user()->name ?? null}}</a>
@@ -55,7 +55,6 @@
 
             <li class="nav-item">
               <a href="{{route('patra.banner.index')}}" class="nav-link @if(Str::startsWith(request()->route()->getName(), 'patra.banner')) active @endif">
-                <col class="row">
                 <i class="bx bx-images col-3 bx-tada-hover"></i>
                 <p>
                   Banner
@@ -67,7 +66,6 @@
 
             <li class="nav-item">
               <a href="{{route('patra.portofolio.index')}}" class="nav-link @if(Str::startsWith(request()->route()->getName(), 'patra.portofolio')) active @endif">
-                <col class="row">
                 <i class="bx bx-news col-3 bx-tada-hover"></i>
                 <p>
                   Portofolio
@@ -110,7 +108,6 @@
 
             <li class="nav-item">
               <a href="{{route('patra.galeri.index')}}" class="nav-link @if(Str::startsWith(request()->route()->getName(), 'patra.galeri')) active @endif">
-                <col class="row">
                 <i class="bx bx-camera col-3 bx-tada-hover"></i>
                 <p>
                   Galeri
