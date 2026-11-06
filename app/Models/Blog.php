@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use App\Models\Concerns\DeletesStoredFiles;
+
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Te7aHoudini\LaravelTrix\Traits\HasTrixRichText;
@@ -12,7 +14,10 @@ use CyrildeWit\EloquentViewable\Contracts\Viewable;
 
 class Blog extends Model implements Viewable
 {
-    use HasFactory, HasTrixRichText, TrixRender, Loggable, InteractsWithViews;
+    use HasFactory, HasTrixRichText, TrixRender, Loggable, InteractsWithViews, DeletesStoredFiles;
+
+    /** Kolom berkas yang dibersihkan dari storage saat diganti/dihapus (lihat DeletesStoredFiles). */
+    protected array $storedFiles = ['image'];
 
     protected $fillable = [
         'title',

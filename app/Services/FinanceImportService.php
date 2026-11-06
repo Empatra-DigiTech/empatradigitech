@@ -8,7 +8,7 @@ use App\Models\FinancePeriod;
 use App\Models\FinanceTransaction;
 use PhpOffice\PhpSpreadsheet\IOFactory;
 use PhpOffice\PhpSpreadsheet\Shared\Date as ExcelDate;
-use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
 
 /**
  * Membaca pembukuan Excel (format "KAS CV EMPATRA DIGITECH") menjadi baris transaksi siap impor.
@@ -20,6 +20,19 @@ use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 class FinanceImportService
 {
     public const MAX_ROWS = 2000;
+
+    /** Baris judul dicari di 10 baris pertama (lihat locateTable). */
+    private const HEADER_SCAN_ROWS = 10;
+
+    /** Kolom di luar ini (kolom A sampai AN) tidak dimuat. */
+    private const MAX_COLUMNS = 40;
+
+    /** Batas ukuran isi file .xlsx setelah dibuka (terkompresi), melindungi dari "zip bomb". */
+    private const MAX_UNCOMPRESSED_BYTES = 50 * 1024 * 1024;
+    private const MAX_ZIP_ENTRIES = 2000;
+
+    /** Format yang boleh dibaca. Format lain (HTML, XML, SYLK, ODS, Gnumeric) sengaja ditolak. */
+    private const ALLOWED_READERS = [IOFactory::READER_XLSX, IOFactory::READER_XLS, IOFactory::READER_CSV];
 
     public const MODE_AUTO = 'auto';
     public const MODE_SWAP = 'swap';
@@ -43,14 +56,68 @@ class FinanceImportService
      */
     public function parse(string $path, string $dateMode = self::MODE_AUTO): array
     {
+        $spreadsheet = $this->load($path);
+
         try {
-            $reader = IOFactory::createReaderForFile($path);
+            return $this->parseSpreadsheet($spreadsheet, $dateMode);
+        } finally {
+            // Bebaskan memori sheet segera; PhpSpreadsheet menyimpan referensi melingkar antar objek.
+            $spreadsheet->disconnectWorksheets();
+        }
+    }
+
+    /**
+     * Muat file dengan pembaca yang dibatasi ke xlsx/xls/csv. Format ditentukan dari ISI file (bukan nama),
+     * tetapi hanya di antara tiga format itu, jadi file HTML/XML/ODS yang disamarkan jadi .csv/.txt ditolak.
+     * Hanya sel dalam batas baris/kolom yang dimuat.
+     */
+    private function load(string $path): Spreadsheet
+    {
+        $this->assertSafeArchiveSize($path);
+
+        try {
+            $reader = IOFactory::createReader(IOFactory::identify($path, self::ALLOWED_READERS));
             $reader->setReadDataOnly(false);
-            $spreadsheet = $reader->load($path);
+            $reader->setReadEmptyCells(false);
+            // +1 baris cadangan: file yang melebihi MAX_ROWS tetap terdeteksi dan ditolak, bukan terpotong diam-diam.
+            $reader->setReadFilter(new FinanceImportReadFilter(self::HEADER_SCAN_ROWS + self::MAX_ROWS + 1, self::MAX_COLUMNS));
+
+            return $reader->load($path);
         } catch (\Throwable $e) {
             throw new UserFacingException('File tidak bisa dibaca. Pastikan formatnya .xlsx / .xls / .csv yang valid.');
         }
+    }
 
+    /** File .xlsx adalah zip kecil yang bisa membengkak berpuluh-puluh MB saat dibuka. */
+    private function assertSafeArchiveSize(string $path): void
+    {
+        if (! class_exists(\ZipArchive::class)) {
+            return;
+        }
+
+        $zip = new \ZipArchive();
+        if ($zip->open($path) !== true) {
+            return; // bukan zip (xls / csv)
+        }
+
+        try {
+            $total = 0;
+            if ($zip->numFiles > self::MAX_ZIP_ENTRIES) {
+                throw new UserFacingException('Isi file terlalu besar atau tidak wajar. Simpan ulang sebagai .xlsx biasa dari Excel.');
+            }
+            for ($i = 0; $i < $zip->numFiles; $i++) {
+                $total += (int) ($zip->statIndex($i)['size'] ?? 0);
+                if ($total > self::MAX_UNCOMPRESSED_BYTES) {
+                    throw new UserFacingException('Isi file terlalu besar setelah dibuka (maksimal ' . (self::MAX_UNCOMPRESSED_BYTES / 1024 / 1024) . ' MB). Simpan ulang sebagai .xlsx biasa dari Excel.');
+                }
+            }
+        } finally {
+            $zip->close();
+        }
+    }
+
+    private function parseSpreadsheet(Spreadsheet $spreadsheet, string $dateMode): array
+    {
         [$sheet, $headerRow, $map] = $this->locateTable($spreadsheet->getAllSheets());
 
         $raw = [];
@@ -62,18 +129,24 @@ class FinanceImportService
         for ($r = $headerRow + 1; $r <= $highest; $r++) {
             // Sel tanggal dibaca PERTAMA: PhpSpreadsheet membatalkan objek sel lama setelah getCell() lain,
             // sehingga deteksi format tanggal gagal bila sel disimpan lebih lama.
-            $date = isset($map['date']) ? $this->rawDate($sheet->getCell([$map['date'], $r])) : ['kind' => 'none'];
-            $value = fn (string $key) => isset($map[$key]) ? $sheet->getCell([$map[$key], $r])->getCalculatedValue() : null;
+            $formulaMissing = false;
+            $date = isset($map['date']) ? $this->rawDate($sheet->getCell([$map['date'], $r]), $formulaMissing) : ['kind' => 'none'];
+            // Closure biasa (bukan fn): $formulaMissing harus ikut berubah di luar, arrow function menangkap nilai saja.
+            $value = function (string $key) use ($map, $sheet, $r, &$formulaMissing) {
+                return isset($map[$key]) ? $this->cellValue($sheet->getCell([$map[$key], $r]), $formulaMissing) : null;
+            };
 
             $inVal = $this->amount($value('in'));
             $outVal = $this->amount($value('out'));
 
-            // Baris kosong / baris total tanpa tanggal dan tanpa nominal dilewati diam-diam.
-            if ($date['kind'] === 'none' && ! $inVal && ! $outVal) {
+            // Baris kosong / baris total tanpa tanggal dan tanpa nominal dilewati diam-diam,
+            // kecuali ada formula tanpa nilai: itu harus dilaporkan, bukan hilang.
+            if ($date['kind'] === 'none' && ! $inVal && ! $outVal && ! $formulaMissing) {
                 continue;
             }
 
             $raw[] = [
+                'formula_missing' => $formulaMissing,
                 'excel_row' => $r,
                 'date' => $date,
                 'number' => $this->text($value('number')),
@@ -234,6 +307,29 @@ class FinanceImportService
         return preg_replace('/[^a-z0-9]/', '', strtolower((string) $v));
     }
 
+    /**
+     * Nilai sel. Formula TIDAK dihitung ulang: dipakai nilai terakhir yang disimpan Excel di dalam file.
+     * File dari sumber tak tepercaya tidak boleh menjalankan mesin formula (lambat, dan satu formula rusak
+     * menggagalkan seluruh impor). Formula tanpa nilai tersimpan ditandai lewat $formulaMissing.
+     */
+    private function cellValue($cell, bool &$formulaMissing)
+    {
+        if ($cell === null) {
+            return null;
+        }
+
+        if ($cell->isFormula()) {
+            $cached = $cell->getOldCalculatedValue();
+            if ($cached === null) {
+                $formulaMissing = true;
+            }
+
+            return $cached;
+        }
+
+        return $cell->getCalculatedValue();
+    }
+
     private function text($v): string
     {
         return trim((string) ($v ?? ''));
@@ -271,12 +367,12 @@ class FinanceImportService
     }
 
     /** Nilai mentah tanggal: ['kind' => 'cell'|'text', 'y','m','d'] atau teks asli. */
-    private function rawDate($cell): array
+    private function rawDate($cell, bool &$formulaMissing = false): array
     {
         if ($cell === null) {
             return ['kind' => 'none'];
         }
-        $v = $cell->getCalculatedValue();
+        $v = $this->cellValue($cell, $formulaMissing);
 
         if (is_numeric($v) && ExcelDate::isDateTime($cell)) {
             $d = ExcelDate::excelToDateTimeObject((float) $v);
@@ -366,6 +462,10 @@ class FinanceImportService
         }
         $type = $in > 0 ? 'masuk' : 'keluar';
         $amount = $in > 0 ? $in : $out;
+
+        if (($r['formula_missing'] ?? false) && $error !== null) {
+            $error = 'Sel berisi formula tanpa nilai tersimpan. Buka file di Excel lalu simpan ulang agar nilainya ikut tersimpan.';
+        }
 
         // Deskripsi: "Kas Masuk"/"Kas Keluar"/kosong dianggap generik, pakai Sub Kategori; selain itu "Deskripsi - Sub".
         $desc = $r['description'];

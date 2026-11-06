@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use App\Models\Concerns\DeletesStoredFiles;
+
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -18,7 +20,10 @@ use Illuminate\Contracts\Auth\CanResetPassword;
 
 class User extends Authenticatable
 {
-    use HasApiTokens, HasFactory, Notifiable, HasRoles, SoftDeletes, Loggable, Impersonate;
+    use HasApiTokens, HasFactory, Notifiable, HasRoles, SoftDeletes, Loggable, Impersonate, DeletesStoredFiles;
+
+    /** Kolom berkas yang dibersihkan dari storage saat diganti/dihapus (lihat DeletesStoredFiles). */
+    protected array $storedFiles = ['avatar'];
 
     /**
      * The attributes that are mass assignable.

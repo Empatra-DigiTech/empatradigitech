@@ -4,6 +4,7 @@ namespace App\Http\Requests\Team;
 
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
+use App\Rules\SafeUrl;
 
 class UpdateRequest extends FormRequest
 {
@@ -24,11 +25,13 @@ class UpdateRequest extends FormRequest
                 'nullable',
                 'url',
                 'max:500',
+                new SafeUrl,
             ],
             'instagram' => [
                 'nullable',
                 'url',
                 'max:500',
+                new SafeUrl,
             ],
             'image' => [
                 'nullable',

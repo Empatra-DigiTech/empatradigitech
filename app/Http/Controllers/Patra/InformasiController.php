@@ -64,13 +64,16 @@ class InformasiController extends Controller
                     'type' => 'file',
                     'file_path' => $file_path,
                 ]);
-            }else if($file_link != null){
+            }else if(filled($file_link)){
                 //if admin post link
                 $create = $this->informasi->create([
                     'title' => $title,
                     'type' => 'link',
                     'file_link' => $file_link,
                 ]);
+            }else{
+                // Biasanya sudah dicegah StoreRequest; jangan pernah menampilkan "Berhasil" tanpa menyimpan.
+                throw new \App\Exceptions\UserFacingException("Unggah file atau isi link terlebih dahulu");
             }
 
             alert()->html('Berhasil','Data berhasil ditambahkan','success');
@@ -133,13 +136,18 @@ class InformasiController extends Controller
                     'file_path' => $file_path,
                     'file_link' => null,
                 ]);
-            }else if($file_link != null){
+            }else if(filled($file_link)){
                 //if admin post link
                 $result->update([
                     'title' => $title,
                     'type' => 'link',
                     'file_link' => $file_link,
                     'file_path' => null,
+                ]);
+            }else{
+                // Hanya judul yang diubah: file/link yang ada tetap dipakai (sebelumnya judul baru hilang diam-diam).
+                $result->update([
+                    'title' => $title,
                 ]);
             }
 
@@ -159,6 +167,11 @@ class InformasiController extends Controller
             $result = $this->informasi;
             $result = $result->where('id',$id);
             $result = $result->first();
+
+            if(!$result){
+                alert()->error('Gagal',"Data tidak ditemukan");
+                return redirect()->route($this->route."index");
+            }
 
             $result->delete();
 

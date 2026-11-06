@@ -4,6 +4,7 @@ namespace App\Http\Requests\ClientLogo;
 
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
+use App\Rules\SafeUrl;
 
 class StoreRequest extends FormRequest
 {
@@ -11,7 +12,7 @@ class StoreRequest extends FormRequest
     {
         return [
             'nama_client' => ['required'],
-            'website_url' => ['nullable', 'url'],
+            'website_url' => ['nullable', 'url', 'max:500', new SafeUrl],
             'logo' => ['required', 'image', 'mimes:jpeg,png,gif,jpg', 'max:2048'],
         ];
     }

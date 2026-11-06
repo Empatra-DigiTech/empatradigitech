@@ -4,6 +4,7 @@ namespace App\Http\Requests\Tautan;
 
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
+use App\Rules\SafeUrl;
 
 
 class StoreRequest extends FormRequest
@@ -16,6 +17,9 @@ class StoreRequest extends FormRequest
             ],
             'url'=> [
                 'required',
+                'string',
+                'max:500',
+                new SafeUrl,
                 ],
 
         ];

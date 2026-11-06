@@ -4,6 +4,7 @@ namespace App\Http\Requests\Portofolio;
 
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
+use App\Rules\SafeUrl;
 
 class UpdateRequest extends FormRequest
 {
@@ -12,6 +13,12 @@ class UpdateRequest extends FormRequest
         return [
             'title' => [
                 'required',
+            ],
+            'demo_url' => [
+                'nullable',
+                'string',
+                'max:500',
+                new SafeUrl,
             ],
             // 'description'=> [
             //     'required',
