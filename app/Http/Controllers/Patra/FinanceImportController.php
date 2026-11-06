@@ -84,6 +84,13 @@ class FinanceImportController extends Controller
             $skipped = 0;
 
             DB::transaction(function () use ($data, $override, $cats, &$imported, &$skipped) {
+                // Data pembanding dibaca SEKALI di awal (bukan satu query per baris).
+                $closed = array_flip(FinancePeriod::closedPeriods());
+                $taken = $this->service->existingNumbers(
+                    array_column(array_filter($data['rows'], fn ($r) => $r['status'] === 'ok' && $r['number'] !== ''), 'number')
+                );
+                $cursor = null; // urutan nomor otomatis terakhir; dibaca sekali lalu dinaikkan di memori
+
                 foreach ($data['rows'] as $i => $row) {
                     if ($row['status'] !== 'ok') {
                         continue;
@@ -95,15 +102,14 @@ class FinanceImportController extends Controller
                         throw new UserFacingException("Baris Excel {$row['excel_row']}: kategori belum dipilih atau tidak sesuai jenis transaksi.");
                     }
 
-                    // Cek ulang saat simpan (data bisa berubah sejak pratinjau).
-                    if (FinancePeriod::isClosedFor($row['date'])
-                        || ($row['number'] !== '' && FinanceTransaction::withTrashed()->where('transaction_number', $row['number'])->exists())) {
+                    // Cek ulang saat simpan (data bisa berubah sejak pratinjau), memakai data yang dibaca di awal.
+                    $numberKey = strtoupper($row['number']);
+                    if (isset($closed[substr($row['date'], 0, 7)]) || ($row['number'] !== '' && isset($taken[$numberKey]))) {
                         $skipped++;
                         continue;
                     }
 
-                    FinanceTransaction::create([
-                        'transaction_number' => $row['number'] !== '' ? $row['number'] : FinanceTransaction::generateTransactionNumber(),
+                    $attributes = [
                         'date' => $row['date'],
                         'description' => $row['description'],
                         'finance_category_id' => $cat->id,
@@ -112,7 +118,14 @@ class FinanceImportController extends Controller
                         'payment_method' => $row['payment_method'],
                         'notes' => $row['notes'],
                         'created_by' => Auth::id(),
-                    ]);
+                    ];
+
+                    if ($row['number'] !== '') {
+                        FinanceTransaction::create($attributes + ['transaction_number' => $row['number']]);
+                        $taken[$numberKey] = true; // nomor yang sama di baris berikutnya dalam file ini dilewati
+                    } else {
+                        FinanceTransaction::createWithAutoNumber($attributes, $cursor);
+                    }
                     $imported++;
                 }
             });

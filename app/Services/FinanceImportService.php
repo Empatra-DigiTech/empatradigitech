@@ -193,7 +193,9 @@ class FinanceImportService
     public function annotate(array $rows): array
     {
         $categories = FinanceCategory::with('parent')->where('is_active', true)->get();
-        $existingNumbers = FinanceTransaction::withTrashed()->pluck('transaction_number')->map(fn ($n) => strtoupper($n))->flip()->all();
+        // Satu query untuk semua baris (bukan satu query per baris): hanya nomor yang ada di file yang dicari.
+        $existingNumbers = $this->existingNumbers(array_column(array_filter($rows, fn ($r) => ! $r['error'] && $r['number'] !== ''), 'number'));
+        $existingUnnumbered = $this->existingTransactionKeys(array_filter($rows, fn ($r) => ! $r['error'] && $r['number'] === ''));
         $closed = array_flip(FinancePeriod::closedPeriods());
         $seen = [];
 
@@ -221,8 +223,7 @@ class FinanceImportService
                     continue;
                 }
                 $seen[$key] = true;
-            } elseif (FinanceTransaction::where('date', $row['date'])->where('type', $row['type'])
-                ->where('amount', $row['amount'])->where('description', $row['description'])->exists()) {
+            } elseif (isset($existingUnnumbered[$this->transactionKey($row)])) {
                 $row['status'] = 'skip';
                 $row['reason'] = 'Transaksi yang sama sudah ada';
                 continue;
@@ -235,6 +236,62 @@ class FinanceImportService
         unset($row);
 
         return $rows;
+    }
+
+    /**
+     * Himpunan nomor (HURUF BESAR => true) dari daftar yang sudah dipakai transaksi, termasuk yang dihapus.
+     * Dicari lewat WHERE IN per 500 nomor, bukan membaca seluruh tabel.
+     *
+     * @param  array<int,string>  $numbers
+     * @return array<string,bool>
+     */
+    public function existingNumbers(array $numbers): array
+    {
+        $numbers = array_values(array_unique(array_filter($numbers, fn ($n) => $n !== '')));
+        $found = [];
+
+        foreach (array_chunk($numbers, 500) as $chunk) {
+            // Varian huruf besar ikut dicari: perbandingan WHERE IN mengikuti collation database.
+            $variants = array_values(array_unique(array_merge($chunk, array_map('strtoupper', $chunk))));
+
+            foreach (FinanceTransaction::withTrashed()->whereIn('transaction_number', $variants)->pluck('transaction_number') as $n) {
+                $found[strtoupper($n)] = true;
+            }
+        }
+
+        return $found;
+    }
+
+    /** Kunci pembanding transaksi tanpa nomor: tanggal | jenis | nominal | deskripsi (tanpa beda huruf/spasi pinggir). */
+    private function transactionKey(array $row): string
+    {
+        return substr((string) $row['date'], 0, 10) . '|' . $row['type'] . '|'
+            . number_format((float) $row['amount'], 2, '.', '') . '|' . mb_strtolower(trim((string) $row['description']));
+    }
+
+    /**
+     * Transaksi yang sudah ada dan cocok dengan baris tanpa nomor, dicari dengan SATU query pada rentang tanggal file.
+     *
+     * @param  array<int,array>  $rows
+     * @return array<string,bool>
+     */
+    private function existingTransactionKeys(array $rows): array
+    {
+        $dates = array_filter(array_column($rows, 'date'));
+        if ($dates === []) {
+            return [];
+        }
+
+        $found = [];
+        $query = FinanceTransaction::query()->toBase()
+            ->select('date', 'type', 'amount', 'description')
+            ->whereBetween('date', [min($dates), max($dates) . ' 23:59:59']);
+
+        foreach ($query->cursor() as $t) {
+            $found[$this->transactionKey(['date' => $t->date, 'type' => $t->type, 'amount' => $t->amount, 'description' => $t->description])] = true;
+        }
+
+        return $found;
     }
 
     /** Ringkasan untuk pratinjau, termasuk pemeriksaan silang dengan kolom "Saldo Akhir" di Excel. */

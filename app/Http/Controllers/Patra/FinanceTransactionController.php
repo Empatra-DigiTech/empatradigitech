@@ -133,8 +133,7 @@ class FinanceTransactionController extends Controller
         try {
             $this->assertPeriodOpen($request->date);
 
-            $this->transaction->create([
-                'transaction_number' => FinanceTransaction::generateTransactionNumber(),
+            FinanceTransaction::createWithAutoNumber([
                 'date' => $request->date,
                 'description' => $request->description,
                 'finance_category_id' => $request->finance_category_id,

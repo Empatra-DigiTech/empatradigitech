@@ -2,11 +2,14 @@
 
 namespace App\Http\Requests\FinanceTransaction;
 
+use App\Http\Requests\Concerns\ValidatesFinanceTransactionCategory;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 
 class UpdateRequest extends FormRequest
 {
+    use ValidatesFinanceTransactionCategory;
+
     public function rules(): array
     {
         return [
