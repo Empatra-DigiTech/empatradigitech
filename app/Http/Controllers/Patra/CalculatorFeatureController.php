@@ -6,6 +6,7 @@ use App\Models\CalculatorFeature;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Http\Request;
 use Illuminate\Pagination\Paginator;
+use Illuminate\Validation\ValidationException;
 
 class CalculatorFeatureController extends Controller
 {
@@ -17,6 +18,24 @@ class CalculatorFeatureController extends Controller
         $this->view = "patra.pages.calculator-feature.";
         $this->feature = new CalculatorFeature();
         Paginator::useBootstrap();
+    }
+
+    private function rules(): array
+    {
+        return [
+            'nama_fitur' => 'required|string|max:255',
+            'harga_tambahan' => 'required|numeric|min:0|max:9999999999999',
+            'deskripsi' => 'nullable|string|max:5000',
+            'urutan' => 'nullable|integer|min:0|max:1000000',
+        ];
+    }
+
+    /** Tampilkan pesan validasi apa adanya (bukan "kesalahan server") lalu kembali ke form. */
+    private function validationFailed(ValidationException $e, string $url)
+    {
+        alert()->html('Gagal', implode('<br>', array_map('e', $e->validator->errors()->all())), 'error');
+
+        return redirect($url)->withInput();
     }
 
     public function index(Request $request)
@@ -33,10 +52,7 @@ class CalculatorFeatureController extends Controller
     public function store(Request $request)
     {
         try {
-            $request->validate([
-                'nama_fitur' => 'required',
-                'harga_tambahan' => 'required|numeric|min:0',
-            ]);
+            $request->validate($this->rules());
 
             $this->feature->create([
                 'nama_fitur' => $request->nama_fitur,
@@ -49,6 +65,8 @@ class CalculatorFeatureController extends Controller
             alert()->html('Berhasil','Data berhasil ditambahkan','success');
             return redirect()->route($this->route."index");
 
+        } catch (ValidationException $e) {
+            return $this->validationFailed($e, route($this->route."create"));
         } catch (\Throwable $e) {
             Log::error($e->getMessage(), ['exception' => $e]);
             alert()->error('Gagal',\App\Helpers\ErrorHelper::userMessage($e));
@@ -69,10 +87,7 @@ class CalculatorFeatureController extends Controller
     public function update(Request $request, $id)
     {
         try {
-            $request->validate([
-                'nama_fitur' => 'required',
-                'harga_tambahan' => 'required|numeric|min:0',
-            ]);
+            $request->validate($this->rules());
 
             $result = $this->feature->where('id',$id)->first();
             if(!$result){
@@ -90,6 +105,8 @@ class CalculatorFeatureController extends Controller
             alert()->html('Berhasil','Data berhasil diubah','success');
             return redirect()->route($this->route."index");
 
+        } catch (ValidationException $e) {
+            return $this->validationFailed($e, route($this->route."edit", $id));
         } catch (\Throwable $e) {
             Log::error($e->getMessage(), ['exception' => $e]);
             alert()->error('Gagal',\App\Helpers\ErrorHelper::userMessage($e));
@@ -101,6 +118,9 @@ class CalculatorFeatureController extends Controller
     {
         try {
             $result = $this->feature->where('id',$id)->first();
+            if(!$result){
+                throw new \App\Exceptions\UserFacingException("Data tidak ditemukan");
+            }
             $result->delete();
             alert()->html('Berhasil','Data berhasil dihapus','success');
             return redirect()->route($this->route."index");

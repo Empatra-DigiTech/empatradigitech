@@ -2,18 +2,19 @@
 
 namespace App\Http\Requests\Menu;
 
+use App\Http\Requests\Concerns\ValidatesMenuParent;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 
 class StoreRequest extends FormRequest
 {
+    use ValidatesMenuParent;
+
     public function rules(): array
     {
         return [
-            'title' => [
-                'required',
-                'max:16',
-            ],
+            'title' => ['required', 'string', 'max:16'],
+            'parent' => ['nullable', 'integer', 'exists:menus,id'],
         ];
     }
 
@@ -22,6 +23,8 @@ class StoreRequest extends FormRequest
         return [
             'title.required' => 'Menu harus diisi',
             'title.max' => 'Menu tidak lebih dari 16 karakter',
+            'parent.exists' => 'Induk menu tidak valid',
+            'parent.integer' => 'Induk menu tidak valid',
         ];
     }
 

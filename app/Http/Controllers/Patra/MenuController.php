@@ -102,7 +102,7 @@ class MenuController extends Controller
 
         if (!$result) {
             alert()->error('Gagal', "Data tidak ditemukan");
-            return redirect()->route($this->route);
+            return redirect()->route($this->route . "index");
         }
 
         $data = [
@@ -219,6 +219,15 @@ class MenuController extends Controller
             $result = $this->menu;
             $result = $result->where('id', $id);
             $result = $result->first();
+
+            if (!$result) {
+                throw new \App\Exceptions\UserFacingException("Data tidak ditemukan");
+            }
+
+            // Sub menu yang kehilangan induknya tidak tampil di navbar publik, jadi hapus ditolak.
+            if ($this->menu->where('parent', $result->id)->exists()) {
+                throw new \App\Exceptions\UserFacingException("Menu tidak bisa dihapus karena masih punya sub menu. Hapus atau pindahkan sub menunya dulu.");
+            }
 
             $result->delete();
 

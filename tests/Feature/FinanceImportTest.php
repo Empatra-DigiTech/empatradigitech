@@ -93,6 +93,70 @@ class FinanceImportTest extends TestCase
         $this->assertSame('Gaji Dev', $rows[3]['description']);  // "Kas Keluar" generik -> sub kategori
     }
 
+    // ---- A6: tafsir tanggal mode auto tidak boleh menebak diam-diam ----
+
+    private function peringatanTanggal(array $res): string
+    {
+        return implode(' | ', $res['warnings']);
+    }
+
+    public function test_auto_urut_naik_yang_jelas_tidak_diberi_peringatan_ambigu(): void
+    {
+        $res = app(FinanceImportService::class)->parse($this->xlsx());
+
+        $this->assertStringNotContainsString('tidak dapat ditentukan', $this->peringatanTanggal($res));
+        $this->assertStringNotContainsString('belum pasti', $this->peringatanTanggal($res));
+    }
+
+    public function test_auto_berurutan_menurun_dibaca_benar_dan_tanpa_peringatan(): void
+    {
+        // Terurut menurun: 20 Mei, 2 Mei (sel tersimpan 5 Feb), 28 April.
+        $rows = [
+            [['text', '20/5/2025'], 'A1', 'x', 'Pendapatan', 'a', 100, 0, 'Tunai', 0],
+            [['cell', 2025, 2, 5], 'A2', 'x', 'Pendapatan', 'b', 100, 0, 'Tunai', 0],
+            [['text', '28/4/2025'], 'A3', 'x', 'Pendapatan', 'c', 100, 0, 'Tunai', 0],
+        ];
+
+        $res = app(FinanceImportService::class)->parse($this->xlsx($rows));
+
+        $this->assertSame(['2025-05-20', '2025-05-02', '2025-04-28'], array_column($res['rows'], 'date'));
+        $this->assertStringNotContainsString('tidak dapat ditentukan', $this->peringatanTanggal($res));
+    }
+
+    public function test_auto_tidak_bisa_memutuskan_memberi_peringatan_jelas(): void
+    {
+        // Satu sel saja: 5 Feb vs 2 Mei sama-sama "kronologis".
+        $rows = [[['cell', 2025, 2, 5], 'A1', 'x', 'Pendapatan', 'a', 100, 0, 'Tunai', 0]];
+
+        $res = app(FinanceImportService::class)->parse($this->xlsx($rows));
+
+        $this->assertStringContainsString('tidak dapat ditentukan', $this->peringatanTanggal($res));
+        $this->assertStringContainsString('1 baris', $this->peringatanTanggal($res));
+    }
+
+    public function test_auto_acak_memberi_peringatan_belum_pasti(): void
+    {
+        $rows = [];
+        foreach ([[9, 1], [7, 11], [4, 7], [12, 1], [9, 4]] as $i => [$m, $d]) {
+            $rows[] = [['cell', 2025, $m, $d], 'A' . $i, 'x', 'Pendapatan', 'a', 100, 0, 'Tunai', 0];
+        }
+
+        $res = app(FinanceImportService::class)->parse($this->xlsx($rows));
+
+        $this->assertStringContainsString('belum pasti', $this->peringatanTanggal($res));
+    }
+
+    public function test_mode_manual_tidak_memberi_peringatan_ambigu(): void
+    {
+        $rows = [[['cell', 2025, 2, 5], 'A1', 'x', 'Pendapatan', 'a', 100, 0, 'Tunai', 0]];
+
+        foreach (['swap', 'asis'] as $mode) {
+            $res = app(FinanceImportService::class)->parse($this->xlsx($rows), $mode);
+            $this->assertStringNotContainsString('tidak dapat ditentukan', $this->peringatanTanggal($res));
+            $this->assertStringNotContainsString('belum pasti', $this->peringatanTanggal($res));
+        }
+    }
+
     public function test_mode_asis_tidak_menukar_tanggal(): void
     {
         $res = app(FinanceImportService::class)->parse($this->xlsx(), 'asis');

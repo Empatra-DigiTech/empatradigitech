@@ -166,6 +166,7 @@ class FinanceImportService
         }
 
         $swap = $this->decideSwap($raw, $dateMode);
+        $dateWarning = $dateMode === self::MODE_AUTO ? $this->dateAmbiguityWarning($raw) : null;
 
         $rows = [];
         $warnings = [];
@@ -176,6 +177,10 @@ class FinanceImportService
 
         if ($swap) {
             $warnings[] = 'Tanggal bertipe tanggal-Excel dibaca dengan hari dan bulan ditukar (Excel menyimpannya sebagai bulan/hari). Cek kolom Tanggal di pratinjau.';
+        }
+
+        if ($dateWarning !== null) {
+            $warnings[] = $dateWarning;
         }
 
         return [
@@ -469,24 +474,74 @@ class FinanceImportService
             return false;
         }
 
-        $inversions = function (bool $swap) use ($raw): int {
+        [$scoreSwap, $scoreAsis] = $this->orderScores($raw);
+
+        return $scoreSwap < $scoreAsis;
+    }
+
+    /**
+     * Skor urutan tanggal untuk tafsir "tukar" dan "apa adanya": jumlah pelanggaran urutan terkecil
+     * antara urut naik dan urut turun (file kas boleh terurut menurun). Makin kecil makin kronologis.
+     *
+     * @return array{0:int,1:int}
+     */
+    private function orderScores(array $raw): array
+    {
+        $score = function (bool $swap) use ($raw): int {
             $prev = null;
-            $count = 0;
+            $asc = 0;
+            $desc = 0;
             foreach ($raw as $r) {
                 $d = $this->resolveDate($r['date'], $swap);
                 if (! $d) {
                     continue;
                 }
-                if ($prev && $d < $prev) {
-                    $count++;
+                if ($prev !== null) {
+                    if ($d < $prev) {
+                        $asc++;
+                    } elseif ($d > $prev) {
+                        $desc++;
+                    }
                 }
                 $prev = $d;
             }
 
-            return $count;
+            return min($asc, $desc);
         };
 
-        return $inversions(true) < $inversions(false);
+        return [$score(true), $score(false)];
+    }
+
+    /**
+     * Peringatan untuk mode auto bila tafsir tanggal tidak bisa dipastikan dari urutan baris.
+     * Hanya relevan bila ada sel tanggal yang hasilnya berbeda antara dua tafsir.
+     */
+    private function dateAmbiguityWarning(array $raw): ?string
+    {
+        $affected = 0;
+        foreach ($raw as $r) {
+            $d = $r['date'];
+            if ($d['kind'] === 'cell' && $d['d'] !== $d['m'] && $this->resolveDate($d, true) !== $this->resolveDate($d, false)) {
+                $affected++;
+            }
+        }
+        if ($affected === 0) {
+            return null;
+        }
+
+        [$scoreSwap, $scoreAsis] = $this->orderScores($raw);
+
+        if ($scoreSwap === $scoreAsis) {
+            return "Tafsir hari/bulan tidak dapat ditentukan otomatis ({$affected} baris tanggal-Excel bisa dibaca dua cara dan urutan barisnya tidak membedakan). "
+                . 'Dibaca apa adanya. Periksa kolom Tanggal, atau ulangi dengan mode "Tukar hari dan bulan" atau "Apa adanya" sesuai file Anda.';
+        }
+
+        if (min($scoreSwap, $scoreAsis) > 0) {
+            return "Tafsir hari/bulan belum pasti: urutan tanggal di file tidak konsisten walau sudah ditafsirkan ({$affected} baris tanggal-Excel terpengaruh). "
+                . 'Periksa kolom Tanggal di pratinjau, atau pilih mode "Tukar hari dan bulan" atau "Apa adanya" secara manual.';
+        }
+
+        return null;
     }
 
     private function resolveDate(array $raw, bool $swap): ?string

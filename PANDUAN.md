@@ -1,17 +1,17 @@
 # Paket perbaikan Empatra Digitech
 
-Dasar: branch `main`, commit `a158597`. Semua dites: 299 test lulus (155 lama + 144 baru).
+Dasar: branch `main`, commit `a158597`. Semua dites: 324 test lulus (155 lama + 169 baru).
 K1 (kredensial di `_env_example`) sengaja TIDAK disentuh sesuai permintaan.
 
 ## Cara pasang (pilih salah satu)
 
-### A. Lewat patch (urut 01 sampai 09)
+### A. Lewat patch (urut 01 sampai 10)
 ```
 git pull
 git apply --check patch/01-k2-sanitasi-trix.patch
 git apply patch/01-k2-sanitasi-trix.patch
 ```
-Ulangi untuk 02 sampai 09. Jika `--check` gagal karena CRLF, pakai cara B.
+Ulangi untuk 02 sampai 10. Jika `--check` gagal karena CRLF, pakai cara B.
 
 ### B. Salin file lengkap (cadangan, tanpa patch)
 Salin isi folder `files/` ke root proyek, timpa file yang sama (struktur folder sudah sama dengan proyek).
@@ -47,6 +47,7 @@ Tidak ada paket Composer baru. Tidak ada migrasi baru.
 | 07 | A1-A3 impor Excel: hanya xlsx/xls/csv, formula tidak dihitung ulang, batas memori (filter baris/kolom, batas isi zip 50 MB, bebaskan memori) |
 | 08 | A4-A5 impor besar: periode tertutup, nomor yang ada, dan kunci duplikat diambil sekali (bukan per baris); nomor transaksi otomatis dengan ulang-coba bila bentrok UNIQUE (`FinanceTransaction::createWithAutoNumber`) |
 | 09 | B1-B2 validasi kategori keuangan: jenis kategori harus sama dengan transaksi, kategori nonaktif ditolak (kecuali transaksi lama yang sudah memakainya), hierarki maksimal 2 level, jenis induk = anak, jenis tidak bisa diubah bila sudah dipakai |
+| 10 | A6 peringatan bila tafsir tanggal mode auto tidak pasti (file menurun juga dikenali), C3 pesan validasi kalkulator tampil (bukan "kesalahan server") + batas panjang/angka, C5 menu: validasi induk (maks. 2 level, bukan diri sendiri), judul maks. 16 saat edit, hapus menu bersub ditolak, perbaikan redirect `show()` |
 | 04 | R1 logout POST, R2 login tanpa min 8, R3 query views beranda dibuang, R4 nomor invoice, R5 UserController, R6 config ganda, R7 layout, R8 aset tak terpakai, R9 avatar tanpa layanan eksternal, R10 pengaturan kosong, R11 hapus kontak |
 
 ## Catatan untuk patch 06 dan 07
@@ -60,3 +61,9 @@ Tidak ada paket Composer baru. Tidak ada migrasi baru.
 2. **Nomor transaksi** tetap format `ED-0001`. Bila dua pengguna menyimpan bersamaan, yang kalah otomatis mencoba nomor berikutnya (maks. 5 kali), bukan error.
 3. **Kategori lama yang sudah tidak konsisten** (mis. anak dari anak, atau jenis beda) tidak diubah otomatis. Aturan baru berlaku saat disimpan. Cek data lama: `SELECT c.id,c.name FROM finance_categories c JOIN finance_categories p ON p.id=c.parent_id WHERE p.parent_id IS NOT NULL OR p.type<>c.type;`
 4. Kategori yang menjadi induk dirinya sendiri kini **ditolak dengan pesan**, bukan diam-diam dikosongkan.
+
+## Catatan untuk patch 10
+1. **Hapus menu yang punya sub menu kini ditolak** dengan pesan (sebelumnya sub menu jadi yatim dan hilang dari navbar). Hapus/pindahkan sub menunya dulu.
+2. **Judul menu** maksimal 16 karakter juga saat edit. Menu lama yang sudah lebih panjang tetap bisa diedit selama judulnya tidak diubah.
+3. **Impor Excel mode Otomatis**: bila tafsir hari/bulan tidak bisa dipastikan, pratinjau menampilkan peringatan dan menyarankan memilih mode manual. Perilaku pemilihan tafsirnya sendiri tidak berubah, kecuali file yang terurut menurun kini dikenali dengan benar.
+4. **Kalkulator:** harga maksimal 9.999.999.999.999, nama maksimal 255 karakter, urutan harus bilangan bulat >= 0.
