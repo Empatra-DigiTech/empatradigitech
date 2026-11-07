@@ -10,10 +10,11 @@ use App\Http\Requests\ClientLogo\UpdateRequest;
 use App\Helpers\UploadHelper;
 use Illuminate\Http\Request;
 use Illuminate\Pagination\Paginator;
-use Error;
 
 class ClientLogoController extends Controller
 {
+    protected $route;
+
     protected $clientLogo;
 
     public function __construct()
@@ -143,6 +144,10 @@ class ClientLogoController extends Controller
     {
         try {
             $result = $this->clientLogo->where('id', $id)->first();
+            if (!$result) {
+                throw new \App\Exceptions\UserFacingException("Data tidak ditemukan");
+            }
+
             $result->delete();
 
             alert()->html('Berhasil', 'Data berhasil dihapus', 'success');

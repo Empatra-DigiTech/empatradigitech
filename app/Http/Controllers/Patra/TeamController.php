@@ -59,7 +59,7 @@ class TeamController extends Controller
             $image = $request->file("image");
 
             if($image){
-                $upload = UploadHelper::upload_file($image,'images',['jpeg','jpg','png','gif']);
+                $upload = UploadHelper::upload_file($image,'team',['jpeg','jpg','png','gif']);
 
                 if($upload["IsError"] == TRUE){
                     throw new \App\Exceptions\UserFacingException($upload["Message"]);
@@ -67,14 +67,18 @@ class TeamController extends Controller
 
                 $image = $upload["Path"];
 
-                $create = $this->team->create([
-                    'nama' => $nama,
-                    'jabatan' => $jabatan,
-                    'linkedin' => $linkedin,
-                    'instagram' => $instagram,
-                    'image' => $image,
-                ]);
             }
+
+            if(!$image){
+                throw new \App\Exceptions\UserFacingException("File gambar wajib diunggah");
+            }
+            $create = $this->team->create([
+                'nama' => $nama,
+                'jabatan' => $jabatan,
+                'linkedin' => $linkedin,
+                'instagram' => $instagram,
+                'image' => $image,
+            ]);
 
             alert()->html('Berhasil','Data berhasil ditambahkan','success');
             return redirect()->route($this->route."index");
@@ -176,6 +180,10 @@ class TeamController extends Controller
             $result = $this->team;
             $result = $result->where('id',$id);
             $result = $result->first();
+            if (!$result) {
+                throw new \App\Exceptions\UserFacingException("Data tidak ditemukan");
+            }
+
 
             $result->delete();
 

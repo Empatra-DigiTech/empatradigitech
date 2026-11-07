@@ -138,7 +138,7 @@ class GaleriController extends Controller
 
 
             if ($image) {
-                $upload = UploadHelper::upload_file($image, 'galeri', ['jpeg', 'jpg', 'png', 'gif']);
+                $upload = UploadHelper::upload_file($image, 'galeri', ['jpg', 'jpeg', 'png', 'gif', 'mkv', 'mp4', 'wmv', 'avi'], 50 * 1024 * 1024);
 
                 if ($upload["IsError"] == TRUE) {
                     throw new \App\Exceptions\UserFacingException($upload["Message"]);
@@ -178,6 +178,10 @@ class GaleriController extends Controller
             $result = $this->galeri;
             $result = $result->where('id', $id);
             $result = $result->first();
+            if (!$result) {
+                throw new \App\Exceptions\UserFacingException("Data tidak ditemukan");
+            }
+
 
             $result->delete();
 

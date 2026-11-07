@@ -42,6 +42,13 @@ class FinanceImportController extends Controller
             'file.max' => 'Ukuran file maksimal 5 MB',
         ]);
 
+        if (config('session.driver') === 'cookie') {
+            // Pratinjau (hingga ribuan baris) disimpan di sesi; cookie dibatasi ~4 KB sehingga pasti gagal.
+            alert()->error('Gagal', 'Impor Excel memerlukan SESSION_DRIVER selain "cookie" (mis. file atau database). Hubungi administrator server.');
+
+            return redirect()->route($this->route . 'import.create');
+        }
+
         try {
             $parsed = $this->service->parse($request->file('file')->getRealPath(), $request->date_mode);
             $rows = $this->service->annotate($parsed['rows']);
@@ -70,7 +77,7 @@ class FinanceImportController extends Controller
     {
         $data = $request->session()->get(self::SESSION_KEY);
 
-        if (! $data || ($data['token'] ?? null) !== $request->token || ($data['user'] ?? null) !== Auth::id()) {
+        if (! $data || ! hash_equals((string) ($data['token'] ?? ''), (string) $request->token) || ($data['user'] ?? null) !== Auth::id()) {
             alert()->error('Gagal', 'Sesi pratinjau habis. Unggah ulang file Excel.');
 
             return redirect()->route($this->route . 'import.create');
@@ -78,6 +85,24 @@ class FinanceImportController extends Controller
 
         $override = (array) $request->input('category', []);
         $cats = FinanceCategory::where('is_active', true)->get()->keyBy('id');
+
+        // Semua baris siap-impor harus punya kategori yang sesuai: dilaporkan SEKALIGUS, bukan satu per satu.
+        $problems = [];
+        foreach ($data['rows'] as $i => $row) {
+            if ($row['status'] !== 'ok') {
+                continue;
+            }
+            $cat = $cats->get((int) ($override[$i] ?? $row['category_id']));
+            if (! $cat || $cat->type !== $row['type']) {
+                $problems[] = $row['excel_row'];
+            }
+        }
+        if ($problems !== []) {
+            $shown = implode(', ', array_slice($problems, 0, 15)) . (count($problems) > 15 ? ', ...' : '');
+            alert()->error('Gagal', count($problems) . " baris belum punya kategori yang sesuai jenis transaksi (baris Excel: {$shown}). Tidak ada data yang disimpan; unggah ulang dan lengkapi kategorinya di pratinjau.");
+
+            return redirect()->route($this->route . 'import.create');
+        }
 
         try {
             $imported = 0;

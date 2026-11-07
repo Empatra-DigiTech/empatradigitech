@@ -10,7 +10,6 @@ use App\Enums\RoleEnum;
 use App\Enums\UserEnum;
 use App\Http\Requests\LoginRequest;
 use Auth;
-use Error;
 
 class LoginController extends Controller
 {

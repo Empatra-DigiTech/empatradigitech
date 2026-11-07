@@ -10,10 +10,11 @@ use App\Http\Requests\Testimoni\UpdateRequest;
 use App\Helpers\UploadHelper;
 use Illuminate\Http\Request;
 use Illuminate\Pagination\Paginator;
-use Error;
 
 class TestimoniController extends Controller
 {
+    protected $route;
+
     protected $testimoni;
 
     public function __construct()
@@ -159,6 +160,10 @@ class TestimoniController extends Controller
     {
         try {
             $result = $this->testimoni->where('id', $id)->first();
+            if (!$result) {
+                throw new \App\Exceptions\UserFacingException("Data tidak ditemukan");
+            }
+
             $result->delete();
 
             alert()->html('Berhasil', 'Data berhasil dihapus', 'success');

@@ -69,20 +69,25 @@ class LayananController extends Controller
 
 
             if($image){
-                $upload = UploadHelper::upload_file($image,'images',['jpeg','jpg','png','gif']);
+                $upload = UploadHelper::upload_file($image,'layanan',['jpeg','jpg','png','gif']);
 
                 if($upload["IsError"] == TRUE){
                     throw new \App\Exceptions\UserFacingException($upload["Message"]);
                 }
 
                 $image = $upload["Path"];
-                $create = $this->layanan->create([
-                    'title' => $title,
-                    'kategori' => $kategori,
-                    'layanan-trixFields' => $request->input('layanan-trixFields'),
-                    'image' => $image,
-                ]);
+
             }
+
+            if(!$image){
+                throw new \App\Exceptions\UserFacingException("File gambar wajib diunggah");
+            }
+            $create = $this->layanan->create([
+                'title' => $title,
+                'kategori' => $kategori,
+                'layanan-trixFields' => $request->input('layanan-trixFields'),
+                'image' => $image,
+            ]);
             alert()->html('Berhasil','Data berhasil ditambahkan','success');
             return redirect()->route($this->route."index");
 
@@ -192,6 +197,10 @@ class LayananController extends Controller
             $result = $this->layanan;
             $result = $result->where('id',$id);
             $result = $result->first();
+            if (!$result) {
+                throw new \App\Exceptions\UserFacingException("Data tidak ditemukan");
+            }
+
 
             $result->delete();
 

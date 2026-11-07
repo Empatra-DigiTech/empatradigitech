@@ -51,13 +51,13 @@ class FinanceTransactionController extends Controller
         $sort = $request->sort === 'asc' ? 'asc' : 'desc';
 
         $filtered = FinanceTransaction::query()
-            ->when(!empty($search), fn ($q) => $q->where('description', 'like', '%' . addcslashes($search, '%_\\') . '%'))
+            ->when(!empty($search), fn ($q) => \App\Support\Like::contains($q, 'description', $search))
             ->when(in_array($type, ['masuk', 'keluar'], true), fn ($q) => $q->where('type', $type))
             ->when(!empty($categoryId), fn ($q) => $q->where('finance_category_id', (int) $categoryId))
             ->when(!empty($bulan) && preg_match('/^\d{4}-(0[1-9]|1[0-2])$/', $bulan), function ($q) use ($bulan) {
                 $start = Carbon::createFromFormat('Y-m-d', $bulan . '-01')->startOfMonth();
-                $q->whereDate('date', '>=', $start->toDateString())
-                  ->whereDate('date', '<=', $start->copy()->endOfMonth()->toDateString());
+                // whereBetween pada kolom date memakai indeks (date, id); whereDate membungkus kolom dengan fungsi.
+                $q->whereBetween('date', [$start->toDateString(), $start->copy()->endOfMonth()->toDateString() . ' 23:59:59']);
             });
 
         // Total hasil filter: agregasi di database (tidak memuat semua baris ke memori).
@@ -216,9 +216,12 @@ class FinanceTransactionController extends Controller
 
             $this->assertPeriodOpen($result->date);
 
-            // Siapa yang menghapus dicatat; saveQuietly agar tidak ada log "update" ganda.
-            $result->forceFill(['deleted_by' => Auth::id()])->saveQuietly();
-            $result->delete(); // soft delete, dicatat oleh Loggable
+            // Dua penulisan harus berhasil bersama (atau batal bersama).
+            DB::transaction(function () use ($result) {
+                // Siapa yang menghapus dicatat; saveQuietly agar tidak ada log "update" ganda.
+                $result->forceFill(['deleted_by' => Auth::id()])->saveQuietly();
+                $result->delete(); // soft delete, dicatat oleh Loggable
+            });
 
             Log::info('Transaksi keuangan dihapus (soft delete)', ['id' => $result->id, 'number' => $result->transaction_number, 'by' => Auth::id()]);
 
@@ -256,8 +259,10 @@ class FinanceTransactionController extends Controller
 
             $this->assertPeriodOpen($result->date);
 
-            $result->restore();
-            $result->forceFill(['deleted_by' => null])->saveQuietly();
+            DB::transaction(function () use ($result) {
+                $result->restore();
+                $result->forceFill(['deleted_by' => null])->saveQuietly();
+            });
 
             Log::info('Transaksi keuangan dipulihkan', ['id' => $result->id, 'number' => $result->transaction_number, 'by' => Auth::id()]);
 

@@ -22,7 +22,7 @@ class SOController extends Controller
     public function __construct(){
         $this->route = "patra.so.";
         $this->view = "patra.pages.so.";
-        $this->so = new so();
+        $this->so = new SO();
     }
     public function index()
     {
@@ -40,12 +40,12 @@ class SOController extends Controller
         try {
 
             $update  = $this->so;
-            $update = $update->first();
+            $update = $update->first() ?? $this->so->create([]);
 
             $image = $request->file("image");
 
             if ($image) {
-                $upload = UploadHelper::upload_file($image, 'galeri', ['jpeg', 'jpg', 'png', 'gif']);
+                $upload = UploadHelper::upload_file($image, 'so', ['jpeg', 'jpg', 'png', 'gif']);
 
                 if ($upload["IsError"] == TRUE) {
                     throw new \App\Exceptions\UserFacingException($upload["Message"]);

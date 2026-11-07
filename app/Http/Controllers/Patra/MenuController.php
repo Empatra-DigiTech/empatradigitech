@@ -24,7 +24,7 @@ class MenuController extends Controller
     {
         $this->route = "patra.menu.";
         $this->view = "patra.pages.menu.";
-        $this->menu = new menu();
+        $this->menu = new Menu();
         Paginator::useBootstrap();
     }
 
@@ -129,23 +129,6 @@ class MenuController extends Controller
         return view($this->view . "edit", $data);
     }
 
-    // public function edit($id)
-    // {
-    //     $result = $this->menu;
-    //     $result = $result->where('id', $id);
-    //     $result = $result->first();
-
-    //     if (!$result) {
-    //         alert()->error('Gagal', "Data tidak ditemukan");
-    //         return redirect()->route($this->route . "index");
-    //     }
-
-    //     $data = [
-    //         'result' => $result,
-    //     ];
-
-    //     return view($this->view . "edit", $data);
-    // }
 
     public function update(UpdateRequest $request, $id)
 {
@@ -177,35 +160,6 @@ class MenuController extends Controller
     }
 }
 
-    // public function update(UpdateRequest $request, $id)
-    // {
-    //     try {
-    //         $result = $this->menu;
-    //         $result = $result->where('id', $id);
-    //         $result = $result->first();
-
-    //         if (!$result) {
-    //             throw new \App\Exceptions\UserFacingException("Data tidak ditemukan");
-    //         }
-
-    //         $title = $request->title;
-    //         $parent = $request->parent;
-
-    //         $result->update([
-    //             'title' => $title,
-    //             'menu-trixFields' => $request->input('menu-trixFields'),
-    //         ]);
-
-
-    //         alert()->html('Berhasil', 'Data berhasil diubah', 'success');
-    //         return redirect()->route($this->route . "index");
-    //     } catch (\Throwable $e) {
-    //         Log::error($e->getMessage(), ['exception' => $e]);
-
-    //         alert()->error('Gagal', \App\Helpers\ErrorHelper::userMessage($e));
-    //         return redirect()->route($this->route . "edit", $id)->withInput();
-    //     }
-    // }
 
     /**
      * Remove the specified resource from storage.

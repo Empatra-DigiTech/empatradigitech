@@ -10,6 +10,9 @@ use Illuminate\Support\Facades\Storage;
 
 class KontakController extends Controller
 {
+    protected $kontak;
+    protected $route;
+
     /**
      * Display a listing of the resource.
      */

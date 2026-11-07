@@ -73,24 +73,29 @@ class BlogController extends Controller
             $image = $request->file("image");
 
             if($image){
-                $upload = UploadHelper::upload_file($image,'images',['jpeg','jpg','png','gif']);
+                $upload = UploadHelper::upload_file($image,'blog',['jpeg','jpg','png','gif']);
 
                 if($upload["IsError"] == TRUE){
                     throw new \App\Exceptions\UserFacingException($upload["Message"]);
                 }
 
                 $image = $upload["Path"];
-                $this->blog->create([
-                    'title' => $title,
-                    'slug' => $this->generateUniqueSlug($title),
-                    'kategori' => $kategori,
-                    'excerpt' => $excerpt,
-                    'blog-trixFields' => $request->input('blog-trixFields'),
-                    'image' => $image,
-                    'is_published' => $request->has('is_published'),
-                    'creator' => Auth::user()->name,
-                ]);
+
             }
+
+            if(!$image){
+                throw new \App\Exceptions\UserFacingException("File gambar wajib diunggah");
+            }
+            $this->blog->create([
+                'title' => $title,
+                'slug' => $this->generateUniqueSlug($title),
+                'kategori' => $kategori,
+                'excerpt' => $excerpt,
+                'blog-trixFields' => $request->input('blog-trixFields'),
+                'image' => $image,
+                'is_published' => $request->has('is_published'),
+                'creator' => Auth::user()->name,
+            ]);
             alert()->html('Berhasil','Data berhasil ditambahkan','success');
             return redirect()->route($this->route."index");
 
@@ -198,6 +203,10 @@ class BlogController extends Controller
             $result = $this->blog;
             $result = $result->where('id',$id);
             $result = $result->first();
+            if (!$result) {
+                throw new \App\Exceptions\UserFacingException("Data tidak ditemukan");
+            }
+
 
             $result->delete();
 

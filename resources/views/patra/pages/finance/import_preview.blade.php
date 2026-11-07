@@ -61,6 +61,7 @@
                                         @if ($row['status'] === 'ok')
                                             <span class="badge badge-success">Impor</span>
                                             @if ($row['reason'])<br><small class="text-danger">{{ $row['reason'] }}</small>@endif
+                                            @if (!empty($row['warning']))<br><small class="text-warning">{{ $row['warning'] }}</small>@endif
                                         @elseif ($row['status'] === 'skip')
                                             <span class="badge badge-secondary">Lewati</span><br><small class="text-muted">{{ $row['reason'] }}</small>
                                         @else

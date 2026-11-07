@@ -20,6 +20,10 @@ use PhpOffice\PhpSpreadsheet\Spreadsheet;
 class FinanceImportService
 {
     public const MAX_ROWS = 2000;
+    public const MIN_YEAR = 2000;
+    public const MAX_YEAR = 2100;
+    public const MAX_NUMBER_LENGTH = 50;
+    public const MAX_NOTES_LENGTH = 2000;
 
     /** Baris judul dicari di 10 baris pertama (lihat locateTable). */
     private const HEADER_SCAN_ROWS = 10;
@@ -52,7 +56,7 @@ class FinanceImportService
     ];
 
     /**
-     * @return array{rows: array<int,array>, sheet: string, summary: array, warnings: array<int,string>}
+     * @return array{rows: array<int,array>, sheet: string, swapped: bool, warnings: array<int,string>}
      */
     public function parse(string $path, string $dateMode = self::MODE_AUTO): array
     {
@@ -136,8 +140,10 @@ class FinanceImportService
                 return isset($map[$key]) ? $this->cellValue($sheet->getCell([$map[$key], $r]), $formulaMissing) : null;
             };
 
-            $inVal = $this->amount($value('in'));
-            $outVal = $this->amount($value('out'));
+            $inRaw = $value('in');
+            $outRaw = $value('out');
+            $inVal = $this->amount($inRaw);
+            $outVal = $this->amount($outRaw);
 
             // Baris kosong / baris total tanpa tanggal dan tanpa nominal dilewati diam-diam,
             // kecuali ada formula tanpa nilai: itu harus dilaporkan, bukan hilang.
@@ -155,6 +161,7 @@ class FinanceImportService
                 'sub' => $this->text($value('sub')),
                 'in' => $inVal,
                 'out' => $outVal,
+                'amount_unsupported' => $this->unsupportedAmount($inRaw) ?? $this->unsupportedAmount($outRaw),
                 'method' => $this->text($value('method')),
                 'balance' => $this->amount($value('balance'), true),
                 'notes' => $this->text($value('notes')),
@@ -170,9 +177,8 @@ class FinanceImportService
 
         $rows = [];
         $warnings = [];
-        foreach ($raw as $i => $r) {
-            $row = $this->buildRow($r, $swap);
-            $rows[] = $row;
+        foreach ($raw as $r) {
+            $rows[] = $this->buildRow($r, $swap);
         }
 
         if ($swap) {
@@ -203,8 +209,9 @@ class FinanceImportService
         $existingUnnumbered = $this->existingTransactionKeys(array_filter($rows, fn ($r) => ! $r['error'] && $r['number'] === ''));
         $closed = array_flip(FinancePeriod::closedPeriods());
         $seen = [];
+        $seenUnnumbered = [];
 
-        foreach ($rows as $i => &$row) {
+        foreach ($rows as &$row) {
             $row['category_id'] = $row['category_id'] ?? $this->guessCategory($row, $categories)?->id;
             $row['status'] = $row['error'] ? 'error' : 'ok';
             $row['reason'] = $row['error'];
@@ -228,10 +235,24 @@ class FinanceImportService
                     continue;
                 }
                 $seen[$key] = true;
-            } elseif (isset($existingUnnumbered[$this->transactionKey($row)])) {
-                $row['status'] = 'skip';
-                $row['reason'] = 'Transaksi yang sama sudah ada';
-                continue;
+            } else {
+                $key = $this->transactionKey($row);
+                if (($existingUnnumbered[$key] ?? null) === 'active') {
+                    $row['status'] = 'skip';
+                    $row['reason'] = 'Transaksi yang sama sudah ada';
+                    continue;
+                }
+                if (($existingUnnumbered[$key] ?? null) === 'trashed') {
+                    $row['status'] = 'skip';
+                    $row['reason'] = 'Transaksi yang sama ada di Sampah. Pulihkan dari menu Sampah bila memang diperlukan';
+                    continue;
+                }
+                if (isset($seenUnnumbered[$key])) {
+                    // Dua baris identik dalam satu file bisa sah (dua pembelian yang sama), jadi hanya diberi peringatan.
+                    $row['warning'] = "Sama persis dengan baris Excel {$seenUnnumbered[$key]} di file ini";
+                } else {
+                    $seenUnnumbered[$key] = $row['excel_row'];
+                }
             }
 
             if (! $row['category_id']) {
@@ -278,7 +299,7 @@ class FinanceImportService
      * Transaksi yang sudah ada dan cocok dengan baris tanpa nomor, dicari dengan SATU query pada rentang tanggal file.
      *
      * @param  array<int,array>  $rows
-     * @return array<string,bool>
+     * @return array<string,string> kunci => 'active'|'trashed'
      */
     private function existingTransactionKeys(array $rows): array
     {
@@ -288,12 +309,16 @@ class FinanceImportService
         }
 
         $found = [];
-        $query = FinanceTransaction::query()->toBase()
-            ->select('date', 'type', 'amount', 'description')
+        // Termasuk transaksi di Sampah, sama seperti pemeriksaan baris bernomor.
+        $query = FinanceTransaction::withTrashed()->toBase()
+            ->select('date', 'type', 'amount', 'description', 'deleted_at')
             ->whereBetween('date', [min($dates), max($dates) . ' 23:59:59']);
 
         foreach ($query->cursor() as $t) {
-            $found[$this->transactionKey(['date' => $t->date, 'type' => $t->type, 'amount' => $t->amount, 'description' => $t->description])] = true;
+            $key = $this->transactionKey(['date' => $t->date, 'type' => $t->type, 'amount' => $t->amount, 'description' => $t->description]);
+            if (($found[$key] ?? null) !== 'active') {
+                $found[$key] = $t->deleted_at === null ? 'active' : 'trashed';
+            }
         }
 
         return $found;
@@ -395,6 +420,23 @@ class FinanceImportService
     private function text($v): string
     {
         return trim((string) ($v ?? ''));
+    }
+
+    /**
+     * Teks angka yang ambigu dan tidak boleh ditebak: tanda kurung (negatif ala akuntansi) dan notasi ilmiah.
+     * Sel bertipe angka asli tidak diperiksa (nilainya sudah pasti).
+     */
+    private function unsupportedAmount($v): ?string
+    {
+        if (! is_string($v)) {
+            return null;
+        }
+        $t = trim($v);
+        if (preg_match('/\(.*\d.*\)/', $t) === 1 || preg_match('/^[^a-z]*\d[.,]?\d*\s*e\s*[+\-]?\d+\s*$/i', $t) === 1) {
+            return mb_substr($t, 0, 30);
+        }
+
+        return null;
     }
 
     /** Angka dari sel: numerik apa adanya, teks gaya Indonesia ("1.700.697", "Rp 5.000,50") dikonversi. */
@@ -563,6 +605,19 @@ class FinanceImportService
         $date = $this->resolveDate($r['date'], $swap);
         if (! $date) {
             $error = $r['date']['kind'] === 'invalid' ? 'Format tanggal tidak dikenali: ' . $r['date']['text'] : 'Tanggal kosong / tidak valid';
+        }
+
+        if ($date && ((int) substr($date, 0, 4) < self::MIN_YEAR || (int) substr($date, 0, 4) > self::MAX_YEAR)) {
+            $error = 'Tahun ' . substr($date, 0, 4) . ' di luar rentang yang wajar (' . self::MIN_YEAR . '-' . self::MAX_YEAR . ')';
+        }
+        if (! $error && ! empty($r['amount_unsupported'])) {
+            $error = 'Format angka tidak didukung: "' . $r['amount_unsupported'] . '". Tulis angka biasa tanpa tanda kurung atau notasi ilmiah.';
+        }
+        if (! $error && mb_strlen($r['number']) > self::MAX_NUMBER_LENGTH) {
+            $error = 'No. Transaksi terlalu panjang (maksimal ' . self::MAX_NUMBER_LENGTH . ' karakter)';
+        }
+        if (! $error && mb_strlen($r['notes']) > self::MAX_NOTES_LENGTH) {
+            $error = 'Catatan terlalu panjang (maksimal ' . self::MAX_NOTES_LENGTH . ' karakter)';
         }
 
         $in = $r['in'] ?? 0.0;

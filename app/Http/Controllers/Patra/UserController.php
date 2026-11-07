@@ -15,6 +15,9 @@ use Auth;
 
 class UserController extends Controller
 {
+    protected $user;
+    protected $route;
+
     public function __construct(){
         $this->route = "patra.users.";
         $this->view = "patra.pages.users.";

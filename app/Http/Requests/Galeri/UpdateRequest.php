@@ -12,14 +12,15 @@ class UpdateRequest extends FormRequest
         return [
             'title' => [
                 'required',
+                'string',
+                'max:255',
             ],
-            'description'=> [
-                'required',
-                ],
+            'description' => ['required', 'string', 'max:255'],
+            'date' => ['required', 'date'],
             'image' => [
-                'image',
-                'max:2048',
-                'mimes:jpeg,png,gif,jpg',
+                'nullable',
+                'max:51200',
+                'mimes:jpeg,png,gif,jpg,mp4,mkv,wmv,avi',
             ],
         ];
     }
@@ -29,9 +30,9 @@ class UpdateRequest extends FormRequest
         return [
             'title.required' => 'Judul harus diisi',
             'description.required' => 'Deksripsi harus diisi',
-            'image.image' => 'Foto harus berupa gambar',
-            'image.mimes' => 'Foto harus berupa jpeg, png, gif, jpg',
-            'image.max' => 'Foto tidak boleh lebih dari 2MB',
+            'date.required' => 'Tanggal harus diisi',
+            'image.mimes' => 'File harus berupa jpeg, png, gif, jpg, mp4, mkv, wmv, avi',
+            'image.max' => 'File tidak boleh lebih dari 50MB',
         ];
     }
 

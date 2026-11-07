@@ -55,29 +55,34 @@ class PortofolioController extends Controller
             $image = $request->file("image");
 
             if($image){
-                $upload = UploadHelper::upload_file($image,'images',['jpeg','jpg','png','gif']);
+                $upload = UploadHelper::upload_file($image,'portofolio',['jpeg','jpg','png','gif']);
 
                 if($upload["IsError"] == TRUE){
                     throw new \App\Exceptions\UserFacingException($upload["Message"]);
                 }
 
                 $image = $upload["Path"];
-                $create = $this->portofolio->create([
-                    'title' => $title,
-                    'portofolio-trixFields' => $request->input('portofolio-trixFields'),
-                    'image' => $image,
-                    'creator' => Auth::user()->name,
-                    'klien' => $request->klien,
-                    'industry' => $request->industry,
-                    'layanan' => $request->layanan,
-                    'brand' => $request->brand,
-                    'tantangan' => $request->tantangan,
-                    'solusi' => $request->solusi,
-                    'fitur' => $request->fitur,
-                    'hasil' => $request->hasil,
-                    'demo_url' => $request->demo_url,
-                ]);
+
             }
+
+            if(!$image){
+                throw new \App\Exceptions\UserFacingException("File gambar wajib diunggah");
+            }
+            $create = $this->portofolio->create([
+                'title' => $title,
+                'portofolio-trixFields' => $request->input('portofolio-trixFields'),
+                'image' => $image,
+                'creator' => Auth::user()->name,
+                'klien' => $request->klien,
+                'industry' => $request->industry,
+                'layanan' => $request->layanan,
+                'brand' => $request->brand,
+                'tantangan' => $request->tantangan,
+                'solusi' => $request->solusi,
+                'fitur' => $request->fitur,
+                'hasil' => $request->hasil,
+                'demo_url' => $request->demo_url,
+            ]);
             alert()->html('Berhasil','Data berhasil ditambahkan','success');
             return redirect()->route($this->route."index");
 
@@ -182,6 +187,10 @@ class PortofolioController extends Controller
             $result = $this->portofolio;
             $result = $result->where('id',$id);
             $result = $result->first();
+            if (!$result) {
+                throw new \App\Exceptions\UserFacingException("Data tidak ditemukan");
+            }
+
 
             $result->delete();
 

@@ -8,8 +8,10 @@ use App\Http\Controllers\Controller;
 use App\Models\FinancePeriod;
 use App\Models\FinanceTransaction;
 use Carbon\Carbon;
+use Illuminate\Database\UniqueConstraintViolationException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
 
@@ -22,17 +24,21 @@ class FinancePeriodController extends Controller
 {
     public function index()
     {
-        $periods = FinancePeriod::with(['closer', 'reopener'])->orderByDesc('period')->get()->map(function ($p) {
-            $start = Carbon::createFromFormat('Y-m-d', $p->period . '-01')->startOfMonth();
-            $agg = FinanceTransaction::query()->toBase()
-                ->whereDate('date', '>=', $start->toDateString())
-                ->whereDate('date', '<=', $start->copy()->endOfMonth()->toDateString())
-                ->selectRaw("COUNT(*) AS jumlah")
-                ->selectRaw("COALESCE(SUM(CASE WHEN type = 'masuk' THEN amount END), 0) AS masuk")
-                ->selectRaw("COALESCE(SUM(CASE WHEN type = 'keluar' THEN amount END), 0) AS keluar")
-                ->first();
-            $p->summary = $agg;
-            return $p;
+        $periods = FinancePeriod::with(['closer', 'reopener'])->orderByDesc('period')->get();
+
+        // Satu query untuk semua periode (sebelumnya satu query per periode).
+        $agg = FinanceTransaction::query()->toBase()
+            ->selectRaw('SUBSTR(date, 1, 7) AS ym')
+            ->selectRaw('COUNT(*) AS jumlah')
+            ->selectRaw("COALESCE(SUM(CASE WHEN type = 'masuk' THEN amount END), 0) AS masuk")
+            ->selectRaw("COALESCE(SUM(CASE WHEN type = 'keluar' THEN amount END), 0) AS keluar")
+            ->whereIn(DB::raw('SUBSTR(date, 1, 7)'), $periods->pluck('period')->all())
+            ->groupBy(DB::raw('SUBSTR(date, 1, 7)'))
+            ->get()
+            ->keyBy('ym');
+
+        $periods->each(function ($p) use ($agg) {
+            $p->summary = $agg->get($p->period) ?? (object) ['jumlah' => 0, 'masuk' => 0, 'keluar' => 0];
         });
 
         return view('patra.pages.finance.period', [
@@ -76,11 +82,16 @@ class FinancePeriodController extends Controller
                 throw new UserFacingException('Periode ' . $data['period'] . ' sudah ditutup');
             }
 
-            $period->fill([
-                'is_closed' => true,
-                'closed_at' => now(),
-                'closed_by' => Auth::id(),
-            ])->save();
+            try {
+                $period->fill([
+                    'is_closed' => true,
+                    'closed_at' => now(),
+                    'closed_by' => Auth::id(),
+                ])->save();
+            } catch (UniqueConstraintViolationException $e) {
+                // Pengguna lain menutup periode yang sama pada saat bersamaan.
+                throw new UserFacingException('Periode ' . $data['period'] . ' sudah ditutup');
+            }
 
             Log::info('Periode keuangan ditutup', ['period' => $data['period'], 'by' => Auth::id()]);
             alert()->html('Berhasil', 'Periode ' . $data['period'] . ' ditutup', 'success');

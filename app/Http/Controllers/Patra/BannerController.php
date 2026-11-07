@@ -59,19 +59,24 @@ class BannerController extends Controller
 
 
             if($image){
-                $upload = UploadHelper::upload_file($image,'image',['jpeg','jpg','png','gif']);
+                $upload = UploadHelper::upload_file($image,'banner',['jpeg','jpg','png','gif']);
 
                 if($upload["IsError"] == TRUE){
                     throw new \App\Exceptions\UserFacingException($upload["Message"]);
                 }
 
                 $image = $upload["Path"];
-                $create = $this->banner->create([
-                    'title' => $title,
-                    'image' => $image,
-                ]);
 
             }
+
+            if(!$image){
+                throw new \App\Exceptions\UserFacingException("File gambar wajib diunggah");
+            }
+            $create = $this->banner->create([
+                'title' => $title,
+                'image' => $image,
+            ]);
+
             alert()->html('Berhasil','Data berhasil ditambahkan','success');
             return redirect()->route($this->route."index");
 
@@ -176,6 +181,10 @@ class BannerController extends Controller
             $result = $this->banner;
             $result = $result->where('id',$id);
             $result = $result->first();
+            if (!$result) {
+                throw new \App\Exceptions\UserFacingException("Data tidak ditemukan");
+            }
+
 
             $result->delete();
 

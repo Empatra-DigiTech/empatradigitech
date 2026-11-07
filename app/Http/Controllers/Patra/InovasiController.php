@@ -70,22 +70,27 @@ class InovasiController extends Controller
 
 
             if($image){
-                $upload = UploadHelper::upload_file($image,'images',['jpeg','jpg','png','gif']);
+                $upload = UploadHelper::upload_file($image,'inovasi',['jpeg','jpg','png','gif']);
 
                 if($upload["IsError"] == TRUE){
                     throw new \App\Exceptions\UserFacingException($upload["Message"]);
                 }
 
                 $image = $upload["Path"];
-                $create = $this->inovasi->create([
-                    'title' => $title,
-                    'inovasi-trixFields' => $request->input('inovasi-trixFields'),
-                    'image' => $image,
-                    'date'=> $date,
-                    'kategori' => $kategori,
-                    'harga' => $harga,
-                ]);
+
             }
+
+            if(!$image){
+                throw new \App\Exceptions\UserFacingException("File gambar wajib diunggah");
+            }
+            $create = $this->inovasi->create([
+                'title' => $title,
+                'inovasi-trixFields' => $request->input('inovasi-trixFields'),
+                'image' => $image,
+                'date'=> $date,
+                'kategori' => $kategori,
+                'harga' => $harga,
+            ]);
             alert()->html('Berhasil','Data berhasil ditambahkan','success');
             return redirect()->route($this->route."index");
 
@@ -198,6 +203,10 @@ class InovasiController extends Controller
             $result = $this->inovasi;
             $result = $result->where('id',$id);
             $result = $result->first();
+            if (!$result) {
+                throw new \App\Exceptions\UserFacingException("Data tidak ditemukan");
+            }
+
 
             $result->delete();
 

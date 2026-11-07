@@ -14,6 +14,9 @@ use Illuminate\Pagination\Paginator;
 
 class GaleriController extends Controller
 {
+    protected $galeri;
+    protected $route;
+
     public function __construct(){
         $this->route = "home.galeri.";
         $this->view = "home.pages.galeri.";

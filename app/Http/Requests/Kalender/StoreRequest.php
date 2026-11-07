@@ -13,6 +13,8 @@ class StoreRequest extends FormRequest
         return [
             'title' => [
                 'required',
+                'string',
+                'max:255',
             ],
             'start' => [
                 'required',
@@ -21,6 +23,7 @@ class StoreRequest extends FormRequest
             'end' => [
                 'required',
                 'date_format:Y-m-d',
+                'after_or_equal:start',
             ],
             // 'file_path' => [
             //     'required',

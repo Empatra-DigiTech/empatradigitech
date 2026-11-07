@@ -122,6 +122,10 @@ class FaqController extends Controller
     {
         try {
             $result = $this->faq->where('id',$id)->first();
+            if (!$result) {
+                throw new \App\Exceptions\UserFacingException("Data tidak ditemukan");
+            }
+
             $result->delete();
 
             alert()->html('Berhasil','Data berhasil dihapus','success');

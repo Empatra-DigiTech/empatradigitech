@@ -10,10 +10,11 @@ use App\Http\Requests\Profile\UpdateRequest;
 use App\Helpers\UploadHelper;
 use App\Enums\UserEnum;
 use Auth;
-use Error;
 
 class ProfileController extends Controller
 {
+    protected $route;
+
     public function __construct(){
         $this->route = "patra.profile.";
         $this->view = "patra.pages.profile.";

@@ -4,6 +4,7 @@ namespace App\Http\Requests\Blog;
 
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class UpdateRequest extends FormRequest
 {
@@ -12,9 +13,16 @@ class UpdateRequest extends FormRequest
         return [
             'title' => [
                 'required',
+                'string',
+                'max:255',
             ],
             'kategori' => [
                 'required',
+                // Daftar dari form; nilai lama yang sudah tersimpan tetap boleh dipertahankan.
+                Rule::in(array_filter(array_merge(
+                    ['Estimasi Biaya', 'Perbandingan Sistem', 'UMKM & Teknologi', 'Tips & Insight'],
+                    [\App\Models\Blog::find($this->route('id'))?->kategori]
+                ))),
             ],
             'excerpt' => [
                 'required',

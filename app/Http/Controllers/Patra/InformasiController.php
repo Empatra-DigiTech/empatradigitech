@@ -13,6 +13,9 @@ use Illuminate\Pagination\Paginator;
 
 class InformasiController extends Controller
 {
+    protected $informasi;
+    protected $route;
+
     public function __construct(){
         $this->route = "patra.informasi.";
         $this->view = "patra.pages.informasi.";

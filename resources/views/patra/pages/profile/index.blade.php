@@ -49,6 +49,13 @@
                                 </div>
                             </div>
                             <div class="form-group row">
+                                <label class="col-md-2 col-form-label">Password Saat Ini</label>
+                                <div class="col-md-10">
+                                    <input type="password" class="form-control" name="current_password" placeholder="Password saat ini" autocomplete="current-password">
+                                    <p class="text-info" style="margin-top: 0px;margin-bottom: 0px;padding-top: 0px;padding-bottom: 0px;"><small><i>Wajib diisi bila mengubah email atau password</i></small></p>
+                                </div>
+                            </div>
+                            <div class="form-group row">
                                 <label class="col-md-2 col-form-label">Password Baru</label>
                                 <div class="col-md-10">
                                     <input type="password" class="form-control" name="password" placeholder="Password">

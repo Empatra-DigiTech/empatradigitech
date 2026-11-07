@@ -12,9 +12,12 @@ class StoreRequest extends FormRequest
         return [
             'title' => [
                 'required',
+                'string',
+                'max:255',
             ],
             'kategori' => [
                 'required',
+                'in:Estimasi Biaya,Perbandingan Sistem,UMKM & Teknologi,Tips & Insight',
             ],
             'excerpt' => [
                 'required',

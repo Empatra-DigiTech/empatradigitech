@@ -1,17 +1,17 @@
 # Paket perbaikan Empatra Digitech
 
-Dasar: branch `main`, commit `a158597`. Semua dites: 324 test lulus (155 lama + 169 baru).
+Dasar: branch `main`, commit `a158597`. Semua dites: 370 test lulus (155 lama + 215 baru).
 K1 (kredensial di `_env_example`) sengaja TIDAK disentuh sesuai permintaan.
 
 ## Cara pasang (pilih salah satu)
 
-### A. Lewat patch (urut 01 sampai 10)
+### A. Lewat patch (urut 01 sampai 12)
 ```
 git pull
 git apply --check patch/01-k2-sanitasi-trix.patch
 git apply patch/01-k2-sanitasi-trix.patch
 ```
-Ulangi untuk 02 sampai 10. Jika `--check` gagal karena CRLF, pakai cara B.
+Ulangi untuk 02 sampai 12. Jika `--check` gagal karena CRLF, pakai cara B.
 
 ### B. Salin file lengkap (cadangan, tanpa patch)
 Salin isi folder `files/` ke root proyek, timpa file yang sama (struktur folder sudah sama dengan proyek).
@@ -48,6 +48,8 @@ Tidak ada paket Composer baru. Tidak ada migrasi baru.
 | 08 | A4-A5 impor besar: periode tertutup, nomor yang ada, dan kunci duplikat diambil sekali (bukan per baris); nomor transaksi otomatis dengan ulang-coba bila bentrok UNIQUE (`FinanceTransaction::createWithAutoNumber`) |
 | 09 | B1-B2 validasi kategori keuangan: jenis kategori harus sama dengan transaksi, kategori nonaktif ditolak (kecuali transaksi lama yang sudah memakainya), hierarki maksimal 2 level, jenis induk = anak, jenis tidak bisa diubah bila sudah dipakai |
 | 10 | A6 peringatan bila tafsir tanggal mode auto tidak pasti (file menurun juga dikenali), C3 pesan validasi kalkulator tampil (bukan "kesalahan server") + batas panjang/angka, C5 menu: validasi induk (maks. 2 level, bukan diri sendiri), judul maks. 16 saat edit, hapus menu bersub ditolak, perbaikan redirect `show()` |
+| 11 | Ketahanan keuangan: impor (A8 batas panjang no./catatan, A9 tolak angka "(1.000)"/"1e3" dan tahun di luar 2000-2100, A10 duplikat tanpa nomor ikut cek Sampah + peringatan duplikat dalam file, A11 `hash_equals` + semua baris tanpa kategori dilaporkan sekaligus + tolak SESSION_DRIVER=cookie), B3 hapus/pulihkan transaksi dalam transaksi DB, B5 pencarian LIKE aman untuk `%` dan `_` (`App\Support\Like`), B6 batas jumlah/catatan/tanggal dan tutup periode bersamaan |
+| 12 | Kerapian: C6 create di luar blok if, C7 hapus data tidak ada memberi pesan jelas (10 controller), C8 fitur Paket jadi list, C9 aturan Galeri Store=Update, C10 string/max, kategori Blog, tanggal Kalender, C11 SO tabel kosong, C12 folder upload seragam, C13 password lama untuk profil, C15 properti controller dideklarasikan, C16 kode mati, B4 ringkasan periode 1 query + whereBetween, A12 kode mati impor |
 | 04 | R1 logout POST, R2 login tanpa min 8, R3 query views beranda dibuang, R4 nomor invoice, R5 UserController, R6 config ganda, R7 layout, R8 aset tak terpakai, R9 avatar tanpa layanan eksternal, R10 pengaturan kosong, R11 hapus kontak |
 
 ## Catatan untuk patch 06 dan 07
@@ -67,3 +69,13 @@ Tidak ada paket Composer baru. Tidak ada migrasi baru.
 2. **Judul menu** maksimal 16 karakter juga saat edit. Menu lama yang sudah lebih panjang tetap bisa diedit selama judulnya tidak diubah.
 3. **Impor Excel mode Otomatis**: bila tafsir hari/bulan tidak bisa dipastikan, pratinjau menampilkan peringatan dan menyarankan memilih mode manual. Perilaku pemilihan tafsirnya sendiri tidak berubah, kecuali file yang terurut menurun kini dikenali dengan benar.
 4. **Kalkulator:** harga maksimal 9.999.999.999.999, nama maksimal 255 karakter, urutan harus bilangan bulat >= 0.
+
+## Catatan untuk patch 11 dan 12
+1. **Profil:** ada kolom baru "Password Saat Ini". Wajib diisi hanya bila mengubah email atau password.
+2. **Galeri:** edit kini menerima video (sama seperti tambah), maksimal 50 MB. Deskripsi dan tanggal wajib saat tambah.
+3. **Blog:** kategori harus salah satu dari 4 pilihan di form. Blog lama dengan kategori lain tetap bisa diedit.
+4. **Panjang judul** (title/nama/jabatan) maksimal 255 karakter di semua form admin yang diubah.
+5. **Folder upload baru** (data lama tidak dipindah, path di database tetap valid): banner, blog, inovasi, layanan, portofolio, team, so.
+6. **Impor Excel:** butuh SESSION_DRIVER selain `cookie`. Baris yang sama persis dalam satu file hanya diberi peringatan (bisa sah), sedangkan baris yang cocok dengan transaksi di Sampah dilewati dengan keterangan.
+7. **A7 (awalan `= + - @`)** sengaja tidak diubah: belum ada fitur ekspor, tampilan sudah aman. Netralkan bila nanti ada ekspor CSV/Excel.
+8. **Tidak ada migrasi** di patch 11-12.

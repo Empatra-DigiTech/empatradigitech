@@ -30,7 +30,7 @@ class FinanceCategoryController extends Controller
         $table = $this->category->with(['parent', 'children']);
 
         if (!empty($search)) {
-            $table = $table->where("name", "like", "%" . $search . "%");
+            $table = \App\Support\Like::contains($table, 'name', $search);
         }
 
         $table = $table->orderBy("type")->orderBy("parent_id")->orderBy("urutan");

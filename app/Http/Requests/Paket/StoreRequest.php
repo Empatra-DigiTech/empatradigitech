@@ -20,7 +20,7 @@ class StoreRequest extends FormRequest
             'harga' => 'required|numeric|min:0',
             'periode' => 'nullable|string|max:100',
             'fitur' => 'nullable|array',
-            'fitur.*' => 'string',
+            'fitur.*' => 'nullable|string|max:255',
             'is_recommended' => 'boolean',
             'is_active' => 'boolean',
             'urutan' => 'nullable|integer',

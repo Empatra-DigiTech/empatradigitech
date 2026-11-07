@@ -23,7 +23,7 @@ use App\Models\Menu;
 
 class HomeController extends Controller
 {
-    // protected $tautan;
+    protected $tautan;
 
     public function __construct()
     {

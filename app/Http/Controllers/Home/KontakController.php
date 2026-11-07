@@ -15,6 +15,9 @@ use Illuminate\Support\Facades\Log;
 
 class KontakController extends Controller
 {
+    protected $kontak;
+    protected $route;
+
     public function __construct(){
         $this->view = "home.pages.kontak.";
         $this->route = "home.kontak.";

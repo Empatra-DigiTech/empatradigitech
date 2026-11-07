@@ -11,6 +11,8 @@ use App\Models\Menu;
 
 class ProfilController extends Controller
 {
+    protected $route;
+
     // FIXED: Controller ini sebelumnya tidak ada sama sekali, padahal
     // routes/web.php sudah mendaftarkan route "home.profil.index" yang
     // mengarah ke ProfilController@index -> mengetik /profil langsung

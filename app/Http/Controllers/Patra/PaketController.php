@@ -69,7 +69,7 @@ class PaketController extends Controller
 
             // Handle fitur array
             if ($request->has('fitur')) {
-                $data['fitur'] = array_filter($request->fitur); // Remove empty entries
+                $data["fitur"] = array_values(array_filter($request->fitur)); // buang isian kosong, kunci diurutkan ulang (list JSON)
             }
 
             $create = $this->paket->create($data);
@@ -133,7 +133,7 @@ class PaketController extends Controller
 
             // Handle fitur array
             if ($request->has('fitur')) {
-                $data['fitur'] = array_filter($request->fitur);
+                $data["fitur"] = array_values(array_filter($request->fitur));
             }
 
             $result->update($data);

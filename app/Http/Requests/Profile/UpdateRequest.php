@@ -20,9 +20,19 @@ class UpdateRequest extends FormRequest
             ],
             'name' => [
                 'required',
+                'string',
+                'max:255',
             ],
             'phone' => [
                 'required',
+                'string',
+                'max:30',
+            ],
+            // Mengubah email atau password harus membuktikan pemilik akun (sesi yang tertinggal / dibajak).
+            'current_password' => [
+                Rule::requiredIf(fn () => filled($this->input('password')) || $this->input('email') !== Auth::user()->email),
+                'nullable',
+                'current_password',
             ],
             'avatar' => [
                 'nullable',
@@ -56,6 +66,9 @@ class UpdateRequest extends FormRequest
             'password.min' => 'Password minimal 8 karakter',
             'password.confirmed' => 'Password tidak sama',
             'phone.required' => 'Phone tidak boleh kosong',
+            'phone.max' => 'Phone tidak boleh lebih dari 30 karakter',
+            'current_password.required' => 'Password saat ini wajib diisi untuk mengubah email atau password',
+            'current_password.current_password' => 'Password saat ini salah',
             'phone.unique' => 'Phone sudah terdaftar',
         ];
     }

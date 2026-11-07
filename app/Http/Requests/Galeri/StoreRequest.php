@@ -13,10 +13,13 @@ class StoreRequest extends FormRequest
         return [
             'title' => [
                 'required',
+                'string',
+                'max:255',
             ],
+            'description' => ['required', 'string', 'max:255'],
+            'date' => ['required', 'date'],
             'image' => [
                 'required',
-                // 'image',
                 'max:51200',
                 'mimes:jpeg,png,gif,jpg,mp4,mkv,wmv,avi',
             ],
@@ -27,9 +30,11 @@ class StoreRequest extends FormRequest
     {
         return [
             'title.required' => 'Judul harus diisi',
-            'image.image' => 'Foto harus berupa gambar',
-            'image.mimes' => 'Foto harus berupa jpeg, png, gif, jpg',
-            'image.max' => 'Foto tidak boleh lebih dari 2MB',
+            'description.required' => 'Deskripsi harus diisi',
+            'date.required' => 'Tanggal harus diisi',
+            'image.required' => 'File harus diisi',
+            'image.mimes' => 'File harus berupa jpeg, png, gif, jpg, mp4, mkv, wmv, avi',
+            'image.max' => 'File tidak boleh lebih dari 50MB',
         ];
     }
 

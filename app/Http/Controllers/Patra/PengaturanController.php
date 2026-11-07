@@ -8,10 +8,12 @@ use App\Models\Pengaturan;
 use Illuminate\Http\Request;
 use App\Http\Requests\Pengaturan\UpdateRequest;
 use App\Helpers\UploadHelper;
-use Error;
 
 class PengaturanController extends Controller
 {
+    protected $pengaturan;
+    protected $route;
+
     /**
      * Display a listing of the resource.
      */

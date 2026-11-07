@@ -10,8 +10,11 @@ class StoreRequest extends FormRequest
     public function rules(): array
     {
         return [
+            'kategori' => ['nullable', 'string', 'max:100'],
             'title' => [
                 'required',
+                'string',
+                'max:255',
             ],
             'harga' => [
                 'nullable',

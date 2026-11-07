@@ -12,10 +12,11 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 use Illuminate\Auth\Events\PasswordReset;
 use App\Models\User;
-use Error;
 
 class ResetPasswordController extends Controller
 {
+    protected $user;
+
     public function __construct(){
         $this->view = "auth.";
         $this->user = new User();
