@@ -19,7 +19,9 @@
     <!-- Vendor CSS Files -->
     <link href="{{URL::to('/')}}/assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <link href="{{URL::to('/')}}/assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
-    <link href="{{URL::to('/')}}/assets/vendor/aos/aos.css" rel="stylesheet">
+    {{-- aos.css sengaja TIDAK dimuat. AOS sudah dimatikan (AOS.init({ disable: true }) di assets/js/main.js),
+         sedangkan CSS-nya menyembunyikan semua elemen [data-aos] sampai JS selesai. Jika dimuat, satu kegagalan JS/cache
+         membuat konten (Portofolio, Galeri, Visi Misi) tidak terlihat. --}}
     <link href="{{URL::to('/')}}/assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
     {{-- <link href="{{URL::to('/')}}/assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet"> --}}
 

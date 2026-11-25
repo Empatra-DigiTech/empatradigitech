@@ -138,15 +138,11 @@ a:active {
 
 section {
     position: relative;
-    transform: translateY(20px);
-    transition:
-        opacity 0.6s var(--transition-base),
-        transform 0.6s var(--transition-base);
-}
-
-section.animate-in {
-    opacity: 1;
-    transform: translateY(0);
+    /* Dulu: transform: translateY(20px) + class .animate-in untuk efek masuk.
+       Tidak ada skrip yang menambahkan .animate-in, sehingga semua <section> (termasuk yang bersarang,
+       mis. section.content > section.galeri-page-header) permanen bergeser 20px per tingkat,
+       memunculkan jalur putih di atas hero gelap. Transform juga membuat elemen position:fixed
+       di dalam section (mis. modal) tidak lagi relatif terhadap layar. */
 }
 
 .section-header {

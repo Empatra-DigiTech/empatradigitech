@@ -15,6 +15,8 @@
     function toggleScrolled() {
         const selectBody = document.querySelector('body');
         const selectHeader = document.querySelector('#header');
+        // Navbar baru memakai #siteNavbar, bukan #header; lewati bila elemen lama tidak ada.
+        if (!selectHeader) return;
         if (
             !selectHeader.classList.contains('scroll-up-sticky') &&
             !selectHeader.classList.contains('sticky-top') &&
@@ -35,11 +37,16 @@
     const mobileNavToggleBtn = document.querySelector('.mobile-nav-toggle');
 
     function mobileNavToogle() {
+        if (!mobileNavToggleBtn) return;
         document.querySelector('body').classList.toggle('mobile-nav-active');
         mobileNavToggleBtn.classList.toggle('bi-list');
         mobileNavToggleBtn.classList.toggle('bi-x');
     }
-    mobileNavToggleBtn.addEventListener('click', mobileNavToogle);
+    // Navbar baru (.site-navbar__toggle) diurus resources/js/home.js. Tombol lama ini sudah tidak ada,
+    // dan tanpa pengecekan ini seluruh skrip di bawahnya berhenti dengan TypeError.
+    if (mobileNavToggleBtn) {
+        mobileNavToggleBtn.addEventListener('click', mobileNavToogle);
+    }
 
     /**
      * Hide mobile nav on same-page/hash links
@@ -86,13 +93,15 @@
                 : scrollTop.classList.remove('active');
         }
     }
-    scrollTop.addEventListener('click', (e) => {
-        e.preventDefault();
-        window.scrollTo({
-            top: 0,
-            behavior: 'smooth',
+    if (scrollTop) {
+        scrollTop.addEventListener('click', (e) => {
+            e.preventDefault();
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth',
+            });
         });
-    });
+    }
 
     window.addEventListener('load', toggleScrollTop);
     document.addEventListener('scroll', toggleScrollTop);
@@ -101,11 +110,10 @@
      * Animation on scroll function and init
      */
     function aosInit() {
+        if (typeof AOS === 'undefined') return;
+
         AOS.init({
-            duration: 600,
-            easing: 'ease-in-out',
-            once: true,
-            mirror: false,
+            disable: true
         });
     }
     window.addEventListener('load', aosInit);
@@ -113,9 +121,8 @@
     /**
      * Initiate glightbox
      */
-    const glightbox = GLightbox({
-        selector: '.glightbox',
-    });
+    const glightbox =
+        typeof GLightbox !== 'undefined' ? GLightbox({ selector: '.glightbox' }) : null;
 
     /**
      * Frequently Asked Questions Toggle

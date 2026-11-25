@@ -30,7 +30,7 @@
                     $extension = pathinfo($row->image, PATHINFO_EXTENSION);
                     $isVideo = in_array($extension, ['wmv', 'mkv', 'mp4', 'avi']);
                 @endphp
-                <a class="gallery-card" data-aos="fade-up" data-aos-delay="{{ ($index % 8) * 60 }}"
+                <a class="gallery-card"
                    href="#galeriShowModal" data-bs-toggle="modal" id="show-galeri"
                    data-url="{{ route('home.galeri.show', $row->id) }}">
 

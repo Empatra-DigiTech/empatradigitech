@@ -36,7 +36,7 @@ class HomeController extends Controller
         $table_tautan = \App\Support\PublicCache::tautan();
 
         // FIXED: Changed from orderBy('date') to orderBy('created_at')
-        $table_portofolio = Portofolio::orderBy('created_at', 'DESC')->take(6)->get();
+        table_port$ofolio = Portofolio::orderBy('created_at', 'DESC')->take(8)->get();
 
         $table_banner = \App\Support\PublicCache::banner();
         $table_layanan = \App\Support\PublicCache::layanan();
